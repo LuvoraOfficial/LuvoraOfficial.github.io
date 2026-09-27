@@ -2299,9 +2299,7 @@ body.occasion-modal-open {
     box-shadow:0 12px 30px rgba(50,30,40,.12) !important;
   }
 
-  .site-header .header-btn{
-    display:none !important;
-  }
+ 
 }
 /* Move hero image downward */
 .hero-art{
@@ -2433,5 +2431,32 @@ body.occasion-modal-open {
   .site-header .menu-toggle.active span {
     background: #481020 !important;
   }
+
+  @media (max-width:768px){
+
+  .site-header{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:flex-start !important;
+  }
+
+  .site-header .brand{
+    flex-shrink:0 !important;
+  }
+
+  .site-header .header-btn{
+    display:inline-flex !important;
+    margin-left:auto !important;
+    margin-right:10px !important;
+    white-space:nowrap !important;
+  }
+
+  .site-header .menu-toggle{
+    flex-shrink:0 !important;
+    margin-left:0 !important;
+    margin-right:0 !important;
+  }
+
+}
 
 }
