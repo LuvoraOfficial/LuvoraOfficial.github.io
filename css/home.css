@@ -2249,6 +2249,7 @@ body.occasion-modal-open {
 
 
 /* ===== FINAL MOBILE NAVBAR CENTER FIX ===== */
+/* ===== MOBILE NAVBAR POSITION ONLY ===== */
 @media (max-width:768px){
 
   .site-header{
@@ -2261,7 +2262,6 @@ body.occasion-modal-open {
     margin:0 !important;
 
     transform:translateX(-50%) !important;
-
     box-sizing:border-box !important;
 
     z-index:999999 !important;
@@ -2272,6 +2272,8 @@ body.occasion-modal-open {
     height:auto !important;
   }
 
+  /* Existing hamburger CSS/design untouched */
+
   .site-header .nav{
     display:none !important;
   }
@@ -2279,6 +2281,7 @@ body.occasion-modal-open {
   .site-header .nav.open{
     display:flex !important;
     position:absolute !important;
+
     top:calc(100% + 8px) !important;
     left:0 !important;
     right:0 !important;
