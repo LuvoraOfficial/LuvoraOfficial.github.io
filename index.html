@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Luvora — Turn Moments Into Memories. Create beautiful digital surprises for the people you love.">
+  <title>Luvora — Turn Moments Into Memories</title>
+
+<link rel="canonical" href="https://LuvoraOfficial.github.io/">
+
+<meta property="og:title" content="Luvora — Turn Moments Into Memories">
+<meta property="og:description" content="Create beautiful personalized digital surprises for the people you love.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://LuvoraOfficial.github.io/">
+
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+  <link rel="stylesheet" href="css/home.css">
+  <script src="assets/js/site-config.js"></script>
+</head>
+<body>
+
+ 
+<header class="site-header">
+  <a href="#" class="brand" aria-label="Luvora Home">
+    <img
+      class="brand-logo"
+      src="assets/icons/luvora-logo.svg"
+      alt="Luvora"
+      data-site-brand
+    >
+  </a>
+
+  <nav class="nav" id="mainNav" aria-label="Main navigation">
+    <a href="#occasions">Occasions</a>
+    <a href="#templates">Templates</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#help">Help</a>
+  </nav>
+
+  <a href="templates.html" class="header-btn">
+    Create a Surprise <span>♡</span>
+  </a>
+
+  <button
+    class="menu-toggle"
+    id="menuToggle"
+    type="button"
+    aria-label="Open menu"
+    aria-expanded="false"
+    aria-controls="mainNav"
+  >
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</header>
+
+  <main>
+
+    <section class="hero">
+      <div class="hero-noise" aria-hidden="true"></div>
+
+      <div class="hero-copy reveal">
+        <div class="eyebrow"><span class="eyebrow-line"></span> A little surprise. A lot of love.</div>
+        <h1>Make someone<br><em>feel loved.</em></h1>
+        <p>
+          Turn your memories, words and little moments into a beautiful
+          digital surprise they'll want to keep forever.
+        </p>
+
+        <div class="hero-actions">
+          <a href="templates.html" class="primary-btn">Create Your Surprise <span>→</span></a>
+          <a href="#how-it-works" class="text-btn">Discover the Magic <span>↗</span></a>
+        </div>
+      </div>
+
+      <div class="hero-stage reveal" aria-label="Romantic Luvora keepsake composition">
+        <div class="hero-art">
+          <!-- The reference composition already contains its own note cards/text. Nothing is overlaid here. -->
+          <img
+            class="hero-reference"
+            src="assets/images/hero/reference-right-final.png"
+            alt="Romantic letter, rose, ribbon and memory photograph arrangement"
+            fetchpriority="high">
+          <div class="petal-layer" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="marquee">
+      <div class="marquee-track">
+        <span>YOUR STORY</span><b>✦</b><span>YOUR MEMORIES</span><b>✦</b>
+        <span>YOUR LOVE</span><b>✦</b><span>YOUR MOMENT</span><b>✦</b>
+        <span>YOUR STORY</span><b>✦</b><span>YOUR MEMORIES</span><b>✦</b>
+        <span>YOUR LOVE</span><b>✦</b><span>YOUR MOMENT</span><b>✦</b>
+      </div>
+    </section>
+
+    <section class="section occasions" id="occasions">
+  <div class="section-heading split-heading">
+    <div>
+      <div class="eyebrow">Choose your moment</div>
+      <h2>Every occasion has<br><em>a story.</em></h2>
+    </div>
+    <p>Some moments deserve more than a message. Give yours a story worth remembering.</p>
+  </div>
+
+  <div class="occasion-grid">
+
+    <button class="occasion-card occasion-cover birthday"
+      data-occasion="birthday" type="button">
+      <img src="assets/images/birthday-bloom.jpg"
+        alt="Birthday celebration" class="occasion-cover-img">
+      <span class="occasion-number">01 · BIRTHDAY</span>
+      <span class="occasion-cover-content">
+        <span class="occasion-cover-title">Birthday Bloom</span>
+        <span class="occasion-cover-subtitle">A day made just for you.</span>
+      </span>
+      <span class="occasion-cover-arrow">↗</span>
+    </button>
+
+    <button class="occasion-card occasion-cover anniversary"
+      data-occasion="anniversary" type="button">
+      <img src="assets/images/our-forever.jpg"
+        alt="Romantic anniversary" class="occasion-cover-img">
+      <span class="occasion-number">02 · ANNIVERSARY</span>
+      <span class="occasion-cover-content">
+        <span class="occasion-cover-title">Our Forever</span>
+        <span class="occasion-cover-subtitle">Still choosing you.</span>
+      </span>
+      <span class="occasion-cover-arrow">↗</span>
+    </button>
+
+    <button class="occasion-card occasion-cover valentines"
+      data-occasion="valentine" type="button">
+      <img src="assets/images/love-notes.jpg"
+        alt="Valentine's Day roses and love letter" class="occasion-cover-img">
+      <span class="occasion-number">03 · VALENTINE'S</span>
+      <span class="occasion-cover-content">
+        <span class="occasion-cover-title">Love Notes</span>
+        <span class="occasion-cover-subtitle">A little more love.</span>
+      </span>
+      <span class="occasion-cover-arrow">↗</span>
+    </button>
+
+    <button class="occasion-card occasion-cover justbecause"
+      data-occasion="justbecause" type="button">
+      <img src="assets/images/little-reasons.jpg"
+        alt="A little romantic surprise" class="occasion-cover-img">
+      <span class="occasion-number">04 · JUST BECAUSE</span>
+      <span class="occasion-cover-content">
+        <span class="occasion-cover-title">Little Reasons</span>
+        <span class="occasion-cover-subtitle">Just because, always.</span>
+      </span>
+      <span class="occasion-cover-arrow">↗</span>
+    </button>
+
+  </div>
+</section>
+
+<!-- OCCASION STORY POPUP -->
+<div class="occasion-modal" id="occasionModal"
+  aria-hidden="true" role="dialog" aria-modal="true"
+  aria-labelledby="occasionModalTitle">
+
+  <div class="occasion-modal-backdrop" data-close-occasion></div>
+
+  <div class="occasion-modal-box">
+    <button class="occasion-modal-close" type="button"
+      aria-label="Close" data-close-occasion>×</button>
+
+    <button class="occasion-language" id="occasionLanguage"
+      type="button">বাংলা</button>
+
+    <div class="occasion-modal-image">
+      <img id="occasionModalImage" src="" alt="">
+    </div>
+
+    <div class="occasion-modal-content">
+      <div class="occasion-modal-eyebrow">EVERY OCCASION HAS A STORY</div>
+
+      <h2 id="occasionModalTitle"></h2>
+
+      <p id="occasionModalMessage"></p>
+
+           </a>
+    </div>
+  </div>
+</div>
+
+    <section class="story-section" id="how-it-works">
+      <div class="story-visual">
+        <div class="phone-frame">
+          <div class="phone-screen">
+            <div class="phone-small">FOR SOMEONE SPECIAL</div>
+            <div class="phone-heart">♡</div>
+            <div class="phone-script">Made with love.</div>
+            <div class="phone-line"></div>
+            <div class="phone-message">A beautiful surprise is waiting for you...</div>
+            <div class="phone-button">Tap to open</div>
+          </div>
+        </div>
+        <div class="floating-word">memories</div>
+      </div>
+
+      <div class="story-copy">
+        <div class="eyebrow">More than a link</div>
+        <h2>It starts with a<br><em>little feeling.</em></h2>
+        <p>
+          Luvora turns your words, photos and memories into an experience.
+          The person you love doesn't need an account — they simply open your
+          private link and discover the surprise.
+        </p>
+
+        <div class="mini-steps">
+          <div><span>01</span><strong>Choose a template</strong><small>Start with an emotion.</small></div>
+          <div><span>02</span><strong>Make it yours</strong><small>Add your memories.</small></div>
+          <div><span>03</span><strong>Send the moment</strong><small>Share one beautiful link.</small></div>
+        </div>
+      </div>
+    </section>
+
+   
+<section class="section templates" id="templates">
+
+  <div class="section-heading center-heading">
+    <div class="eyebrow">Made for emotions</div>
+
+    <h2>
+      Templates that feel<br>
+      <em>like you.</em>
+    </h2>
+
+    <p>Six beautiful ways to begin your story.</p>
+  </div>
+
+  <div class="template-showcase">
+
+    <!-- 01 -->
+    <article class="template-item template-rose">
+      <div class="template-number">01</div>
+      <div class="template-category">BIRTHDAY</div>
+
+      <div class="template-preview">
+        <span>Happy</span>
+        <strong>Birthday</strong>
+        <i>♡</i>
+      </div>
+
+      <div class="template-line"></div>
+      <h3>The Birthday Story</h3>
+    </article>
+
+
+    <!-- 02 -->
+    <article class="template-item template-peach">
+      <div class="template-number">02</div>
+      <div class="template-category">BIRTHDAY</div>
+
+      <div class="template-preview">
+        <span>Birthday</span>
+        <strong>Memories</strong>
+        <i>✦</i>
+      </div>
+
+      <div class="template-line"></div>
+      <h3>Birthday Memories</h3>
+    </article>
+
+
+    <!-- 03 -->
+    <article class="template-item template-wine">
+      <div class="template-number">03</div>
+      <div class="template-category">ANNIVERSARY</div>
+
+      <div class="template-preview">
+        <span>Our</span>
+        <strong>Journey</strong>
+        <i>∞</i>
+      </div>
+
+      <div class="template-line"></div>
+      <h3>Our Journey</h3>
+    </article>
+
+
+    <!-- 04 -->
+    <article class="template-item template-taupe">
+      <div class="template-number">04</div>
+      <div class="template-category">ANNIVERSARY</div>
+
+      <div class="template-preview">
+        <span>Through</span>
+        <strong>the Years</strong>
+        <i>◇</i>
+      </div>
+
+      <div class="template-line"></div>
+      <h3>Through the Years</h3>
+    </article>
+
+
+    <!-- 05 -->
+    <article class="template-item template-ivory">
+      <div class="template-number">05</div>
+      <div class="template-category">LOVE LETTER</div>
+
+      <div class="template-preview">
+        <span>A Letter</span>
+        <strong>from Heart</strong>
+        <i>♡</i>
+      </div>
+
+      <div class="template-line"></div>
+      <h3>A Letter from Heart</h3>
+    </article>
+
+
+    <!-- 06 -->
+    <article class="template-item template-plum">
+      <div class="template-number">06</div>
+      <div class="template-category">JUST BECAUSE</div>
+
+      <div class="template-preview">
+        <span>Just</span>
+        <strong>Because</strong>
+        <i>✦</i>
+      </div>
+
+      <div class="template-line"></div>
+      <h3>Just Because</h3>
+    </article>
+
+  </div>
+
+</section>
+
+
+    <section class="video-section">
+      <div class="video-copy">
+        <div class="eyebrow">Your memories, moving</div>
+        <h2>Add a video.<br><em>Make it real.</em></h2>
+        <p>
+          Add your favourite video to your surprise. It appears as a
+          beautiful reels-style memory card inside the experience.
+        </p>
+        <span class="coming-pill">VIDEO FEATURE · COMING IN EDITOR</span>
+      </div>
+
+      <div class="video-card-placeholder">
+        <div class="video-top"><span>YOUR VIDEO</span><span>9:16</span></div>
+        <div class="play-circle">▶</div>
+        <div class="video-bottom"><span>One moment. One memory.</span><span>♡</span></div>
+      </div>
+    </section>
+
+  <section class="pricing-section" id="pricing">
+  <div class="price-card">
+
+    <div class="price-copy">
+      <span class="price-label">A LITTLE LOVE, A SPECIAL PRICE</span>
+
+      <h2>Make their day unforgettable.</h2>
+
+      <p>
+        Create a beautiful surprise letter and share
+        your feelings with someone special.
+      </p>
+
+      <div class="price-offer">
+        <span class="old-price">₹99</span>
+        <span class="save-badge">SAVE ₹50</span>
+      </div>
+
+      <div class="price-main">
+        <span class="currency">₹</span>
+        <strong>49</strong>
+        <span class="price-once">/ one-time</span>
+      </div>
+
+      <p class="price-note">
+        One beautiful surprise. A memory to keep forever.
+      </p>
+
+      <a href="#templates" class="price-btn">
+        Create Your Surprise <span>→</span>
+      </a>
+    </div>
+
+    <div class="price-divider"></div>
+
+    <div class="price-benefits">
+      <span class="benefit-label">YOUR SURPRISE INCLUDES</span>
+
+      <div class="benefit-item">
+        <span class="benefit-check">✓</span>
+        Beautiful romantic templates
+      </div>
+
+      <div class="benefit-item">
+        <span class="benefit-check">✓</span>
+        Personalised love letter
+      </div>
+
+      <div class="benefit-item">
+        <span class="benefit-check">✓</span>
+        Add your own photos
+      </div>
+
+      <div class="benefit-item">
+        <span class="benefit-check">✓</span>
+        Shareable surprise link
+      </div>
+
+      <div class="benefit-item">
+        <span class="benefit-check">✓</span>
+        A special memory made by you
+      </div>
+
+      <div class="price-heart">♡</div>
+    </div>
+
+  </div>
+</section>
+
+    <section class="help-section section" id="help">
+      <div class="help-inner">
+        <div>
+          <div class="eyebrow"><span class="eyebrow-line"></span> We’re here for you</div>
+          <h2>Need a little<br><em>help?</em></h2>
+          <p>Have a question about creating or sharing a surprise? Reach us through any of the options below.</p>
+        </div>
+
+        <div class="help-actions">
+          <!-- Replace the placeholder contact details below with Luvora's real contacts. -->
+          <a class="help-card" href="mailto:sh8020062@gmail.com">
+            <span class="help-icon">✉</span>
+            <span><strong>Email</strong><small>sh8020062@gmail.com</small></span>
+            <b>↗</b>
+          </a>
+          <a class="help-card" href="https://wa.me/918371083186" target="_blank" rel="noopener">
+            <span class="help-icon">◌</span>
+            <span><strong>WhatsApp</strong><small>Chat with us</small></span>
+            <b>↗</b>
+          </a>
+          <a class="help-card" href="tel:+918371083186">
+            <span class="help-icon">⌕</span>
+            <span><strong>Call</strong><small>+918371083186</small></span>
+            <b>↗</b>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="final-cta" id="create">
+      <div class="final-heart">♡</div>
+      <div class="eyebrow">Some feelings deserve more</div>
+      <h2>Give them a moment<br><em>they'll never forget.</em></h2>
+      <a href="templates.html" class="primary-btn light-btn">Create Your Surprise <span>→</span></a>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-main">
+      <div>
+        <img class="brand-logo footer-logo" src="assets/icons/luvora-logo.svg" alt="Luvora" data-site-brand>
+        <p data-site-tagline>Turn Moments Into Memories.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#occasions">Occasions</a>
+       
+        <a href="#how-it-works">How It Works</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#help">Help</a>
+      </div>
+    </div>
+    <div class="footer-bottom"><span>© <span data-site-year>2026</span> <span data-site-brand>Luvora</span></span><span>Made for meaningful moments ♡</span></div>
+  </footer>
+
+  <script src="assets/js/home.js" defer></script>
+
+<script>
+  if ("scrollRestoration" in history) {
+    history.scrollRestoration = "manual";
+  }
+
+  window.addEventListener("load", () => {
+    window.scrollTo(0, 0);
+  });
+</script>
+
+
+
+
+</body>
+</html>
