@@ -2465,3 +2465,12 @@ body.occasion-modal-open {
     border-radius: 25px !important;
   }
 }
+.site-header{
+  display:flex !important;
+  align-items:center !important;
+}
+
+/* Move hero image downward */
+.hero-art{
+  transform: translateY(60px) !important;
+}
