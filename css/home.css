@@ -2307,3 +2307,131 @@ body.occasion-modal-open {
 .hero-art{
   transform: translateY(90px) !important;
 }
+
+/* =========================================================
+   LUVORA PREMIUM HAMBURGER
+   Overrides existing hamburger styling
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  .site-header .menu-toggle {
+    display: flex !important;
+
+    width: 42px !important;
+    height: 42px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    flex-shrink: 0 !important;
+
+    align-items: center !important;
+    justify-content: center !important;
+    flex-direction: column !important;
+
+    gap: 5px !important;
+
+    border: 1px solid rgba(86, 21, 42, .12) !important;
+    border-radius: 50% !important;
+
+    background: rgba(255, 250, 248, .72) !important;
+
+    box-shadow:
+      0 5px 15px rgba(74, 14, 31, .08),
+      inset 0 1px 0 rgba(255,255,255,.8) !important;
+
+    cursor: pointer !important;
+
+    -webkit-tap-highlight-color: transparent !important;
+
+    transition:
+      background .3s ease,
+      box-shadow .3s ease,
+      transform .3s ease !important;
+  }
+
+
+  /* THREE LINES */
+
+  .site-header .menu-toggle span {
+    display: block !important;
+
+    width: 17px !important;
+    height: 1.5px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    border: 0 !important;
+    border-radius: 10px !important;
+
+    background: #641f32 !important;
+
+    transform-origin: center !important;
+
+    transition:
+      transform .35s cubic-bezier(.68,-.55,.27,1.55),
+      opacity .2s ease,
+      width .3s ease,
+      background .3s ease !important;
+  }
+
+
+  /* HOVER */
+
+  .site-header .menu-toggle:hover {
+    background: #f8e7df !important;
+
+    box-shadow:
+      0 8px 22px rgba(74, 14, 31, .13),
+      inset 0 1px 0 rgba(255,255,255,.9) !important;
+
+    transform: translateY(-1px) !important;
+  }
+
+  .site-header .menu-toggle:hover span {
+    background: #711f3b !important;
+  }
+
+
+  /* TAP / ACTIVE FEEDBACK */
+
+  .site-header .menu-toggle:active {
+    transform: scale(.94) !important;
+  }
+
+
+  /* =====================================================
+     OPEN → ELEGANT X ANIMATION
+     ===================================================== */
+
+  .site-header .menu-toggle.active span:nth-child(1) {
+    transform: translateY(6.5px) rotate(45deg) !important;
+  }
+
+  .site-header .menu-toggle.active span:nth-child(2) {
+    opacity: 0 !important;
+    transform: scaleX(0) !important;
+  }
+
+  .site-header .menu-toggle.active span:nth-child(3) {
+    transform: translateY(-6.5px) rotate(-45deg) !important;
+  }
+
+
+  /* OPEN BUTTON GLOW */
+
+  .site-header .menu-toggle.active {
+    background: #f5e5e6 !important;
+
+    box-shadow:
+      0 8px 24px rgba(74, 14, 31, .15),
+      inset 0 1px 0 rgba(255,255,255,.9) !important;
+  }
+
+  .site-header .menu-toggle.active span {
+    background: #481020 !important;
+  }
+
+}
