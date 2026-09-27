@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="description"
+    content="A beautiful personalized birthday surprise filled with memories, love and little magical moments."
+  >
+
+  <title>Birthday Story — Luvora</title>
+
+  <link
+    rel="icon"
+    type="image/svg+xml"
+    href="assets/icons/favicon.svg"
+  >
+
+  <!-- Birthday page stylesheet -->
+  <link rel="stylesheet" href="css/birthday.css">
+</head>
+
+<body>
+
+  <!-- =========================================================
+       BACKGROUND EFFECT LAYERS
+       These will be animated later with CSS + JavaScript
+  ========================================================== -->
+
+  <div class="birthday-background">
+
+    <div class="background-glow glow-one"></div>
+    <div class="background-glow glow-two"></div>
+    <div class="background-glow glow-three"></div>
+
+    <div class="stars">
+      <span>✦</span>
+      <span>✧</span>
+      <span>✦</span>
+      <span>✧</span>
+      <span>✦</span>
+      <span>✧</span>
+      <span>✦</span>
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================
+       FLOATING HEARTS
+       JavaScript will create additional hearts here
+  ========================================================== -->
+
+  <div
+    class="floating-hearts"
+    id="floatingHearts"
+    aria-hidden="true">
+  </div>
+
+
+  <!-- =========================================================
+       CONFETTI
+       JavaScript will create confetti here
+  ========================================================== -->
+
+  <div
+    class="confetti-container"
+    id="confettiContainer"
+    aria-hidden="true">
+  </div>
+
+
+  <!-- =========================================================
+       MAIN BIRTHDAY EXPERIENCE
+  ========================================================== -->
+
+  <main class="birthday-story">
+
+
+    <!-- =======================================================
+         01 — OPENING / HERO
+    ======================================================== -->
+
+    <section
+      class="birthday-hero"
+      id="birthdayHero"
+    >
+
+      <div class="hero-content">
+
+        <span class="hero-eyebrow">
+          A LITTLE SURPRISE FOR
+        </span>
+
+        <!-- Customer name will appear here -->
+        <h1 class="birthday-name" id="birthdayName">
+          My Love
+        </h1>
+
+        <div class="hero-divider">
+          <span></span>
+          <i>♡</i>
+          <span></span>
+         <button
+  class="edit-surprise-button"
+  id="editSurpriseButton"
+  type="button"
+>
+  ✨ Edit This Surprise
+</button>
+        </div>
+
+        <p class="birthday-date" id="birthdayDate">
+          A very special day
+        </p>
+
+        <p class="hero-message">
+          Today isn't just another day.
+          <br>
+          Today is a celebration of
+          <em>you.</em>
+        </p>
+
+        <button
+          class="start-surprise-button"
+          id="startSurpriseButton"
+          type="button"
+        >
+          <span>Open Your Surprise</span>
+          <strong>↓</strong>
+        </button>
+
+      </div>
+
+      <div class="hero-decoration">
+
+        <div class="floating-star star-one">✦</div>
+        <div class="floating-star star-two">✧</div>
+        <div class="floating-star star-three">✦</div>
+
+        <div class="moon-decoration"></div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =======================================================
+         02 — BALLOON SURPRISE
+    ======================================================== -->
+
+    <section
+      class="birthday-section balloon-section"
+      id="balloonSection"
+    >
+
+      <div class="section-heading">
+
+        <span class="section-eyebrow">
+          SURPRISE ONE
+        </span>
+
+        <h2>
+          Pop the balloons
+          <span>🎈</span>
+        </h2>
+
+        <p>
+          Every balloon is hiding a little message
+          meant just for you.
+        </p>
+
+      </div>
+
+
+      <div
+        class="balloon-stage"
+        id="balloonStage"
+      >
+
+        <!-- Balloon 01 -->
+
+        <button
+          class="birthday-balloon balloon-pink"
+          data-message="You make my world brighter every single day. ❤️"
+          aria-label="Pop pink balloon"
+          type="button"
+        >
+
+          <span class="balloon-shine"></span>
+
+          <span class="balloon-string"></span>
+
+        </button>
+
+
+        <!-- Balloon 02 -->
+
+        <button
+          class="birthday-balloon balloon-purple"
+          data-message="Your smile is still my favourite thing in the world. ✨"
+          aria-label="Pop purple balloon"
+          type="button"
+        >
+
+          <span class="balloon-shine"></span>
+
+          <span class="balloon-string"></span>
+
+        </button>
+
+
+        <!-- Balloon 03 -->
+
+        <button
+          class="birthday-balloon balloon-gold"
+          data-message="You deserve every beautiful thing life has to offer. 🌷"
+          aria-label="Pop gold balloon"
+          type="button"
+        >
+
+          <span class="balloon-shine"></span>
+
+          <span class="balloon-string"></span>
+
+        </button>
+
+
+        <!-- Balloon 04 -->
+
+        <button
+          class="birthday-balloon balloon-blue"
+          data-message="Life feels a little sweeter because you're in it. 💕"
+          aria-label="Pop blue balloon"
+          type="button"
+        >
+
+          <span class="balloon-shine"></span>
+
+          <span class="balloon-string"></span>
+
+        </button>
+
+
+        <!-- Balloon 05 -->
+
+        <button
+          class="birthday-balloon balloon-rose"
+          data-message="If I could give you one thing, it would be the ability to see yourself through my eyes. 💗"
+          aria-label="Pop rose balloon"
+          type="button"
+        >
+
+          <span class="balloon-shine"></span>
+
+          <span class="balloon-string"></span>
+
+        </button>
+
+      </div>
+
+
+      <p class="interaction-hint">
+        ✦ Tap the balloons one by one ✦
+      </p>
+
+
+      <!-- Hidden message area -->
+
+      <div
+        class="balloon-message"
+        id="balloonMessage"
+        aria-live="polite"
+      >
+
+        <span class="message-heart">♡</span>
+
+        <p id="balloonMessageText"></p>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =======================================================
+         03 — ENVELOPE / LOVE LETTER
+    ======================================================== -->
+
+    <section
+      class="birthday-section letter-section"
+      id="letterSection"
+    >
+
+      <div class="section-heading">
+
+        <span class="section-eyebrow">
+          SURPRISE TWO
+        </span>
+
+        <h2>
+          A letter
+          <span>💌</span>
+        </h2>
+
+        <p>
+          Some feelings are too special
+          to fit inside a text message.
+        </p>
+
+      </div>
+
+
+      <div class="envelope-area">
+
+        <button
+          class="love-envelope"
+          id="loveEnvelope"
+          type="button"
+          aria-label="Open your love letter"
+        >
+
+          <div class="envelope-back"></div>
+
+          <div class="letter-paper">
+
+            <div class="letter-inner">
+
+              <span class="letter-small-title">
+                A little letter for you
+              </span>
+
+              <p>
+                To
+                <strong class="letter-recipient">
+                  My Love
+                </strong>,
+              </p>
+
+              <p>
+                Some people enter our lives and somehow
+                ordinary moments start feeling extraordinary.
+              </p>
+
+              <p>
+                You are one of those people.
+              </p>
+
+              <p>
+                On your birthday, I hope you remember
+                just how loved, appreciated and special
+                you truly are.
+              </p>
+
+              <p>
+                Keep smiling.
+                Keep dreaming.
+                Keep being beautifully you.
+              </p>
+
+              <div class="letter-signature">
+
+                <span>With all my heart,</span>
+
+                <strong>
+                  Always yours ♡
+                </strong>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="envelope-front"></div>
+
+          <div class="envelope-flap"></div>
+
+          <div class="envelope-seal">
+            ♥
+          </div>
+
+        </button>
+
+
+        <p class="envelope-hint">
+          Tap the envelope to open your letter
+        </p>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =======================================================
+         04 — PHOTO MEMORIES
+    ======================================================== -->
+
+   <section
+  class="birthday-section memories-section"
+  id="memoriesSection"
+>
+
+  <div class="section-heading">
+
+    <span class="section-eyebrow">
+      SURPRISE THREE
+    </span>
+
+    <h2>
+      Our little memories
+      <span>📖</span>
+    </h2>
+
+    <p>
+      Because the best moments deserve
+      a place to stay forever.
+    </p>
+
+  </div>
+
+
+  <!-- =====================================================
+       INTERACTIVE MEMORY BOOK
+       ===================================================== -->
+
+  <div class="memory-book-area" id="memoryBookArea">
+
+    <div class="memory-book" id="memoryBook">
+
+
+      <!-- =================================================
+           FRONT COVER
+           ================================================= -->
+
+      <div class="memory-cover" id="memoryCover">
+
+        <div class="cover-decoration cover-decoration-top">
+          ✦
+        </div>
+
+        <div class="cover-inner">
+
+          <span class="cover-eyebrow">
+            OUR STORY
+          </span>
+
+          <h3>
+            Our Little<br>
+            Memories
+          </h3>
+
+          <div class="cover-line"></div>
+
+          <p>
+            A collection of moments<br>
+            I never want to forget.
+          </p>
+
+          <div class="cover-flower">
+            ✿
+          </div>
+
+        </div>
+
+        <div class="cover-decoration cover-decoration-bottom">
+          ✧
+        </div>
+
+        <!-- Page-turn hint -->
+        <div class="memory-book-hint">
+
+          <span class="hint-arrow">
+            →
+          </span>
+
+          <span>
+            Turn the pages...
+          </span>
+
+          <small>
+            A few beautiful memories are waiting for you.
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           MEMORY PAGE 1
+           ================================================= -->
+
+      <div
+        class="memory-page memory-page-1"
+        data-page="1"
+      >
+
+        <div class="memory-page-content">
+
+          <div class="memory-photo-slot photo-slot-top">
+
+            <img
+              src="assets/images/birthday/demo-1.jpg"
+              alt="Our memory"
+            >
+
+          </div>
+
+
+          <div class="memory-quote quote-top">
+
+            <span class="quote-decoration">🌹</span>
+
+            <p>
+              “Some moments become
+              memories we keep forever.”
+            </p>
+
+          </div>
+
+
+          <div class="memory-photo-slot photo-slot-bottom">
+
+            <img
+              src="assets/images/birthday/demo-2.jpg"
+              alt="Our memory"
+            >
+
+          </div>
+
+
+          <div class="memory-quote quote-bottom">
+
+            <span class="quote-decoration">🦋</span>
+
+            <p>
+              “Happiness is hidden
+              in little moments like these.”
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="memory-page-number">
+          1 / 3
+        </div>
+
+        <button
+          type="button"
+          class="memory-next-button"
+          data-next-page="2"
+        >
+          Turn the page →
+        </button>
+
+      </div>
+
+
+      <!-- =================================================
+           MEMORY PAGE 2
+           ================================================= -->
+
+      <div
+        class="memory-page memory-page-2"
+        data-page="2"
+      >
+
+        <div class="memory-page-content">
+
+          <div class="memory-photo-slot photo-slot-top">
+
+            <img
+              src="assets/images/birthday/demo-3.jpg"
+              alt="Our memory"
+            >
+
+          </div>
+
+
+          <div class="memory-quote quote-top">
+
+            <span class="quote-decoration">🌸</span>
+
+            <p>
+              “The sweetest memories
+              are the ones made together.”
+            </p>
+
+          </div>
+
+
+          <div class="memory-photo-slot photo-slot-bottom">
+
+            <img
+              src="assets/images/birthday/demo-4.jpg"
+              alt="Our memory"
+            >
+
+          </div>
+
+
+          <div class="memory-quote quote-bottom">
+
+            <span class="quote-decoration">✦</span>
+
+            <p>
+              “Every picture holds
+              a little piece of our story.”
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="memory-page-number">
+          2 / 3
+        </div>
+
+        <button
+          type="button"
+          class="memory-next-button"
+          data-next-page="3"
+        >
+          Turn the page →
+        </button>
+
+      </div>
+
+
+      <!-- =================================================
+           MEMORY PAGE 3
+           ================================================= -->
+
+      <div
+        class="memory-page memory-page-3"
+        data-page="3"
+      >
+
+        <div class="memory-page-content">
+
+          <div class="memory-photo-slot photo-slot-top">
+
+            <img
+              src="assets/images/birthday/demo-5.jpg"
+              alt="Our memory"
+            >
+
+          </div>
+
+
+          <div class="memory-quote quote-top">
+
+            <span class="quote-decoration">🌹</span>
+
+            <p>
+              “And somehow,
+              every memory feels better
+              with you in it.”
+            </p>
+
+          </div>
+
+
+          <div class="memory-photo-slot photo-slot-bottom">
+
+            <img
+              src="assets/images/birthday/demo-6.jpg"
+              alt="Our memory"
+            >
+
+          </div>
+
+
+          <div class="memory-quote quote-bottom">
+
+            <span class="quote-decoration">🦋</span>
+
+            <p>
+              “Here’s to all the memories
+              still waiting to be made.”
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="memory-page-number">
+          3 / 3
+        </div>
+
+        <button
+          type="button"
+          class="memory-next-button memory-final-button"
+          data-next-page="4"
+        >
+          One more page... ❤️
+        </button>
+
+      </div>
+
+
+      <!-- =================================================
+           BACK COVER
+           ================================================= -->
+
+      <div
+        class="memory-back-cover"
+        id="memoryBackCover"
+      >
+
+        <div class="back-cover-inner">
+
+          <div class="back-cover-flower">
+            ✿
+          </div>
+
+          <p>
+            And this is only<br>
+            the beginning...
+          </p>
+
+          <span>
+            ❤️
+          </span>
+
+        </div>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+    <!-- =======================================================
+         05 — PERSONAL VIDEO
+    ======================================================== -->
+
+    <section
+      class="birthday-section video-section"
+      id="videoSection"
+    >
+
+      <div class="section-heading">
+
+        <span class="section-eyebrow">
+          SURPRISE FOUR
+        </span>
+
+        <h2>
+          One more thing...
+          <span>🎬</span>
+        </h2>
+
+        <p>
+          A little video made especially for this moment.
+        </p>
+
+      </div>
+
+
+      <div class="birthday-video-wrapper">
+
+<!-- DESKTOP PORTRAIT VIDEO DECORATION -->
+
+<div class="portrait-decoration portrait-decoration-left">
+  <div class="balloon-bunch">
+    <span class="decor-balloon balloon-pink"></span>
+    <span class="decor-balloon balloon-lilac"></span>
+    <span class="decor-balloon balloon-gold"></span>
+  </div>
+
+  <div class="decor-flower flower-one">✿</div>
+  <div class="decor-flower flower-two">✿</div>
+  <div class="decor-sparkle sparkle-one">✦</div>
+  <div class="decor-sparkle sparkle-two">✧</div>
+</div>
+
+<div class="portrait-decoration portrait-decoration-right">
+  <div class="balloon-bunch">
+    <span class="decor-balloon balloon-peach"></span>
+    <span class="decor-balloon balloon-blue"></span>
+    <span class="decor-balloon balloon-pink"></span>
+  </div>
+
+  <div class="decor-flower flower-one">✿</div>
+  <div class="decor-flower flower-two">✿</div>
+  <div class="decor-sparkle sparkle-one">✦</div>
+  <div class="decor-sparkle sparkle-two">✧</div>
+</div>
+
+        <div class="video-frame-decoration"></div>
+
+        <video
+          id="birthdayVideo"
+          class="birthday-video"
+          controls
+          playsinline
+          preload="metadata"
+        >
+
+          <source
+            id="birthdayVideoSource"
+            src=""
+            type="video/mp4"
+          >
+
+          Your browser does not support video playback.
+
+        </video>
+
+        <div
+          class="video-placeholder"
+          id="videoPlaceholder"
+        >
+
+          <span>▶</span>
+
+          <p>
+            Your special video will appear here.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =======================================================
+         06 — BIRTHDAY CAKE / CANDLE MOMENT
+    ======================================================== -->
+
+    <section
+      class="birthday-section cake-section"
+      id="cakeSection"
+    >
+
+      <div class="section-heading">
+
+        <span class="section-eyebrow">
+          THE BIG MOMENT
+        </span>
+
+        <h2>
+          Make a wish
+          <span>🕯️</span>
+        </h2>
+
+        <p>
+          Light the moment, close your eyes
+          and make your birthday wish.
+        </p>
+
+      </div>
+
+
+      <!-- 3D CAKE -->
+
+      <div class="cake-scene">
+
+        <div class="cake-glow"></div>
+
+
+        <div class="birthday-cake">
+
+          <!-- Candle flames -->
+
+          <div class="cake-candles">
+
+            <button
+              class="cake-candle candle-one"
+              type="button"
+              aria-label="Candle one"
+            >
+              <span class="candle-flame"></span>
+            </button>
+
+            <button
+              class="cake-candle candle-two"
+              type="button"
+              aria-label="Candle two"
+            >
+              <span class="candle-flame"></span>
+            </button>
+
+            <button
+              class="cake-candle candle-three"
+              type="button"
+              aria-label="Candle three"
+            >
+              <span class="candle-flame"></span>
+            </button>
+
+          </div>
+
+
+          <!-- Cake top -->
+
+          <div class="cake-top">
+
+            <div class="cake-icing"></div>
+
+            <span class="cake-decoration">♡</span>
+            <span class="cake-decoration">✦</span>
+            <span class="cake-decoration">♡</span>
+
+          </div>
+
+
+          <!-- Cake middle -->
+
+          <div class="cake-middle">
+
+            <div class="cake-detail detail-one"></div>
+            <div class="cake-detail detail-two"></div>
+            <div class="cake-detail detail-three"></div>
+
+          </div>
+
+
+          <!-- Cake bottom -->
+
+          <div class="cake-bottom">
+
+            <div class="cake-ribbon"></div>
+
+          </div>
+
+
+          <!-- Cake plate -->
+
+          <div class="cake-plate"></div>
+
+        </div>
+
+      </div>
+
+
+      <p class="candle-instruction">
+        ✦ Tap the candles ✦
+      </p>
+
+
+     <button
+  class="birthday-wish-button"
+  id="birthdayWishButton"
+  type="button"
+  aria-label="Open birthday gift"
+>
+  <span class="gift-box-lid">
+    <span class="gift-lid-ribbon"></span>
+  </span>
+
+  <span class="gift-box-body">
+    <span class="gift-ribbon-vertical"></span>
+    <span class="gift-ribbon-horizontal"></span>
+
+    <span class="gift-tap">
+      TAP ME
+    </span>
+  </span>
+
+  <span class="gift-sparkle sparkle-one">✦</span>
+  <span class="gift-sparkle sparkle-two">✧</span>
+  <span class="gift-sparkle sparkle-three">✦</span>
+</button>
+
+
+      <div
+        class="wish-message"
+        id="wishMessage"
+        aria-live="polite"
+      >
+
+        <span>✨</span>
+
+        <p>
+          May every beautiful wish in your heart
+          find its way to you.
+        </p>
+
+        <span>✨</span>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =======================================================
+         07 — FINAL SURPRISE
+    ======================================================== -->
+
+    <section
+      class="final-surprise"
+      id="finalSurprise"
+    >
+
+      <div class="final-sparkles">
+        <span>✦</span>
+        <span>✧</span>
+        <span>✦</span>
+        <span>✧</span>
+      </div>
+
+
+      <div class="final-content">
+
+        <span class="final-eyebrow">
+          ONE LAST THING
+        </span>
+
+        <h2>
+          Happy Birthday,
+          <br>
+
+          <span id="finalBirthdayName">
+            My Love
+          </span>
+          💖
+        </h2>
+
+
+        <div class="final-line">
+          <span></span>
+          <i>♥</i>
+          <span></span>
+        </div>
+
+
+        <p class="final-message">
+          May your new year be filled with
+          beautiful surprises, peaceful moments,
+          unforgettable memories and
+          all the love your heart can hold.
+        </p>
+
+
+        <div class="final-heart">
+          ♥
+        </div>
+
+
+        <p class="final-small-message">
+          You are someone's favourite person.
+          <br>
+          Never forget that.
+        </p>
+
+      </div>
+
+    </section>
+
+<section
+  class="customization-panel"
+  id="customizationPanel"
+>
+
+  <div class="customization-inner">
+
+    <span class="section-eyebrow">
+      MAKE IT YOURS
+    </span>
+
+    <h2>
+      Personalize Your Surprise ✨
+    </h2>
+
+    <p>
+      Replace the demo details and memories with your own.
+      You can preview everything before creating your final surprise.
+    </p>
+
+    <div class="customization-form">
+
+      <div class="form-group">
+        <label for="customerName">
+          Name
+        </label>
+
+        <input
+          type="text"
+          id="customerName"
+          placeholder="Enter their name"
+        >
+      </div>
+
+
+      <div class="form-group">
+        <label for="customerDate">
+          Special Date
+        </label>
+
+        <input
+          type="text"
+          id="customerDate"
+          placeholder="e.g. 12 October 2026"
+        >
+      </div>
+
+
+      <div class="form-group full-width">
+
+        <label for="customerPhotos">
+          Your Photos
+        </label>
+
+        <input
+          type="file"
+          id="customerPhotos"
+          accept="image/*"
+          multiple
+        >
+
+        <small>
+          Select multiple photos from your gallery.
+        </small>
+
+        <div
+          class="custom-photo-preview"
+          id="customPhotoPreview"
+        ></div>
+
+      </div>
+
+
+      <div class="form-group full-width">
+
+        <label for="customerVideo">
+          Your Video
+        </label>
+
+        <input
+          type="file"
+          id="customerVideo"
+          accept="video/*"
+        >
+
+        <small>
+          Select one birthday video.
+        </small>
+
+        <div
+          class="custom-video-name"
+          id="customVideoName"
+        ></div>
+
+      </div>
+
+    </div>
+
+
+    <div class="customization-actions">
+
+      <button
+        type="button"
+        id="previewSurpriseButton"
+      >
+        Preview Complete Surprise
+      </button>
+
+      <p
+        class="preview-status"
+        id="previewStatus"
+      >
+        ✨ Your personalized preview is ready.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<div
+  class="preview-actions"
+  id="previewActions"
+>
+
+  <button
+    type="button"
+    id="backToEditButton"
+  >
+    ← Back to Edit
+  </button>
+
+  <button
+    type="button"
+    id="previewCreateButton"
+  >
+    Generate Link →
+  </button>
+
+</div>
+
+
+<!-- =======================================================
+     FOOTER
+======================================================== -->
+
+<footer class="birthday-footer">
+
+  <p>
+    Made with
+    <span>♥</span>
+    for a very special birthday.
+  </p>
+
+  <a href="templates.html">
+    ← Back to templates
+  </a>
+
+</footer>
+
+  </main>
+
+
+  <!-- =========================================================
+       BIRTHDAY PAGE JAVASCRIPT
+  ========================================================== -->
+
+ <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/site-config.js"></script>
+<script src="templates/birthday.js"></script>
+</body>
+</html>
