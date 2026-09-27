@@ -2380,3 +2380,13 @@ body.occasion-modal-open {
   top: 12px !important;
   transform: translateX(-50%) !important;
 }
+
+/* ===== NAVBAR SCROLL OFFSET ===== */
+#occasions,
+#pricing,
+#help,
+#templates,
+#how-it-works,
+#create {
+  scroll-margin-top: 110px;
+}
