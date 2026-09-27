@@ -2187,287 +2187,81 @@ body.occasion-modal-open {
 
 
 
-/* ===== PREMIUM RESPONSIVE NAVBAR ===== */
-
-.site-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 28px;
-  position: relative;
-  z-index: 1000;
-}
-
-.site-header .nav {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(18px, 2.5vw, 38px);
-  margin-left: auto;
-}
-
-.site-header .nav a {
-  text-decoration: none;
-  white-space: nowrap;
-  transition: color 0.25s ease;
-}
-
-.site-header .nav a:hover {
-  color: #c18b9d;
-}
-
-.site-header .header-btn {
-  flex-shrink: 0;
-  white-space: nowrap;
-  text-decoration: none;
-}
-
-/* Hamburger hidden on desktop */
-.menu-toggle {
-  display: none;
-  width: 44px;
-  height: 44px;
-  padding: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 13px;
-  background: #3b1026;
-  cursor: pointer;
-  flex-shrink: 0;
-}
-
-.menu-toggle span {
-  display: block;
-  width: 21px;
-  height: 2px;
-  margin: 5px auto;
-  border-radius: 5px;
-  background: #fff5ee;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-/* Hamburger transforms into X */
-.menu-toggle.active span:nth-child(1) {
-  transform: translateY(7px) rotate(45deg);
-}
-
-.menu-toggle.active span:nth-child(2) {
-  opacity: 0;
-}
-
-.menu-toggle.active span:nth-child(3) {
-  transform: translateY(-7px) rotate(-45deg);
-}
-
-/* ===== MOBILE MENU ===== */
-@media (max-width: 768px) {
-  .site-header {
-    gap: 12px;
-  }
-
-  .site-header .brand {
-    margin-right: auto;
-  }
-
-  .site-header .header-btn {
-    font-size: 12px;
-    padding: 12px 14px;
-  }
-
-  .menu-toggle {
-    display: block;
-  }
-
-  .site-header .nav {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
-
-    position: absolute;
-    top: calc(100% + 12px);
-    left: 0;
-    right: 0;
-
-    padding: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 20px;
-
-    background: linear-gradient(
-      145deg,
-      #2b0b1b,
-      #52152f 60%,
-      #321020
-    );
-
-    box-shadow: 0 20px 50px rgba(20, 0, 10, 0.4);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transform: translateY(-10px) scale(0.98);
-    transform-origin: top center;
-
-    transition:
-      opacity 0.25s ease,
-      transform 0.25s ease,
-      visibility 0.25s ease;
-  }
-
-  .site-header .nav.open {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    transform: translateY(0) scale(1);
-  }
-
-  .site-header .nav a {
-    display: flex;
-    align-items: center;
-    min-height: 54px;
-    padding: 0 18px;
-    color: #fff3ec;
-    font-size: 15px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.09);
-  }
-
-  .site-header .nav a:last-child {
-    border-bottom: none;
-  }
-
-  .site-header .nav a:active {
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 10px;
-  }
-}
-
-/* Small phones */
-@media (max-width: 380px) {
-  .site-header {
-    gap: 8px;
-  }
-
-  .site-header .header-btn {
-    font-size: 11px;
-    padding: 10px;
-  }
-
-  .menu-toggle {
-    width: 40px;
-    height: 40px;
-  }
-}
-
-/* ===== FIXED NAVBAR OVERRIDE ===== */
-.site-header {
-  position: fixed !important;
-  top: 12px !important;
-  left: 50% !important;
-  right: auto !important;
-  margin: 0 !important;
-  transform: translateX(-50%) !important;
-  z-index: 99999 !important;
-  width: min(1240px, calc(100% - 40px)) !important;
-}
-
-/* Prevent scroll/animation rules from moving the navbar */
-.site-header,
-.site-header.scrolled,
-.site-header.hide,
-.site-header.hidden {
-  position: fixed !important;
-  top: 12px !important;
-  transform: translateX(-50%) !important;
-}
-
-/* ===== NAVBAR SCROLL OFFSET ===== */
-#occasions,
-#pricing,
-#help,
-#templates,
-#how-it-works,
-#create {
-  scroll-margin-top: 110px;
-}
-
 /* =========================================================
-   FORCE PREMIUM NAVBAR
+   FINAL LUVORA NAVBAR
    ========================================================= */
 
 .site-header{
-  width: min(1240px, calc(100% - 40px)) !important;
-  margin: 16px auto 0 !important;
+  width:min(1240px,calc(100% - 40px)) !important;
+  height:auto !important;
 
-  padding: 12px 14px 12px 22px !important;
+  margin:16px auto 0 !important;
+  padding:12px 14px 12px 22px !important;
 
-  border-radius: 32px !important;
+  position:fixed !important;
+  top:16px !important;
+  left:50% !important;
+  right:auto !important;
 
-  background: rgba(255, 250, 248, 0.94) !important;
+  transform:translateX(-50%) !important;
 
-  border: 1px solid rgba(90, 55, 65, 0.14) !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:28px !important;
+
+  border:1px solid rgba(74,14,31,.12) !important;
+  border-radius:32px !important;
+
+  background:rgba(255,250,248,.94) !important;
 
   box-shadow:
-    0 12px 35px rgba(50, 30, 40, 0.12),
-    0 2px 8px rgba(50, 30, 40, 0.06) !important;
+    0 12px 35px rgba(50,30,40,.12),
+    0 2px 8px rgba(50,30,40,.06) !important;
 
-  backdrop-filter: blur(18px) !important;
-  -webkit-backdrop-filter: blur(18px) !important;
+  backdrop-filter:blur(18px) !important;
+  -webkit-backdrop-filter:blur(18px) !important;
 
-  position: sticky !important;
-  top: 14px !important;
-
-  z-index: 9999 !important;
+  z-index:99999 !important;
 }
 
-
-/* keep navbar contents above its surface */
 .site-header > *{
-  position: relative;
-  z-index: 2;
+  position:relative;
+  z-index:2;
 }
 
+.site-header .brand{
+  flex-shrink:0;
+}
 
-/* subtle inner highlight */
-.site-header::before{
-  content: "" !important;
-  position: absolute !important;
-  inset: 0 !important;
+.site-header .nav{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:clamp(20px,2.5vw,38px) !important;
+  margin-left:auto !important;
+}
 
-  border-radius: 32px !important;
-
-  border: 1px solid rgba(255,255,255,.65);
-
-  pointer-events: none !important;
-  z-index: 1 !important;
+.site-header .header-btn{
+  flex-shrink:0 !important;
+  white-space:nowrap !important;
 }
 
 
 /* MOBILE */
-@media(max-width:600px){
+@media(max-width:768px){
 
   .site-header{
-    width: calc(100% - 24px) !important;
-    margin: 8px auto 0 !important;
-
-    padding: 9px 10px 9px 15px !important;
-
-    border-radius: 25px !important;
-
-    background: rgba(255,250,248,.96) !important;
-
-    box-shadow:
-      0 9px 28px rgba(50,30,40,.12),
-      0 2px 7px rgba(50,30,40,.06) !important;
+    width:calc(100% - 24px) !important;
+    top:8px !important;
+    padding:9px 10px 9px 15px !important;
+    border-radius:25px !important;
+    gap:12px !important;
   }
 
-  .site-header::before{
-    border-radius: 25px !important;
+  .site-header .nav{
+    display:flex !important;
   }
-}
-.site-header{
-  display:flex !important;
-  align-items:center !important;
 }
 
 /* Move hero image downward */
