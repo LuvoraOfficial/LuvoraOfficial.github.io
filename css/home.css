@@ -2392,93 +2392,76 @@ body.occasion-modal-open {
 }
 
 /* =========================================================
-   PREMIUM FLOATING NAVBAR
+   FORCE PREMIUM NAVBAR
    ========================================================= */
 
 .site-header{
-  width: min(1240px, calc(100% - 40px));
-  margin: 16px auto 0;
-  padding: 12px 14px 12px 22px;
+  width: min(1240px, calc(100% - 40px)) !important;
+  margin: 16px auto 0 !important;
 
-  border-radius: 28px;
+  padding: 12px 14px 12px 22px !important;
 
-  /* slightly different from page background */
-  background: rgba(255, 250, 248, 0.88);
+  border-radius: 32px !important;
 
-  /* premium separation */
-  border: 1px solid rgba(72, 42, 52, 0.10);
+  background: rgba(255, 250, 248, 0.94) !important;
 
-  /* floating depth */
+  border: 1px solid rgba(90, 55, 65, 0.14) !important;
+
   box-shadow:
-    0 10px 35px rgba(55, 32, 42, 0.08),
-    0 2px 8px rgba(55, 32, 42, 0.05);
+    0 12px 35px rgba(50, 30, 40, 0.12),
+    0 2px 8px rgba(50, 30, 40, 0.06) !important;
 
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px) !important;
+  -webkit-backdrop-filter: blur(18px) !important;
 
-  position: sticky;
-  top: 14px;
-  z-index: 1000;
+  position: sticky !important;
+  top: 14px !important;
 
-  transition:
-    box-shadow .3s ease,
-    background .3s ease,
-    border-color .3s ease;
+  z-index: 9999 !important;
 }
 
 
-/* subtle premium highlight */
-.site-header::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  border-radius:inherit;
-  pointer-events:none;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255,255,255,.65),
-      transparent 45%
-    );
-
-  opacity:.7;
-}
-
-
-/* stronger floating effect while scrolling */
-.site-header:hover{
-  box-shadow:
-    0 14px 42px rgba(55, 32, 42, 0.11),
-    0 3px 10px rgba(55, 32, 42, 0.06);
-}
-
-
-/* keep navbar content above the highlight */
+/* keep navbar contents above its surface */
 .site-header > *{
-  position:relative;
-  z-index:1;
+  position: relative;
+  z-index: 2;
 }
 
 
-/* =========================
-   MOBILE
-   ========================= */
+/* subtle inner highlight */
+.site-header::before{
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
 
+  border-radius: 32px !important;
+
+  border: 1px solid rgba(255,255,255,.65);
+
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+
+/* MOBILE */
 @media(max-width:600px){
 
   .site-header{
-    width:calc(100% - 24px);
-    margin-top:8px;
-    padding:9px 10px 9px 15px;
+    width: calc(100% - 24px) !important;
+    margin: 8px auto 0 !important;
 
-    border-radius:22px;
+    padding: 9px 10px 9px 15px !important;
 
-    background:rgba(255,250,248,.92);
+    border-radius: 25px !important;
+
+    background: rgba(255,250,248,.96) !important;
 
     box-shadow:
-      0 8px 25px rgba(55,32,42,.09),
-      0 2px 7px rgba(55,32,42,.05);
+      0 9px 28px rgba(50,30,40,.12),
+      0 2px 7px rgba(50,30,40,.06) !important;
   }
 
+  .site-header::before{
+    border-radius: 25px !important;
+  }
 }
