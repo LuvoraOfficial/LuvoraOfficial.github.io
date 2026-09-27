@@ -3511,3 +3511,62 @@ body.occasion-modal-open {
   }
 
 }
+/* =========================================================
+   LUVORA MARQUEE — BIGGER + SLIGHTLY LOWER
+========================================================= */
+
+.marquee{
+  margin-top:25px !important;
+  min-height:52px !important;
+  display:flex;
+  align-items:center;
+}
+
+.marquee-track{
+  padding:17px 0 !important;
+  gap:0 !important;
+}
+
+.marquee-group{
+  gap:32px !important;
+  padding:0 32px !important;
+}
+
+.marquee span{
+  font-size:12px !important;
+  letter-spacing:.18em !important;
+  font-weight:700 !important;
+}
+
+.marquee b{
+  font-size:14px !important;
+}
+
+
+/* MOBILE */
+@media (max-width:600px){
+
+  .marquee{
+    margin-top:20px !important;
+    min-height:50px !important;
+  }
+
+  .marquee-track{
+    padding:16px 0 !important;
+  }
+
+  .marquee-group{
+    gap:26px !important;
+    padding:0 26px !important;
+  }
+
+  .marquee span{
+    font-size:10px !important;
+    letter-spacing:.15em !important;
+  }
+
+  .marquee b{
+    font-size:12px !important;
+  }
+
+}
