@@ -3477,3 +3477,17 @@ body.occasion-modal-open {
     overflow:hidden !important;
   }
 }
+
+/* IMAGE + IMAGE SECTION POSITION */
+
+@media (min-width:601px) and (max-width:1200px){
+  .hero-art{
+    transform:translateY(-50px);
+  }
+}
+
+@media (max-width:600px){
+  .hero-art{
+    transform:translateY(-40px);
+  }
+}
