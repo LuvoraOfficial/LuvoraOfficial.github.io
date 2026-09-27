@@ -5425,3 +5425,768 @@ body.preview-mode .preview-actions {
   }
 
 }
+
+/* =========================================================
+   REALISTIC BIRTHDAY CAKE — FINAL OVERRIDE
+   ========================================================= */
+
+/* ---------- Cake stage ---------- */
+
+.cake-scene {
+  position: relative !important;
+  width: 100% !important;
+  min-height: 540px !important;
+
+  display: grid !important;
+  place-items: center !important;
+
+  perspective: none !important;
+  overflow: visible !important;
+
+  transform: none !important;
+}
+
+
+/* ---------- Soft romantic glow ---------- */
+
+.cake-glow {
+  position: absolute !important;
+
+  width: min(520px, 85vw) !important;
+  height: 240px !important;
+
+  left: 50% !important;
+  top: 58% !important;
+
+  transform: translate(-50%, -50%) !important;
+
+  border-radius: 50% !important;
+
+  background:
+    radial-gradient(
+      ellipse,
+      rgba(255, 185, 215, 0.24) 0%,
+      rgba(255, 145, 190, 0.10) 45%,
+      transparent 75%
+    ) !important;
+
+  filter: blur(40px) !important;
+
+  pointer-events: none !important;
+}
+
+
+/* =========================================================
+   CAKE IMAGE WRAPPER
+   ========================================================= */
+
+.birthday-cake {
+  position: relative !important;
+
+  width: min(620px, 88vw) !important;
+  height: auto !important;
+  aspect-ratio: 1 / 1 !important;
+
+  margin: 0 auto !important;
+
+  transform: none !important;
+  transform-style: flat !important;
+
+  animation: realisticCakeFloat 5s ease-in-out infinite !important;
+
+  isolation: isolate !important;
+}
+
+
+/* ---------- Actual cake image ---------- */
+
+.birthday-cake-image {
+  position: absolute !important;
+
+  inset: 0 !important;
+
+  display: block !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  object-fit: contain !important;
+
+  user-select: none !important;
+  -webkit-user-drag: none !important;
+
+  pointer-events: none !important;
+
+  z-index: 1 !important;
+}
+
+
+/* ---------- Gentle floating ---------- */
+
+@keyframes realisticCakeFloat {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+
+}
+
+
+/* =========================================================
+   OLD 3D CAKE PARTS — HIDE THEM
+   ========================================================= */
+
+.birthday-cake > .cake-top,
+.birthday-cake > .cake-middle,
+.birthday-cake > .cake-bottom,
+.birthday-cake > .cake-plate {
+  display: none !important;
+}
+
+
+/* =========================================================
+   PERSONALIZED CAKE WRITING
+   ========================================================= */
+
+.cake-personal-message {
+  position: absolute !important;
+
+  /*
+    Blank cake-top area অনুযায়ী position.
+    Image-এর সঙ্গে একই wrapper-এর ভিতরে থাকায়
+    cake move করলে writing-ও একসাথে move করবে.
+  */
+
+  left: 58% !important;
+  top: 42% !important;
+
+  transform:
+    translate(-50%, -50%)
+    rotate(-1.5deg)
+    scaleY(0.92) !important;
+
+  z-index: 5 !important;
+
+  width: 43% !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  text-align: center !important;
+
+  pointer-events: none !important;
+
+  color: #8d1727 !important;
+
+  /*
+    Slight softness যাতে flat digital text না লাগে.
+  */
+
+  text-shadow:
+    0 1px 1px rgba(255,255,255,.65),
+    0 1px 2px rgba(95,20,25,.14) !important;
+}
+
+
+.cake-message-main {
+  display: block !important;
+
+  font-family:
+    "Brush Script MT",
+    "Segoe Script",
+    cursive !important;
+
+  font-size: clamp(18px, 3vw, 31px) !important;
+
+  font-weight: 600 !important;
+
+  line-height: 1.05 !important;
+
+  white-space: nowrap !important;
+}
+
+
+.cake-message-name {
+  display: block !important;
+
+  margin-top: 3px !important;
+
+  max-width: 100% !important;
+
+  font-family:
+    "Brush Script MT",
+    "Segoe Script",
+    cursive !important;
+
+  font-size: clamp(22px, 3.7vw, 38px) !important;
+
+  font-weight: 600 !important;
+
+  line-height: 1 !important;
+
+  white-space: nowrap !important;
+
+  overflow: hidden !important;
+
+  text-overflow: ellipsis !important;
+}
+
+
+/* =========================================================
+   CANDLE INTERACTION LAYER
+   ========================================================= */
+
+.cake-candles {
+  position: absolute !important;
+
+  inset: 0 !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  display: block !important;
+
+  transform: none !important;
+
+  z-index: 20 !important;
+
+  pointer-events: none !important;
+}
+
+
+/*
+   The PNG already contains the candles.
+   So these buttons are ONLY invisible touch zones.
+*/
+
+.cake-candle {
+  position: absolute !important;
+
+  display: block !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  border: 0 !important;
+  outline: 0 !important;
+
+  background: transparent !important;
+
+  box-shadow: none !important;
+
+  cursor: pointer !important;
+
+  pointer-events: auto !important;
+
+  z-index: 21 !important;
+
+  appearance: none !important;
+
+  -webkit-appearance: none !important;
+}
+
+
+/* Remove old candle drawing */
+
+.cake-candle::before,
+.cake-candle::after {
+  display: none !important;
+
+  content: none !important;
+}
+
+
+/* =========================================================
+   3 CANDLE POSITIONS
+   Based on the supplied cake image
+   ========================================================= */
+
+
+/* LEFT CANDLE */
+
+.cake-candle.candle-one {
+  left: 58.0% !important;
+  top: 3.0% !important;
+
+  width: 6.0% !important;
+  height: 18.5% !important;
+}
+
+
+/* MIDDLE CANDLE */
+
+.cake-candle.candle-two {
+  left: 63.4% !important;
+  top: 1.0% !important;
+
+  width: 6.2% !important;
+  height: 19.5% !important;
+}
+
+
+/* RIGHT CANDLE */
+
+.cake-candle.candle-three {
+  left: 68.7% !important;
+  top: 3.0% !important;
+
+  width: 6.0% !important;
+  height: 18.5% !important;
+}
+
+
+/* =========================================================
+   REALISTIC FLAMES
+   ========================================================= */
+
+.candle-flame {
+  position: absolute !important;
+
+  left: 50% !important;
+  top: 0 !important;
+
+  width: 15px !important;
+  height: 25px !important;
+
+  transform:
+    translate(-50%, -78%)
+    rotate(2deg) !important;
+
+  transform-origin: 50% 90% !important;
+
+  border-radius:
+    55% 45% 55% 45% !important;
+
+  background:
+    radial-gradient(
+      ellipse at 50% 72%,
+      #fffbe8 0%,
+      #fff3a3 27%,
+      #ffc44d 53%,
+      #ff7b32 76%,
+      rgba(255,92,45,0.15) 100%
+    ) !important;
+
+  box-shadow:
+    0 0 5px rgba(255,180,60,.85),
+    0 0 13px rgba(255,130,40,.62),
+    0 0 24px rgba(255,90,35,.30) !important;
+
+  filter: saturate(1.05) !important;
+
+  pointer-events: none !important;
+
+  animation: candleFlameFlicker 0.8s ease-in-out infinite alternate !important;
+}
+
+
+/* Inner flame */
+
+.candle-flame::after {
+  content: "" !important;
+
+  position: absolute !important;
+
+  left: 50% !important;
+  bottom: 3px !important;
+
+  width: 6px !important;
+  height: 12px !important;
+
+  transform:
+    translateX(-50%)
+    rotate(2deg) !important;
+
+  border-radius: 50% 50% 45% 45% !important;
+
+  background:
+    radial-gradient(
+      ellipse,
+      #ffffff 0%,
+      #fff9d0 55%,
+      #ffd56a 100%
+    ) !important;
+
+  filter: blur(.2px) !important;
+}
+
+
+/* Flame movement */
+
+@keyframes candleFlameFlicker {
+
+  0% {
+    transform:
+      translate(-50%, -78%)
+      rotate(-4deg)
+      scale(0.94);
+  }
+
+  35% {
+    transform:
+      translate(-50%, -80%)
+      rotate(3deg)
+      scale(1.02);
+  }
+
+  70% {
+    transform:
+      translate(-50%, -79%)
+      rotate(-2deg)
+      scale(0.98);
+  }
+
+  100% {
+    transform:
+      translate(-50%, -82%)
+      rotate(4deg)
+      scale(1.06);
+  }
+
+}
+
+
+/* =========================================================
+   WHEN CANDLE IS BLOWN
+   ========================================================= */
+
+.cake-candle.blown .candle-flame {
+  opacity: 0 !important;
+
+  visibility: hidden !important;
+
+  animation: none !important;
+
+  transform:
+    translate(-50%, -65%)
+    scale(0.2) !important;
+
+  transition:
+    opacity .25s ease,
+    transform .35s ease !important;
+}
+
+
+/*
+   Existing JS also creates realistic smoke.
+   Keep it above the cake.
+*/
+
+.realistic-candle-smoke {
+  z-index: 9999 !important;
+  pointer-events: none !important;
+}
+
+
+/* =========================================================
+   MAGICAL REVEAL — KEEP EXISTING EFFECT
+   ========================================================= */
+
+.cake-scene.magical-reveal .birthday-cake {
+  animation:
+    realisticCakeFloat 5s ease-in-out infinite,
+    cakeMagicalPulse 1.4s ease-in-out !important;
+}
+
+
+@keyframes cakeMagicalPulse {
+
+  0% {
+    filter:
+      brightness(1)
+      drop-shadow(0 20px 35px rgba(0,0,0,.18));
+  }
+
+  45% {
+    filter:
+      brightness(1.12)
+      drop-shadow(
+        0 0 32px rgba(255,180,215,.55)
+      );
+  }
+
+  100% {
+    filter:
+      brightness(1)
+      drop-shadow(0 20px 35px rgba(0,0,0,.18));
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  .cake-scene {
+    min-height: 430px !important;
+
+    padding:
+      10px 0 20px !important;
+
+    transform: none !important;
+  }
+
+
+  .birthday-cake {
+    width: min(470px, 96vw) !important;
+
+    aspect-ratio: 1 / 1 !important;
+  }
+
+
+  .cake-glow {
+    width: 80vw !important;
+    height: 170px !important;
+  }
+
+
+  .cake-message-main {
+    font-size: clamp(15px, 4.3vw, 23px) !important;
+  }
+
+
+  .cake-message-name {
+    font-size: clamp(18px, 5vw, 27px) !important;
+  }
+
+
+  .cake-candle.candle-one {
+    left: 58.0% !important;
+    top: 3.0% !important;
+
+    width: 7.0% !important;
+    height: 18.5% !important;
+  }
+
+
+  .cake-candle.candle-two {
+    left: 63.2% !important;
+    top: 1.0% !important;
+
+    width: 7.0% !important;
+    height: 19.5% !important;
+  }
+
+
+  .cake-candle.candle-three {
+    left: 68.5% !important;
+    top: 3.0% !important;
+
+    width: 7.0% !important;
+    height: 18.5% !important;
+  }
+
+
+  .candle-flame {
+    width: 12px !important;
+    height: 21px !important;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+  .cake-scene {
+    min-height: 370px !important;
+  }
+
+
+  .birthday-cake {
+    width: 98vw !important;
+  }
+
+
+  .cake-message-main {
+    font-size: 14px !important;
+  }
+
+
+  .cake-message-name {
+    font-size: 17px !important;
+  }
+
+
+  .candle-flame {
+    width: 10px !important;
+    height: 18px !important;
+  }
+
+}
+
+/* =========================================================
+   MOBILE BALLOONS — FIXED SLOTS + PERSISTENT MESSAGES
+   Desktop balloon behaviour remains unchanged.
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+  .balloon-stage {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    align-items: stretch !important;
+    justify-items: center !important;
+    gap: 18px 12px !important;
+    min-height: 0 !important;
+    padding: 18px 6px 125px !important;
+    margin-bottom: 35px !important;
+  }
+
+  .mobile-balloon-unit {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    height: 225px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .mobile-balloon-unit:nth-child(5) {
+    grid-column: 1 / -1;
+    width: min(100%, 165px);
+  }
+
+  .mobile-balloon-unit .birthday-balloon {
+    flex: 0 0 auto;
+    margin: 0 !important;
+    z-index: 2;
+  }
+
+  .mobile-balloon-unit .balloon-string {
+    height: 150px;
+  }
+
+  .mobile-balloon-message {
+    position: absolute;
+    z-index: 5;
+    left: 50%;
+    top: 0;
+    width: min(100%, 165px);
+    padding: 10px 10px 11px;
+    border: 1px solid rgba(255, 210, 230, 0.16);
+    border-radius: 14px;
+    text-align: center;
+    background: linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.09),
+      rgba(255, 255, 255, 0.035)
+    );
+    backdrop-filter: blur(16px);
+    box-shadow:
+      0 12px 28px rgba(0, 0, 0, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.10);
+    opacity: 0;
+    transform: translate(-50%, 8px) scale(0.94);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    pointer-events: none;
+  }
+
+  .mobile-balloon-message.visible {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+
+  .mobile-balloon-message .message-heart {
+    display: block;
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  .mobile-balloon-message p {
+    margin: 5px 0 0;
+    color: rgba(255, 237, 245, 0.84);
+    font-size: 11px;
+    line-height: 1.38;
+  }
+
+  /* The old single-message card is replaced by one card per balloon. */
+  .balloon-message:not(.mobile-final-balloon-message) {
+    display: none !important;
+  }
+
+  /* Final completion message stays separate from the five saved messages. */
+  .balloon-message.mobile-final-balloon-message {
+    display: block !important;
+    width: min(310px, calc(100% - 24px));
+    padding: 13px 15px;
+    top: 100% !important;
+    left: 50% !important;
+    transform: translate(-50%, 18px) scale(0.96);
+  }
+
+  .balloon-message.mobile-final-balloon-message.visible {
+    transform: translate(-50%, 18px) scale(1);
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .mobile-balloon-unit {
+    height: 210px;
+  }
+
+  .mobile-balloon-message {
+    width: min(100%, 150px);
+    padding: 9px 8px 10px;
+  }
+
+  .mobile-balloon-message p {
+    font-size: 10.5px;
+    line-height: 1.36;
+  }
+
+}
+
+/* =========================================================
+   MOBILE MEMORY DIARY — SAME 920:650 DESKTOP RATIO
+   The book is scaled as one complete object, so its internal
+   layout/functionality does not get stretched vertically.
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+  .memory-book-area {
+    overflow: hidden;
+    padding: 12px 0;
+    margin-top: 30px;
+  }
+
+  .memory-book {
+    width: 920px;
+    height: 650px;
+    transform-origin: center center;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE MEMORY DIARY — LANDSCAPE COMPACT RATIO
+   Keep the complete diary/design/functionality unchanged;
+   only reduce its vertical dimension on mobile.
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+  .memory-book {
+    transform: scaleY(0.78) !important;
+    transform-origin: center center !important;
+  }
+
+}
