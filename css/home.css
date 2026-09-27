@@ -2460,3 +2460,187 @@ body.occasion-modal-open {
 }
 
 }
+
+/* =========================================================
+   LUVORA MOBILE NAVBAR — FINAL COMPACT
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  .site-header {
+    width: calc(100% - 24px) !important;
+
+    height: 52px !important;
+
+    min-height: 52px !important;
+
+    padding: 6px 7px 6px 14px !important;
+
+    margin: 0 !important;
+
+    top: 8px !important;
+    left: 50% !important;
+    right: auto !important;
+
+    transform: translateX(-50%) !important;
+
+    box-sizing: border-box !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+
+    gap: 0 !important;
+
+    border-radius: 24px !important;
+  }
+
+
+  /* LOGO */
+
+  .site-header .brand {
+    display: flex !important;
+    align-items: center !important;
+
+    flex-shrink: 0 !important;
+  }
+
+  .site-header .brand-logo {
+    width: 105px !important;
+    height: auto !important;
+    display: block !important;
+  }
+
+
+  /* CREATE A SURPRISE — SMALL & CUTE */
+
+  .site-header .header-btn {
+    display: inline-flex !important;
+
+    align-items: center !important;
+    justify-content: center !important;
+
+    margin-left: auto !important;
+    margin-right: 7px !important;
+
+    padding: 7px 11px !important;
+
+    min-height: 30px !important;
+
+    border-radius: 18px !important;
+
+    gap: 5px !important;
+
+    background: #641f32 !important;
+    color: #fffaf6 !important;
+
+    font-size: 8.5px !important;
+    font-weight: 700 !important;
+
+    white-space: nowrap !important;
+
+    box-shadow:
+      0 4px 10px rgba(74,14,31,.12) !important;
+  }
+
+  .site-header .header-btn span {
+    font-size: 11px !important;
+  }
+
+
+  /* HAMBURGER — ALWAYS AT THE END */
+
+  .site-header .menu-toggle {
+    display: flex !important;
+
+    width: 36px !important;
+    height: 36px !important;
+
+    min-width: 36px !important;
+    min-height: 36px !important;
+
+    flex: 0 0 36px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    align-items: center !important;
+    justify-content: center !important;
+    flex-direction: column !important;
+
+    gap: 4px !important;
+
+    box-sizing: border-box !important;
+
+    border-radius: 50% !important;
+  }
+
+
+  /* THREE LINES */
+
+  .site-header .menu-toggle span {
+    width: 16px !important;
+    height: 1.5px !important;
+
+    flex: 0 0 auto !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    border-radius: 10px !important;
+
+    background: #641f32 !important;
+  }
+
+
+  /* OPEN → X */
+
+  .site-header .menu-toggle.active span:nth-child(1) {
+    transform: translateY(5.5px) rotate(45deg) !important;
+  }
+
+  .site-header .menu-toggle.active span:nth-child(2) {
+    opacity: 0 !important;
+    transform: scaleX(0) !important;
+  }
+
+  .site-header .menu-toggle.active span:nth-child(3) {
+    transform: translateY(-5.5px) rotate(-45deg) !important;
+  }
+
+
+  /* MOBILE NAV DROPDOWN */
+
+  .site-header .nav {
+    display: none !important;
+  }
+
+  .site-header .nav.open {
+    display: flex !important;
+
+    position: absolute !important;
+
+    top: calc(100% + 7px) !important;
+    left: 0 !important;
+    right: 0 !important;
+
+    width: 100% !important;
+
+    box-sizing: border-box !important;
+
+    flex-direction: column !important;
+    align-items: center !important;
+
+    gap: 14px !important;
+
+    padding: 16px !important;
+
+    border-radius: 19px !important;
+
+    background: rgba(255,250,248,.98) !important;
+
+    box-shadow:
+      0 12px 30px rgba(50,30,40,.13) !important;
+  }
+
+}
