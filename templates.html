@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Choose a beautiful Luvora surprise template for birthdays, anniversaries, Valentine's Day and more.">
+  <title>Choose a Template — Luvora</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+  <link rel="stylesheet" href="css/templates.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <a href="index.html" class="brand" aria-label="Luvora Home">
+      <img class="brand-logo" src="assets/icons/luvora-logo.svg" alt="Luvora" data-site-brand>
+    </a>
+
+    <div class="step-indicator">
+      <span class="active">01</span>
+      <i></i>
+      <span>02</span>
+      <i></i>
+      <span>03</span>
+    </div>
+
+    <a href="index.html" class="back-link">← Home</a>
+  </header>
+
+  <main>
+    <section class="template-hero">
+      <div class="eyebrow"><span class="eyebrow-line"></span> Create your surprise</div>
+      <h1>Choose a moment.<br><em>Make it unforgettable.</em></h1>
+      <p>Start with a beautiful experience and make it yours later with your own photos, words and memories.</p>
+    </section>
+
+    <section class="template-area">
+      <div class="filter-row" aria-label="Template filters">
+        <button class="filter active" data-filter="all">All templates <span>06</span></button>
+        <button class="filter" data-filter="birthday">Birthday <span>02</span></button>
+        <button class="filter" data-filter="anniversary">Anniversary <span>02</span></button>
+        <button class="filter" data-filter="valentines">Valentine's <span>01</span></button>
+        <button class="filter" data-filter="just-because">Just Because <span>01</span></button>
+      </div>
+
+      <div class="template-grid" id="templateGrid"></div>
+
+      <div class="empty-state" id="emptyState">
+        <span>♡</span>
+        <h2>More beautiful moments are coming.</h2>
+        <p>We're preparing more experiences for every kind of love story.</p>
+      </div>
+    </section>
+
+    <section class="bottom-note">
+      <span>♡</span>
+      <div>
+        <strong>Don't worry about getting it perfect.</strong>
+        <p>You'll be able to preview and personalize everything before sharing your surprise.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div>
+      <img class="brand-logo footer-logo" src="assets/icons/luvora-logo.svg" alt="Luvora" data-site-brand>
+      <p data-site-tagline>Turn Moments Into Memories.</p>
+    </div>
+    <span>© <span data-site-year>2026</span> <span data-site-brand>Luvora</span></span>
+  </footer>
+
+  <script src="assets/js/site-config.js"></script>
+  <script src="templates/templates.js"></script>
+  <script>
+    const grid = document.getElementById("templateGrid");
+    const emptyState = document.getElementById("emptyState");
+    const filters = document.querySelectorAll(".filter");
+
+    function renderTemplates(filter = "all") {
+      const list = filter === "all"
+        ? LUVORA_TEMPLATES
+        : LUVORA_TEMPLATES.filter(t => t.occasion === filter);
+
+      grid.innerHTML = "";
+
+      list.forEach((template, index) => {
+        const card = document.createElement("article");
+card.className = "template-card";
+card.dataset.occasion = template.occasion;
+
+card.addEventListener("click", () => {
+  window.location.href =
+    template.page || `editor.html?template=${template.id}`;
+});
+
+card.setAttribute("role", "link");
+card.setAttribute("tabindex", "0");
+
+card.addEventListener("keydown", (event) => {
+  if (event.key === "Enter" || event.key === " ") {
+    event.preventDefault();
+
+    window.location.href =
+      template.page || `editor.html?template=${template.id}`;
+  }
+});
+        card.innerHTML = `
+          <div class="template-visual ${template.accent}">
+            <div class="visual-top">
+              <span>${template.number}</span>
+              <span>${occasionLabel(template.occasion)}</span>
+            </div>
+            <div class="visual-center">
+              <small>${template.subtitle}</small>
+              <div class="visual-symbol">${symbol(template.occasion)}</div>
+              <strong>${template.title}</strong>
+            </div>
+            <div class="visual-frame"></div>
+            <span class="visual-coming">PREVIEW</span>
+          </div>
+
+          <div class="template-info">
+  <div>
+    <span class="template-category">${occasionLabel(template.occasion)}</span>
+    <h2>${template.title}</h2>
+    <p>${template.description}</p>
+  </div>
+</div>
+        `;
+
+        grid.appendChild(card);
+        requestAnimationFrame(() => setTimeout(() => card.classList.add("show"), index * 70));
+      });
+
+      emptyState.classList.toggle("show", list.length === 0);
+    }
+
+    function occasionLabel(value) {
+      const labels = {
+        birthday: "Birthday",
+        anniversary: "Anniversary",
+        valentines: "Valentine's",
+        "just-because": "Just Because"
+      };
+      return labels[value] || value;
+    }
+
+    function symbol(value) {
+      const symbols = {
+        birthday: "♡",
+        anniversary: "∞",
+        valentines: "♥",
+        "just-because": "✦"
+      };
+      return symbols[value] || "♡";
+    }
+
+    filters.forEach(button => {
+      button.addEventListener("click", () => {
+        filters.forEach(b => b.classList.remove("active"));
+        button.classList.add("active");
+        renderTemplates(button.dataset.filter);
+      });
+    });
+
+    const initialFilter = new URLSearchParams(window.location.search).get("occasion") || "all";
+    const initialButton = document.querySelector(`.filter[data-filter="${initialFilter}"]`);
+    if (initialButton) {
+      filters.forEach(b => b.classList.remove("active"));
+      initialButton.classList.add("active");
+    }
+    renderTemplates(initialButton ? initialFilter : "all");
+  </script>
+</body>
+</html>
