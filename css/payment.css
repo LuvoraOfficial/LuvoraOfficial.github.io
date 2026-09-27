@@ -509,3 +509,22 @@ body {
   }
 
 }
+
+.price {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.old-price {
+  font-size: 20px;
+  color: #9a8e89;
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+}
+
+.current-price {
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--primary);
+}
