@@ -2390,3 +2390,95 @@ body.occasion-modal-open {
 #create {
   scroll-margin-top: 110px;
 }
+
+/* =========================================================
+   PREMIUM FLOATING NAVBAR
+   ========================================================= */
+
+.site-header{
+  width: min(1240px, calc(100% - 40px));
+  margin: 16px auto 0;
+  padding: 12px 14px 12px 22px;
+
+  border-radius: 28px;
+
+  /* slightly different from page background */
+  background: rgba(255, 250, 248, 0.88);
+
+  /* premium separation */
+  border: 1px solid rgba(72, 42, 52, 0.10);
+
+  /* floating depth */
+  box-shadow:
+    0 10px 35px rgba(55, 32, 42, 0.08),
+    0 2px 8px rgba(55, 32, 42, 0.05);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  position: sticky;
+  top: 14px;
+  z-index: 1000;
+
+  transition:
+    box-shadow .3s ease,
+    background .3s ease,
+    border-color .3s ease;
+}
+
+
+/* subtle premium highlight */
+.site-header::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  pointer-events:none;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,.65),
+      transparent 45%
+    );
+
+  opacity:.7;
+}
+
+
+/* stronger floating effect while scrolling */
+.site-header:hover{
+  box-shadow:
+    0 14px 42px rgba(55, 32, 42, 0.11),
+    0 3px 10px rgba(55, 32, 42, 0.06);
+}
+
+
+/* keep navbar content above the highlight */
+.site-header > *{
+  position:relative;
+  z-index:1;
+}
+
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media(max-width:600px){
+
+  .site-header{
+    width:calc(100% - 24px);
+    margin-top:8px;
+    padding:9px 10px 9px 15px;
+
+    border-radius:22px;
+
+    background:rgba(255,250,248,.92);
+
+    box-shadow:
+      0 8px 25px rgba(55,32,42,.09),
+      0 2px 7px rgba(55,32,42,.05);
+  }
+
+}
