@@ -2279,21 +2279,7 @@ body.occasion-modal-open {
     display:block !important;
   }
 
-  /* Hamburger */
-  .site-header .menu-toggle{
-    display:flex !important;
-    width:42px !important;
-    height:42px !important;
-    margin:0 !important;
-    padding:0 !important;
-
-    align-items:center !important;
-    justify-content:center !important;
-    flex-direction:column !important;
-    gap:4px !important;
-
-    flex-shrink:0 !important;
-  }
+ 
 
   /* Menu closed */
   .site-header .nav{
