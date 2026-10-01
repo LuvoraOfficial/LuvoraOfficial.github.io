@@ -386,6 +386,37 @@ if (balloonStage && balloonMessage) {
   balloonStage.appendChild(balloonMessage);
 }
 
+/* =========================================================
+   MOBILE BALLOON LAYOUT
+   Each balloon gets its own fixed slot so popping one
+   never moves or replaces another balloon's message.
+   Desktop keeps the original single-message system.
+   ========================================================= */
+
+function setupMobileBalloonLayout() {
+
+  if (!balloonStage || window.innerWidth > 800) {
+    return;
+  }
+
+  balloons.forEach((balloon, index) => {
+
+    if (balloon.parentElement?.classList.contains("mobile-balloon-unit")) {
+      return;
+    }
+
+    const unit = document.createElement("div");
+    unit.className = "mobile-balloon-unit";
+    unit.dataset.balloonIndex = String(index);
+
+    balloon.parentNode.insertBefore(unit, balloon);
+    unit.appendChild(balloon);
+
+  });
+}
+
+setupMobileBalloonLayout();
+
 balloons.forEach((balloon, index) => {
 
   balloon.addEventListener("click", () => {
@@ -401,18 +432,50 @@ balloons.forEach((balloon, index) => {
       BIRTHDAY_CONFIG.balloonMessages[index] ||
       "You are incredibly special. ❤️";
 
-    if (balloonMessageText) {
-      balloonMessageText.textContent = message;
-    }
+    /* =====================================================
+       MOBILE — KEEP EVERY POPPED MESSAGE
+       ===================================================== */
 
-    /*
-     * Place the message directly above
-     * the balloon that was popped.
-     */
-    if (balloonStage && balloonMessage) {
+    if (window.innerWidth <= 800) {
 
-      const balloonRect =
-        balloon.getBoundingClientRect();
+      const unit =
+        balloon.closest(".mobile-balloon-unit");
+
+      if (unit && !unit.querySelector(".mobile-balloon-message")) {
+
+        const messageCard = document.createElement("div");
+        messageCard.className = "mobile-balloon-message";
+        messageCard.setAttribute("aria-live", "polite");
+
+        const heart = document.createElement("span");
+        heart.className = "message-heart";
+        heart.textContent = "♡";
+
+        const text = document.createElement("p");
+        text.textContent = message;
+
+        messageCard.appendChild(heart);
+        messageCard.appendChild(text);
+        unit.appendChild(messageCard);
+
+        requestAnimationFrame(() => {
+          messageCard.classList.add("visible");
+        });
+      }
+
+    } else {
+
+      if (balloonMessageText) {
+        balloonMessageText.textContent = message;
+      }
+
+      /*
+       * Desktop keeps the original single-message behaviour.
+       */
+      if (balloonStage && balloonMessage) {
+
+        const balloonRect =
+          balloon.getBoundingClientRect();
 
       const stageRect =
         balloonStage.getBoundingClientRect();
@@ -430,19 +493,20 @@ balloons.forEach((balloon, index) => {
       balloonMessage.style.left =
         `${messageLeft}px`;
 
-      balloonMessage.style.top =
-        `${Math.max(20, messageTop)}px`;
+        balloonMessage.style.top =
+          `${Math.max(20, messageTop)}px`;
+      }
+
+      if (balloonMessage) {
+        balloonMessage.classList.remove("visible");
+
+        requestAnimationFrame(() => {
+          balloonMessage.classList.add("visible");
+        });
+      }
     }
 
     balloon.classList.add("popped");
-
-    if (balloonMessage) {
-      balloonMessage.classList.remove("visible");
-
-      requestAnimationFrame(() => {
-        balloonMessage.classList.add("visible");
-      });
-    }
 
     createFloatingHearts(3);
     createMiniConfetti(12);
@@ -467,6 +531,12 @@ balloons.forEach((balloon, index) => {
           }
 
           if (balloonMessage) {
+            if (window.innerWidth <= 800) {
+              balloonMessage.classList.add("mobile-final-balloon-message");
+              balloonMessage.style.left = "50%";
+              balloonMessage.style.top = "100%";
+            }
+
             balloonMessage.classList.add("visible");
           }
 
@@ -641,6 +711,44 @@ function initMemoryBook() {
      ======================================================= */
 
   let currentPage = 0;
+
+  /* =======================================================
+     MOBILE DIARY SCALE
+     Keep the complete diary interaction/layout intact.
+     On mobile only, compress the visual height to create
+     a wider landscape presentation. Desktop is untouched.
+     ======================================================= */
+
+  function updateMobileMemoryBookScale() {
+
+    if (window.innerWidth <= 800) {
+
+      const availableWidth =
+        Math.max(300, window.innerWidth - 24);
+
+      const scale =
+        Math.min(1, availableWidth / 920);
+
+      book.style.zoom = String(scale);
+
+      bookArea.style.minHeight =
+        `${650 * scale * 0.8 + 24}px`;
+
+    } else {
+
+      book.style.zoom = "";
+      bookArea.style.minHeight = "";
+
+    }
+  }
+
+  updateMobileMemoryBookScale();
+
+  window.addEventListener(
+    "resize",
+    updateMobileMemoryBookScale,
+    { passive: true }
+  );
 
 
   /* =======================================================
@@ -2241,6 +2349,10 @@ document.body.classList.remove("preview-mode");
   });
 }
 
+/* =========================================================
+   CREATE SURPRISE → SAVE DATA → PAYMENT
+   ========================================================= */
+
 const createSurpriseButton =
   document.getElementById("previewCreateButton");
 
@@ -2248,7 +2360,13 @@ if (createSurpriseButton) {
 
   createSurpriseButton.addEventListener(
     "click",
-    () => {
+    async (event) => {
+
+      event.preventDefault();
+
+      /* =================================================
+         GET CUSTOMER INFORMATION
+         ================================================= */
 
       const name =
         customerName
@@ -2259,7 +2377,6 @@ if (createSurpriseButton) {
         customerDate
           ? customerDate.value
           : "";
-
 
       /* =================================================
          CREATE TEMPORARY DRAFT ID
@@ -2273,9 +2390,8 @@ if (createSurpriseButton) {
           .toString(36)
           .substring(2, 10);
 
-
       /* =================================================
-         SAVE CUSTOMIZATION DATA
+         CREATE SURPRISE DATA
          ================================================= */
 
       const surpriseData = {
@@ -2298,14 +2414,54 @@ if (createSurpriseButton) {
 
       };
 
+      /* =================================================
+         SERIALIZE DATA
+         ================================================= */
+
+      const serializedData =
+        JSON.stringify(
+          surpriseData
+        );
+
+      /* =================================================
+         SAVE TO SESSION STORAGE
+         ================================================= */
 
       sessionStorage.setItem(
         "luvoraSurpriseData",
-        JSON.stringify(
-          surpriseData
-        )
+        serializedData
       );
 
+      /* =================================================
+         BACKUP COPY
+         ================================================= */
+
+      localStorage.setItem(
+        "luvoraSurpriseData",
+        serializedData
+      );
+
+      /* =================================================
+         VERIFY DATA WAS SAVED
+         ================================================= */
+
+      const savedData =
+        sessionStorage.getItem(
+          "luvoraSurpriseData"
+        ) ||
+        localStorage.getItem(
+          "luvoraSurpriseData"
+        );
+
+      if (!savedData) {
+
+        alert(
+          "Your surprise information could not be saved. Please try again."
+        );
+
+        return;
+
+      }
 
       /* =================================================
          CONTINUE TO PAYMENT
@@ -2317,8 +2473,7 @@ if (createSurpriseButton) {
     }
   );
 
-}}
-
+}
 
  function initializeBirthdayExperience() {
   loadCustomerDataFromURL();
