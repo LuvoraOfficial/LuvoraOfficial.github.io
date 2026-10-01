@@ -118,9 +118,16 @@
   </main>
 
 
-  <script src="templates/payment.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
- <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script> 
+<script>
+window.SUPABASE_CONFIG = {
+  url: "https://yyxcoojwjihimfhnjkhg.supabase.co/rest/v1/",
+  publishableKey: "sb_publishable_mz1iukZ_LByi-5YK82fhKw_FxcnX1X7"
+};
+</script>
+
+<script src="templates/payment.js"></script>
 
 </body>
 
