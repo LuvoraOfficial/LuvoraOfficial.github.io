@@ -2474,6 +2474,7 @@ if (createSurpriseButton) {
   );
 
 }
+    }
 
  function initializeBirthdayExperience() {
   loadCustomerDataFromURL();
