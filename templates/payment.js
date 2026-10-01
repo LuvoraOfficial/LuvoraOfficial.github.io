@@ -88,9 +88,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let surpriseData = null;
 
-  const savedData =
-    sessionStorage.getItem("luvoraSurpriseData");
-
+const savedData =
+  sessionStorage.getItem("luvoraSurpriseData") ||
+  localStorage.getItem("luvoraSurpriseData");
+   
   if (savedData) {
 
     try {
