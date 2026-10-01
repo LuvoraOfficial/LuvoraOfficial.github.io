@@ -231,28 +231,10 @@ checkSavedMedia();
            Your website is already connected to Supabase.
         ------------------------------------------------- */
 
-        let client = window.luvoraSupabaseClient;
-
-        if (!client) {
-
-          if (
-            typeof supabase === "undefined" ||
-            !window.SUPABASE_CONFIG
-          ) {
-
-            throw new Error(
-              "Supabase connection is not available."
-            );
-
-          }
-
-
-          client = supabase.createClient(
-            window.SUPABASE_CONFIG.url,
-            window.SUPABASE_CONFIG.publishableKey
-          );
-
-        }
+       const client = supabase.createClient(
+  window.SUPABASE_CONFIG.url,
+  window.SUPABASE_CONFIG.publishableKey
+);
 
 
         /* -------------------------------------------------
