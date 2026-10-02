@@ -1778,6 +1778,7 @@ function setupCustomizationSystem() {
 
   const customerName = document.getElementById("customerName");
   const customerDate = document.getElementById("customerDate");
+  const customerPhone = document.getElementById("customerPhone");
   const customerPhotos = document.getElementById("customerPhotos");
   const customerVideo = document.getElementById("customerVideo");
 
@@ -2378,14 +2379,36 @@ if (createSurpriseButton) {
           ? customerDate.value
           : "";
 
-       if (!name) {
+       const phone =
+        customerPhone
+             ? customerPhone.value.trim()
+             : "";
+       
+
+if (!name) {
+
   alert("Please enter a name.");
+
   return;
+
 }
 
 if (!date) {
+
   alert("Please select the special date.");
+
   return;
+
+}
+
+if (!/^[6-9]\d{9}$/.test(phone)) {
+
+  alert(
+    "Please enter a valid 10-digit mobile number."
+  );
+
+  return;
+
 }
 
       /* =================================================
@@ -2403,25 +2426,26 @@ if (!date) {
       /* =================================================
          CREATE SURPRISE DATA
          ================================================= */
+const surpriseData = {
 
-      const surpriseData = {
+  draftId: draftId,
 
-        draftId: draftId,
+  template:
+    "birthday-story",
 
-        template:
-          "birthday-story",
+  name:
+    name,
 
-        name:
-           name,
+  date:
+    date,
 
-        date:
-         date,
+  phone:
+    phone,
 
-        mediaStorage:
-          "indexeddb"
+  mediaStorage:
+    "indexeddb"
 
-      };
-
+};
       /* =================================================
          SERIALIZE DATA
          ================================================= */
