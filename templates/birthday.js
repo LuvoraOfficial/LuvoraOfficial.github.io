@@ -54,7 +54,7 @@ const BIRTHDAY_CONFIG = {
 
   name: "My Love",
 
-  date: "A very special day",
+  date: "",
 
   /* Balloon messages */
 
@@ -2378,6 +2378,16 @@ if (createSurpriseButton) {
           ? customerDate.value
           : "";
 
+       if (!name) {
+  alert("Please enter a name.");
+  return;
+}
+
+if (!date) {
+  alert("Please select the special date.");
+  return;
+}
+
       /* =================================================
          CREATE TEMPORARY DRAFT ID
          ================================================= */
@@ -2402,12 +2412,10 @@ if (createSurpriseButton) {
           "birthday-story",
 
         name:
-          name ||
-          BIRTHDAY_CONFIG.name,
+           name,
 
         date:
-          date ||
-          BIRTHDAY_CONFIG.date,
+         date,
 
         mediaStorage:
           "indexeddb"
