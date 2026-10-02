@@ -2303,7 +2303,7 @@ body.occasion-modal-open {
 }
 /* Move hero image downward */
 .hero-art{
-  transform: translateY(90px) !important;
+  transform: translateY(110px) !important;
 }
 
 /* =========================================================
