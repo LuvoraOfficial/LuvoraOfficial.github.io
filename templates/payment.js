@@ -250,6 +250,9 @@ checkSavedMedia();
           birthday_date:
             surpriseData.date || "",
 
+          phone:
+            surpriseData.phone || "",
+           
           template:
             surpriseData.template ||
             "birthday-story",
