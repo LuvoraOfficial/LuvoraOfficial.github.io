@@ -3227,3 +3227,103 @@ body.occasion-modal-open {
     }
 }
 
+/* =========================================================
+   FINAL HERO IMAGE CONTAINER FIX
+   ========================================================= */
+
+/* Keep image container exactly as tall as the image */
+.hero-art {
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+}
+
+.hero-reference {
+    width: 100% !important;
+    height: auto !important;
+    display: block !important;
+}
+
+
+/* =========================================================
+   LAPTOP / DESKTOP
+   ========================================================= */
+
+@media (min-width: 601px) {
+
+    .hero-stage {
+        height: auto !important;
+        min-height: 0 !important;
+        overflow: visible !important;
+        align-items: flex-start !important;
+    }
+
+    .hero-art {
+        height: auto !important;
+        min-height: 0 !important;
+        overflow: visible !important;
+    }
+
+    .hero-reference {
+        height: auto !important;
+    }
+
+    /* More space for the marquee */
+    .marquee {
+        min-height: 68px !important;
+        margin-top: 55px !important;
+    }
+
+    .marquee-track {
+        padding-top: 22px !important;
+        padding-bottom: 22px !important;
+    }
+}
+
+
+/* =========================================================
+   PHONE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .hero-stage {
+        height: auto !important;
+        min-height: 0 !important;
+        overflow: visible !important;
+    }
+
+    .hero-art {
+        height: auto !important;
+        min-height: 0 !important;
+        overflow: visible !important;
+
+        /* Keep the container tied to image height */
+        display: block !important;
+    }
+
+    .hero-reference {
+        width: 100% !important;
+        height: auto !important;
+        display: block !important;
+    }
+
+    /* Petals stay exactly within image height */
+    .hero-art > .petal-layer {
+        top: 0 !important;
+        bottom: auto !important;
+
+        height: 100% !important;
+        max-height: 100% !important;
+        overflow: hidden !important;
+    }
+
+    .marquee {
+        min-height: 50px !important;
+    }
+
+    .marquee-track {
+        padding-top: 16px !important;
+        padding-bottom: 16px !important;
+    }
+}
