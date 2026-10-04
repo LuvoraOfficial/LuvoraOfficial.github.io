@@ -2845,7 +2845,7 @@ body.occasion-modal-open {
 @media (max-width: 600px) {
 
   .marquee {
-    margin-top: 35px !important;
+    margin-top: 55px !important;
     min-height: 50px !important;
   }
 
@@ -2866,4 +2866,9 @@ body.occasion-modal-open {
   .marquee b {
     font-size: 12px !important;
   }
+}
+/* LUVORA — MOVE MARQUEE DOWN */
+.marquee {
+  position: relative !important;
+  top: 35px !important;
 }
