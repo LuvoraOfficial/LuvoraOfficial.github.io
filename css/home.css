@@ -3485,7 +3485,7 @@ body.occasion-modal-open {
   .hero-art{
     transform: translate(
       0px,      /* LEFT / RIGHT */
-      -70px     /* UP / DOWN */
+      -50px     /* UP / DOWN */
     ) !important;
   }
 
@@ -3516,7 +3516,7 @@ body.occasion-modal-open {
 ========================================================= */
 
 .marquee{
-  margin-top:40px !important;
+  margin-top:60px !important;
   min-height:52px !important;
   display:flex;
   align-items:center;
@@ -3547,7 +3547,7 @@ body.occasion-modal-open {
 @media (max-width:600px){
 
   .marquee{
-    margin-top:35px !important;
+    margin-top:45px !important;
     min-height:50px !important;
   }
 
