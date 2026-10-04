@@ -948,7 +948,7 @@ body{background-color:#F1E8DB;color:#241D1A}
   align-items:flex-start;
 }
 
-.hero-copy{
+..hero-copy{
   max-width:560px;
   padding-right:24px;
   position:relative;
@@ -1905,7 +1905,7 @@ html {
   align-items: flex-start;
   width: 100%;
   min-height: 350px;
-  padding: 25px;
+  padding: 15px;
   overflow: hidden;
   border: 1px solid rgba(255,255,255,.25);
   border-radius: 24px;
@@ -2187,744 +2187,387 @@ body.occasion-modal-open {
 
 
 
-/* =========================================================
-   FINAL LUVORA NAVBAR
-   ========================================================= */
+/* ===== PREMIUM RESPONSIVE NAVBAR ===== */
 
-.site-header{
-  width:min(1240px,calc(100% - 40px)) !important;
-  height:auto !important;
-
-  margin:16px auto 0 !important;
-  padding:12px 14px 12px 22px !important;
-
-  position:fixed !important;
-  top:16px !important;
-  left:50% !important;
-  right:auto !important;
-
-  transform:translateX(-50%) !important;
-
-  display:flex !important;
-  align-items:center !important;
-  justify-content:space-between !important;
-  gap:28px !important;
-
-  border:1px solid rgba(74,14,31,.12) !important;
-  border-radius:32px !important;
-
-  background:rgba(255,250,248,.94) !important;
-
-  box-shadow:
-    0 12px 35px rgba(50,30,40,.12),
-    0 2px 8px rgba(50,30,40,.06) !important;
-
-  backdrop-filter:blur(18px) !important;
-  -webkit-backdrop-filter:blur(18px) !important;
-
-  z-index:99999 !important;
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  position: relative;
+  z-index: 1000;
 }
 
-.site-header > *{
-  position:relative;
-  z-index:2;
+.site-header .nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(18px, 2.5vw, 38px);
+  margin-left: auto;
 }
 
-.site-header .brand{
-  flex-shrink:0;
+.site-header .nav a {
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.25s ease;
 }
 
-.site-header .nav{
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  gap:clamp(20px,2.5vw,38px) !important;
-  margin-left:auto !important;
+.site-header .nav a:hover {
+  color: #c18b9d;
 }
 
-.site-header .header-btn{
-  flex-shrink:0 !important;
-  white-space:nowrap !important;
+.site-header .header-btn {
+  flex-shrink: 0;
+  white-space: nowrap;
+  text-decoration: none;
 }
 
-
-/* ===== FINAL MOBILE NAVBAR CENTER FIX ===== */
-/* ===== MOBILE NAVBAR POSITION ONLY ===== */
-@media (max-width:768px){
-
-  .site-header{
-    position:fixed !important;
-    top:8px !important;
-    left:50% !important;
-    right:auto !important;
-
-    width:calc(100% - 24px) !important;
-    margin:0 !important;
-
-    transform:translateX(-50%) !important;
-    box-sizing:border-box !important;
-
-    z-index:999999 !important;
-  }
-
-  .site-header .brand-logo{
-    width:115px !important;
-    height:auto !important;
-  }
-
-  /* Existing hamburger CSS/design untouched */
-
-  .site-header .nav{
-    display:none !important;
-  }
-
-  .site-header .nav.open{
-    display:flex !important;
-    position:absolute !important;
-
-    top:calc(100% + 8px) !important;
-    left:0 !important;
-    right:0 !important;
-    width:100% !important;
-
-    flex-direction:column !important;
-    align-items:center !important;
-    gap:16px !important;
-
-    padding:18px !important;
-    box-sizing:border-box !important;
-
-    border-radius:20px !important;
-    background:rgba(255,250,248,.97) !important;
-    box-shadow:0 12px 30px rgba(50,30,40,.12) !important;
-  }
-
- 
-}
-/* Move hero image downward */
-.hero-art{
-  transform: translateY(110px) !important;
+/* Hamburger hidden on desktop */
+.menu-toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 13px;
+  background: #3b1026;
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
-/* =========================================================
-   LUVORA PREMIUM HAMBURGER
-   Overrides existing hamburger styling
-   ========================================================= */
+.menu-toggle span {
+  display: block;
+  width: 21px;
+  height: 2px;
+  margin: 5px auto;
+  border-radius: 5px;
+  background: #fff5ee;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
 
+/* Hamburger transforms into X */
+.menu-toggle.active span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ===== MOBILE MENU ===== */
 @media (max-width: 768px) {
-
-  .site-header .menu-toggle {
-    display: flex !important;
-
-    width: 42px !important;
-    height: 42px !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-
-    flex-shrink: 0 !important;
-
-    align-items: center !important;
-    justify-content: center !important;
-    flex-direction: column !important;
-
-    gap: 5px !important;
-
-    border: 1px solid rgba(86, 21, 42, .12) !important;
-    border-radius: 50% !important;
-
-    background: rgba(255, 250, 248, .72) !important;
-
-    box-shadow:
-      0 5px 15px rgba(74, 14, 31, .08),
-      inset 0 1px 0 rgba(255,255,255,.8) !important;
-
-    cursor: pointer !important;
-
-    -webkit-tap-highlight-color: transparent !important;
-
-    transition:
-      background .3s ease,
-      box-shadow .3s ease,
-      transform .3s ease !important;
-  }
-
-
-  /* THREE LINES */
-
-  .site-header .menu-toggle span {
-    display: block !important;
-
-    width: 17px !important;
-    height: 1.5px !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-
-    border: 0 !important;
-    border-radius: 10px !important;
-
-    background: #641f32 !important;
-
-    transform-origin: center !important;
-
-    transition:
-      transform .35s cubic-bezier(.68,-.55,.27,1.55),
-      opacity .2s ease,
-      width .3s ease,
-      background .3s ease !important;
-  }
-
-
-  /* HOVER */
-
-  .site-header .menu-toggle:hover {
-    background: #f8e7df !important;
-
-    box-shadow:
-      0 8px 22px rgba(74, 14, 31, .13),
-      inset 0 1px 0 rgba(255,255,255,.9) !important;
-
-    transform: translateY(-1px) !important;
-  }
-
-  .site-header .menu-toggle:hover span {
-    background: #711f3b !important;
-  }
-
-
-  /* TAP / ACTIVE FEEDBACK */
-
-  .site-header .menu-toggle:active {
-    transform: scale(.94) !important;
-  }
-
-
-  /* =====================================================
-     OPEN → ELEGANT X ANIMATION
-     ===================================================== */
-
-  .site-header .menu-toggle.active span:nth-child(1) {
-    transform: translateY(6.5px) rotate(45deg) !important;
-  }
-
-  .site-header .menu-toggle.active span:nth-child(2) {
-    opacity: 0 !important;
-    transform: scaleX(0) !important;
-  }
-
-  .site-header .menu-toggle.active span:nth-child(3) {
-    transform: translateY(-6.5px) rotate(-45deg) !important;
-  }
-
-
-  /* OPEN BUTTON GLOW */
-
-  .site-header .menu-toggle.active {
-    background: #f5e5e6 !important;
-
-    box-shadow:
-      0 8px 24px rgba(74, 14, 31, .15),
-      inset 0 1px 0 rgba(255,255,255,.9) !important;
-  }
-
-  .site-header .menu-toggle.active span {
-    background: #481020 !important;
-  }
-
-  @media (max-width:768px){
-
-  .site-header{
-    display:flex !important;
-    align-items:center !important;
-    justify-content:flex-start !important;
-  }
-
-  .site-header .brand{
-    flex-shrink:0 !important;
-  }
-
-  .site-header .header-btn{
-    display:inline-flex !important;
-    margin-left:auto !important;
-    margin-right:10px !important;
-    white-space:nowrap !important;
-  }
-
-  .site-header .menu-toggle{
-    flex-shrink:0 !important;
-    margin-left:0 !important;
-    margin-right:0 !important;
-  }
-
-}
-
-}
-
-/* =========================================================
-   LUVORA MOBILE NAVBAR — FINAL COMPACT
-   ========================================================= */
-
-@media (max-width: 768px) {
-
   .site-header {
-    width: calc(100% - 24px) !important;
-
-    height: 52px !important;
-
-    min-height: 52px !important;
-
-    padding: 6px 7px 6px 14px !important;
-
-    margin: 0 !important;
-
-    top: 8px !important;
-    left: 50% !important;
-    right: auto !important;
-
-    transform: translateX(-50%) !important;
-
-    box-sizing: border-box !important;
-
-    display: flex !important;
-    align-items: center !important;
-    justify-content: flex-start !important;
-
-    gap: 0 !important;
-
-    border-radius: 24px !important;
+    gap: 12px;
   }
-
-
-  /* LOGO */
 
   .site-header .brand {
-    display: flex !important;
-    align-items: center !important;
-
-    flex-shrink: 0 !important;
+    margin-right: auto;
   }
-
-  .site-header .brand-logo {
-    width: 105px !important;
-    height: auto !important;
-    display: block !important;
-  }
-
-
-  /* CREATE A SURPRISE — SMALL & CUTE */
 
   .site-header .header-btn {
-    display: inline-flex !important;
-
-    align-items: center !important;
-    justify-content: center !important;
-
-    margin-left: auto !important;
-    margin-right: 7px !important;
-
-    padding: 7px 11px !important;
-
-    min-height: 30px !important;
-
-    border-radius: 18px !important;
-
-    gap: 5px !important;
-
-    background: #641f32 !important;
-    color: #fffaf6 !important;
-
-    font-size: 8.5px !important;
-    font-weight: 700 !important;
-
-    white-space: nowrap !important;
-
-    box-shadow:
-      0 4px 10px rgba(74,14,31,.12) !important;
+    font-size: 12px;
+    padding: 12px 14px;
   }
 
-  .site-header .header-btn span {
-    font-size: 11px !important;
+  .menu-toggle {
+    display: block;
   }
-
-
-  /* HAMBURGER — ALWAYS AT THE END */
-
-  .site-header .menu-toggle {
-    display: flex !important;
-
-    width: 36px !important;
-    height: 36px !important;
-
-    min-width: 36px !important;
-    min-height: 36px !important;
-
-    flex: 0 0 36px !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-
-    align-items: center !important;
-    justify-content: center !important;
-    flex-direction: column !important;
-
-    gap: 4px !important;
-
-    box-sizing: border-box !important;
-
-    border-radius: 50% !important;
-  }
-
-
-  /* THREE LINES */
-
-  .site-header .menu-toggle span {
-    width: 16px !important;
-    height: 1.5px !important;
-
-    flex: 0 0 auto !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-
-    border-radius: 10px !important;
-
-    background: #641f32 !important;
-  }
-
-
-  /* OPEN → X */
-
-  .site-header .menu-toggle.active span:nth-child(1) {
-    transform: translateY(5.5px) rotate(45deg) !important;
-  }
-
-  .site-header .menu-toggle.active span:nth-child(2) {
-    opacity: 0 !important;
-    transform: scaleX(0) !important;
-  }
-
-  .site-header .menu-toggle.active span:nth-child(3) {
-    transform: translateY(-5.5px) rotate(-45deg) !important;
-  }
-
-
-  /* MOBILE NAV DROPDOWN */
 
   .site-header .nav {
-    display: none !important;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 0;
+    right: 0;
+
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px;
+
+    background: linear-gradient(
+      145deg,
+      #2b0b1b,
+      #52152f 60%,
+      #321020
+    );
+
+    box-shadow: 0 20px 50px rgba(20, 0, 10, 0.4);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-10px) scale(0.98);
+    transform-origin: top center;
+
+    transition:
+      opacity 0.25s ease,
+      transform 0.25s ease,
+      visibility 0.25s ease;
   }
 
   .site-header .nav.open {
-    display: flex !important;
-
-    position: absolute !important;
-
-    top: calc(100% + 7px) !important;
-    left: 0 !important;
-    right: 0 !important;
-
-    width: 100% !important;
-
-    box-sizing: border-box !important;
-
-    flex-direction: column !important;
-    align-items: center !important;
-
-    gap: 14px !important;
-
-    padding: 16px !important;
-
-    border-radius: 19px !important;
-
-    background: rgba(255,250,248,.98) !important;
-
-    box-shadow:
-      0 12px 30px rgba(50,30,40,.13) !important;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
   }
-  
-/* =========================================================
-   LUVORA — CLEAN HERO / MOBILE NAV / MARQUEE
-   Fresh replacement for previous conflicting overrides
-   ========================================================= */
 
-
-/* =========================================================
-   HERO — BASE
-   ========================================================= */
-
-.hero {
-    position: relative;
-    overflow: visible !important;
-}
-
-.hero-copy {
-    position: relative;
-    z-index: 5;
-}
-
-.hero-stage {
-    position: relative;
+  .site-header .nav a {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    overflow: visible !important;
+    min-height: 54px;
+    padding: 0 18px;
+    color: #fff3ec;
+    font-size: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+  }
+
+  .site-header .nav a:last-child {
+    border-bottom: none;
+  }
+
+  .site-header .nav a:active {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+  }
 }
 
-.hero-art {
-    position: relative;
-    margin: 0 !important;
+/* Small phones */
+@media (max-width: 380px) {
+  .site-header {
+    gap: 8px;
+  }
+
+  .site-header .header-btn {
+    font-size: 11px;
+    padding: 10px;
+  }
+
+  .menu-toggle {
+    width: 40px;
+    height: 40px;
+  }
 }
 
-.hero-reference {
-    display: block;
-    width: 100%;
-    height: auto;
-    object-fit: contain;
+/* ===== FIXED NAVBAR OVERRIDE ===== */
+.site-header {
+  position: fixed !important;
+  top: 12px !important;
+  left: 50% !important;
+  right: auto !important;
+  margin: 0 !important;
+  transform: translateX(-50%) !important;
+  z-index: 99999 !important;
+  width: min(1240px, calc(100% - 40px)) !important;
+}
+
+/* Prevent scroll/animation rules from moving the navbar */
+.site-header,
+.site-header.scrolled,
+.site-header.hide,
+.site-header.hidden {
+  position: fixed !important;
+  top: 12px !important;
+  transform: translateX(-50%) !important;
+}
+
+/* =========================================================
+   LUVORA — FINAL HERO + MOBILE NAV + MARQUEE FIX
+   ========================================================= */
+
+/* ---------- DESKTOP HERO ---------- */
+
+.hero{
+  position:relative;
+  overflow:visible !important;
+}
+
+.hero-copy{
+  position:relative;
+  top:0 !important;
+  left:0 !important;
+  transform:none !important;
+}
+
+.hero-stage{
+  position:relative;
+  overflow:visible !important;
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+}
+
+.hero-art{
+  position:relative;
+  margin:0 !important;
+}
+
+.hero-reference{
+  display:block;
+  width:100%;
+  height:auto;
+  object-fit:contain;
 }
 
 
 /* =========================================================
-   DESKTOP / LARGE LAPTOP
+   LAPTOP
    ========================================================= */
 
-@media (min-width: 1201px) {
+@media (min-width:901px) and (max-width:1400px){
 
-    .hero {
-        padding-top: 70px !important;
-        padding-bottom: 70px !important;
-        overflow: visible !important;
-    }
+  .hero{
+    padding-top:70px;
+    padding-bottom:55px;
+    align-items:center;
+  }
 
-    .hero-stage {
-        width: 100%;
-        height: auto;
-        min-height: 0;
-    }
+  .hero-copy{
+    top:0 !important;
+    left:0 !important;
+  }
 
-    .hero-art {
-        width: min(100%, 620px);
-        max-width: 620px;
-        flex: 0 1 620px;
+  .hero-stage{
+    height:auto !important;
+    min-height:0 !important;
+    aspect-ratio:auto !important;
+    overflow:visible !important;
+    align-items:center;
+  }
 
-        /* IMAGE + IMAGE CONTAINER POSITION */
-        transform: translateY(25px) !important;
+  .hero-art{
+    width:min(620px,100%);
+    max-width:620px;
+    flex:0 1 620px;
+  }
 
-        overflow: visible !important;
-    }
-
-    .hero-reference {
-        width: 100%;
-        height: auto;
-    }
-
-    .hero-art > .petal-layer {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-    }
-}
-
-
-/* =========================================================
-   LAPTOP / TABLET
-   ========================================================= */
-
-@media (min-width: 601px) and (max-width: 1200px) {
-
-    .hero {
-        min-height: 0 !important;
-        height: auto !important;
-
-        padding-top: 60px !important;
-        padding-bottom: 70px !important;
-
-        overflow: visible !important;
-    }
-
-    .hero-stage {
-        width: 100%;
-        height: auto !important;
-        min-height: 0 !important;
-
-        display: flex !important;
-        align-items: flex-start !important;
-        justify-content: flex-end !important;
-
-        overflow: visible !important;
-    }
-
-    .hero-art {
-        width: min(100%, 620px);
-        max-width: 620px;
-
-        height: auto !important;
-        min-height: 0 !important;
-
-        flex: 0 1 620px;
-
-        /*
-         * ONLY IMAGE + IMAGE CONTAINER MOVES DOWN
-         * Hero section itself does not move.
-         */
-        transform: translateY(45px) !important;
-
-        margin: 0 !important;
-
-        overflow: visible !important;
-    }
-
-    .hero-reference {
-        position: relative;
-
-        width: 100% !important;
-        height: auto !important;
-
-        display: block !important;
-        object-fit: contain !important;
-    }
-
-    .hero-art > .petal-layer {
-        position: absolute;
-        inset: 0;
-
-        width: 100%;
-        height: 100%;
-
-        overflow: visible;
-    }
 }
 
 
 /* =========================================================
    MOBILE HERO
+   Text starts just below navbar.
+   Whole hero moves down together.
+   Image is NOT independently translated/cropped.
    ========================================================= */
 
-@media (max-width: 600px) {
+@media (max-width:600px){
 
-    .hero {
-        width: 100% !important;
+  .hero{
+    width:100%;
+    min-height:0 !important;
 
-        min-height: 0 !important;
-        height: auto !important;
+    display:grid;
+    grid-template-columns:1fr;
 
-        display: grid !important;
-        grid-template-columns: 1fr !important;
+    gap:12px;
 
-        gap: 14px !important;
+    /* space below fixed navbar */
+    padding:105px 20px 0 !important;
 
-        /*
-         * Space below fixed navbar.
-         */
-        padding: 105px 20px 30px !important;
+    margin:0;
 
-        margin: 0 !important;
+    border-radius:0;
 
-        align-items: start !important;
+    overflow:visible !important;
 
-        overflow: visible !important;
-    }
+    align-items:start;
+  }
 
-    .hero-copy {
-        width: 100% !important;
-        max-width: 100% !important;
+  .hero-copy{
+    width:100%;
+    max-width:100%;
 
-        position: relative !important;
+    padding:0 !important;
+    margin:0 !important;
 
-        margin: 0 !important;
-        padding: 0 !important;
+    position:relative;
 
-        top: 0 !important;
-        left: 0 !important;
-        transform: none !important;
+    top:0 !important;
+    left:0 !important;
+    transform:none !important;
 
-        z-index: 5;
-    }
+    z-index:5;
+  }
 
-    .hero-copy h1 {
-        font-size: clamp(44px, 12.5vw, 66px);
-        line-height: .98;
-    }
+  .hero-copy h1{
+    font-size:clamp(44px,12.5vw,66px);
+    line-height:.98;
+  }
 
-    .hero-copy > p {
-        font-size: 13px;
-        line-height: 1.65;
-        margin: 20px 0 24px;
-    }
+  .hero-copy>p{
+    font-size:13px;
+    line-height:1.65;
+    margin:20px 0 24px;
+  }
 
-    .hero-actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 14px;
-    }
+  .hero-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+  }
 
+  /* Entire image area follows the text naturally */
+  .hero-stage{
+    width:100% !important;
 
-    /* -----------------------------------------
-       IMAGE SECTION
-       ----------------------------------------- */
+    height:auto !important;
+    min-height:0 !important;
 
-    .hero-stage {
-        position: relative !important;
+    aspect-ratio:auto !important;
 
-        width: 100% !important;
-        height: auto !important;
-        min-height: 0 !important;
+    margin:14px 0 0 !important;
 
-        display: flex !important;
-        align-items: flex-start !important;
-        justify-content: center !important;
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
 
-        margin: 0 !important;
+    overflow:visible !important;
+  }
 
-        overflow: visible !important;
-    }
+  .hero-art{
+    position:relative;
 
-    .hero-art {
-        position: relative !important;
+    width:min(100%,520px) !important;
+    max-width:520px !important;
 
-        width: 100% !important;
-        max-width: 520px !important;
+    height:auto !important;
 
-        height: auto !important;
+    flex:0 1 520px;
 
-        flex: 0 1 520px !important;
+    margin:0 auto !important;
 
-        margin: 0 auto !important;
+    overflow:visible !important;
+  }
 
-        /*
-         * IMAGE + ITS CONTAINER DOWN
-         *
-         * Increase this value if you want it
-         * even lower.
-         */
-        transform: translateY(35px) !important;
+  .hero-reference{
+    position:relative;
 
-        overflow: visible !important;
-    }
+    width:100% !important;
+    height:auto !important;
 
-    .hero-reference {
-        position: relative !important;
+    display:block;
 
-        width: 100% !important;
-        height: auto !important;
+    object-fit:contain;
 
-        display: block !important;
+    transform:none !important;
+  }
 
-        object-fit: contain !important;
+  /* keep petals inside the image area */
+  .hero-art>.petal-layer{
+    inset:-5% -3%;
+  }
 
-        transform: none !important;
-    }
-
-    .hero-art > .petal-layer {
-        position: absolute !important;
-        inset: 0 !important;
-
-        width: 100% !important;
-        height: 100% !important;
-
-        overflow: visible !important;
-    }
 }
 
 
@@ -2932,122 +2575,118 @@ body.occasion-modal-open {
    VERY SMALL PHONE
    ========================================================= */
 
-@media (max-width: 380px) {
+@media (max-width:380px){
 
-    .hero {
-        padding-top: 100px !important;
-        padding-right: 15px !important;
-        padding-left: 15px !important;
-        padding-bottom: 40px !important;
-    }
+  .hero{
+    padding:100px 15px 0 !important;
+  }
 
-    .hero-copy h1 {
-        font-size: clamp(40px, 12vw, 48px);
-    }
+  .hero-copy h1{
+    font-size:clamp(40px,12vw,48px);
+  }
 
-    .hero-copy > p {
-        font-size: 12px;
-    }
+  .hero-copy>p{
+    font-size:12px;
+  }
 
-    .hero-stage {
-        margin-top: 0 !important;
-    }
+  .hero-stage{
+    margin-top:12px !important;
+  }
 
-    .hero-art {
-        width: 100% !important;
-        max-width: 480px !important;
+  .hero-art{
+    width:100% !important;
+    max-width:480px !important;
+  }
 
-        transform: translateY(30px) !important;
-    }
 }
 
 
 /* =========================================================
-   MOBILE NAVBAR
+   MOBILE NAVBAR — THINNER + BUTTON + HAMBURGER
    ========================================================= */
 
-@media (max-width: 768px) {
+@media (max-width:768px){
 
-    .site-header {
-        width: calc(100% - 24px) !important;
+  .site-header{
+    width:calc(100% - 24px) !important;
 
-        min-height: 52px;
+    min-height:52px;
 
-        padding: 7px 8px 7px 13px !important;
+    padding:7px 8px 7px 13px !important;
 
-        top: 8px !important;
+    top:8px !important;
 
-        left: 50% !important;
-        right: auto !important;
+    border-radius:18px !important;
 
-        transform: translateX(-50%) !important;
+    gap:8px !important;
 
-        position: fixed !important;
+    left:50% !important;
+    right:auto !important;
 
-        border-radius: 18px !important;
+    transform:translateX(-50%) !important;
 
-        gap: 8px !important;
+    position:fixed !important;
 
-        z-index: 99999 !important;
-    }
+    z-index:99999 !important;
+  }
 
-    .brand-logo {
-        width: 108px !important;
-    }
+  .brand-logo{
+    width:108px !important;
+  }
 
-    .site-header .brand {
-        margin-right: 0;
-        min-width: 0;
-    }
+  .site-header .brand{
+    margin-right:auto;
+    min-width:0;
+  }
 
-    .site-header .header-actions {
-        display: flex;
-        align-items: center;
-        gap: 7px !important;
-    }
+  .site-header .header-actions{
+    display:flex;
+    align-items:center;
+    gap:7px !important;
+  }
 
-    /* Create a Surprise button */
+  /* Create a Surprise button */
+  .site-header .header-btn{
+    padding:8px 12px !important;
 
-    .site-header .header-btn {
-        padding: 8px 12px !important;
+    min-height:34px;
 
-        min-height: 34px;
+    border-radius:999px;
 
-        border-radius: 999px;
+    font-size:10px !important;
+    line-height:1;
 
-        font-size: 10px !important;
-        line-height: 1;
+    white-space:nowrap;
 
-        white-space: nowrap;
+    box-shadow:none;
+  }
 
-        box-shadow: none;
-    }
+  /* Hamburger */
+  .menu-toggle{
+    display:flex !important;
 
-    /* Hamburger */
+    width:36px !important;
+    height:36px !important;
 
-    .menu-toggle {
-        display: flex !important;
+    padding:7px !important;
 
-        width: 36px !important;
-        height: 36px !important;
+    margin:0 !important;
 
-        padding: 7px !important;
-        margin: 0 !important;
+    border-radius:10px !important;
 
-        border-radius: 10px !important;
+    align-items:center;
+    justify-content:center;
 
-        align-items: center;
-        justify-content: center;
+    flex-shrink:0;
+  }
 
-        flex-shrink: 0;
-    }
+  .menu-toggle span{
+    width:18px !important;
+    height:2px !important;
 
-    .menu-toggle span {
-        width: 18px !important;
-        height: 2px !important;
+    margin:3px auto !important;
+  }
 
-        margin: 3px auto !important;
-    }
 }
 
 
@@ -3055,175 +2694,151 @@ body.occasion-modal-open {
    SMALL PHONE NAVBAR
    ========================================================= */
 
-@media (max-width: 380px) {
+@media (max-width:380px){
 
-    .site-header {
-        width: calc(100% - 16px) !important;
+  .site-header{
+    width:calc(100% - 16px) !important;
+    padding:6px 7px 6px 11px !important;
+    top:7px !important;
+  }
 
-        padding: 6px 7px 6px 11px !important;
+  .brand-logo{
+    width:100px !important;
+  }
 
-        top: 7px !important;
-    }
+  .site-header .header-btn{
+    padding:7px 10px !important;
+    min-height:32px;
+    font-size:9px !important;
+  }
 
-    .brand-logo {
-        width: 100px !important;
-    }
+  .menu-toggle{
+    width:34px !important;
+    height:34px !important;
+    padding:6px !important;
+  }
 
-    .site-header .header-btn {
-        padding: 7px 10px !important;
-
-        min-height: 32px;
-
-        font-size: 9px !important;
-    }
-
-    .menu-toggle {
-        width: 34px !important;
-        height: 34px !important;
-
-        padding: 6px !important;
-    }
 }
 
 
 /* =========================================================
-   MARQUEE
+   MOVING BAR / MARQUEE
+   Thin, smooth, no initial empty space.
    ========================================================= */
 
-.marquee {
-    width: 100%;
+.marquee{
+  width:100%;
 
-    /*
-     * MARQUEE LOWER
-     */
-    margin-top: 75px !important;
+  margin-top:-35 !important;
 
-    min-height: 68px !important;
+  overflow:hidden;
 
-    display: flex;
-    align-items: center;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
 
-    overflow: hidden;
+  background:#fffaf6;
 
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-
-    background: #fffaf6;
-
-    position: relative;
+  position:relative;
 }
 
-.marquee-track {
-    display: flex;
+.marquee-track{
+  display:flex;
 
-    width: max-content;
+  width:max-content;
 
-    align-items: center;
+  align-items:center;
 
-    gap: 0;
+  gap:0;
 
-    padding: 25px 0;
+  padding:21px 0;
 
-    animation: luvoraMarquee 24s linear infinite;
+  animation:luvoraMarquee 24s linear infinite;
 
-    will-change: transform;
+  will-change:transform;
+
+  transform:none;
 }
 
-.marquee-group {
-    display: flex;
+.marquee-group{
+  display:flex;
 
-    align-items: center;
+  align-items:center;
 
-    flex-shrink: 0;
+  flex-shrink:0;
 
-    gap: 32px;
+  gap:30px;
 
-    padding: 0 32px;
+  padding:0 30px;
 
-    white-space: nowrap;
+  white-space:nowrap;
 }
 
-.marquee span {
-    font-size: 12px;
+.marquee span{
+  font-size:10px;
 
-    letter-spacing: .18em;
+  letter-spacing:.18em;
 
-    font-weight: 700;
+  font-weight:700;
 
-    color: var(--muted);
+  color:var(--muted);
 
-    white-space: nowrap;
+  white-space:nowrap;
 }
 
-.marquee b {
-    color: var(--rose);
+.marquee b{
+  color:var(--rose);
 
-    font-size: 14px;
+  font-size:12px;
 
-    flex-shrink: 0;
+  flex-shrink:0;
 }
 
+@keyframes luvoraMarquee{
 
-/* =========================================================
-   MARQUEE ANIMATION
-   ========================================================= */
+  from{
+    transform:translateX(0);
+  }
 
-@keyframes luvoraMarquee {
+  to{
+    transform:translateX(-50%);
+  }
 
-    from {
-        transform: translateX(0);
-    }
-
-    to {
-        transform: translateX(-50%);
-    }
 }
 
 
-/* =========================================================
-   MOBILE MARQUEE
-   ========================================================= */
+/* Slightly smaller on phone */
 
-@media (max-width: 600px) {
+@media (max-width:600px){
 
-    .marquee {
-        margin-top: 75px !important;
+  .marquee-track{
+    padding: 15px 0;
 
-        min-height: 50px !important;
-    }
+    animation-duration:20s;
+  }
 
-    .marquee-track {
-        padding: 25px 0;
+  .marquee-group{
+    gap:24px;
+    padding:0 24px;
+  }
 
-        animation-duration: 20s;
-    }
+  .marquee span{
+    font-size:8px;
+    letter-spacing:.15em;
+  }
 
-    .marquee-group {
-        gap: 26px;
+  .marquee b{
+    font-size:10px;
+  }
 
-        padding: 0 26px;
-    }
-
-    .marquee span {
-        font-size: 10px;
-
-        letter-spacing: .15em;
-    }
-
-    .marquee b {
-        font-size: 12px;
-    }
 }
 
 
-/* =========================================================
-   REDUCED MOTION
-   ========================================================= */
+/* Respect reduced motion */
 
-@media (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion:reduce){
 
-    .marquee-track {
-        animation: none;
-    }
+  .marquee-track{
+    animation:none;
+  }
+
 }
-
