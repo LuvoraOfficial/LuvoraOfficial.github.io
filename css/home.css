@@ -3096,9 +3096,9 @@ body.occasion-modal-open {
     /*
      * MARQUEE LOWER
      */
-    margin-top: 55px !important;
+    margin-top: 75px !important;
 
-    min-height: 52px !important;
+    min-height: 68px !important;
 
     display: flex;
     align-items: center;
@@ -3122,7 +3122,7 @@ body.occasion-modal-open {
 
     gap: 0;
 
-    padding: 17px 0;
+    padding: 25px 0;
 
     animation: luvoraMarquee 24s linear infinite;
 
@@ -3187,13 +3187,13 @@ body.occasion-modal-open {
 @media (max-width: 600px) {
 
     .marquee {
-        margin-top: 55px !important;
+        margin-top: 75px !important;
 
         min-height: 50px !important;
     }
 
     .marquee-track {
-        padding: 16px 0;
+        padding: 25px 0;
 
         animation-duration: 20s;
     }
