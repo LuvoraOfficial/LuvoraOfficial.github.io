@@ -2642,7 +2642,7 @@ body.occasion-modal-open {
     box-shadow:
       0 12px 30px rgba(50,30,40,.13) !important;
   }
- ```css
+```css
 /* =========================================================
    LUVORA — CLEAN HERO / MOBILE NAV / MARQUEE
    Fresh replacement for previous conflicting overrides
@@ -3096,7 +3096,7 @@ body.occasion-modal-open {
     /*
      * MARQUEE LOWER
      */
-    margin-top: 80px !important;
+    margin-top: 55px !important;
 
     min-height: 52px !important;
 
@@ -3187,7 +3187,7 @@ body.occasion-modal-open {
 @media (max-width: 600px) {
 
     .marquee {
-        margin-top: 80px !important;
+        margin-top: 55px !important;
 
         min-height: 50px !important;
     }
@@ -3226,4 +3226,4 @@ body.occasion-modal-open {
         animation: none;
     }
 }
-```
+
