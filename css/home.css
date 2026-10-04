@@ -3485,7 +3485,7 @@ body.occasion-modal-open {
   .hero-art{
     transform: translate(
       0px,      /* LEFT / RIGHT */
-      -30px     /* UP / DOWN */
+      -70px     /* UP / DOWN */
     ) !important;
   }
 
