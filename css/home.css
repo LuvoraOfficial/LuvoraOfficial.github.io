@@ -3096,7 +3096,7 @@ body.occasion-modal-open {
     /*
      * MARQUEE LOWER
      */
-    margin-top: 55px !important;
+    margin-top: 80px !important;
 
     min-height: 52px !important;
 
@@ -3187,7 +3187,7 @@ body.occasion-modal-open {
 @media (max-width: 600px) {
 
     .marquee {
-        margin-top: 55px !important;
+        margin-top: 80px !important;
 
         min-height: 50px !important;
     }
