@@ -948,7 +948,7 @@ body{background-color:#F1E8DB;color:#241D1A}
   align-items:flex-start;
 }
 
-..hero-copy{
+.hero-copy{
   max-width:560px;
   padding-right:24px;
   position:relative;
