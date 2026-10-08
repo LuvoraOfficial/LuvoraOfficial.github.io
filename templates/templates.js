@@ -59,5 +59,4 @@ const LUVORA_TEMPLATES = [
     description: "A simple, emotional surprise for the person who deserves to know they're loved.",
     accent: "night",
     image: "assets/images/templates/just-because.jpg"
-  }
-];
+  },
