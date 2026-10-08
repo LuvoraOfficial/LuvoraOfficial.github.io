@@ -948,7 +948,7 @@ body{background-color:#F1E8DB;color:#241D1A}
   align-items:flex-start;
 }
 
-..hero-copy{
+ .hero-copy{
   max-width:560px;
   padding-right:24px;
   position:relative;
@@ -2643,6 +2643,9 @@ body.occasion-modal-open {
       0 12px 30px rgba(50,30,40,.13) !important;
   }
 
+
+}
+
 /* =========================================================
    LUVORA — CLEAN HERO + MARQUEE FIX
    ========================================================= */
@@ -2698,13 +2701,14 @@ body.occasion-modal-open {
     object-fit: contain !important;
   }
 
-  .hero-art > .petal-layer {
-    position: absolute !important;
-    inset: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    overflow: hidden !important;
-  }
+ .hero-art > .petal-layer {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  overflow: hidden !important;
+  pointer-events: none;
+}
 }
 
 
@@ -2867,8 +2871,1121 @@ body.occasion-modal-open {
     font-size: 12px !important;
   }
 }
-/* LUVORA — MOVE MARQUEE DOWN */
-.marquee {
+
+
+/* =========================================================
+   LUVORA — FINAL HERO + MARQUEE RESPONSIVE FIX
+   ========================================================= */
+
+/* ---------- HERO BASE ---------- */
+
+.hero {
+  width: 100%;
+  min-height: auto;
+  padding: 0 0 0 clamp(24px, 6vw, 90px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(480px, .9fr);
+  gap: 20px;
+  align-items: center;
+  overflow: visible !important;
+}
+
+/* Left text */
+.hero-copy {
   position: relative !important;
-  top: 35px !important;
+  top: 0 !important;
+  left: 0 !important;
+  transform: none !important;
+  width: 100%;
+  max-width: 620px;
+  padding: 0 10px 0 0;
+  z-index: 5;
+}
+
+/* Right image area */
+.hero-stage {
+  width: 100%;
+  height: auto !important;
+  min-height: 0 !important;
+  aspect-ratio: auto !important;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  overflow: visible !important;
+  margin: 0 !important;
+}
+
+/* Actual artwork */
+
+.hero-art {
+  position: relative !important;
+  inset: auto !important;
+
+  width: min(100%, 680px) !important;
+  max-width: 680px !important;
+
+  /* IMAGE RATIO — container exactly follows image */
+  aspect-ratio: 542 / 566 !important;
+
+  height: auto !important;
+  flex: 0 1 680px !important;
+
+  margin: 0 !important;
+  transform: none !important;
+
+  overflow: hidden !important;
+  background: transparent;
+}
+/* Keep original image ratio — NEVER force height */
+.hero-reference {
+  position: relative !important;
+  inset: auto !important;
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  max-width: none !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  transform: none !important;
+}
+
+/* Petals */
+.hero-art > .petal-layer {
+  position: absolute !important;
+  inset: 0 !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  overflow: hidden !important;
+  pointer-events: none !important;
+}
+
+/* =========================================================
+   DESKTOP / LAPTOP
+   ========================================================= */
+
+@media (min-width: 1101px) {
+
+  .hero {
+  min-height: auto !important;
+  grid-template-columns: minmax(0, 1fr) minmax(500px, .9fr);
+  align-items: center;
+}
+  .hero-copy {
+    align-self: center;
+  }
+
+  .hero-stage {
+    align-self: center;
+  }
+
+  .hero-art {
+    width: min(100%, 680px) !important;
+    max-width: 680px !important;
+  }
+}
+
+
+/* =========================================================
+   LAPTOP / LANDSCAPE TABLET
+   ========================================================= */
+
+@media (min-width: 901px) and (max-width: 1100px) {
+
+  .hero {
+    min-height: auto;
+    grid-template-columns: minmax(0, .95fr) minmax(420px, 1.05fr);
+    gap: 10px;
+    padding: 50px 3vw 35px 4vw;
+  }
+
+  .hero-copy {
+    max-width: 500px;
+  }
+
+  .hero-copy h1 {
+    font-size: clamp(48px, 5.5vw, 64px);
+  }
+
+  .hero-stage {
+    width: 100%;
+  }
+
+  .hero-art {
+    width: min(100%, 500px) !important;
+    max-width: 500px !important;
+    flex-basis: 500px !important;
+  }
+}
+
+
+/* =========================================================
+   TABLET — STACKED
+   ========================================================= */
+
+@media (min-width: 601px) and (max-width: 900px) {
+
+  .hero {
+    width: calc(100% - 24px);
+    min-height: auto;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    padding: 55px 32px 0;
+    border-radius: 28px;
+    overflow: visible !important;
+    align-items: start;
+  }
+
+  .hero-copy {
+    width: 100%;
+    max-width: 680px;
+    padding: 0;
+  }
+
+  .hero-copy h1 {
+    font-size: clamp(54px, 8vw, 74px);
+  }
+
+  .hero-stage {
+    width: calc(100% + 64px);
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 5px -32px 0 !important;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    overflow: visible !important;
+  }
+
+  .hero-art {
+    width: min(100%, 620px) !important;
+    max-width: 620px !important;
+    flex: 0 1 620px !important;
+    margin: 0 auto !important;
+    transform: none !important;
+  }
+
+  .hero-reference {
+    width: 100% !important;
+    height: auto !important;
+  }
+}
+
+
+/* =========================================================
+   PHONE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .hero {
+    width: calc(100% - 12px);
+    min-height: auto;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 42px 20px 0;
+    border-radius: 26px;
+    overflow: visible !important;
+    align-items: start;
+  }
+
+  .hero-copy {
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+    transform: none !important;
+  }
+
+  .hero-copy h1 {
+    font-size: clamp(44px, 12.5vw, 66px);
+    line-height: .98;
+  }
+
+  .hero-copy > p {
+    font-size: 13px;
+    line-height: 1.6;
+    margin: 20px 0 24px;
+  }
+
+  .hero-actions {
+    gap: 14px;
+  }
+
+  /* Image container now grows naturally with image */
+  .hero-stage {
+    position: relative !important;
+    top: 0 !important;
+    width: calc(100% + 40px) !important;
+    height: auto !important;
+    min-height: 0 !important;
+    aspect-ratio: auto !important;
+    margin: 15px -20px 0 !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    overflow: visible !important;
+  }
+
+  /* No forced 520px / 300px / translateY */
+  .hero-art {
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: min(100%, 500px) !important;
+    max-width: 500px !important;
+    height: auto !important;
+    flex: 0 1 500px !important;
+    margin: 0 auto !important;
+    transform: none !important;
+    overflow: visible !important;
+  }
+
+ .hero-reference {
+  position: absolute !important;
+  inset: 0 !important;
+
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+
+  max-width: none !important;
+
+  object-fit: fill !important;
+  object-position: center !important;
+
+  transform: none !important;
+}
+  /* Slightly move image DOWN naturally */
+  .hero-art {
+    margin-top: 12px !important;
+  }
+
+  /* ---------- MARQUEE ---------- */
+
+  .marquee {
+    width: 100% !important;
+    margin-top: 12px !important;
+    min-height: 48px !important;
+    height: 48px !important;
+    display: flex !important;
+    align-items: center !important;
+    overflow: hidden !important;
+  }
+
+  .marquee-track {
+    display: flex !important;
+    align-items: center !important;
+    padding: 0 !important;
+    gap: 0 !important;
+    width: max-content !important;
+  }
+
+  .marquee-group {
+    display: flex !important;
+    align-items: center !important;
+    gap: 20px !important;
+    padding: 0 20px !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+  }
+
+  .marquee span {
+    font-size: 9px !important;
+    line-height: 1 !important;
+    letter-spacing: .13em !important;
+    white-space: nowrap !important;
+  }
+
+  .marquee b {
+    font-size: 11px !important;
+    line-height: 1 !important;
+    flex-shrink: 0 !important;
+  }
+
+
+  /* ---------- OCCASIONS ---------- */
+
+  /*
+     Remove all previous negative positioning.
+     This is the main reason the spacing was becoming strange.
+  */
+
+  .occasions,
+  section.occasions,
+  #occasions {
+    position: relative !important;
+    top: 0 !important;
+    transform: none !important;
+    margin-top: 38px !important;
+  }
+
+  .occasions .section-heading {
+    margin-top: 0 !important;
+  }
+
+  .section {
+    margin-top: 70px;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+  .hero {
+    padding: 34px 15px 0;
+  }
+
+  .hero-copy h1 {
+    font-size: clamp(40px, 12vw, 48px);
+  }
+
+  .hero-stage {
+    width: calc(100% + 30px) !important;
+    margin-left: -15px !important;
+    margin-right: -15px !important;
+    margin-top: 12px !important;
+  }
+
+  .hero-art {
+    width: min(100%, 450px) !important;
+    max-width: 450px !important;
+  }
+
+  .marquee {
+    margin-top: 10px !important;
+  }
+
+  .marquee-group {
+    gap: 17px !important;
+    padding: 0 17px !important;
+  }
+
+  .marquee span {
+    font-size: 8px !important;
+  }
+
+  .marquee b {
+    font-size: 10px !important;
+  }
+
+  .occasions,
+  section.occasions,
+  #occasions {
+    margin-top: 32px !important;
+  }
+}
+/* =========================================================
+   LUVORA — FINAL CLEAN HERO / MARQUEE OVERRIDE
+   Single authoritative responsive layout.
+   ========================================================= */
+
+/* Base: natural image ratio, no forced crop */
+.hero{
+  width:100% !important;
+  min-height:0 !important;
+  height:auto !important;
+  padding:0 0 0 clamp(24px,6vw,90px) !important;
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(480px,.9fr) !important;
+  gap:20px !important;
+  align-items:center !important;
+  overflow:visible !important;
+}
+
+.hero-copy{
+  position:relative !important;
+  top:0 !important;
+  left:0 !important;
+  transform:none !important;
+  width:100% !important;
+  max-width:620px !important;
+  padding:0 10px 0 0 !important;
+  z-index:5 !important;
+}
+
+.hero-stage{
+  position:relative !important;
+  width:100% !important;
+  height:auto !important;
+  min-height:0 !important;
+  aspect-ratio:auto !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:flex-end !important;
+  overflow:visible !important;
+  margin:0 !important;
+}
+
+.hero-art{
+  position:relative !important;
+  inset:auto !important;
+  width:min(100%,680px) !important;
+  max-width:680px !important;
+  height:auto !important;
+  min-height:0 !important;
+  flex:0 1 680px !important;
+  margin:0 !important;
+  transform:none !important;
+  aspect-ratio:auto !important;
+  overflow:visible !important;
+  background:transparent !important;
+}
+
+.hero-reference{
+  position:relative !important;
+  inset:auto !important;
+  display:block !important;
+  width:100% !important;
+  max-width:none !important;
+  height:auto !important;
+  aspect-ratio:auto !important;
+  object-fit:contain !important;
+  object-position:center !important;
+  transform:none !important;
+}
+
+.hero-art > .petal-layer{
+  position:absolute !important;
+  inset:-5% -5% !important;
+  width:110% !important;
+  height:110% !important;
+  overflow:hidden !important;
+  pointer-events:none !important;
+}
+
+/* Desktop */
+@media (min-width:1101px){
+  .hero{
+    min-height:calc(100vh - 84px) !important;
+    grid-template-columns:minmax(0,1fr) minmax(500px,.9fr) !important;
+    gap:20px !important;
+    align-items:center !important;
+  }
+
+  .hero-stage{
+    align-self:center !important;
+  }
+
+  .hero-art{
+    width:min(100%,680px) !important;
+    max-width:680px !important;
+    flex-basis:680px !important;
+  }
+}
+
+/* Laptop / landscape tablet */
+@media (min-width:901px) and (max-width:1100px){
+  .hero{
+    min-height:auto !important;
+    grid-template-columns:minmax(0,.95fr) minmax(420px,1.05fr) !important;
+    gap:10px !important;
+    padding:50px 3vw 35px 4vw !important;
+  }
+
+  .hero-copy{max-width:500px !important;}
+
+  .hero-stage{
+    width:100% !important;
+    margin:0 !important;
+  }
+
+  .hero-art{
+    width:min(100%,500px) !important;
+    max-width:500px !important;
+    flex-basis:500px !important;
+  }
+}
+
+/* Tablet: stack text and image; image keeps full natural height */
+@media (min-width:601px) and (max-width:900px){
+  .hero{
+    width:calc(100% - 24px) !important;
+    min-height:auto !important;
+    grid-template-columns:1fr !important;
+    gap:0 !important;
+    padding:55px 32px 0 !important;
+    border-radius:28px !important;
+    overflow:visible !important;
+    align-items:start !important;
+  }
+
+  .hero-copy{
+    width:100% !important;
+    max-width:680px !important;
+    padding:0 !important;
+  }
+
+  .hero-stage{
+    width:calc(100% + 64px) !important;
+    margin:30px -32px 0 !important;
+    align-items:flex-start !important;
+    justify-content:center !important;
+  }
+
+  .hero-art{
+    width:min(100%,620px) !important;
+    max-width:620px !important;
+    flex-basis:620px !important;
+    margin:0 auto !important;
+  }
+}
+
+/* Phone */
+@media (max-width:600px){
+  .hero{
+    width:calc(100% - 12px) !important;
+    min-height:auto !important;
+    grid-template-columns:1fr !important;
+    gap:0 !important;
+    padding:42px 20px 0 !important;
+    border-radius:26px !important;
+    overflow:visible !important;
+    align-items:start !important;
+  }
+
+  .hero-copy{
+    width:100% !important;
+    max-width:100% !important;
+    padding:0 !important;
+    margin:0 !important;
+  }
+
+  .hero-stage{
+    position:relative !important;
+    top:0 !important;
+    width:calc(100% + 40px) !important;
+    height:auto !important;
+    min-height:0 !important;
+    aspect-ratio:auto !important;
+    margin:32px -20px 0 !important;
+    display:flex !important;
+    align-items:flex-start !important;
+    justify-content:center !important;
+    overflow:visible !important;
+  }
+
+ .hero-art {
+  position:relative !important;
+  inset:auto !important;
+
+  /* Hero image + container 20% smaller */
+  width:min(80%,620px) !important;
+  max-width:544px !important;
+
+  height:auto !important;
+  flex:0 1 544px !important;
+
+  margin:0 !important;
+  transform:none !important;
+  overflow:visible !important;
+}
+
+  .hero-reference{
+    width:100% !important;
+    height:auto !important;
+    display:block !important;
+    object-fit:contain !important;
+    object-position:center !important;
+  }
+
+  /* Keep marquee as one horizontal row */
+  .marquee{
+    width:100% !important;
+    height:48px !important;
+    min-height:48px !important;
+    margin-top:8px !important;
+    display:flex !important;
+    align-items:center !important;
+    overflow:hidden !important;
+  }
+
+  .marquee-track{
+    display:flex !important;
+    align-items:center !important;
+    width:max-content !important;
+    padding:0 !important;
+    gap:0 !important;
+    flex-wrap:nowrap !important;
+  }
+
+  .marquee-group{
+    display:flex !important;
+    flex-direction:row !important;
+    align-items:center !important;
+    gap:20px !important;
+    padding:0 20px !important;
+    white-space:nowrap !important;
+    flex-shrink:0 !important;
+  }
+
+  .marquee span,
+  .marquee b{
+    display:inline-block !important;
+    flex:none !important;
+    white-space:nowrap !important;
+    writing-mode:horizontal-tb !important;
+    transform:none !important;
+  }
+
+  .marquee span{
+    font-size:9px !important;
+    line-height:1 !important;
+    letter-spacing:.13em !important;
+  }
+
+  .marquee b{
+    font-size:11px !important;
+    line-height:1 !important;
+  }
+
+  /* Occasion starts with controlled, small gap */
+  .occasions,
+  section.occasions,
+  #occasions{
+    position:relative !important;
+    top:0 !important;
+    transform:none !important;
+    margin-top:28px !important;
+  }
+}
+
+@media (max-width:380px){
+  .hero{
+    padding:34px 15px 0 !important;
+  }
+
+  .hero-stage{
+    width:calc(100% + 30px) !important;
+    margin:28px -15px 0 !important;
+  }
+
+  .hero-art{
+    width:min(100%,450px) !important;
+    max-width:450px !important;
+  }
+
+  .marquee{
+    margin-top:7px !important;
+  }
+
+  .marquee-group{
+    gap:17px !important;
+    padding:0 17px !important;
+  }
+
+  .marquee span{font-size:8px !important;}
+  .marquee b{font-size:10px !important;}
+
+  .occasions,
+  section.occasions,
+  #occasions{
+    margin-top:25px !important;
+  }
+}
+
+
+/* =========================================================
+   HERO — MOVE IMAGE + CONTAINER LEFT / RIGHT TOGETHER
+   ========================================================= */
+
+/* Desktop */
+@media (min-width: 1101px) {
+  .hero-art {
+    transform: translate(-90px, 70px) !important;
+  }
+}
+
+
+/* =========================================================
+   HERO ART — CONTAINER MUST FIT IMAGE
+   ========================================================= */
+
+.hero-stage {
+  height: auto !important;
+  min-height: 0 !important;
+  aspect-ratio: auto !important;
+  overflow: visible !important;
+}
+
+.hero-art {
+  height: auto !important;
+  min-height: 0 !important;
+  aspect-ratio: auto !important;
+  overflow: visible !important;
+
+  /* image-এর নিজের size অনুযায়ী container */
+  display: block !important;
+  line-height: 0 !important;
+}
+
+.hero-reference {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  object-fit: contain !important;
+}
+
+/* FINAL — IMAGE CONTAINER FITS EXACTLY TO IMAGE */
+
+.hero-stage {
+  height: auto !important;
+  min-height: 0 !important;
+  aspect-ratio: auto !important;
+  align-self: center !important;
+}
+
+.hero-art {
+  height: auto !important;
+  min-height: 0 !important;
+  aspect-ratio: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 0 !important;
+}
+
+.hero-reference {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* ===== HERO IMAGE CONTAINER MANUAL CONTROL ===== */
+
+.hero-art {
+  /* শুধু এই দুইটা value change করে দেখো */
+  width: 544px !important;
+  height: 566px !important;
+
+  position: relative !important;
+  flex: none !important;
+
+  overflow: visible !important;
+}
+
+/* Image নিজের original size/ratio-তেই থাকবে */
+.hero-art .hero-reference {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+}
+
+/* Petal container */
+.hero-art > .petal-layer {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
+}
+
+/* ===== HERO IMAGE + CONTAINER +10% ===== */
+
+@media (min-width: 1101px) {
+  .hero-art {
+    width: min(90%, 612px) !important;
+    max-width: 612px !important;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1100px) {
+  .hero-art {
+    width: min(90%, 450px) !important;
+    max-width: 450px !important;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+  .hero-art {
+    width: min(90%, 558px) !important;
+    max-width: 558px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-art {
+    width: min(90%, 450px) !important;
+    max-width: 450px !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .hero-art {
+    width: min(90%, 405px) !important;
+    max-width: 405px !important;
+  }
+}
+/* =========================================================
+   LUVORA — FINAL PHONE HERO FIX
+   Only affects phones <= 600px
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  /* ---------- HERO ---------- */
+
+  .hero {
+    width: calc(100% - 12px) !important;
+    min-height: auto !important;
+
+    grid-template-columns: 1fr !important;
+    gap: 0 !important;
+
+    /* Text একটু নিচে নামবে */
+    padding: 62px 20px 0 !important;
+
+    border-radius: 26px !important;
+    overflow: visible !important;
+    align-items: start !important;
+
+    /* Easy master controls */
+    --hero-text-y: 12px;
+    --hero-stage-y: 0px;
+  }
+
+
+  /* ---------- HERO TEXT ---------- */
+
+  .hero-copy {
+    position: relative !important;
+
+    top: auto !important;
+    left: auto !important;
+
+    width: 100% !important;
+    max-width: 100% !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    z-index: 5 !important;
+
+    /* Text manually up/down */
+    transform: translateY(var(--hero-text-y)) !important;
+  }
+
+  .hero-copy h1 {
+    font-size: clamp(44px, 12.5vw, 66px) !important;
+    line-height: .98 !important;
+  }
+
+  .hero-copy > p {
+    font-size: 13px !important;
+    line-height: 1.6 !important;
+    margin: 20px 0 24px !important;
+  }
+
+  .hero-actions {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 14px !important;
+  }
+
+
+  /* ---------- IMAGE AREA ---------- */
+
+  .hero-stage {
+    position: relative !important;
+
+    top: auto !important;
+
+    width: calc(100% + 40px) !important;
+
+    /*
+      Image-এর actual height অনুযায়ী stage-এর
+      height নিজে থেকেই তৈরি হবে
+    */
+    height: auto !important;
+    min-height: 0 !important;
+    aspect-ratio: auto !important;
+
+    margin: 22px -20px 0 !important;
+
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+
+    overflow: visible !important;
+
+    transform: translateY(var(--hero-stage-y)) !important;
+  }
+
+
+  /* =====================================================
+     HERO IMAGE + CONTAINER
+     Container ALWAYS follows image's natural ratio
+     ===================================================== */
+
+  .hero-art {
+    position: relative !important;
+
+    top: auto !important;
+    left: auto !important;
+
+    /*
+      Mobile image size
+      এখান থেকেই শুধু image + container-এর size control হবে
+    */
+    width: min(90%, 450px) !important;
+    max-width: 450px !important;
+
+    height: auto !important;
+    min-height: 0 !important;
+
+    /*
+      Container-এর height image নিজে তৈরি করবে
+    */
+    aspect-ratio: auto !important;
+
+    flex: 0 1 450px !important;
+
+    margin: 0 auto !important;
+    padding: 0 !important;
+
+    overflow: visible !important;
+
+    /*
+      FULL IMAGE + CONTAINER MOVE
+      এখানে X/Y change করলে দুটো একসাথে move করবে
+    */
+    --hero-x: 0px;
+    --hero-y: 0px;
+
+    transform: translate(
+      var(--hero-x),
+      var(--hero-y)
+    ) !important;
+
+    line-height: 0 !important;
+  }
+
+
+  /* ---------- ACTUAL IMAGE ---------- */
+
+  .hero-reference {
+    position: relative !important;
+
+    top: auto !important;
+    left: auto !important;
+
+    display: block !important;
+
+    width: 100% !important;
+    height: auto !important;
+
+    min-height: 0 !important;
+    max-width: none !important;
+    max-height: none !important;
+
+    /*
+      IMPORTANT:
+      Image-এর original ratio থাকবে
+      container image-এর exact size follow করবে
+    */
+    object-fit: contain !important;
+
+    /*
+      শুধু IMAGE-এর আলাদা movement
+    */
+    --image-x: 0px;
+    --image-y: 0px;
+
+    transform: translate(
+      var(--image-x),
+      var(--image-y)
+    ) !important;
+  }
+
+
+  /* ---------- PETALS ---------- */
+
+  .hero-art > .petal-layer {
+    position: absolute !important;
+
+    inset: 0 !important;
+
+    width: 100% !important;
+    height: 100% !important;
+
+    overflow: hidden !important;
+    pointer-events: none !important;
+  }
+
+
+  /* ---------- MARQUEE ---------- */
+
+  .marquee {
+    margin-top: 12px !important;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL PHONE
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+  .hero {
+    padding: 52px 15px 0 !important;
+
+    --hero-text-y: 10px;
+  }
+
+  .hero-stage {
+    width: calc(100% + 30px) !important;
+    margin-left: -15px !important;
+    margin-right: -15px !important;
+    margin-top: 20px !important;
+  }
+
+  .hero-art {
+    width: min(90%, 405px) !important;
+    max-width: 405px !important;
+  }
+}
+/* ===== FIX: Occasion / Pricing / Help scroll position ===== */
+#pricing,
+#help {
+  scroll-margin-top: 60px !important;
+}
+
+/* ===== OCCASION NAV SCROLL FIX ===== */
+.section:has(.occasion-grid) {
+  scroll-margin-top: 85px !important;
+}
+
+/* ===== PRICING SECTION — FINAL COMPACT ===== */
+.pricing-section {
+  padding-top: 50px !important;
+  padding-bottom: 50px !important;
+}
+
+.pricing-section .section-heading {
+  margin-bottom: 21px !important;
+}
+
+.pricing-section .price-card {
+  padding: 20px 27px !important;
+}
+.pricing-section .section-heading {
+  margin-bottom: 20px !important;
+}
+
+#pricing {
+  scroll-margin-top: 10px !important;
 }
