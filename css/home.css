@@ -3993,7 +3993,7 @@ body.occasion-modal-open {
 /* ===== PHONE HERO TEXT — MOVE DOWN ===== */
 @media (max-width: 600px) {
   .hero {
-    --hero-text-y: 30px !important;
+    --hero-text-y: 50px !important;
   }
 }
 
