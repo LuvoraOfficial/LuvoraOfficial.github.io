@@ -6185,7 +6185,7 @@ body.preview-mode .preview-actions {
 @media (max-width: 800px) {
 
   .memory-book {
-    transform: scaleY(0.78) !important;
+    transform: scaleY(0.98) !important;
     transform-origin: center center !important;
   }
 
