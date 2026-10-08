@@ -61,7 +61,3 @@ const LUVORA_TEMPLATES = [
     image: "assets/images/templates/just-because.jpg"
   }
 ];
-
-    margin-bottom: 18px !important;
-  }
-}
