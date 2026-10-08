@@ -276,7 +276,7 @@ const letterRecipient =
   document.querySelector(".letter-recipient");
 
 const memoryGallery =
-  document.getElementById("memoryGallery");
+  document.getElementById("memoryBook");
 
 const birthdayVideo =
   document.getElementById("birthdayVideo");
