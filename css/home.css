@@ -3863,7 +3863,7 @@ body.occasion-modal-open {
       এখানে X/Y change করলে দুটো একসাথে move করবে
     */
     --hero-x: 0px;
-    --hero-y: 0px;
+    --hero-y: 15px;
 
     transform: translate(
       var(--hero-x),
