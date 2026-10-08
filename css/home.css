@@ -3996,3 +3996,11 @@ body.occasion-modal-open {
     --hero-text-y: 30px !important;
   }
 }
+
+/* ===== PRICING CARD — LAPTOP & DESKTOP ONLY ===== */
+@media (min-width: 1101px) {
+  .pricing-section .price-card {
+    width: min(900px, 100%) !important;
+    padding: 28px 38px !important;
+  }
+}
