@@ -61,3 +61,25 @@ const LUVORA_TEMPLATES = [
     image: "assets/images/templates/just-because.jpg"
   }
 ];
+
+/* ===== PHONE — REDUCE TOP TEXT SPACE ===== */
+@media (max-width: 700px) {
+  .template-hero h1 {
+    font-size: 43px !important;
+    line-height: 0.95 !important;
+  }
+
+  .template-hero > p {
+    font-size: 12px !important;
+    line-height: 1.4 !important;
+    margin-top: 12px !important;
+  }
+
+  .template-area {
+    margin-top: 28px !important;
+  }
+
+  .filter-row {
+    margin-bottom: 18px !important;
+  }
+}
