@@ -3989,3 +3989,10 @@ body.occasion-modal-open {
 #pricing {
   scroll-margin-top: 10px !important;
 }
+
+/* ===== PHONE HERO TEXT — MOVE DOWN ===== */
+@media (max-width: 600px) {
+  .hero {
+    --hero-text-y: 30px !important;
+  }
+}
