@@ -304,21 +304,27 @@
       try {
 
         const response =
-          await fetch(
-            VERIFY_PAYMENT_URL,
-            {
-              method: "POST",
+  await fetch(
+    VERIFY_PAYMENT_URL,
+    {
+      method: "POST",
 
-              headers: {
-                "Content-Type": "application/json"
-              },
+      headers: {
+        "Content-Type": "application/json",
 
-              body: JSON.stringify({
-                link_id: linkId,
-                order_id: orderId
-              })
-            }
-          );
+        "apikey":
+          window.SUPABASE_CONFIG.publishableKey,
+
+        "Authorization":
+          `Bearer ${window.SUPABASE_CONFIG.publishableKey}`
+      },
+
+      body: JSON.stringify({
+        link_id: linkId,
+        order_id: orderId
+      })
+    }
+  );
 
 
         const data =
