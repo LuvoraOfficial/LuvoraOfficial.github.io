@@ -432,4 +432,94 @@ h1 em{color:var(--primary);font-style:italic}
 }
 
 
+/* =========================================================
+   LUVORA TEMPLATES — COMPACT PROFESSIONAL TOP AREA
+   ========================================================= */
 
+.template-hero {
+  margin-top: 35px !important;
+}
+
+.template-hero .eyebrow {
+  margin-bottom: 12px !important;
+}
+
+.template-hero > p {
+  margin-top: 16px !important;
+  line-height: 1.5 !important;
+}
+
+.template-area {
+  margin-top: 38px !important;
+}
+
+.filter-row {
+  gap: 8px !important;
+  margin-bottom: 26px !important;
+}
+
+.filter {
+  padding: 8px 14px !important;
+}
+
+
+/* Keep first template row closer to filters */
+.template-grid {
+  gap: 38px 30px !important;
+}
+
+/* =========================================================
+   LUVORA TEMPLATES — DESKTOP CARD SIZE
+   ========================================================= */
+
+@media (min-width: 701px) {
+  .template-grid {
+    grid-template-columns: repeat(2, minmax(0, 430px)) !important;
+    gap: 34px 26px !important;
+  }
+
+  .template-card {
+    transform: scale(0.92);
+    transform-origin: top center;
+    margin-bottom: -5%;
+  }
+}
+/* =========================================================
+   DESKTOP — BRING TEMPLATE CARDS UP
+   ========================================================= */
+
+@media (min-width: 701px) {
+  .template-hero h1 {
+    font-size: clamp(46px, 5.8vw, 68px) !important;
+    line-height: 0.98 !important;
+  }
+
+  .template-hero > p {
+    margin-top: 14px !important;
+    line-height: 1.45 !important;
+  }
+
+  .template-area {
+    margin-top: 28px !important;
+  }
+
+  .filter-row {
+    margin-bottom: 18px !important;
+  }
+}
+@media (min-width: 701px) {
+  .template-hero > p {
+    max-width: 680px !important;
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+  }
+}
+
+/* TEMPLATE PAGE — MATCH NAVBAR WITH BACKGROUND */
+body {
+  background: #F3EBE1 !important;
+}
+
+.site-header {
+  background: #fffaf8 !important;
+}
