@@ -544,3 +544,11 @@ body {
     margin-bottom: 18px !important;
   }
 }
+/* ===== PHONE — KEEP HERO HEADING ON ONE LINE ===== */
+@media (max-width: 700px) {
+  .template-hero h1 {
+    font-size: 38px !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+}
