@@ -240,7 +240,7 @@ a:focus-visible {
   position: relative;
   width: min(1180px, calc(100% - 40px));
   margin: 0 auto;
-  padding: 120px 20px;
+  padding: 75px 20px;
 }
 
 .section-heading {
@@ -289,8 +289,8 @@ a:focus-visible {
 
 .birthday-hero {
   position: relative;
-  min-height: 100vh;
-  min-height: 100svh;
+  min-height: 82vh;
+  min-height: 82svh;
   display: grid;
   place-items: center;
   padding: 100px 24px;
@@ -477,12 +477,17 @@ a:focus-visible {
 
 .balloon-stage {
   position: relative;
-  min-height: 560px;
+  min-height: 460px;
   display: flex;
   align-items: flex-end;
   justify-content: center;
   gap: clamp(12px, 4vw, 60px);
-  padding: 40px 10px 80px;
+
+  /* Balloon area-এর ভিতরের spacing */
+  padding: 40px 10px 110px;
+
+  /* Balloon এবং নিচের content যেন overlap না করে */
+  margin-bottom: 70px;
 }
 
 .birthday-balloon {
@@ -600,36 +605,62 @@ a:focus-visible {
 }
 
 .balloon-message {
-  width: min(650px, 100%);
-  margin: 25px auto 0;
-  padding: 25px 30px;
-  border: 1px solid rgba(255, 210, 230, 0.12);
-  border-radius: 25px;
+  position: absolute;
+  z-index: 20;
+
+  width: min(360px, calc(100% - 24px));
+  padding: 18px 22px;
+
+  border: 1px solid rgba(255, 210, 230, 0.16);
+  border-radius: 20px;
+
   text-align: center;
-  background: rgba(255, 255, 255, 0.04);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.035)
+    );
+
   backdrop-filter: blur(20px);
+
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+
   opacity: 0;
-  transform: translateY(15px);
-  transition: 0.5s ease;
+  transform:
+    translateX(-50%)
+    translateY(10px)
+    scale(0.96);
+
+  pointer-events: none;
+
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s ease;
 }
 
 .balloon-message.visible {
   opacity: 1;
-  transform: translateY(0);
+  transform:
+    translateX(-50%)
+    translateY(0)
+    scale(1);
 }
 
 .message-heart {
   color: #ffb7d1;
-  font-size: 25px;
+  font-size: 22px;
 }
 
 .balloon-message p {
-  margin-top: 10px;
-  color: rgba(255, 237, 245, 0.82);
-  font-size: 17px;
-  line-height: 1.7;
+  margin-top: 8px;
+  color: rgba(255, 237, 245, 0.84);
+  font-size: 15px;
+  line-height: 1.6;
 }
-
 
 /* =========================================================
    08 — ENVELOPE / LOVE LETTER
@@ -781,13 +812,230 @@ a:focus-visible {
 
 
 /* =========================================================
-   09 — MEMORIES
+   MEMORY GALLERY — PREMIUM MEMORY BOOK
    ========================================================= */
 
 .memory-gallery {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
+  grid-template-columns: repeat(3, minmax(0, 270px));
+  justify-content: center;
+  gap: 30px;
+  perspective: 1200px;
+}
+
+/* =========================================================
+   MEMORY BOOK PAGE / PHOTO FRAME
+   ========================================================= */
+
+.memory-card {
+  position: relative;
+  overflow: hidden;
+
+  width: 100%;
+  aspect-ratio: 4 / 5;
+
+  padding: 10px;
+
+  border-radius: 8px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 250, 246, 0.98),
+      rgba(244, 228, 232, 0.96)
+    );
+
+  border: 1px solid rgba(255, 255, 255, 0.65);
+
+  box-shadow:
+    0 18px 35px rgba(0, 0, 0, 0.22),
+    0 5px 12px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+
+  transform:
+    translateY(0)
+    rotate(var(--memory-rotate, 0deg));
+
+  animation:
+    memoryFloat 6s ease-in-out infinite;
+
+  transition:
+    transform 0.45s ease,
+    box-shadow 0.45s ease;
+}
+
+/* Individual page angles */
+
+.memory-card:nth-child(1) {
+  --memory-rotate: -1.4deg;
+  animation-delay: -1s;
+}
+
+.memory-card:nth-child(2) {
+  --memory-rotate: 1deg;
+  animation-delay: -2.5s;
+}
+
+.memory-card:nth-child(3) {
+  --memory-rotate: -0.7deg;
+  animation-delay: -4s;
+}
+
+.memory-card:nth-child(4) {
+  --memory-rotate: 1.5deg;
+  animation-delay: -0.5s;
+}
+
+.memory-card:nth-child(5) {
+  --memory-rotate: -1deg;
+  animation-delay: -3s;
+}
+
+.memory-card:nth-child(6) {
+  --memory-rotate: 0.8deg;
+  animation-delay: -4.5s;
+}
+
+/* =========================================================
+   INNER PHOTO
+   ========================================================= */
+
+.memory-card img {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  border-radius: 4px;
+
+  transition:
+    transform 0.7s ease,
+    filter 0.7s ease;
+}
+
+/* =========================================================
+   SOFT PHOTO OVERLAY
+   ========================================================= */
+
+.memory-card::after {
+  content: "";
+
+  position: absolute;
+  inset: 10px;
+
+  z-index: 3;
+
+  border-radius: 4px;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.10),
+      transparent 30%,
+      rgba(20, 8, 15, 0.12)
+    );
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+}
+
+/* =========================================================
+   MEMORY PAGE CORNER
+   ========================================================= */
+
+.memory-card::before {
+  content: "";
+
+  position: absolute;
+
+  right: -1px;
+  bottom: -1px;
+
+  z-index: 4;
+
+  width: 32px;
+  height: 32px;
+
+  background:
+    linear-gradient(
+      135deg,
+      transparent 48%,
+      rgba(210, 185, 195, 0.65) 49%,
+      rgba(255, 248, 250, 0.98) 51%
+    );
+
+  border-radius: 0 0 8px 0;
+
+  pointer-events: none;
+}
+
+/* =========================================================
+   HOVER — LIFT THE MEMORY PAGE
+   ========================================================= */
+
+.memory-card:hover {
+  z-index: 10;
+
+  animation-play-state: paused;
+
+  transform:
+    translateY(-12px)
+    rotate(0deg)
+    scale(1.025);
+
+  box-shadow:
+    0 30px 55px rgba(0, 0, 0, 0.30),
+    0 8px 20px rgba(0, 0, 0, 0.15),
+    0 0 35px rgba(255, 190, 220, 0.12);
+}
+
+.memory-card:hover img {
+  transform: scale(1.055);
+}
+
+/* =========================================================
+   GENTLE FLOATING MOTION
+   ========================================================= */
+
+@keyframes memoryFloat {
+
+  0%,
+  100% {
+    transform:
+      translateY(0)
+      rotate(var(--memory-rotate, 0deg));
+  }
+
+  50% {
+    transform:
+      translateY(-7px)
+      rotate(
+        calc(var(--memory-rotate, 0deg) * 0.55)
+      );
+  }
+}
+
+/* =========================================================
+   REDUCE MOTION FOR ACCESSIBILITY
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .memory-card {
+    animation: none;
+  }
+
+  .memory-card img {
+    transition: none;
+  }
+
 }
 
 .memory-placeholder {
@@ -814,37 +1062,6 @@ a:focus-visible {
   font-size: 13px;
 }
 
-.memory-card {
-  position: relative;
-  overflow: hidden;
-  border-radius: 22px;
-  aspect-ratio: 4 / 5;
-  background: #21131d;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
-}
-
-.memory-card img {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-  transition: transform 0.7s ease;
-}
-
-.memory-card:hover img {
-  transform: scale(1.07);
-}
-
-.memory-card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    180deg,
-    transparent 50%,
-    rgba(15, 6, 12, 0.55)
-  );
-}
 
 
 /* =========================================================
@@ -874,6 +1091,28 @@ a:focus-visible {
   background: #090609;
   object-fit: contain;
 }
+
+/* =========================================================
+   DESKTOP PORTRAIT VIDEO — COMPACT DISPLAY
+   Landscape video remains unchanged.
+   Mobile remains completely untouched.
+   ========================================================= */
+
+@media (min-width: 801px) {
+
+  .birthday-video-wrapper.portrait-video {
+    width: min(400px, 100%);
+  }
+
+  .birthday-video-wrapper.portrait-video .birthday-video {
+    width: 100%;
+    min-height: 0;
+    aspect-ratio: 9 / 16;
+    object-fit: contain;
+  }
+
+}
+
 
 .video-placeholder {
   position: absolute;
@@ -911,7 +1150,7 @@ a:focus-visible {
 
 .cake-scene {
   position: relative;
-  min-height: 550px;
+  min-height: 450px;
   display: grid;
   place-items: center;
   perspective: 1400px;
@@ -1361,25 +1600,409 @@ a:focus-visible {
   }
 }
 
+/* =========================================================
+   PREMIUM 3D BIRTHDAY GIFT
+   ========================================================= */
+
 .birthday-wish-button {
+  position: relative;
+
+  width: 210px;
+  height: 190px;
+
+  margin: 35px auto 20px;
+
+  border: 0;
+  background: transparent;
+
+  cursor: pointer;
+
   display: block;
-  margin: 20px auto 0;
-  padding: 16px 26px;
-  border: 1px solid rgba(255, 218, 231, 0.2);
-  border-radius: 100px;
-  color: #fff;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 144, 184, 0.22),
-    rgba(144, 91, 145, 0.22)
-  );
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-  transition: 0.35s ease;
+
+  perspective: 900px;
+
+  filter:
+    drop-shadow(0 24px 25px rgba(0, 0, 0, 0.28));
+
+  transition:
+    transform 0.35s ease,
+    filter 0.35s ease;
+
+  animation: giftFloat 3.2s ease-in-out infinite;
 }
 
 .birthday-wish-button:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 45px rgba(255, 131, 176, 0.15);
+  transform: translateY(-6px) scale(1.03);
+
+  filter:
+    drop-shadow(0 30px 32px rgba(0, 0, 0, 0.34));
+}
+
+.birthday-wish-button:focus-visible {
+  outline: 2px solid rgba(255, 220, 235, 0.75);
+  outline-offset: 8px;
+  border-radius: 20px;
+}
+
+
+/* -------------------------
+   GIFT BODY
+   ------------------------- */
+
+.gift-box-body {
+  position: absolute;
+
+  left: 25px;
+  bottom: 15px;
+
+  width: 160px;
+  height: 112px;
+
+  border-radius: 8px 8px 14px 14px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #f9d7e5 0%,
+      #e8a9c3 45%,
+      #c87599 100%
+    );
+
+  box-shadow:
+    inset 8px 0 12px rgba(255, 255, 255, 0.18),
+    inset -10px -12px 18px rgba(80, 20, 45, 0.18),
+    0 14px 20px rgba(0, 0, 0, 0.22);
+
+  transform-style: preserve-3d;
+
+  transition:
+    transform 0.75s cubic-bezier(.2,.8,.2,1);
+}
+
+
+/* -------------------------
+   GIFT LID
+   ------------------------- */
+
+.gift-box-lid {
+  position: absolute;
+
+  z-index: 4;
+
+  left: 18px;
+  top: 48px;
+
+  width: 174px;
+  height: 38px;
+
+  border-radius: 8px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffe5ef 0%,
+      #eab1c9 45%,
+      #bd688e 100%
+    );
+
+  box-shadow:
+    inset 0 5px 8px rgba(255, 255, 255, 0.28),
+    inset -8px -7px 12px rgba(80, 20, 45, 0.18),
+    0 10px 15px rgba(0, 0, 0, 0.24);
+
+  transform-origin: bottom center;
+
+  transform-style: preserve-3d;
+
+  transition:
+    transform 0.85s cubic-bezier(.2,.8,.2,1),
+    top 0.85s cubic-bezier(.2,.8,.2,1);
+}
+
+
+/* -------------------------
+   RIBBONS
+   ------------------------- */
+
+.gift-ribbon-vertical {
+  position: absolute;
+
+  left: 50%;
+  top: 0;
+
+  width: 23px;
+  height: 100%;
+
+  transform: translateX(-50%);
+
+  background:
+    linear-gradient(
+      90deg,
+      #f7d37e,
+      #fff0b3,
+      #dca94f
+    );
+
+  box-shadow:
+    inset 2px 0 3px rgba(255,255,255,0.35),
+    inset -2px 0 3px rgba(90,60,15,0.18);
+}
+
+
+.gift-ribbon-horizontal {
+  position: absolute;
+
+  left: 0;
+  top: 43px;
+
+  width: 100%;
+  height: 18px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #f7d37e,
+      #fff0b3,
+      #dca94f
+    );
+
+  box-shadow:
+    inset 0 2px 3px rgba(255,255,255,0.35),
+    inset 0 -2px 3px rgba(90,60,15,0.18);
+}
+
+
+.gift-lid-ribbon {
+  position: absolute;
+
+  left: 50%;
+  top: 0;
+
+  width: 23px;
+  height: 100%;
+
+  transform: translateX(-50%);
+
+  background:
+    linear-gradient(
+      90deg,
+      #f7d37e,
+      #fff0b3,
+      #dca94f
+    );
+}
+
+
+/* -------------------------
+   TAP ME
+   ------------------------- */
+
+.gift-tap {
+  position: absolute;
+
+  left: 50%;
+  top: 43px;
+
+  transform: translateX(-50%);
+
+  z-index: 5;
+
+  color: #fffafc;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  letter-spacing: 2.5px;
+
+  white-space: nowrap;
+
+  text-shadow:
+    0 2px 5px rgba(70, 20, 40, 0.32);
+
+  animation:
+    tapPulse 1.8s ease-in-out infinite;
+}
+
+
+/* -------------------------
+   SPARKLES
+   ------------------------- */
+
+.gift-sparkle {
+  position: absolute;
+
+  z-index: 8;
+
+  color: #fff1b8;
+
+  text-shadow:
+    0 0 10px rgba(255, 230, 150, 0.75);
+
+  pointer-events: none;
+
+  opacity: 0;
+
+  animation:
+    giftSparkle 2.4s ease-in-out infinite;
+}
+
+.sparkle-one {
+  top: 34px;
+  right: 8px;
+  font-size: 21px;
+}
+
+.sparkle-two {
+  top: 92px;
+  left: 2px;
+  font-size: 15px;
+  animation-delay: 0.8s;
+}
+
+.sparkle-three {
+  bottom: 18px;
+  right: 2px;
+  font-size: 17px;
+  animation-delay: 1.4s;
+}
+
+
+/* =========================================================
+   GIFT OPEN STATE
+   ========================================================= */
+
+.birthday-wish-button.gift-open {
+  animation: none;
+}
+
+
+.birthday-wish-button.gift-open .gift-box-lid {
+  top: 8px;
+
+  transform:
+    translateY(-18px)
+    rotateX(62deg)
+    rotateZ(-4deg);
+}
+
+
+.birthday-wish-button.gift-open .gift-box-body {
+  transform:
+    translateY(7px)
+    scale(0.98);
+}
+
+
+.birthday-wish-button.gift-open .gift-tap {
+  opacity: 0;
+
+  transition:
+    opacity 0.25s ease;
+}
+
+
+.birthday-wish-button.gift-open .gift-sparkle {
+  opacity: 1;
+}
+
+
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+@keyframes giftFloat {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+
+@keyframes tapPulse {
+
+  0%,
+  100% {
+    opacity: 0.72;
+    transform: translateX(-50%) scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1.08);
+  }
+}
+
+
+@keyframes giftSparkle {
+
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.7) rotate(0deg);
+  }
+
+  35% {
+    opacity: 1;
+    transform: scale(1) rotate(18deg);
+  }
+
+  70% {
+    opacity: 0.35;
+    transform: scale(0.82) rotate(35deg);
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+  .birthday-wish-button {
+    width: 190px;
+    height: 175px;
+
+    margin-top: 28px;
+  }
+
+  .gift-box-body {
+    left: 22px;
+
+    width: 146px;
+    height: 103px;
+  }
+
+  .gift-box-lid {
+    left: 16px;
+
+    width: 158px;
+    height: 36px;
+
+    top: 45px;
+  }
+
+  .gift-ribbon-horizontal {
+    top: 40px;
+  }
+
+  .gift-tap {
+    top: 40px;
+
+    font-size: 12px;
+    letter-spacing: 2.2px;
+  }
+
+  .gift-ribbon-vertical,
+  .gift-lid-ribbon {
+    width: 21px;
+  }
 }
 
 .wish-message {
@@ -1538,7 +2161,7 @@ a:focus-visible {
    ========================================================= */
 
 .birthday-footer {
-  padding: 50px 20px 60px;
+  padding: 18px 20px 20px;
   text-align: center;
   background: rgba(0, 0, 0, 0.12);
 }
@@ -1576,7 +2199,7 @@ a:focus-visible {
 
   .birthday-section {
     width: min(100% - 24px, 700px);
-    padding: 90px 12px;
+    padding: 72px 12px;
   }
 
   .birthday-hero {
@@ -1779,19 +2402,14 @@ a:focus-visible {
 
 .customization-panel {
   max-width: 1100px;
-  margin: 80px auto;
-  padding: 70px 30px;
-  opacity: 0;
-  transform: translateY(35px);
-  pointer-events: none;
-  max-height: 0;
-  overflow: hidden;
-  transition:
-    opacity 0.6s ease,
-    transform 0.6s ease,
-    max-height 0.8s ease;
+  margin: 30px auto;
+  padding: 0px 30px;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  max-height: 1200px;
+  overflow: visible;
 }
-
 .customization-panel.active {
   opacity: 1;
   transform: translateY(0);
@@ -2113,6 +2731,17 @@ a:focus-visible {
   opacity: 0.85;
   transform: translateY(0);
 }
+
+/* PREVIEW MODE */
+
+body.preview-mode .customization-panel {
+  display: none;
+}
+
+body.preview-mode .preview-actions {
+  display: flex;
+}
+
 
 .preview-actions {
   display: none;
@@ -2526,3 +3155,3244 @@ a:focus-visible {
       scale(16);
   }
 }
+
+/* =========================================================
+   PORTRAIT VIDEO — PREMIUM BIRTHDAY DECORATION
+   DESKTOP ONLY
+   ========================================================= */
+
+.portrait-decoration {
+  display: none;
+}
+
+@media (min-width: 801px) {
+
+  .birthday-video-wrapper.portrait-video {
+    position: relative;
+    width: min(760px, 100%);
+    min-height: 560px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .birthday-video-wrapper.portrait-video .birthday-video {
+    position: relative;
+    z-index: 5;
+
+    width: 420px;
+    max-width: 100%;
+
+    min-height: 0;
+
+    aspect-ratio: 9 / 16;
+
+    object-fit: contain;
+
+    border-radius: 22px;
+
+    box-shadow:
+      0 25px 55px rgba(0, 0, 0, 0.35),
+      0 0 45px rgba(255, 170, 205, 0.08);
+  }
+
+
+  /* =====================================================
+     DECORATION CONTAINERS
+     ===================================================== */
+
+  .birthday-video-wrapper.portrait-video
+  .portrait-decoration {
+
+    position: absolute;
+
+    top: 50%;
+
+    display: block;
+
+    width: 145px;
+    height: 430px;
+
+    transform: translateY(-50%);
+
+    pointer-events: none;
+
+    z-index: 3;
+  }
+
+
+  .portrait-decoration-left {
+    left: 18px;
+  }
+
+
+  .portrait-decoration-right {
+    right: 18px;
+  }
+
+
+  /* =====================================================
+     BALLOON BUNCH
+     ===================================================== */
+
+  .balloon-bunch {
+
+    position: absolute;
+
+    top: 25px;
+    left: 50%;
+
+    width: 105px;
+    height: 155px;
+
+    transform: translateX(-50%);
+  }
+
+
+  .decor-balloon {
+
+    position: absolute;
+
+    width: 58px;
+    height: 74px;
+
+    border-radius:
+      50% 50% 46% 46%;
+
+    box-shadow:
+      inset 10px 8px 12px rgba(255,255,255,0.32),
+      inset -9px -10px 15px rgba(0,0,0,0.16),
+      0 12px 18px rgba(0,0,0,0.18);
+
+    animation:
+      balloonFloat 3.8s ease-in-out infinite;
+  }
+
+
+  /* Balloon highlight */
+
+  .decor-balloon::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 10px;
+    left: 13px;
+
+    width: 13px;
+    height: 22px;
+
+    border-radius: 50%;
+
+    background:
+      rgba(255,255,255,0.45);
+
+    filter: blur(1px);
+  }
+
+
+  /* Balloon knot */
+
+  .decor-balloon::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    bottom: -6px;
+
+    width: 9px;
+    height: 9px;
+
+    transform: translateX(-50%) rotate(45deg);
+
+    background: inherit;
+
+    border-radius: 2px;
+  }
+
+
+  /* Left bouquet */
+
+  .portrait-decoration-left
+  .decor-balloon:nth-child(1) {
+
+    left: 4px;
+    top: 35px;
+
+    transform: rotate(-18deg);
+
+    background:
+      linear-gradient(
+        145deg,
+        #ffd5e7,
+        #f58db8,
+        #c94f82
+      );
+
+    animation-delay: -0.4s;
+  }
+
+
+  .portrait-decoration-left
+  .decor-balloon:nth-child(2) {
+
+    left: 25px;
+    top: 5px;
+
+    transform: rotate(2deg);
+
+    background:
+      linear-gradient(
+        145deg,
+        #eadcff,
+        #b99bea,
+        #7659aa
+      );
+
+    animation-delay: -1.1s;
+  }
+
+
+  .portrait-decoration-left
+  .decor-balloon:nth-child(3) {
+
+    left: 52px;
+    top: 38px;
+
+    transform: rotate(18deg);
+
+    background:
+      linear-gradient(
+        145deg,
+        #fff0b0,
+        #f4c65c,
+        #c38b24
+      );
+
+    animation-delay: -1.8s;
+  }
+
+
+  /* Right bouquet */
+
+  .portrait-decoration-right
+  .decor-balloon:nth-child(1) {
+
+    left: 4px;
+    top: 38px;
+
+    transform: rotate(-18deg);
+
+    background:
+      linear-gradient(
+        145deg,
+        #ffe0cf,
+        #f4a37f,
+        #bd654a
+      );
+
+    animation-delay: -0.7s;
+  }
+
+
+  .portrait-decoration-right
+  .decor-balloon:nth-child(2) {
+
+    left: 25px;
+    top: 5px;
+
+    transform: rotate(2deg);
+
+    background:
+      linear-gradient(
+        145deg,
+        #d9f5ff,
+        #76cde8,
+        #3988a8
+      );
+
+    animation-delay: -1.4s;
+  }
+
+
+  .portrait-decoration-right
+  .decor-balloon:nth-child(3) {
+
+    left: 52px;
+    top: 38px;
+
+    transform: rotate(18deg);
+
+    background:
+      linear-gradient(
+        145deg,
+        #ffd5e7,
+        #f58db8,
+        #c94f82
+      );
+
+    animation-delay: -2.1s;
+  }
+
+
+  /* =====================================================
+     BALLOON STRINGS
+     ===================================================== */
+
+  .balloon-bunch::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    top: 105px;
+
+    width: 2px;
+    height: 115px;
+
+    transform:
+      translateX(-50%)
+      rotate(5deg);
+
+    background:
+      linear-gradient(
+        180deg,
+        rgba(255,220,235,0.55),
+        rgba(255,220,235,0)
+      );
+
+    opacity: 0.7;
+  }
+
+
+  /* =====================================================
+     FLOWERS
+     ===================================================== */
+
+  .decor-flower {
+
+    position: absolute;
+
+    font-size: 45px;
+
+    line-height: 1;
+
+    color: #ffd5e7;
+
+    text-shadow:
+      0 5px 12px rgba(0,0,0,0.2),
+      0 0 20px rgba(255,190,220,0.35);
+
+    filter:
+      drop-shadow(
+        0 8px 10px rgba(0,0,0,0.15)
+      );
+
+    animation:
+      flowerFloat 4.5s ease-in-out infinite;
+  }
+
+
+  .portrait-decoration-left .flower-one {
+
+    left: 15px;
+    bottom: 75px;
+
+    font-size: 52px;
+
+    color: #ffc4dc;
+
+    animation-delay: -1s;
+  }
+
+
+  .portrait-decoration-left .flower-two {
+
+    right: 2px;
+    bottom: 145px;
+
+    font-size: 32px;
+
+    color: #e5c8ff;
+
+    animation-delay: -2.5s;
+  }
+
+
+  .portrait-decoration-right .flower-one {
+
+    right: 12px;
+    bottom: 75px;
+
+    font-size: 52px;
+
+    color: #ffd0b8;
+
+    animation-delay: -1.5s;
+  }
+
+
+  .portrait-decoration-right .flower-two {
+
+    left: 2px;
+    bottom: 145px;
+
+    font-size: 32px;
+
+    color: #bfeaff;
+
+    animation-delay: -3s;
+  }
+
+
+  /* =====================================================
+     SPARKLES
+     ===================================================== */
+
+  .decor-sparkle {
+
+    position: absolute;
+
+    color: rgba(255,235,245,0.85);
+
+    text-shadow:
+      0 0 12px rgba(255,210,230,0.8);
+
+    animation:
+      sparkleFloat 2.8s ease-in-out infinite;
+  }
+
+
+  .portrait-decoration-left .sparkle-one {
+
+    right: 5px;
+    top: 215px;
+
+    font-size: 24px;
+  }
+
+
+  .portrait-decoration-left .sparkle-two {
+
+    left: 8px;
+    top: 275px;
+
+    font-size: 15px;
+
+    animation-delay: -1.2s;
+  }
+
+
+  .portrait-decoration-right .sparkle-one {
+
+    left: 5px;
+    top: 215px;
+
+    font-size: 24px;
+
+    animation-delay: -0.8s;
+  }
+
+
+  .portrait-decoration-right .sparkle-two {
+
+    right: 8px;
+    top: 275px;
+
+    font-size: 15px;
+
+    animation-delay: -1.8s;
+  }
+
+
+  /* =====================================================
+     ANIMATIONS
+     ===================================================== */
+
+  @keyframes balloonFloat {
+
+    0%,
+    100% {
+      margin-top: 0;
+    }
+
+    50% {
+      margin-top: -9px;
+    }
+  }
+
+
+  @keyframes flowerFloat {
+
+    0%,
+    100% {
+      transform:
+        translateY(0)
+        rotate(-4deg)
+        scale(1);
+    }
+
+    50% {
+      transform:
+        translateY(-8px)
+        rotate(5deg)
+        scale(1.04);
+    }
+  }
+
+
+  @keyframes sparkleFloat {
+
+    0%,
+    100% {
+      opacity: 0.35;
+      transform: scale(0.75);
+    }
+
+    50% {
+      opacity: 1;
+      transform: scale(1.15);
+    }
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE — NO PORTRAIT DECORATION
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+  .portrait-decoration {
+    display: none !important;
+  }
+
+}
+
+/* =========================================================
+   LUVORA — INTERACTIVE MEMORY BOOK
+   STEP 2 — PREMIUM DIARY DESIGN
+   ========================================================= */
+
+
+/* =========================================================
+   MEMORY BOOK AREA
+   ========================================================= */
+
+.memory-book-area {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 55px;
+  padding: 20px;
+  perspective: 1800px;
+}
+
+
+/* =========================================================
+   BOOK
+   ========================================================= */
+
+.memory-book {
+  position: relative;
+
+  width: min(920px, 100%);
+  height: 650px;
+
+  transform-style: preserve-3d;
+
+  filter:
+    drop-shadow(0 30px 45px rgba(0, 0, 0, 0.28));
+}
+
+
+/* =========================================================
+   FRONT COVER
+   ========================================================= */
+
+.memory-cover {
+  position: absolute;
+  inset: 0;
+
+  z-index: 20;
+
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 55px;
+
+  border-radius: 10px 20px 20px 10px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #321c2b 0%,
+      #4a263a 42%,
+      #2a1825 100%
+    );
+
+  border: 1px solid rgba(255, 255, 255, 0.14);
+
+  box-shadow:
+    inset 10px 0 20px rgba(0, 0, 0, 0.20),
+    inset -2px 0 5px rgba(255, 255, 255, 0.08),
+    0 25px 55px rgba(0, 0, 0, 0.32);
+
+  transform-origin: left center;
+
+  backface-visibility: hidden;
+
+  transition:
+    transform 1.2s cubic-bezier(0.77, 0, 0.18, 1),
+    box-shadow 0.8s ease;
+}
+
+
+/* =========================================================
+   COVER INNER BORDER
+   ========================================================= */
+
+.memory-cover::before {
+  content: "";
+
+  position: absolute;
+  inset: 18px;
+
+  border: 1px solid rgba(255, 220, 235, 0.22);
+
+  border-radius: 7px;
+
+  pointer-events: none;
+}
+
+
+.memory-cover::after {
+  content: "";
+
+  position: absolute;
+  inset: 28px;
+
+  border: 1px solid rgba(255, 220, 235, 0.08);
+
+  border-radius: 5px;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   COVER CONTENT
+   ========================================================= */
+
+.cover-inner {
+  position: relative;
+  z-index: 4;
+
+  text-align: center;
+
+  transform: translateY(-30px);
+}
+
+
+.cover-eyebrow {
+  display: block;
+
+  margin-bottom: 18px;
+
+  color: rgba(255, 220, 235, 0.65);
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 5px;
+}
+
+
+.cover-inner h3 {
+  margin: 0;
+
+  color: #fff4f8;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: clamp(44px, 6vw, 70px);
+
+  line-height: 0.98;
+
+  font-weight: 400;
+
+  letter-spacing: -1px;
+
+  text-shadow:
+    0 5px 18px rgba(0, 0, 0, 0.30);
+}
+
+
+.cover-line {
+  width: 90px;
+  height: 1px;
+
+  margin: 25px auto 22px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 210, 230, 0.75),
+      transparent
+    );
+}
+
+
+.cover-inner p {
+  margin: 0;
+
+  color: rgba(255, 225, 235, 0.68);
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 15px;
+
+  line-height: 1.7;
+
+  font-style: italic;
+}
+
+
+.cover-flower {
+  margin-top: 25px;
+
+  color: rgba(255, 205, 225, 0.65);
+
+  font-size: 25px;
+
+  animation:
+    memoryFlowerFloat 4s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   COVER DECORATIONS
+   ========================================================= */
+
+.cover-decoration {
+  position: absolute;
+
+  color: rgba(255, 210, 230, 0.45);
+
+  font-size: 26px;
+
+  z-index: 3;
+}
+
+
+.cover-decoration-top {
+  top: 48px;
+  left: 55px;
+
+  animation:
+    memorySparkle 3s ease-in-out infinite;
+}
+
+
+.cover-decoration-bottom {
+  right: 55px;
+  bottom: 48px;
+
+  animation:
+    memorySparkle 3s ease-in-out infinite 1.2s;
+}
+
+
+/* =========================================================
+   PAGE HINT
+   ========================================================= */
+
+.memory-book-hint {
+  position: absolute;
+
+  z-index: 8;
+
+  left: 50%;
+  bottom: 30px;
+
+  transform: translateX(-50%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 5px;
+
+  width: max-content;
+
+  color: rgba(255, 230, 240, 0.65);
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size: 12px;
+
+  letter-spacing: 1.5px;
+
+  text-align: center;
+}
+
+
+.memory-book-hint small {
+  display: block;
+
+  color: rgba(255, 220, 235, 0.42);
+
+  font-size: 9px;
+
+  letter-spacing: 0.5px;
+}
+
+
+.hint-arrow {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 34px;
+  height: 22px;
+
+  font-size: 20px;
+
+  animation:
+    memoryArrowMove 1.7s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   MEMORY PAGES
+   ========================================================= */
+
+.memory-page {
+  position: absolute;
+  inset: 0;
+
+  z-index: 5;
+
+  overflow: hidden;
+
+  padding: 45px 55px 55px;
+
+  border-radius: 10px 20px 20px 10px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fffdfb,
+      #f8eef1 52%,
+      #f3e4e9
+    );
+
+  border: 1px solid rgba(255, 255, 255, 0.9);
+
+  box-shadow:
+    inset 0 0 35px rgba(120, 60, 80, 0.06),
+    0 18px 35px rgba(0, 0, 0, 0.15);
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transform:
+    rotateY(-8deg)
+    translateX(20px);
+
+  transform-origin: left center;
+
+  transition:
+    opacity 0.6s ease,
+    transform 0.8s cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+
+/* =========================================================
+   ACTIVE PAGE
+   ========================================================= */
+
+.memory-page.active {
+  opacity: 1;
+
+  pointer-events: auto;
+
+  transform:
+    rotateY(0deg)
+    translateX(0);
+}
+
+
+/* =========================================================
+   PAPER TEXTURE
+   ========================================================= */
+
+.memory-page::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  opacity: 0.35;
+
+  background:
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(120, 70, 90, 0.05),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 80% 80%,
+      rgba(120, 70, 90, 0.04),
+      transparent 35%
+    );
+}
+
+
+/* =========================================================
+   PAGE INNER BORDER
+   ========================================================= */
+
+.memory-page::after {
+  content: "";
+
+  position: absolute;
+  inset: 18px;
+
+  border: 1px solid rgba(130, 70, 95, 0.12);
+
+  border-radius: 6px;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   PAGE CONTENT
+   ========================================================= */
+
+.memory-page-content {
+  position: relative;
+
+  z-index: 4;
+
+  width: 100%;
+  height: 100%;
+}
+
+
+/* =========================================================
+   PHOTO SLOTS
+   ========================================================= */
+
+.memory-photo-slot {
+  position: absolute;
+
+  width: 270px;
+  height: 205px;
+
+  padding: 8px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #fffefa,
+      #f4e7ea
+    );
+
+  border: 1px solid rgba(110, 70, 85, 0.12);
+
+  box-shadow:
+    0 14px 25px rgba(50, 20, 35, 0.16),
+    0 4px 8px rgba(50, 20, 35, 0.08);
+
+  transition:
+    transform 0.5s ease,
+    box-shadow 0.5s ease;
+}
+
+
+.memory-photo-slot::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 4px;
+
+  border: 1px solid rgba(130, 80, 100, 0.08);
+
+  pointer-events: none;
+}
+
+
+.memory-photo-slot img {
+  position: relative;
+
+  z-index: 2;
+
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  border-radius: 2px;
+
+  filter:
+    saturate(0.94)
+    contrast(0.98);
+
+  transition:
+    transform 0.7s ease,
+    filter 0.7s ease;
+}
+
+
+.memory-photo-slot:hover {
+  z-index: 10;
+
+  transform:
+    translateY(-7px)
+    rotate(0deg)
+    scale(1.035);
+
+  box-shadow:
+    0 22px 38px rgba(50, 20, 35, 0.23);
+}
+
+
+.memory-photo-slot:hover img {
+  transform: scale(1.035);
+
+  filter:
+    saturate(1)
+    contrast(1);
+}
+
+
+/* =========================================================
+   PHOTO POSITIONS
+   ========================================================= */
+
+.photo-slot-top {
+  top: 42px;
+  left: 30px;
+
+  transform: rotate(-3deg);
+}
+
+
+.photo-slot-bottom {
+  right: 30px;
+  bottom: 48px;
+
+  transform: rotate(3deg);
+}
+
+
+/* =========================================================
+   QUOTES
+   ========================================================= */
+
+.memory-quote {
+  position: absolute;
+
+  width: 245px;
+
+  color: #70475a;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 14px;
+
+  line-height: 1.65;
+
+  font-style: italic;
+
+  text-align: center;
+}
+
+
+.quote-top {
+  top: 70px;
+  right: 55px;
+}
+
+
+.quote-bottom {
+  left: 55px;
+  bottom: 70px;
+}
+
+
+.memory-quote p {
+  margin: 8px 0 0;
+}
+
+
+.quote-decoration {
+  display: block;
+
+  font-size: 20px;
+
+  line-height: 1;
+}
+
+
+/* =========================================================
+   PAGE NUMBER
+   ========================================================= */
+
+.memory-page-number {
+  position: absolute;
+
+  z-index: 10;
+
+  bottom: 20px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  color: rgba(100, 60, 80, 0.48);
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size: 10px;
+
+  letter-spacing: 2px;
+}
+
+
+/* =========================================================
+   NEXT BUTTON
+   ========================================================= */
+
+.memory-next-button {
+  position: absolute;
+
+  z-index: 12;
+
+  right: 28px;
+  bottom: 18px;
+
+  border: none;
+
+  background: transparent;
+
+  color: rgba(105, 60, 80, 0.65);
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 12px;
+
+  font-style: italic;
+
+  cursor: pointer;
+
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+
+.memory-next-button:hover {
+  color: #70475a;
+
+  transform: translateX(4px);
+}
+
+
+/* =========================================================
+   BACK COVER
+   ========================================================= */
+
+.memory-back-cover {
+  position: absolute;
+  inset: 0;
+
+  z-index: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px 20px 20px 10px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #321c2b,
+      #4a263a,
+      #2a1825
+    );
+
+  box-shadow:
+    inset 0 0 35px rgba(0, 0, 0, 0.20);
+}
+
+
+.back-cover-inner {
+  text-align: center;
+
+  color: rgba(255, 225, 235, 0.72);
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-style: italic;
+}
+
+
+.back-cover-inner p {
+  margin: 20px 0;
+
+  font-size: 18px;
+
+  line-height: 1.7;
+}
+
+
+.back-cover-inner span {
+  font-size: 25px;
+}
+
+
+.back-cover-flower {
+  font-size: 25px;
+}
+
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+@keyframes memoryArrowMove {
+
+  0%,
+  100% {
+    transform: translateX(0);
+    opacity: 0.55;
+  }
+
+  50% {
+    transform: translateX(8px);
+    opacity: 1;
+  }
+
+}
+
+
+@keyframes memorySparkle {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+
+  50% {
+    transform: scale(1.18);
+    opacity: 0.9;
+  }
+
+}
+
+
+@keyframes memoryFlowerFloat {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-5px) rotate(3deg);
+  }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .memory-cover,
+  .memory-page,
+  .memory-photo-slot,
+  .memory-cover-hint,
+  .memory-book-hint {
+    transition: none;
+    animation: none;
+  }
+
+}
+
+/* =========================================================
+   MEMORY BOOK — COVER OPEN FIX
+   ========================================================= */
+
+.memory-cover.memory-cover-open {
+  transform:
+    rotateY(-155deg);
+
+  box-shadow:
+    inset 10px 0 20px rgba(0, 0, 0, 0.18),
+    18px 20px 35px rgba(0, 0, 0, 0.18);
+}
+
+
+/* Make the first page visible after cover opens */
+
+
+
+/* Keep the hint clickable */
+
+.memory-book-hint {
+  cursor: pointer;
+
+  user-select: none;
+}
+
+
+/* Small visual feedback */
+
+.memory-book-hint:hover {
+  color: rgba(255, 240, 246, 0.95);
+}
+
+.memory-book-hint:hover .hint-arrow {
+  transform: translateX(10px);
+}
+
+/* =========================================================
+   LUVORA — MEMORY BOOK
+   INNER PAGE ROMANTIC DECORATION
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   SOFT PAPER GLOW
+   --------------------------------------------------------- */
+
+.memory-page {
+  background:
+    radial-gradient(
+      circle at 12% 10%,
+      rgba(255, 205, 220, 0.32),
+      transparent 24%
+    ),
+    radial-gradient(
+      circle at 88% 88%,
+      rgba(220, 195, 220, 0.22),
+      transparent 26%
+    ),
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(255, 255, 255, 0.75),
+      transparent 65%
+    ),
+    linear-gradient(
+      135deg,
+      #fffdfb,
+      #fbf0f3 52%,
+      #f5e8ed
+    );
+}
+
+
+/* ---------------------------------------------------------
+   DECORATION LAYER
+   --------------------------------------------------------- */
+
+.memory-page .memory-page-content::before,
+.memory-page .memory-page-content::after {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+}
+
+
+/* ---------------------------------------------------------
+   TOP LEFT FLORAL DECOR
+   --------------------------------------------------------- */
+
+.memory-page-1 .memory-page-content::before {
+  content: "🌹  ❀";
+  top: -18px;
+  left: -18px;
+
+  font-size: 48px;
+  line-height: 1;
+
+  opacity: 0.38;
+
+  transform:
+    rotate(-18deg);
+
+  filter:
+    drop-shadow(0 5px 8px rgba(90, 45, 65, 0.15));
+
+  animation:
+    memoryCornerFloat 5s ease-in-out infinite;
+}
+
+
+/* ---------------------------------------------------------
+   PAGE 1 — BOTTOM RIGHT FLOWER
+   --------------------------------------------------------- */
+
+.memory-page-1 .memory-page-content::after {
+  content: "✿  🌿";
+  right: -12px;
+  bottom: -14px;
+
+  font-size: 46px;
+
+  opacity: 0.28;
+
+  transform:
+    rotate(12deg);
+
+  animation:
+    memoryCornerFloat 6s ease-in-out infinite reverse;
+}
+
+
+/* ---------------------------------------------------------
+   PAGE 2 — TOP RIGHT FLORAL DECOR
+   --------------------------------------------------------- */
+
+.memory-page-2 .memory-page-content::before {
+  content: "🌸  ❀";
+  top: -15px;
+  right: -12px;
+
+  font-size: 46px;
+
+  opacity: 0.34;
+
+  transform:
+    rotate(15deg);
+
+  animation:
+    memoryCornerFloat 5.5s ease-in-out infinite;
+}
+
+
+/* ---------------------------------------------------------
+   PAGE 2 — BOTTOM LEFT
+   --------------------------------------------------------- */
+
+.memory-page-2 .memory-page-content::after {
+  content: "🌿  ✿";
+  left: -15px;
+  bottom: -12px;
+
+  font-size: 44px;
+
+  opacity: 0.27;
+
+  transform:
+    rotate(-12deg);
+
+  animation:
+    memoryCornerFloat 6s ease-in-out infinite reverse;
+}
+
+
+/* ---------------------------------------------------------
+   PAGE 3 — ROMANTIC ROSES
+   --------------------------------------------------------- */
+
+.memory-page-3 .memory-page-content::before {
+  content: "🌹  ✿  🌹";
+  top: -14px;
+  left: 50%;
+
+  transform:
+    translateX(-50%)
+    rotate(-2deg);
+
+  font-size: 40px;
+
+  letter-spacing: 5px;
+
+  opacity: 0.32;
+
+  animation:
+    memoryRoseFloat 5s ease-in-out infinite;
+}
+
+
+/* ---------------------------------------------------------
+   PAGE 3 — BOTTOM ROMANTIC DECOR
+   --------------------------------------------------------- */
+
+.memory-page-3 .memory-page-content::after {
+  content: "✧  🦋  ✧";
+  bottom: -12px;
+  left: 50%;
+
+  transform:
+    translateX(-50%);
+
+  font-size: 34px;
+
+  letter-spacing: 8px;
+
+  opacity: 0.30;
+
+  animation:
+    memoryButterflyFloat 5s ease-in-out infinite;
+}
+
+
+/* ---------------------------------------------------------
+   SMALL FLOATING BUTTERFLIES
+   --------------------------------------------------------- */
+
+.memory-page-1::before {
+  content: "🦋";
+  position: absolute;
+
+  top: 26px;
+  right: 24px;
+
+  font-size: 20px;
+
+  opacity: 0.38;
+
+  z-index: 2;
+
+  pointer-events: none;
+
+  animation:
+    memoryButterflyFloat 6s ease-in-out infinite;
+}
+
+
+.memory-page-2::before {
+  content: "🦋";
+  position: absolute;
+
+  bottom: 30px;
+  right: 25px;
+
+  font-size: 19px;
+
+  opacity: 0.34;
+
+  z-index: 2;
+
+  pointer-events: none;
+
+  animation:
+    memoryButterflyFloat 6.5s ease-in-out infinite;
+}
+
+
+.memory-page-3::before {
+  content: "🦋";
+  position: absolute;
+
+  top: 32px;
+  left: 25px;
+
+  font-size: 19px;
+
+  opacity: 0.35;
+
+  z-index: 2;
+
+  pointer-events: none;
+
+  animation:
+    memoryButterflyFloat 6s ease-in-out infinite reverse;
+}
+
+
+/* ---------------------------------------------------------
+   TINY SPARKLES
+   --------------------------------------------------------- */
+
+.memory-page-1 .memory-page-number::before,
+.memory-page-2 .memory-page-number::before,
+.memory-page-3 .memory-page-number::before {
+  content: "✦";
+  position: absolute;
+
+  left: -38px;
+  top: -2px;
+
+  font-size: 13px;
+
+  color: rgba(145, 85, 115, 0.45);
+
+  animation:
+    memorySparkle 3s ease-in-out infinite;
+}
+
+
+.memory-page-1 .memory-page-number::after,
+.memory-page-2 .memory-page-number::after,
+.memory-page-3 .memory-page-number::after {
+  content: "✧";
+  position: absolute;
+
+  right: -38px;
+  top: -2px;
+
+  font-size: 12px;
+
+  color: rgba(145, 85, 115, 0.38);
+
+  animation:
+    memorySparkle 3.5s ease-in-out infinite 1s;
+}
+
+
+/* ---------------------------------------------------------
+   PHOTO FRAME ENHANCEMENT
+   --------------------------------------------------------- */
+
+.memory-photo-slot {
+  border-radius: 4px;
+
+  box-shadow:
+    0 16px 28px rgba(60, 25, 45, 0.15),
+    0 4px 10px rgba(60, 25, 45, 0.08),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+
+  background:
+    linear-gradient(
+      145deg,
+      #fffefa,
+      #f8e9ed
+    );
+}
+
+
+/* little elegant corner mark */
+
+.memory-photo-slot::after {
+  content: "✧";
+
+  position: absolute;
+
+  right: 7px;
+  top: 5px;
+
+  font-size: 12px;
+
+  color: rgba(130, 75, 100, 0.38);
+
+  z-index: 5;
+
+  pointer-events: none;
+}
+
+
+/* ---------------------------------------------------------
+   QUOTE ENHANCEMENT
+   --------------------------------------------------------- */
+
+.memory-quote {
+  padding: 10px 12px;
+
+  border-top:
+    1px solid rgba(130, 75, 100, 0.12);
+
+  border-bottom:
+    1px solid rgba(130, 75, 100, 0.10);
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.30),
+      transparent
+    );
+
+  border-radius: 50%;
+}
+
+
+.memory-quote p {
+  text-shadow:
+    0 1px 1px rgba(255, 255, 255, 0.7);
+}
+
+
+/* ---------------------------------------------------------
+   QUOTE DECORATION
+   --------------------------------------------------------- */
+
+.quote-decoration {
+  filter:
+    drop-shadow(
+      0 3px 5px rgba(100, 50, 75, 0.14)
+    );
+
+  animation:
+    memoryTinyFloat 4s ease-in-out infinite;
+}
+
+
+/* ---------------------------------------------------------
+   SOFT PETAL DOTS
+   --------------------------------------------------------- */
+
+.memory-page-content {
+  overflow: visible;
+}
+
+
+.memory-page-content > .memory-photo-slot::before {
+  border-radius: 3px;
+}
+
+
+/* ---------------------------------------------------------
+   ANIMATIONS
+   --------------------------------------------------------- */
+
+@keyframes memoryCornerFloat {
+
+  0%,
+  100% {
+    transform:
+      translateY(0)
+      rotate(-12deg);
+  }
+
+  50% {
+    transform:
+      translateY(-6px)
+      rotate(-8deg);
+  }
+
+}
+
+
+@keyframes memoryRoseFloat {
+
+  0%,
+  100% {
+    transform:
+      translateX(-50%)
+      translateY(0)
+      rotate(-2deg);
+  }
+
+  50% {
+    transform:
+      translateX(-50%)
+      translateY(-5px)
+      rotate(2deg);
+  }
+
+}
+
+
+@keyframes memoryButterflyFloat {
+
+  0%,
+  100% {
+    transform:
+      translateX(0)
+      translateY(0)
+      rotate(0deg);
+  }
+
+  50% {
+    transform:
+      translateX(5px)
+      translateY(-8px)
+      rotate(4deg);
+  }
+
+}
+
+
+@keyframes memoryTinyFloat {
+
+  0%,
+  100% {
+    transform:
+      translateY(0);
+  }
+
+  50% {
+    transform:
+      translateY(-3px);
+  }
+
+}
+
+
+/* ---------------------------------------------------------
+   MOBILE — KEEP DECORATION SUBTLE
+   --------------------------------------------------------- */
+
+@media (max-width: 800px) {
+
+  .memory-page-1 .memory-page-content::before,
+  .memory-page-1 .memory-page-content::after,
+  .memory-page-2 .memory-page-content::before,
+  .memory-page-2 .memory-page-content::after,
+  .memory-page-3 .memory-page-content::before,
+  .memory-page-3 .memory-page-content::after {
+
+    font-size: 30px;
+    opacity: 0.22;
+
+  }
+
+  .memory-page-1::before,
+  .memory-page-2::before,
+  .memory-page-3::before {
+
+    font-size: 15px;
+    opacity: 0.25;
+
+  }
+
+}
+
+/* =========================================================
+   LUVORA — MEMORY BOOK
+   PREMIUM DECORATION BOOST
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   RICHER PAGE BACKGROUND
+   --------------------------------------------------------- */
+
+.memory-page {
+  background:
+    radial-gradient(
+      circle at 8% 8%,
+      rgba(191, 104, 137, 0.16),
+      transparent 25%
+    ),
+    radial-gradient(
+      circle at 92% 92%,
+      rgba(155, 108, 145, 0.14),
+      transparent 27%
+    ),
+    radial-gradient(
+      circle at 50% 45%,
+      rgba(255, 255, 255, 0.92),
+      transparent 58%
+    ),
+    linear-gradient(
+      135deg,
+      #fffdfb 0%,
+      #f9edf1 48%,
+      #f2e1e8 100%
+    );
+
+  box-shadow:
+    inset 0 0 55px rgba(111, 56, 78, 0.08),
+    inset 0 0 8px rgba(255, 255, 255, 0.9),
+    0 18px 35px rgba(55, 25, 40, 0.16);
+}
+
+
+/* ---------------------------------------------------------
+   INNER GOLDEN / ROSE BORDER
+   --------------------------------------------------------- */
+
+.memory-page::after {
+  inset: 16px;
+
+  border:
+    1px solid rgba(132, 67, 91, 0.20);
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.45);
+
+  border-radius: 7px;
+}
+
+
+/* ---------------------------------------------------------
+   PAGE 1 — STRONGER ROSE
+   --------------------------------------------------------- */
+
+.memory-page-1 .memory-page-content::before {
+  content: "🌹  ❀";
+
+  top: -20px;
+  left: -18px;
+
+  font-size: 55px;
+
+  opacity: 0.68;
+
+  filter:
+    drop-shadow(0 5px 7px rgba(91, 39, 60, 0.20));
+
+  transform: rotate(-16deg);
+}
+
+
+.memory-page-1 .memory-page-content::after {
+  content: "✿  🌿";
+
+  right: -13px;
+  bottom: -16px;
+
+  font-size: 52px;
+
+  opacity: 0.55;
+
+  filter:
+    drop-shadow(0 5px 8px rgba(91, 39, 60, 0.18));
+
+  transform: rotate(12deg);
+}
+
+
+/* ---------------------------------------------------------
+   PAGE 2 — FLORAL CORNERS
+   --------------------------------------------------------- */
+
+.memory-page-2 .memory-page-content::before {
+  content: "🌸  ❀";
+
+  top: -17px;
+  right: -12px;
+
+  font-size: 54px;
+
+  opacity: 0.62;
+
+  filter:
+    drop-shadow(0 5px 8px rgba(91, 39, 60, 0.18));
+
+  transform: rotate(14deg);
+}
+
+
+.memory-page-2 .memory-page-content::after {
+  content: "🌿  ✿";
+
+  left: -14px;
+  bottom: -15px;
+
+  font-size: 51px;
+
+  opacity: 0.52;
+
+  filter:
+    drop-shadow(0 5px 8px rgba(91, 39, 60, 0.18));
+
+  transform: rotate(-12deg);
+}
+
+
+/* ---------------------------------------------------------
+   PAGE 3 — HERO FLORAL DECOR
+   --------------------------------------------------------- */
+
+.memory-page-3 .memory-page-content::before {
+  content: "🌹  ✿  🌹";
+
+  top: -18px;
+  left: 50%;
+
+  font-size: 46px;
+
+  letter-spacing: 6px;
+
+  opacity: 0.62;
+
+  filter:
+    drop-shadow(0 5px 8px rgba(91, 39, 60, 0.20));
+
+  transform:
+    translateX(-50%)
+    rotate(-2deg);
+}
+
+
+.memory-page-3 .memory-page-content::after {
+  content: "✧  🦋  ✧";
+
+  bottom: -14px;
+  left: 50%;
+
+  font-size: 38px;
+
+  letter-spacing: 10px;
+
+  opacity: 0.55;
+
+  filter:
+    drop-shadow(0 4px 7px rgba(91, 39, 60, 0.16));
+
+  transform: translateX(-50%);
+}
+
+
+/* ---------------------------------------------------------
+   BUTTERFLIES — MORE VISIBLE
+   --------------------------------------------------------- */
+
+.memory-page-1::before {
+  font-size: 24px;
+  opacity: 0.62;
+
+  filter:
+    drop-shadow(0 4px 5px rgba(90, 45, 70, 0.18));
+}
+
+
+.memory-page-2::before {
+  font-size: 23px;
+  opacity: 0.58;
+
+  filter:
+    drop-shadow(0 4px 5px rgba(90, 45, 70, 0.18));
+}
+
+
+.memory-page-3::before {
+  font-size: 23px;
+  opacity: 0.60;
+
+  filter:
+    drop-shadow(0 4px 5px rgba(90, 45, 70, 0.18));
+}
+
+
+/* ---------------------------------------------------------
+   PHOTO FRAMES — PREMIUM
+   --------------------------------------------------------- */
+
+.memory-photo-slot {
+
+  padding: 9px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #fffefa 0%,
+      #f8eaee 55%,
+      #ead6de 100%
+    );
+
+  border:
+    1px solid rgba(125, 66, 88, 0.20);
+
+  box-shadow:
+    0 20px 35px rgba(57, 26, 42, 0.20),
+    0 6px 12px rgba(57, 26, 42, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+
+}
+
+
+/* PHOTO INNER FRAME */
+
+.memory-photo-slot::before {
+
+  inset: 5px;
+
+  border:
+    1px solid rgba(145, 76, 101, 0.16);
+
+}
+
+
+/* ---------------------------------------------------------
+   QUOTES — MORE LUXURIOUS
+   --------------------------------------------------------- */
+
+.memory-quote {
+
+  color: #623c50;
+
+  font-size: 14px;
+
+  text-shadow:
+    0 1px 1px rgba(255, 255, 255, 0.9);
+
+  border-top:
+    1px solid rgba(128, 67, 91, 0.18);
+
+  border-bottom:
+    1px solid rgba(128, 67, 91, 0.15);
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.55),
+      transparent
+    );
+
+}
+
+
+/* ---------------------------------------------------------
+   QUOTE SYMBOLS
+   --------------------------------------------------------- */
+
+.quote-decoration {
+
+  font-size: 23px;
+
+  opacity: 0.88;
+
+  filter:
+    drop-shadow(0 3px 5px rgba(95, 43, 67, 0.18));
+
+}
+
+
+/* ---------------------------------------------------------
+   PAGE NUMBERS
+   --------------------------------------------------------- */
+
+.memory-page-number {
+
+  color:
+    rgba(105, 56, 77, 0.68);
+
+  font-weight: 600;
+
+  letter-spacing: 3px;
+
+}
+
+
+/* ---------------------------------------------------------
+   PAGE BUTTON — MORE ELEGANT
+   --------------------------------------------------------- */
+
+.memory-next-button {
+
+  color:
+    rgba(96, 49, 70, 0.78);
+
+  font-size: 13px;
+
+  text-shadow:
+    0 1px 1px rgba(255, 255, 255, 0.8);
+
+}
+
+
+.memory-next-button:hover {
+
+  color:
+    #63384f;
+
+  transform:
+    translateX(6px);
+
+}
+
+
+/* ---------------------------------------------------------
+   DECORATIVE SPARKLES
+   --------------------------------------------------------- */
+
+.memory-page-1 .memory-page-number::before,
+.memory-page-2 .memory-page-number::before,
+.memory-page-3 .memory-page-number::before {
+
+  color:
+    rgba(151, 91, 116, 0.75);
+
+  font-size: 14px;
+
+}
+
+
+.memory-page-1 .memory-page-number::after,
+.memory-page-2 .memory-page-number::after,
+.memory-page-3 .memory-page-number::after {
+
+  color:
+    rgba(151, 91, 116, 0.68);
+
+  font-size: 13px;
+
+}
+
+
+/* ---------------------------------------------------------
+   PREMIUM FLOATING EFFECT
+   --------------------------------------------------------- */
+
+.memory-page-1 .memory-page-content::before,
+.memory-page-2 .memory-page-content::before,
+.memory-page-3 .memory-page-content::before {
+
+  animation:
+    premiumFloralFloat 5s ease-in-out infinite;
+
+}
+
+
+@keyframes premiumFloralFloat {
+
+  0%,
+  100% {
+    filter:
+      drop-shadow(
+        0 5px 7px rgba(91, 39, 60, 0.18)
+      );
+  }
+
+  50% {
+    transform:
+      translateY(-5px)
+      scale(1.025)
+      rotate(1deg);
+
+    filter:
+      drop-shadow(
+        0 9px 13px rgba(91, 39, 60, 0.24)
+      );
+  }
+
+}
+
+
+/* ---------------------------------------------------------
+   MOBILE — KEEP IT CLEAN
+   --------------------------------------------------------- */
+
+@media (max-width: 800px) {
+
+  .memory-page-1 .memory-page-content::before,
+  .memory-page-1 .memory-page-content::after,
+  .memory-page-2 .memory-page-content::before,
+  .memory-page-2 .memory-page-content::after,
+  .memory-page-3 .memory-page-content::before,
+  .memory-page-3 .memory-page-content::after {
+
+    font-size: 34px;
+    opacity: 0.42;
+
+  }
+
+}
+
+/* =========================================================
+   REALISTIC BIRTHDAY CAKE — FINAL OVERRIDE
+   ========================================================= */
+
+/* ---------- Cake stage ---------- */
+
+.cake-scene {
+  position: relative !important;
+  width: 100% !important;
+  min-height: 540px !important;
+
+  display: grid !important;
+  place-items: center !important;
+
+  perspective: none !important;
+  overflow: visible !important;
+
+  transform: none !important;
+}
+
+
+/* ---------- Soft romantic glow ---------- */
+
+.cake-glow {
+  position: absolute !important;
+
+  width: min(520px, 85vw) !important;
+  height: 240px !important;
+
+  left: 50% !important;
+  top: 58% !important;
+
+  transform: translate(-50%, -50%) !important;
+
+  border-radius: 50% !important;
+
+  background:
+    radial-gradient(
+      ellipse,
+      rgba(255, 185, 215, 0.24) 0%,
+      rgba(255, 145, 190, 0.10) 45%,
+      transparent 75%
+    ) !important;
+
+  filter: blur(40px) !important;
+
+  pointer-events: none !important;
+}
+
+
+/* =========================================================
+   CAKE IMAGE WRAPPER
+   ========================================================= */
+
+.birthday-cake {
+  position: relative !important;
+
+ width: min(434px, 61.6vw) !important; 
+ height: auto !important;
+ aspect-ratio: 1 / 1 !important;
+
+  margin: 0 auto !important;
+
+  transform: none !important;
+  transform-style: flat !important;
+
+  animation: realisticCakeFloat 5s ease-in-out infinite !important;
+
+  isolation: isolate !important;
+}
+
+
+/* ---------- Actual cake image ---------- */
+
+.birthday-cake-image {
+  position: absolute !important;
+
+  inset: 0 !important;
+
+  display: block !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  object-fit: contain !important;
+
+  user-select: none !important;
+  -webkit-user-drag: none !important;
+
+  pointer-events: none !important;
+
+  z-index: 1 !important;
+}
+
+
+/* ---------- Gentle floating ---------- */
+
+@keyframes realisticCakeFloat {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+
+}
+
+
+/* =========================================================
+   OLD 3D CAKE PARTS — HIDE THEM
+   ========================================================= */
+
+.birthday-cake > .cake-top,
+.birthday-cake > .cake-middle,
+.birthday-cake > .cake-bottom,
+.birthday-cake > .cake-plate {
+  display: none !important;
+}
+
+
+/* =========================================================
+   PERSONALIZED CAKE WRITING
+   ========================================================= */
+
+.cake-personal-message {
+  position: absolute !important;
+
+  /*
+    Blank cake-top area অনুযায়ী position.
+    Image-এর সঙ্গে একই wrapper-এর ভিতরে থাকায়
+    cake move করলে writing-ও একসাথে move করবে.
+  */
+
+ left: 50% !important;
+top: 40% !important;
+
+  transform:
+    translate(-50%, -50%)
+    rotate(-1.5deg)
+    scaleY(0.92) !important;
+
+  z-index: 5 !important;
+
+width: 38% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  text-align: center !important;
+
+  pointer-events: none !important;
+
+  color: #8d1727 !important;
+
+  /*
+    Slight softness যাতে flat digital text না লাগে.
+  */
+
+  text-shadow:
+    0 1px 1px rgba(255,255,255,.65),
+    0 1px 2px rgba(95,20,25,.14) !important;
+}
+
+
+.cake-message-main {
+  display: block !important;
+
+  font-family:
+    "Brush Script MT",
+    "Segoe Script",
+    cursive !important;
+
+font-size: clamp(14px, 2.4vw, 25px) !important; 
+
+  font-weight: 600 !important;
+
+  line-height: 1.05 !important;
+
+  white-space: nowrap !important;
+}
+
+
+.cake-message-name {
+ display: block !important;
+  margin-top: 1px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+text-align: center !important;
+
+  font-family:
+    "Brush Script MT",
+    "Segoe Script",
+    cursive !important;
+
+font-size: clamp(10px, 2.5vw, 25px) !important;
+
+  font-weight: 600 !important;
+
+  line-height: 1 !important;
+
+  white-space: nowrap !important;
+
+  overflow: hidden !important;
+
+text-overflow: clip !important;
+}
+
+
+/* =========================================================
+   CANDLE INTERACTION LAYER
+   ========================================================= */
+
+.cake-candles {
+  position: absolute !important;
+
+  inset: 0 !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  display: block !important;
+
+  transform: none !important;
+
+  z-index: 20 !important;
+
+  pointer-events: none !important;
+}
+
+
+/*
+   The PNG already contains the candles.
+   So these buttons are ONLY invisible touch zones.
+*/
+
+.cake-candle {
+  position: absolute !important;
+
+  display: block !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  border: 0 !important;
+  outline: 0 !important;
+
+  background: transparent !important;
+
+  box-shadow: none !important;
+
+  cursor: pointer !important;
+
+  pointer-events: auto !important;
+
+  z-index: 21 !important;
+
+  appearance: none !important;
+
+  -webkit-appearance: none !important;
+}
+
+
+/* Remove old candle drawing */
+
+.cake-candle::before,
+.cake-candle::after {
+  display: none !important;
+
+  content: none !important;
+}
+
+
+/* =========================================================
+   3 CANDLE POSITIONS
+   Based on the supplied cake image
+   ========================================================= */
+
+
+/* LEFT CANDLE */
+
+.cake-candle.candle-one {
+  left: 58.0% !important;
+  top: -4.0% !important;
+
+  width: 7.0% !important;
+  height: 25.5% !important;
+}
+
+
+/* MIDDLE CANDLE */
+
+.cake-candle.candle-two {
+  left: 63.4% !important;
+  top: -6.0% !important;
+
+  width: 7.2% !important;
+  height: 26.5% !important;
+}
+
+
+/* RIGHT CANDLE */
+
+.cake-candle.candle-three {
+  left: 68.7% !important;
+  top: -4.0% !important;
+
+  width: 7.0% !important;
+  height: 25.5% !important;
+}
+
+
+/* =========================================================
+   REALISTIC FLAMES
+   ========================================================= */
+
+.candle-flame {
+  position: absolute !important;
+
+  left: 50% !important;
+  top: 0 !important;
+
+  width: 15px !important;
+  height: 25px !important;
+
+ 
+  transform-origin: 50% 90% !important;
+
+  border-radius:
+    55% 45% 55% 45% !important;
+
+  background:
+    radial-gradient(
+      ellipse at 50% 72%,
+      #fffbe8 0%,
+      #fff3a3 27%,
+      #ffc44d 53%,
+      #ff7b32 76%,
+      rgba(255,92,45,0.15) 100%
+    ) !important;
+
+  box-shadow:
+    0 0 5px rgba(255,180,60,.85),
+    0 0 13px rgba(255,130,40,.62),
+    0 0 24px rgba(255,90,35,.30) !important;
+
+  filter: saturate(1.05) !important;
+
+  pointer-events: none !important;
+
+  animation: candleFlameFlicker 0.8s ease-in-out infinite alternate !important;
+}
+
+
+/* Inner flame */
+
+.candle-flame::after {
+  content: "" !important;
+
+  position: absolute !important;
+
+  left: 50% !important;
+  bottom: 3px !important;
+
+  width: 6px !important;
+  height: 12px !important;
+
+  transform:
+    translateX(-50%)
+    rotate(2deg) !important;
+
+  border-radius: 50% 50% 45% 45% !important;
+
+  background:
+    radial-gradient(
+      ellipse,
+      #ffffff 0%,
+      #fff9d0 55%,
+      #ffd56a 100%
+    ) !important;
+
+  filter: blur(.2px) !important;
+}
+
+
+/* Flame movement */
+
+@keyframes candleFlameFlicker {
+
+  0% {
+    transform:
+      translate(-50%, -78%)
+      rotate(-4deg)
+      scale(0.94);
+  }
+
+  35% {
+    transform:
+      translate(-50%, -80%)
+      rotate(3deg)
+      scale(1.02);
+  }
+
+  70% {
+    transform:
+      translate(-50%, -79%)
+      rotate(-2deg)
+      scale(0.98);
+  }
+
+  100% {
+    transform:
+      translate(-50%, -82%)
+      rotate(4deg)
+      scale(1.06);
+  }
+
+}
+
+
+/* =========================================================
+   WHEN CANDLE IS BLOWN
+   ========================================================= */
+
+.cake-candle.blown .candle-flame {
+  opacity: 0 !important;
+
+  visibility: hidden !important;
+
+  animation: none !important;
+
+  transform:
+    translate(-50%, -65%)
+    scale(0.2) !important;
+
+  transition:
+    opacity .25s ease,
+    transform .35s ease !important;
+}
+
+
+/*
+   Existing JS also creates realistic smoke.
+   Keep it above the cake.
+*/
+
+.realistic-candle-smoke {
+  z-index: 9999 !important;
+  pointer-events: none !important;
+}
+
+
+/* =========================================================
+   MAGICAL REVEAL — KEEP EXISTING EFFECT
+   ========================================================= */
+
+.cake-scene.magical-reveal .birthday-cake {
+  animation:
+    realisticCakeFloat 5s ease-in-out infinite,
+    cakeMagicalPulse 1.4s ease-in-out !important;
+}
+
+
+@keyframes cakeMagicalPulse {
+
+  0% {
+    filter:
+      brightness(1)
+      drop-shadow(0 20px 35px rgba(0,0,0,.18));
+  }
+
+  45% {
+    filter:
+      brightness(1.12)
+      drop-shadow(
+        0 0 32px rgba(255,180,215,.55)
+      );
+  }
+
+  100% {
+    filter:
+      brightness(1)
+      drop-shadow(0 20px 35px rgba(0,0,0,.18));
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  .cake-scene {
+    min-height: 430px !important;
+
+    padding:
+      10px 0 20px !important;
+
+    transform: none !important;
+  }
+
+
+  .birthday-cake {
+    width: min(470px, 96vw) !important;
+
+    aspect-ratio: 1 / 1 !important;
+  }
+
+
+  .cake-glow {
+    width: 80vw !important;
+    height: 170px !important;
+  }
+
+
+  .cake-message-main {
+    font-size: clamp(15px, 4.3vw, 23px) !important;
+  }
+
+
+  .cake-message-name {
+    font-size: clamp(18px, 5vw, 27px) !important;
+  }
+
+
+  .cake-candle.candle-one {
+    left: 58.0% !important;
+    top: 3.0% !important;
+
+    width: 7.0% !important;
+    height: 18.5% !important;
+  }
+
+
+  .cake-candle.candle-two {
+    left: 63.2% !important;
+    top: 1.0% !important;
+
+    width: 7.0% !important;
+    height: 19.5% !important;
+  }
+
+
+  .cake-candle.candle-three {
+    left: 68.5% !important;
+    top: 3.0% !important;
+
+    width: 7.0% !important;
+    height: 18.5% !important;
+  }
+
+
+  .candle-flame {
+    width: 12px !important;
+    height: 21px !important;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+  .cake-scene {
+    min-height: 370px !important;
+  }
+
+
+  .birthday-cake {
+    width: 98vw !important;
+  }
+
+
+  .cake-message-main {
+    font-size: 14px !important;
+  }
+
+
+  .cake-message-name {
+    font-size: 17px !important;
+  }
+
+
+  .candle-flame {
+    width: 10px !important;
+    height: 18px !important;
+  }
+
+}
+
+/* =========================================================
+   MOBILE BALLOONS — FIXED SLOTS + PERSISTENT MESSAGES
+   Desktop balloon behaviour remains unchanged.
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+  .balloon-stage {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    align-items: stretch !important;
+    justify-items: center !important;
+    gap: 18px 12px !important;
+    min-height: 0 !important;
+    padding: 18px 6px 125px !important;
+    margin-bottom: 35px !important;
+  }
+
+  .mobile-balloon-unit {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    height: 225px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .mobile-balloon-unit:nth-child(5) {
+    grid-column: 1 / -1;
+    width: min(100%, 165px);
+  }
+
+  .mobile-balloon-unit .birthday-balloon {
+    flex: 0 0 auto;
+    margin: 0 !important;
+    z-index: 2;
+  }
+
+  .mobile-balloon-unit .balloon-string {
+    height: 150px;
+  }
+
+  .mobile-balloon-message {
+    position: absolute;
+    z-index: 5;
+    left: 50%;
+    top: 0;
+    width: min(100%, 165px);
+    padding: 10px 10px 11px;
+    border: 1px solid rgba(255, 210, 230, 0.16);
+    border-radius: 14px;
+    text-align: center;
+    background: linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.09),
+      rgba(255, 255, 255, 0.035)
+    );
+    backdrop-filter: blur(16px);
+    box-shadow:
+      0 12px 28px rgba(0, 0, 0, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.10);
+    opacity: 0;
+    transform: translate(-50%, 8px) scale(0.94);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    pointer-events: none;
+  }
+
+  .mobile-balloon-message.visible {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+
+  .mobile-balloon-message .message-heart {
+    display: block;
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  .mobile-balloon-message p {
+    margin: 5px 0 0;
+    color: rgba(255, 237, 245, 0.84);
+    font-size: 11px;
+    line-height: 1.38;
+  }
+
+  /* The old single-message card is replaced by one card per balloon. */
+  .balloon-message:not(.mobile-final-balloon-message) {
+    display: none !important;
+  }
+
+  /* Final completion message stays separate from the five saved messages. */
+  .balloon-message.mobile-final-balloon-message {
+    display: block !important;
+    width: min(310px, calc(100% - 24px));
+    padding: 13px 15px;
+    top: 100% !important;
+    left: 50% !important;
+    transform: translate(-50%, 18px) scale(0.96);
+  }
+
+  .balloon-message.mobile-final-balloon-message.visible {
+    transform: translate(-50%, 18px) scale(1);
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .mobile-balloon-unit {
+    height: 210px;
+  }
+
+  .mobile-balloon-message {
+    width: min(100%, 150px);
+    padding: 9px 8px 10px;
+  }
+
+  .mobile-balloon-message p {
+    font-size: 10.5px;
+    line-height: 1.36;
+  }
+
+}
+
+/* =========================================================
+   MOBILE MEMORY DIARY — SAME 920:650 DESKTOP RATIO
+   The book is scaled as one complete object, so its internal
+   layout/functionality does not get stretched vertically.
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+  .memory-book-area {
+    overflow: hidden;
+    padding: 12px 0;
+    margin-top: 30px;
+  }
+
+  .memory-book {
+    width: 920px;
+    height: 650px;
+    transform-origin: center center;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE MEMORY DIARY — LANDSCAPE COMPACT RATIO
+   Keep the complete diary/design/functionality unchanged;
+   only reduce its vertical dimension on mobile.
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+  .memory-book {
+    transform: scaleY(0.98) !important;
+    transform-origin: center center !important;
+  }
+
+}
+
+@media (max-width: 800px) {
+
+  .photo-slot-top {
+    left: 10px !important;
+  }
+
+  .photo-slot-bottom {
+    right: 10px !important;
+  }
+
+  .quote-top {
+    right: 25px !important;
+  }
+
+  .quote-bottom {
+    left: 25px !important;
+  }
+
+}
+
+/* ===== FINAL CANDLE ALIGNMENT FIX ===== */
+
+.cake-candles {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+  transform: none !important;
+  pointer-events: none !important;
+  z-index: 20 !important;
+}
+
+/* Left candle */
+.cake-candle.candle-one {
+  left: 32% !important;
+  top: 5% !important;
+  width: 5% !important;
+  height: 18.5% !important;
+}
+
+/* Middle candle */
+.cake-candle.candle-two {
+  left: 48% !important;
+  top: 0% !important;
+  width: 5% !important;
+  height: 19.5% !important;
+}
+
+/* Right candle */
+.cake-candle.candle-three {
+  left: 65% !important;
+  top: 5% !important;
+  width: 5% !important;
+  height: 18.5% !important;
+}
+
+/* Flame alignment */
+
+/* Realistic burnt candle wick */
+
+.cake-candle .candle-flame::before {
+  content: "";
+  position: absolute;
+
+  left: 50%;
+  bottom: -5px;
+
+  width: 3px;
+  height: 8px;
+
+  transform: translateX(-50%);
+
+  background: linear-gradient(
+    to bottom,
+    #17100e 0%,
+    #29201b 65%,
+    #493027 100%
+  );
+
+  border-radius: 2px 2px 1px 1px;
+
+  z-index: 3;
+}
+
+/* Slight dark burnt area at the wick tip */
+
+.cake-candle .candle-flame {
+  filter: saturate(1.05);
+}
+
+.cake-candle .candle-flame::after {
+  box-shadow: 0 0 2px rgba(255, 180, 60, 0.3);
+}
+
+/* Make the entire candle button, including the flame area, clickable */
+.cake-candles .cake-candle {
+  pointer-events: auto !important;
+  overflow: visible !important;
+}
+
+.cake-candles .candle-flame {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+/* =====================================
+   LUVORA — MOBILE PERSONALIZE FIX
+   ===================================== */
+
+@media (max-width: 700px) {
+
+  .customization-panel,
+  .customization-panel.active {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin: 30px auto;
+    padding: 20px 12px;
+    box-sizing: border-box;
+  }
+
+  .customization-inner {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin: 0 auto;
+    padding: 25px 14px;
+    box-sizing: border-box;
+  }
+
+  .customization-inner *,
+  .customization-inner *::before,
+  .customization-inner *::after {
+    box-sizing: border-box;
+    min-width: 0;
+  }
+
+  .customization-form {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+    max-width: 100%;
+    gap: 18px;
+  }
+
+  .form-group,
+  .form-group.full-width {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    grid-column: 1 / -1;
+  }
+
+  .form-group input {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  /* Image upload previews */
+  .custom-photo-preview {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    gap: 8px;
+    overflow: hidden;
+  }
+
+  .custom-photo-item {
+    flex: 0 0 62px;
+    width: 62px;
+    height: 62px;
+    min-width: 62px;
+    max-width: 62px;
+  }
+
+  .custom-photo-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Uploaded video filename */
+  .custom-video-name {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    white-space: normal;
+    box-sizing: border-box;
+  }
+
+  /* Preview button */
+  #previewSurpriseButton {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+}
+
