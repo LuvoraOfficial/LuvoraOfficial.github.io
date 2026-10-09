@@ -54,7 +54,7 @@ const BIRTHDAY_CONFIG = {
 
   name: "My Love",
 
-  date: "A very special day",
+  date: "",
 
   /* Balloon messages */
 
@@ -276,7 +276,7 @@ const letterRecipient =
   document.querySelector(".letter-recipient");
 
 const memoryGallery =
-  document.getElementById("memoryGallery");
+  document.getElementById("memoryBook");
 
 const birthdayVideo =
   document.getElementById("birthdayVideo");
@@ -304,10 +304,6 @@ const floatingHearts =
 
 const confettiContainer =
   document.getElementById("confettiContainer");
-
-const replayButton =
-  document.getElementById("replayButton");
-
 
 /* =========================================================
    03 — INITIAL CUSTOMER DATA
@@ -386,11 +382,44 @@ if (startSurpriseButton) {
 
 let poppedBalloons = 0;
 
+if (balloonStage && balloonMessage) {
+  balloonStage.appendChild(balloonMessage);
+}
+
+/* =========================================================
+   MOBILE BALLOON LAYOUT
+   Each balloon gets its own fixed slot so popping one
+   never moves or replaces another balloon's message.
+   Desktop keeps the original single-message system.
+   ========================================================= */
+
+function setupMobileBalloonLayout() {
+
+  if (!balloonStage || window.innerWidth > 800) {
+    return;
+  }
+
+  balloons.forEach((balloon, index) => {
+
+    if (balloon.parentElement?.classList.contains("mobile-balloon-unit")) {
+      return;
+    }
+
+    const unit = document.createElement("div");
+    unit.className = "mobile-balloon-unit";
+    unit.dataset.balloonIndex = String(index);
+
+    balloon.parentNode.insertBefore(unit, balloon);
+    unit.appendChild(balloon);
+
+  });
+}
+
+setupMobileBalloonLayout();
+
 balloons.forEach((balloon, index) => {
 
   balloon.addEventListener("click", () => {
-
-    /* Prevent clicking the same balloon twice */
 
     if (balloon.classList.contains("popped")) {
       return;
@@ -398,52 +427,125 @@ balloons.forEach((balloon, index) => {
 
     poppedBalloons++;
 
-    /* Get message */
-
     const message =
       balloon.dataset.message ||
       BIRTHDAY_CONFIG.balloonMessages[index] ||
       "You are incredibly special. ❤️";
 
-    /* Show message */
+    /* =====================================================
+       MOBILE — KEEP EVERY POPPED MESSAGE
+       ===================================================== */
 
-    if (balloonMessageText) {
-      balloonMessageText.textContent =
-        message;
+    if (window.innerWidth <= 800) {
+
+      const unit =
+        balloon.closest(".mobile-balloon-unit");
+
+      if (unit && !unit.querySelector(".mobile-balloon-message")) {
+
+        const messageCard = document.createElement("div");
+        messageCard.className = "mobile-balloon-message";
+        messageCard.setAttribute("aria-live", "polite");
+
+        const heart = document.createElement("span");
+        heart.className = "message-heart";
+        heart.textContent = "♡";
+
+        const text = document.createElement("p");
+        text.textContent = message;
+
+        messageCard.appendChild(heart);
+        messageCard.appendChild(text);
+        unit.appendChild(messageCard);
+
+        requestAnimationFrame(() => {
+          messageCard.classList.add("visible");
+        });
+      }
+
+    } else {
+
+      if (balloonMessageText) {
+        balloonMessageText.textContent = message;
+      }
+
+      /*
+       * Desktop keeps the original single-message behaviour.
+       */
+      if (balloonStage && balloonMessage) {
+
+        const balloonRect =
+          balloon.getBoundingClientRect();
+
+      const stageRect =
+        balloonStage.getBoundingClientRect();
+
+      const messageLeft =
+        balloonRect.left -
+        stageRect.left +
+        balloonRect.width / 2;
+
+      const messageTop =
+        balloonRect.top -
+        stageRect.top -
+        125;
+
+      balloonMessage.style.left =
+        `${messageLeft}px`;
+
+        balloonMessage.style.top =
+          `${Math.max(20, messageTop)}px`;
+      }
+
+      if (balloonMessage) {
+        balloonMessage.classList.remove("visible");
+
+        requestAnimationFrame(() => {
+          balloonMessage.classList.add("visible");
+        });
+      }
     }
-
-    if (balloonMessage) {
-      balloonMessage.classList.add("visible");
-    }
-
-    /* Pop animation */
 
     balloon.classList.add("popped");
 
-    /* Small celebration */
-
     createFloatingHearts(3);
-
     createMiniConfetti(12);
 
-    /* After all balloons */
-
+    /*
+     * Keep the last balloon's own message visible
+     * for a while before showing the final message.
+     */
     if (poppedBalloons === balloons.length) {
 
       setTimeout(() => {
 
-        if (balloonMessageText) {
-
-          balloonMessageText.textContent =
-            "You found every little message. But this is only the beginning... 💖";
-
+        if (balloonMessage) {
+          balloonMessage.classList.remove("visible");
         }
 
-        createFloatingHearts(10);
-        createMiniConfetti(30);
+        setTimeout(() => {
 
-      }, 600);
+          if (balloonMessageText) {
+            balloonMessageText.textContent =
+              "You found every little message. But this is only the beginning... 💖";
+          }
 
+          if (balloonMessage) {
+            if (window.innerWidth <= 800) {
+              balloonMessage.classList.add("mobile-final-balloon-message");
+              balloonMessage.style.left = "50%";
+              balloonMessage.style.top = "100%";
+            }
+
+            balloonMessage.classList.add("visible");
+          }
+
+          createFloatingHearts(10);
+          createMiniConfetti(30);
+
+        }, 450);
+
+      }, 2300);
     }
 
   });
@@ -477,26 +579,39 @@ if (loveEnvelope) {
 
 }
 
-
 /* =========================================================
-   07 — MEMORY GALLERY
+   07 — MEMORY BOOK
    ========================================================= */
 
 function loadCustomerPhotosFromURL() {
-  const params = new URLSearchParams(window.location.search);
-  const photos = params.get("photos");
+
+  const params =
+    new URLSearchParams(window.location.search);
+
+  const photos =
+    params.get("photos");
 
   if (!photos) return;
 
-  const photoList = photos
-    .split(",")
-    .map(photo => photo.trim())
-    .filter(photo => photo);
+  const photoList =
+    photos
+      .split(",")
+      .map(photo => photo.trim())
+      .filter(photo => photo);
 
   if (photoList.length > 0) {
-    BIRTHDAY_CONFIG.photos = photoList;
+
+    BIRTHDAY_CONFIG.photos =
+      photoList.slice(0, 6);
+
   }
+
 }
+
+
+/* =========================================================
+   LOAD PHOTOS INTO MEMORY BOOK
+   ========================================================= */
 
 function loadMemoryGallery() {
 
@@ -504,46 +619,558 @@ function loadMemoryGallery() {
     return;
   }
 
-  /* If there are no customer photos,
-     keep the beautiful placeholder. */
+  const photoSlots =
+    memoryGallery.querySelectorAll(
+      ".memory-photo-slot img"
+    );
 
-  if (
-    !BIRTHDAY_CONFIG.photos ||
-    BIRTHDAY_CONFIG.photos.length === 0
-  ) {
+  if (!photoSlots.length) {
     return;
   }
 
-  memoryGallery.innerHTML = "";
+  const photos =
+    BIRTHDAY_CONFIG.photos || [];
 
-  BIRTHDAY_CONFIG.photos
-    .slice(0, 6)
-    .forEach((photo, index) => {
+  /*
+    Maximum 6 photos:
 
-      const card =
-        document.createElement("div");
+    Photo 1 + 2 → Page 1
+    Photo 3 + 4 → Page 2
+    Photo 5 + 6 → Page 3
+  */
 
-      card.className =
-        "memory-card";
+  photoSlots.forEach((image, index) => {
 
-      const image =
-        document.createElement("img");
+    if (photos[index]) {
 
-      image.src = photo;
+      image.src =
+        photos[index];
 
       image.alt =
         `Birthday memory ${index + 1}`;
 
-      image.loading = "lazy";
+    }
 
-      card.appendChild(image);
-
-      memoryGallery.appendChild(card);
-
-    });
+  });
 
 }
 
+/* =========================================================
+   MEMORY BOOK — INTERACTION ENGINE
+   ========================================================= */
+
+function initMemoryBook() {
+
+  const bookArea =
+    document.getElementById("memoryBookArea");
+
+  const book =
+    document.getElementById("memoryBook");
+
+  const cover =
+    document.getElementById("memoryCover");
+
+  const backCover =
+    document.getElementById("memoryBackCover");
+
+  if (
+    !bookArea ||
+    !book ||
+    !cover ||
+    !backCover
+  ) {
+    console.warn(
+      "Memory Book elements were not found."
+    );
+    return;
+  }
+
+
+  const pages =
+    Array.from(
+      book.querySelectorAll(".memory-page")
+    );
+
+
+  if (!pages.length) {
+    console.warn(
+      "Memory Book pages were not found."
+    );
+    return;
+  }
+
+
+  /* =======================================================
+     STATE
+
+     0 = Cover
+     1 = Page 1
+     2 = Page 2
+     3 = Page 3
+     4 = Back Cover
+     ======================================================= */
+
+  let currentPage = 0;
+
+  /* =======================================================
+     MOBILE DIARY SCALE
+     Keep the complete diary interaction/layout intact.
+     On mobile only, compress the visual height to create
+     a wider landscape presentation. Desktop is untouched.
+     ======================================================= */
+
+  function updateMobileMemoryBookScale() {
+
+    if (window.innerWidth <= 800) {
+
+      const availableWidth =
+        Math.max(300, window.innerWidth - 24);
+
+      const scale =
+        Math.min(1, availableWidth / 920);
+
+      book.style.zoom = String(scale);
+
+      bookArea.style.minHeight =
+        `${650 * scale * 0.8 + 24}px`;
+
+    } else {
+
+      book.style.zoom = "";
+      bookArea.style.minHeight = "";
+
+    }
+  }
+
+  updateMobileMemoryBookScale();
+
+  window.addEventListener(
+    "resize",
+    updateMobileMemoryBookScale,
+    { passive: true }
+  );
+
+
+  /* =======================================================
+     INITIAL STATE
+     ======================================================= */
+
+  function setInitialState() {
+
+    currentPage = 0;
+
+    cover.classList.remove(
+      "memory-cover-open"
+    );
+
+    cover.style.display = "flex";
+    cover.style.pointerEvents = "auto";
+
+    pages.forEach(page => {
+
+      page.classList.remove("active");
+
+      page.style.opacity = "0";
+      page.style.pointerEvents = "none";
+
+    });
+
+    backCover.style.opacity = "0";
+    backCover.style.pointerEvents = "none";
+
+  }
+
+
+  setInitialState();
+
+
+  /* =======================================================
+     OPEN COVER
+     ======================================================= */
+
+  function openMemoryBook() {
+
+    if (currentPage !== 0) {
+      return;
+    }
+
+    currentPage = 1;
+
+    cover.classList.add(
+      "memory-cover-open"
+    );
+
+
+    /*
+      Wait until the cover has started
+      opening before showing Page 1.
+    */
+
+    setTimeout(() => {
+
+      pages.forEach((page, index) => {
+
+        if (index === 0) {
+
+          page.classList.add("active");
+
+          page.style.opacity = "1";
+          page.style.pointerEvents = "auto";
+
+        } else {
+
+          page.classList.remove("active");
+
+          page.style.opacity = "0";
+          page.style.pointerEvents = "none";
+
+        }
+
+      });
+
+    }, 450);
+
+  }
+
+
+  /* =======================================================
+     SHOW PAGE
+     ======================================================= */
+
+  function showPage(pageNumber) {
+
+    if (
+      pageNumber < 1 ||
+      pageNumber > 3
+    ) {
+      return;
+    }
+
+
+    currentPage = pageNumber;
+
+
+    /* Hide back cover */
+
+    backCover.style.opacity = "0";
+    backCover.style.pointerEvents = "none";
+
+
+    /* Show selected page */
+
+    pages.forEach((page, index) => {
+
+      if (index === pageNumber - 1) {
+
+        page.classList.add("active");
+
+        page.style.opacity = "1";
+        page.style.pointerEvents = "auto";
+
+      } else {
+
+        page.classList.remove("active");
+
+        page.style.opacity = "0";
+        page.style.pointerEvents = "none";
+
+      }
+
+    });
+
+  }
+
+
+  /* =======================================================
+     SHOW BACK COVER
+     ======================================================= */
+
+  function showBackCover() {
+
+    currentPage = 4;
+
+
+    pages.forEach(page => {
+
+      page.classList.remove("active");
+
+      page.style.opacity = "0";
+      page.style.pointerEvents = "none";
+
+    });
+
+
+    backCover.style.opacity = "1";
+    backCover.style.pointerEvents = "auto";
+
+  }
+
+
+  /* =======================================================
+     COVER CLICK
+     ======================================================= */
+
+  cover.addEventListener(
+    "click",
+    function(event) {
+
+      event.preventDefault();
+      event.stopPropagation();
+
+      openMemoryBook();
+
+    }
+  );
+
+
+  /* =======================================================
+     NEXT BUTTONS
+     ======================================================= */
+
+  const nextButtons =
+    book.querySelectorAll(
+      ".memory-next-button"
+    );
+
+
+  nextButtons.forEach(button => {
+
+    button.addEventListener(
+      "click",
+      function(event) {
+
+        event.preventDefault();
+        event.stopPropagation();
+
+
+        const nextPage =
+          Number(
+            button.getAttribute(
+              "data-next-page"
+            )
+          );
+
+
+        if (
+          nextPage === 2 ||
+          nextPage === 3
+        ) {
+
+          showPage(nextPage);
+
+        } else if (
+          nextPage === 4
+        ) {
+
+          showBackCover();
+
+        }
+
+      }
+    );
+
+  });
+
+
+  /* =======================================================
+     KEYBOARD — RIGHT ARROW
+     ======================================================= */
+
+  document.addEventListener(
+    "keydown",
+    function(event) {
+
+      if (
+        event.key !== "ArrowRight"
+      ) {
+        return;
+      }
+
+
+      if (currentPage === 0) {
+
+        openMemoryBook();
+
+      } else if (
+        currentPage === 1
+      ) {
+
+        showPage(2);
+
+      } else if (
+        currentPage === 2
+      ) {
+
+        showPage(3);
+
+      } else if (
+        currentPage === 3
+      ) {
+
+        showBackCover();
+
+      }
+
+    }
+  );
+
+
+  /* =======================================================
+     KEYBOARD — LEFT ARROW
+     ======================================================= */
+
+  document.addEventListener(
+    "keydown",
+    function(event) {
+
+      if (
+        event.key !== "ArrowLeft"
+      ) {
+        return;
+      }
+
+
+      if (currentPage === 4) {
+
+        showPage(3);
+
+      } else if (
+        currentPage === 3
+      ) {
+
+        showPage(2);
+
+      } else if (
+        currentPage === 2
+      ) {
+
+        showPage(1);
+
+      }
+
+    }
+  );
+
+
+  /* =======================================================
+     TOUCH / SWIPE SUPPORT
+     ======================================================= */
+
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+
+  bookArea.addEventListener(
+    "touchstart",
+    function(event) {
+
+      if (
+        !event.touches ||
+        !event.touches.length
+      ) {
+        return;
+      }
+
+      touchStartX =
+        event.touches[0].clientX;
+
+    },
+    { passive: true }
+  );
+
+
+  bookArea.addEventListener(
+    "touchend",
+    function(event) {
+
+      if (
+        !event.changedTouches ||
+        !event.changedTouches.length
+      ) {
+        return;
+      }
+
+      touchEndX =
+        event.changedTouches[0].clientX;
+
+
+      const swipeDistance =
+        touchEndX - touchStartX;
+
+
+      /* Swipe left → next */
+
+      if (swipeDistance < -50) {
+
+        if (currentPage === 0) {
+
+          openMemoryBook();
+
+        } else if (
+          currentPage < 3
+        ) {
+
+          showPage(
+            currentPage + 1
+          );
+
+        } else if (
+          currentPage === 3
+        ) {
+
+          showBackCover();
+
+        }
+
+      }
+
+
+      /* Swipe right → previous */
+
+      if (swipeDistance > 50) {
+
+        if (currentPage === 4) {
+
+          showPage(3);
+
+        } else if (
+          currentPage > 1
+        ) {
+
+          showPage(
+            currentPage - 1
+          );
+
+        }
+
+      }
+
+    },
+    { passive: true }
+  );
+
+}
+
+
+/* =========================================================
+   START MEMORY BOOK
+   ========================================================= */
+
+if (
+  document.readyState === "loading"
+) {
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    initMemoryBook,
+    { once: true }
+  );
+
+} else {
+
+  initMemoryBook();
+
+}
 
 /* =========================================================
    08 — VIDEO SYSTEM
@@ -551,10 +1178,7 @@ function loadMemoryGallery() {
 
 function loadBirthdayVideo() {
 
-  if (
-    !birthdayVideo ||
-    !birthdayVideoSource
-  ) {
+  if (!birthdayVideo || !birthdayVideoSource) {
     return;
   }
 
@@ -571,6 +1195,49 @@ function loadBirthdayVideo() {
     videoPlaceholder.style.display =
       "none";
   }
+
+  /* =====================================================
+     DETECT VIDEO ORIENTATION
+     ===================================================== */
+
+  birthdayVideo.onloadedmetadata = () => {
+
+    const videoWidth =
+      birthdayVideo.videoWidth;
+
+    const videoHeight =
+      birthdayVideo.videoHeight;
+
+    if (!videoWidth || !videoHeight) {
+      return;
+    }
+
+    const wrapper =
+      birthdayVideo.closest(
+        ".birthday-video-wrapper"
+      );
+
+    if (!wrapper) {
+      return;
+    }
+
+    /* Portrait / Reel video */
+
+    if (videoHeight > videoWidth) {
+
+      wrapper.classList.add(
+        "portrait-video"
+      );
+
+    } else {
+
+      wrapper.classList.remove(
+        "portrait-video"
+      );
+
+    }
+
+  };
 
 }
 
@@ -818,55 +1485,41 @@ if (birthdayWishButton) {
     "click",
     () => {
 
-      if (wishMessage) {
+      /** Prevent opening the gift twice.*/
 
-        wishMessage.classList.add("visible");
-
+      if (
+        birthdayWishButton.classList.contains(
+          "gift-open"
+        )
+      ) {
+        return;
       }
 
-      createMiniConfetti(80);
-      createFloatingHearts(20);
+           birthdayWishButton.classList.add(
+        "gift-open"
+      );
 
-      /* Scroll slightly so the message
-         becomes visible */
-
+      /*
+       * Let the lid open first.
+       */
       setTimeout(() => {
 
         if (wishMessage) {
-
-          wishMessage.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-          });
-
+          wishMessage.classList.add(
+            "visible"
+          );
         }
 
-      }, 250);
+        createMiniConfetti(45);
+        createFloatingHearts(12);
 
-
-      /* Show preview actions
-         after the final birthday wish */
-
-      setTimeout(() => {
-
-        if (previewActions) {
-
-          previewActions.classList.add("show");
-
-          previewActions.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-          });
-
-        }
-
-      }, 900);
-
+      }, 850);
     }
   );
 
 }
 
+         
 /* =========================================================
    12 — FLOATING HEART GENERATOR
    ========================================================= */
@@ -1016,86 +1669,6 @@ function getConfettiColor() {
 }
 
 
-/* =========================================================
-   15 — REPLAY EXPERIENCE
-   ========================================================= */
-
-if (replayButton) {
-
-  replayButton.addEventListener(
-    "click",
-    () => {
-
-      /* Reset balloons */
-
-      balloons.forEach((balloon) => {
-
-        balloon.classList.remove("popped");
-
-      });
-
-      poppedBalloons = 0;
-
-
-      /* Reset balloon message */
-
-      if (balloonMessage) {
-        balloonMessage.classList.remove(
-          "visible"
-        );
-      }
-
-
-      /* Reset envelope */
-
-      if (loveEnvelope) {
-        loveEnvelope.classList.remove(
-          "open"
-        );
-      }
-
-
-      /* Reset candles */
-
-      candles.forEach((candle) => {
-
-        candle.classList.remove("blown");
-
-      });
-
-      blownCandles = 0;
-
-
-      /* Reset wish */
-
-      if (wishMessage) {
-        wishMessage.classList.remove(
-          "visible"
-        );
-      }
-
-
-      /* Return to top */
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-
-
-      /* Small restart celebration */
-
-      setTimeout(() => {
-
-        createFloatingHearts(10);
-
-      }, 800);
-
-    }
-  );
-
-}
-
 
 /* =========================================================
    16 — SECTION REVEAL ANIMATION
@@ -1205,8 +1778,24 @@ function setupCustomizationSystem() {
 
   const customerName = document.getElementById("customerName");
   const customerDate = document.getElementById("customerDate");
+  const customerPhone = document.getElementById("customerPhone");
   const customerPhotos = document.getElementById("customerPhotos");
   const customerVideo = document.getElementById("customerVideo");
+
+  const previewButton =
+    document.getElementById("previewSurpriseButton");
+
+  const previewStatus =
+    document.getElementById("previewStatus");
+
+  const previewActions =
+    document.getElementById("previewActions");
+
+  const backToEditButton =
+    document.getElementById("backToEditButton");
+
+  const previewCreateButton =
+    document.getElementById("previewCreateButton");
 
 if (customerName) {
   customerName.value = BIRTHDAY_CONFIG.name;
@@ -1221,41 +1810,75 @@ if (customerDate) {
   const finalBirthdayName = document.getElementById("finalBirthdayName");
   const letterRecipients = document.querySelectorAll(".letter-recipient");
 
-  if (editButton && customizationPanel) {
-    editButton.addEventListener("click", () => {
-      customizationPanel.classList.toggle("active");
 
-      customizationPanel.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
+if (editButton && customizationPanel) {
+  editButton.addEventListener("click", () => {
+
+    document.body.classList.remove("preview-mode");
+
+    if (previewActions) {
+      previewActions.classList.remove("show");
+    }
+
+    customizationPanel.scrollIntoView({
+      behavior: "auto",
+      block: "start"
     });
+
+  });
+} 
+
+function updateBirthdayName() {
+  const name = customerName
+    ? customerName.value.trim()
+    : "";
+
+  if (!name) return;
+
+  if (birthdayName) {
+    birthdayName.textContent = name;
   }
 
-  if (customerName) {
-    customerName.addEventListener("input", () => {
-      const name = customerName.value.trim();
+  letterRecipients.forEach((recipient) => {
+    recipient.textContent = name;
+  });
 
-      if (!name) return;
+  // Update the name displayed on the birthday cake
+  const cakeName = document.getElementById("cakeBirthdayName");
 
-      if (birthdayName) birthdayName.textContent = name;
-      if (finalBirthdayName) finalBirthdayName.textContent = name;
+  if (cakeName) {
+    cakeName.textContent = name;
 
-      letterRecipients.forEach((recipient) => {
-        recipient.textContent = name;
-      });
-    });
+    // Reset font size before measuring
+    cakeName.style.fontSize = "";
+
+    // Automatically shrink long names to fit
+    let fontSize = 24;
+    const minFontSize = 10;
+
+    cakeName.style.whiteSpace = "nowrap";
+    cakeName.style.display = "block";
+    cakeName.style.maxWidth = "100%";
+
+    while (
+      fontSize > minFontSize &&
+      cakeName.scrollWidth > cakeName.clientWidth
+    ) {
+      fontSize -= 1;
+      cakeName.style.fontSize = fontSize + "px";
+    }
   }
+}
 
-  if (customerDate) {
-    customerDate.addEventListener("input", () => {
-      const date = customerDate.value.trim();
+if (customerName) {
 
-      if (!date) return;
+  customerName.addEventListener(
+    "input",
+    updateBirthdayName
+  );
 
-      if (birthdayDate) birthdayDate.textContent = date;
-    });
-  }
+  updateBirthdayName();
+}
 
 
 if (customerPhotos) {
@@ -1554,128 +2177,196 @@ if (customerPhotos) {
 
 if (customerVideo) {
 
-  const customVideoName =
-    document.getElementById("customVideoName");
-
-  let currentVideoUrl = "";
-
-
-  /* =====================================================
-     VIDEO FILE SELECTION
+    /* =====================================================
+     VIDEO CUSTOMIZATION
      ===================================================== */
 
-  customerVideo.addEventListener(
-    "change",
-    async () => {
+  if (customerVideo) {
 
-      const file =
-        customerVideo.files[0];
+    const customVideoName =
+      document.getElementById("customVideoName");
 
-      if (!file) {
-        return;
+    let currentVideoUrl = "";
+
+
+    /* ===================================================
+       VIDEO FILE SELECTION
+       =================================================== */
+
+    customerVideo.addEventListener(
+      "change",
+      async () => {
+
+        const file =
+          customerVideo.files[0];
+
+        if (!file) {
+          return;
+        }
+
+
+        /* Remove previous preview URL */
+
+        if (currentVideoUrl) {
+
+          URL.revokeObjectURL(
+            currentVideoUrl
+          );
+
+        }
+
+
+        /* Create new preview URL */
+
+        currentVideoUrl =
+          URL.createObjectURL(file);
+
+
+        BIRTHDAY_CONFIG.video =
+          currentVideoUrl;
+
+
+        /* Show selected filename */
+if (customVideoName) {
+  customVideoName.innerHTML = "";
+
+  const fileName = document.createElement("span");
+  fileName.textContent = `Selected: ${file.name}`;
+
+  const removeButton = document.createElement("button");
+  removeButton.type = "button";
+  removeButton.textContent = "×";
+  removeButton.setAttribute("aria-label", "Remove selected video");
+
+  removeButton.style.cssText = `
+    margin-left: 10px;
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 50%;
+    background: #4A0E1F;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    line-height: 1;
+    flex-shrink: 0;
+  `;
+
+  removeButton.addEventListener("click", async () => {
+    customerVideo.value = "";
+
+    if (currentVideoUrl) {
+      URL.revokeObjectURL(currentVideoUrl);
+      currentVideoUrl = "";
+    }
+
+    BIRTHDAY_CONFIG.video = "";
+
+    customVideoName.innerHTML = "";
+
+    try {
+      await deleteDraftFile("video");
+    } catch (error) {
+      console.error("Could not remove saved video:", error);
+    }
+
+    loadBirthdayVideo();
+  });
+
+  customVideoName.style.display = "flex";
+  customVideoName.style.alignItems = "center";
+  customVideoName.style.flexWrap = "wrap";
+  customVideoName.style.gap = "6px";
+
+  fileName.style.cssText = `
+    min-width: 0;
+    overflow-wrap: anywhere;
+    flex: 1;
+  `;
+
+  customVideoName.append(fileName, removeButton);
+}
+        /* Save actual video file */
+
+        try {
+
+          await saveDraftFile(
+            "video",
+            file
+          );
+
+        } catch (error) {
+
+          console.error(
+            "Could not save video:",
+            error
+          );
+
+        }
+
+
+        loadBirthdayVideo();
+
       }
+    );
 
 
-      /* Remove previous preview URL */
+    /* ===================================================
+       RESTORE SAVED VIDEO
+       =================================================== */
 
-      if (currentVideoUrl) {
+    async function restoreSavedVideo() {
 
-        URL.revokeObjectURL(
-          currentVideoUrl
+      try {
+
+        const savedVideo =
+          await getDraftFile("video");
+
+
+        if (!savedVideo) {
+          return;
+        }
+
+
+        currentVideoUrl =
+          URL.createObjectURL(
+            savedVideo
+          );
+
+
+        BIRTHDAY_CONFIG.video =
+          currentVideoUrl;
+
+
+        if (customVideoName) {
+
+          customVideoName.textContent =
+            `Selected: ${savedVideo.name}`;
+
+        }
+
+
+        loadBirthdayVideo();
+
+      } catch (error) {
+
+        console.error(
+          "Could not restore saved video:",
+          error
         );
 
       }
 
-
-      /* Create new preview URL */
-
-      currentVideoUrl =
-        URL.createObjectURL(file);
-
-
-      BIRTHDAY_CONFIG.video =
-        currentVideoUrl;
-
-
-      /* Show only the filename */
-
-      if (customVideoName) {
-
-        customVideoName.textContent =
-          `Selected: ${file.name}`;
-
-      }
-
-
-      /* Save the actual video file */
-
-      await saveDraftFile(
-        "video",
-        file
-      );
-
-
-      loadBirthdayVideo();
-
-    }
-  );
-
-
-  /* =====================================================
-     RESTORE SAVED VIDEO
-     ===================================================== */
-
-  async function restoreSavedVideo() {
-
-    const savedVideo =
-      await getDraftFile("video");
-
-
-    if (!savedVideo) {
-      return;
     }
 
 
-    currentVideoUrl =
-      URL.createObjectURL(
-        savedVideo
-      );
-
-
-    BIRTHDAY_CONFIG.video =
-      currentVideoUrl;
-
-
-    if (customVideoName) {
-
-      customVideoName.textContent =
-        `Selected: ${savedVideo.name}`;
-
-    }
-
-
-    loadBirthdayVideo();
+    restoreSavedVideo();
 
   }
-
-
-  restoreSavedVideo();
-
 }
- 
-  const previewButton = document.getElementById("previewSurpriseButton");
-  const previewStatus = document.getElementById("previewStatus");
 
-const previewActions =
-  document.getElementById("previewActions");
+  if (previewButton) {
 
-const backToEditButton =
-  document.getElementById("backToEditButton");
-
-const previewCreateButton =
-  document.getElementById("previewCreateButton");
-
- if (previewButton) {
   previewButton.addEventListener("click", () => {
 
     if (previewStatus) {
@@ -1684,11 +2375,14 @@ const previewCreateButton =
         "✨ Your personalized preview is ready.";
     }
 
-      if (customizationPanel) {
-      customizationPanel.classList.remove("active");
+    if (previewActions) {
+      previewActions.classList.add("show");
     }
 
-    const hero = document.getElementById("birthdayHero");
+    document.body.classList.add("preview-mode");
+
+    const hero =
+      document.getElementById("birthdayHero");
 
     if (hero) {
       hero.scrollIntoView({
@@ -1699,7 +2393,9 @@ const previewCreateButton =
 
     createFloatingHearts();
     createMiniConfetti();
+
   });
+
 }
 
 
@@ -1709,6 +2405,8 @@ if (backToEditButton) {
     if (previewActions) {
       previewActions.classList.remove("show");
     }
+
+document.body.classList.remove("preview-mode");
 
     if (previewStatus) {
       previewStatus.classList.remove("show");
@@ -1725,14 +2423,24 @@ if (backToEditButton) {
   });
 }
 
+/* =========================================================
+   CREATE SURPRISE → SAVE DATA → PAYMENT
+   ========================================================= */
+
 const createSurpriseButton =
-  document.getElementById("createSurpriseButton");
+  document.getElementById("previewCreateButton");
 
 if (createSurpriseButton) {
 
   createSurpriseButton.addEventListener(
     "click",
-    () => {
+    async (event) => {
+
+      event.preventDefault();
+
+      /* =================================================
+         GET CUSTOMER INFORMATION
+         ================================================= */
 
       const name =
         customerName
@@ -1744,6 +2452,37 @@ if (createSurpriseButton) {
           ? customerDate.value
           : "";
 
+       const phone =
+        customerPhone
+             ? customerPhone.value.trim()
+             : "";
+       
+
+if (!name) {
+
+  alert("Please enter a name.");
+
+  return;
+
+}
+
+if (!date) {
+
+  alert("Please select the special date.");
+
+  return;
+
+}
+
+if (!/^[6-9]\d{9}$/.test(phone)) {
+
+  alert(
+    "Please enter a valid 10-digit mobile number."
+  );
+
+  return;
+
+}
 
       /* =================================================
          CREATE TEMPORARY DRAFT ID
@@ -1757,39 +2496,77 @@ if (createSurpriseButton) {
           .toString(36)
           .substring(2, 10);
 
-
       /* =================================================
-         SAVE CUSTOMIZATION DATA
+         CREATE SURPRISE DATA
+         ================================================= */
+const surpriseData = {
+
+  draftId: draftId,
+
+  template:
+    "birthday-story",
+
+  name:
+    name,
+
+  date:
+    date,
+
+  phone:
+    phone,
+
+  mediaStorage:
+    "indexeddb"
+
+};
+      /* =================================================
+         SERIALIZE DATA
          ================================================= */
 
-      const surpriseData = {
+      const serializedData =
+        JSON.stringify(
+          surpriseData
+        );
 
-        draftId: draftId,
-
-        template:
-          "birthday-story",
-
-        name:
-          name ||
-          BIRTHDAY_CONFIG.name,
-
-        date:
-          date ||
-          BIRTHDAY_CONFIG.date,
-
-        mediaStorage:
-          "indexeddb"
-
-      };
-
+      /* =================================================
+         SAVE TO SESSION STORAGE
+         ================================================= */
 
       sessionStorage.setItem(
         "luvoraSurpriseData",
-        JSON.stringify(
-          surpriseData
-        )
+        serializedData
       );
 
+      /* =================================================
+         BACKUP COPY
+         ================================================= */
+
+      localStorage.setItem(
+        "luvoraSurpriseData",
+        serializedData
+      );
+
+      /* =================================================
+         VERIFY DATA WAS SAVED
+         ================================================= */
+
+      const savedData =
+        sessionStorage.getItem(
+          "luvoraSurpriseData"
+        ) ||
+        localStorage.getItem(
+          "luvoraSurpriseData"
+        );
+
+      if (!savedData) {
+
+        alert(
+          "Your surprise information could not be saved. Please try again."
+        );
+
+        return;
+
+      }
 
       /* =================================================
          CONTINUE TO PAYMENT
@@ -1802,19 +2579,7 @@ if (createSurpriseButton) {
   );
 
 }
-
-if (previewCreateButton) {
-  previewCreateButton.addEventListener("click", () => {
-
-    const createButton =
-      document.getElementById("createSurpriseButton");
-
-    if (createButton) {
-      createButton.click();
     }
-  });
-}
-}
 
  function initializeBirthdayExperience() {
   loadCustomerDataFromURL();
@@ -1845,4 +2610,52 @@ if (
 
   initializeBirthdayExperience();
 
+}
+
+function fitCakeBirthdayName() {
+  const name = document.querySelector(".cake-message-name");
+  const box = document.querySelector(".cake-personal-message");
+
+  if (!name || !box) return;
+
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+
+  if (!ctx) return;
+
+  const text = name.textContent.trim();
+  const style = getComputedStyle(name);
+  const weight = style.fontWeight;
+  const family = style.fontFamily;
+
+  // Keep the name inside a conservative part of the cake's writing area.
+  const maxWidth = box.clientWidth * 0.72;
+
+  let size = 25;
+  const minSize = 8;
+
+  while (size > minSize) {
+    ctx.font = `${weight} ${size}px ${family}`;
+
+    if (ctx.measureText(text).width <= maxWidth) break;
+    size -= 0.5;
+  }
+
+  name.style.setProperty("font-size", `${size}px`, "important");
+  name.style.setProperty("max-width", `${maxWidth}px`, "important");
+  name.style.setProperty("overflow", "hidden", "important");
+  name.style.setProperty("white-space", "nowrap", "important");
+}
+
+window.addEventListener("load", fitCakeBirthdayName);
+window.addEventListener("resize", fitCakeBirthdayName);
+
+const cakeName = document.querySelector(".cake-message-name");
+
+if (cakeName) {
+  new MutationObserver(fitCakeBirthdayName).observe(cakeName, {
+    childList: true,
+    characterData: true,
+    subtree: true
+  });
 }
