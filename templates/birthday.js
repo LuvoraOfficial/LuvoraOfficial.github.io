@@ -69,12 +69,12 @@ const BIRTHDAY_CONFIG = {
   /* Customer photos can later be inserted here */
 
   photos: [
-  "assets/images/birthday/demo-1.jpg",
-  "assets/images/birthday/demo-2.jpg",
-  "assets/images/birthday/demo-3.jpg",
-  "assets/images/birthday/demo-4.jpg",
-  "assets/images/birthday/demo-5.jpg",
-  "assets/images/birthday/demo-6.jpg"
+  "assets/images/demo-1.jpg",
+  "assets/images/demo-2.jpg",
+  "assets/images/demo-3.jpg",
+  "assets/images/demo-4.jpg",
+  "assets/images/demo-5.jpg",
+  "assets/images/demo-6.jpg"
 ],
 
   /* Customer video can later be inserted here */
@@ -1397,11 +1397,11 @@ function magicalCakeReveal() {
     sparkle.className =
       "cake-sparkle";
 
-sparkle.style.setProperty(
-  "--spark-x",
-  `${(Math.random() - 0.5) * (window.innerWidth <= 700 ? 120 : 460)}px`
-);
-     
+    sparkle.style.setProperty(
+      "--spark-x",
+      `${(Math.random() - 0.5) * 460}px`
+    );
+
     sparkle.style.setProperty(
       "--spark-y",
       `${(Math.random() - 0.5) * 350}px`
@@ -1434,11 +1434,11 @@ sparkle.style.setProperty(
 
     heart.textContent = "♥";
 
-heart.style.setProperty(
-  "--heart-x",
-  `${(Math.random() - 0.5) * (window.innerWidth <= 700 ? 100 : 380)}px`
-);
-     
+    heart.style.setProperty(
+      "--heart-x",
+      `${(Math.random() - 0.5) * 380}px`
+    );
+
     heart.style.setProperty(
       "--heart-y",
       `${-100 - Math.random() * 220}px`
@@ -1475,50 +1475,44 @@ heart.style.setProperty(
 
 }
 
-/* =========================================================
-   11 — BIRTHDAY WISH
-   ========================================================= */
+/* =========================================
+   11 — PREMIUM PANDA GIFT REVEAL
+========================================= */
 
-if (birthdayWishButton) {
+const pandaGiftReveal =
+  document.getElementById("pandaGiftReveal");
 
-  birthdayWishButton.addEventListener(
-    "click",
-    () => {
+const pandaRomanticMessage =
+  document.getElementById("pandaRomanticMessage");
 
-      /** Prevent opening the gift twice.*/
+if (birthdayWishButton && pandaGiftReveal) {
 
-      if (
-        birthdayWishButton.classList.contains(
-          "gift-open"
-        )
-      ) {
-        return;
-      }
+  birthdayWishButton.addEventListener("click", () => {
 
-           birthdayWishButton.classList.add(
-        "gift-open"
-      );
-
-      /*
-       * Let the lid open first.
-       */
-      setTimeout(() => {
-
-        if (wishMessage) {
-          wishMessage.classList.add(
-            "visible"
-          );
-        }
-
-        createMiniConfetti(45);
-        createFloatingHearts(12);
-
-      }, 850);
+    if (
+      birthdayWishButton.classList.contains("gift-open")
+    ) {
+      return;
     }
-  );
+
+    // Start opening the box
+    birthdayWishButton.classList.add("gift-open");
+
+    // Let the box open before showing the surprise
+    setTimeout(() => {
+
+      birthdayWishButton.classList.add("gift-disappear");
+
+      pandaGiftReveal.classList.add("panda-visible");
+
+      createMiniConfetti(45);
+      createFloatingHearts(12);
+
+    }, 700);
+
+  });
 
 }
-
          
 /* =========================================================
    12 — FLOATING HEART GENERATOR
@@ -1778,9 +1772,9 @@ function setupCustomizationSystem() {
 
   const customerName = document.getElementById("customerName");
   const customerDate = document.getElementById("customerDate");
-  const customerPhone = document.getElementById("customerPhone");
   const customerPhotos = document.getElementById("customerPhotos");
   const customerVideo = document.getElementById("customerVideo");
+  const customerPandaMessage = document.getElementById("customerPandaMessage");
 
   const previewButton =
     document.getElementById("previewSurpriseButton");
@@ -1827,6 +1821,18 @@ if (editButton && customizationPanel) {
 
   });
 } 
+
+if (customerPandaMessage && pandaRomanticMessage) {
+
+  customerPandaMessage.addEventListener("input", () => {
+
+    pandaRomanticMessage.textContent =
+      customerPandaMessage.value.trim() ||
+      "You make my world more beautiful. ❤️";
+
+  });
+
+}
 
 function updateBirthdayName() {
   const name = customerName
@@ -1887,12 +1893,12 @@ if (customerPhotos) {
     document.getElementById("customPhotoPreview");
 
   const DEMO_PHOTOS = [
-    "assets/images/birthday/demo-1.jpg",
-    "assets/images/birthday/demo-2.jpg",
-    "assets/images/birthday/demo-3.jpg",
-    "assets/images/birthday/demo-4.jpg",
-    "assets/images/birthday/demo-5.jpg",
-    "assets/images/birthday/demo-6.jpg"
+    "assets/images/demo-1.jpg",
+    "assets/images/demo-2.jpg",
+    "assets/images/demo-3.jpg",
+    "assets/images/demo-4.jpg",
+    "assets/images/demo-5.jpg",
+    "assets/images/demo-6.jpg"
   ];
 
   let uploadedPhotoUrls = [];
