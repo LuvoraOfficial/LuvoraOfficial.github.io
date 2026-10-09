@@ -6395,4 +6395,17 @@ text-overflow: clip !important;
     min-width: 0;
   }
 }
-
+/* Keep video remove button visible */
+.remove-custom-video,
+.remove-video-button,
+#customVideoName button {
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 10;
+}
