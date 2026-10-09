@@ -927,48 +927,49 @@
         ✦ Tap the candles ✦
       </p>
 
+<!-- PREMIUM GIFT BOX -->
+<div class="gift-experience" id="giftExperience">
 
-     <button
-  class="birthday-wish-button"
-  id="birthdayWishButton"
-  type="button"
-  aria-label="Open birthday gift"
->
-  <span class="gift-box-lid">
-    <span class="gift-lid-ribbon"></span>
-  </span>
-
-  <span class="gift-box-body">
-    <span class="gift-ribbon-vertical"></span>
-    <span class="gift-ribbon-horizontal"></span>
-
-    <span class="gift-tap">
-      TAP ME
+  <button
+    class="birthday-wish-button"
+    id="birthdayWishButton"
+    type="button"
+    aria-label="Open your special gift"
+  >
+    <span class="gift-box-lid">
+      <span class="gift-lid-ribbon"></span>
     </span>
-  </span>
 
-  <span class="gift-sparkle sparkle-one">✦</span>
-  <span class="gift-sparkle sparkle-two">✧</span>
-  <span class="gift-sparkle sparkle-three">✦</span>
-</button>
+    <span class="gift-box-body">
+      <span class="gift-ribbon-vertical"></span>
+      <span class="gift-ribbon-horizontal"></span>
 
+      <span class="gift-tap">TAP TO OPEN</span>
+    </span>
 
-      <div
-        class="wish-message"
-        id="wishMessage"
-        aria-live="polite"
-      >
+    <span class="gift-sparkle sparkle-one">✦</span>
+    <span class="gift-sparkle sparkle-two">✧</span>
+    <span class="gift-sparkle sparkle-three">✦</span>
+  </button>
 
-        <span>✨</span>
+  <!-- REVEALED PANDA SURPRISE -->
+  <div class="panda-gift-reveal" id="pandaGiftReveal">
 
-        <p>
-          May every beautiful wish in your heart
-          find its way to you.
-        </p>
+    <img
+      src="assets/images/panda-bouquet.png"
+      alt="A cute panda offering a flower bouquet"
+      class="panda-bouquet-image"
+      id="pandaBouquetImage"
+    >
 
-        <span>✨</span>
+    <p
+      class="panda-romantic-message"
+      id="pandaRomanticMessage"
+    >If I could gift you one thing, it would be the chance to see yourself through my eyes. ❤️</p>
 
-      </div>
+  </div>
+
+</div>
 
     </section>
 
@@ -1135,6 +1136,23 @@
       </div>
 
     </div>
+
+<div class="customization-field">
+  <label for="customerPandaMessage">
+    Panda Gift Romantic Message
+  </label>
+
+  <textarea
+    id="customerPandaMessage"
+    maxlength="180"
+    rows="3"
+    placeholder="Write your own romantic message..."
+  >If I could gift you one thing, it would be the chance to see yourself through my eyes. ❤️</textarea>
+
+  <small>
+    This message will appear below the panda bouquet.
+  </small>
+</div>
 
 
     <div class="customization-actions">
