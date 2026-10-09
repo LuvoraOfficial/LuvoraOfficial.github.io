@@ -1397,11 +1397,11 @@ function magicalCakeReveal() {
     sparkle.className =
       "cake-sparkle";
 
-    sparkle.style.setProperty(
-      "--spark-x",
-      `${(Math.random() - 0.5) * 460}px`
-    );
-
+sparkle.style.setProperty(
+  "--spark-x",
+  `${(Math.random() - 0.5) * (window.innerWidth <= 700 ? 120 : 460)}px`
+);
+     
     sparkle.style.setProperty(
       "--spark-y",
       `${(Math.random() - 0.5) * 350}px`
@@ -1434,11 +1434,11 @@ function magicalCakeReveal() {
 
     heart.textContent = "♥";
 
-    heart.style.setProperty(
-      "--heart-x",
-      `${(Math.random() - 0.5) * 380}px`
-    );
-
+heart.style.setProperty(
+  "--heart-x",
+  `${(Math.random() - 0.5) * (window.innerWidth <= 700 ? 100 : 380)}px`
+);
+     
     heart.style.setProperty(
       "--heart-y",
       `${-100 - Math.random() * 220}px`
