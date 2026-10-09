@@ -6396,3 +6396,30 @@ text-overflow: clip !important;
   }
 }
 
+/* =========================================
+   LUVORA — MOBILE CAKE SIZE FIX (15% SMALLER)
+   Desktop remains unchanged
+   ========================================= */
+
+@media (max-width: 700px) {
+
+  .birthday-cake {
+    width: min(368.9px, 52.36vw) !important;
+    height: auto !important;
+    aspect-ratio: 1 / 1 !important;
+  }
+
+  /* Scale flame size for the smaller cake */
+  .cake-candle .candle-flame {
+    width: 12.75px !important;
+    height: 21.25px !important;
+  }
+
+  .cake-candle .candle-flame::after {
+    width: 5.1px !important;
+    height: 10.2px !important;
+    bottom: 2.55px !important;
+  }
+
+}
+
