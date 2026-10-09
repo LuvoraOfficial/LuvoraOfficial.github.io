@@ -6686,3 +6686,148 @@ text-overflow: clip !important;
   visibility: visible !important;
   opacity: 1 !important;
 }
+
+/* ==========================================
+   ROYAL GOLDEN ROMANTIC LETTER
+========================================== */
+
+#pandaRomanticMessage {
+  position: relative;
+  box-sizing: border-box;
+  width: min(90%, 430px);
+  margin: 25px auto 35px;
+  padding: 24px 30px;
+
+  color: #17120d !important;
+  font-family: "Lora", Georgia, serif;
+  font-size: clamp(16px, 2vw, 20px);
+  font-weight: 500;
+  line-height: 1.7;
+  letter-spacing: 0.15px;
+  text-align: center;
+  overflow-wrap: anywhere;
+
+  background:
+    linear-gradient(
+      90deg,
+      #bd8b3c 0%,
+      #f8e7ad 8%,
+      #fff4cf 25%,
+      #f8e6b0 50%,
+      #fff4cf 75%,
+      #f8e7ad 92%,
+      #bd8b3c 100%
+    );
+
+  border-top: 2px solid #b88a3d;
+  border-bottom: 2px solid #b88a3d;
+  border-radius: 4px;
+
+  box-shadow:
+    0 8px 20px rgba(58, 35, 9, 0.18),
+    inset 0 0 15px rgba(160, 108, 31, 0.12);
+
+  /* Initially rolled up */
+  opacity: 0;
+  clip-path: inset(0 50% 0 50%);
+  transform: scaleX(0.85);
+
+  transition:
+    clip-path 1.2s ease,
+    opacity 0.4s ease,
+    transform 1s ease;
+}
+
+/* Letter-er dui pashe golden rolled edges */
+#pandaRomanticMessage::before,
+#pandaRomanticMessage::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  width: 12px;
+
+  border: 1px solid #9a6b25;
+  border-radius: 8px;
+
+  background: linear-gradient(
+    90deg,
+    #94621f,
+    #f8d77b,
+    #c18a32,
+    #94621f
+  );
+
+  box-shadow: 1px 2px 4px rgba(40, 24, 5, 0.2);
+}
+
+#pandaRomanticMessage::before {
+  left: -5px;
+}
+
+#pandaRomanticMessage::after {
+  right: -5px;
+}
+
+/* Panda reveal hole message unroll hobe */
+.panda-gift-reveal.panda-visible #pandaRomanticMessage,
+.panda-visible #pandaRomanticMessage {
+  opacity: 1;
+  clip-path: inset(0 0 0 0);
+  transform: scaleX(1);
+}
+
+/* ==========================================
+   MOBILE RESPONSIVE
+========================================== */
+
+@media (max-width: 600px) {
+  .panda-gift-reveal {
+    margin-top: 25px;
+    margin-bottom: 30px;
+  }
+
+  .panda-bouquet-image {
+    width: min(100%, 270px);
+    max-height: 270px;
+  }
+
+  #pandaRomanticMessage {
+    width: calc(100% - 20px);
+    margin-top: 20px;
+    padding: 19px 22px;
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  #pandaRomanticMessage::before,
+  #pandaRomanticMessage::after {
+    width: 9px;
+  }
+}
+/* FIX: Keep panda PNG away from the cake section */
+
+.panda-gift-reveal {
+  position: relative !important;
+  top: auto !important;
+  margin-top: 60px !important;
+  padding-top: 20px !important;
+  transform: none !important;
+}
+
+/* Prevent reveal animation from pulling panda upward */
+.panda-gift-reveal.panda-visible {
+  top: auto !important;
+  margin-top: 60px !important;
+  transform: none !important;
+}
+
+/* Keep panda image in its own space */
+.panda-gift-reveal .panda-bouquet-image {
+  position: relative !important;
+  top: auto !important;
+  display: block !important;
+  margin-top: 20px !important;
+  margin-bottom: 25px !important;
+  transform: none !important;
+}
