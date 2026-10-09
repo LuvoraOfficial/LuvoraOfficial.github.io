@@ -6395,17 +6395,294 @@ text-overflow: clip !important;
     min-width: 0;
   }
 }
-/* Keep video remove button visible */
-.remove-custom-video,
-.remove-video-button,
-#customVideoName button {
-  display: inline-flex !important;
-  visibility: visible !important;
-  opacity: 1 !important;
+
+/* =========================================
+   LUVORA — PREMIUM GIFT EXPERIENCE
+========================================= */
+
+.gift-experience {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  min-height: 260px;
+  margin: 30px auto;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  flex-shrink: 0;
+  perspective: 1100px;
+}
+
+/* PREMIUM 3D BOX */
+
+.gift-experience .birthday-wish-button {
   position: relative;
-  z-index: 10;
+  z-index: 2;
+  transform-style: preserve-3d;
+  transition:
+    opacity 0.45s ease,
+    transform 0.75s cubic-bezier(.2,.8,.2,1),
+    filter 0.4s ease;
+  filter: drop-shadow(0 24px 24px rgba(39, 7, 16, 0.25));
+}
+
+/* Richer box finish */
+
+.gift-experience .gift-box-body {
+  background: linear-gradient(
+    135deg,
+    #f8d6e4 0%,
+    #d987aa 35%,
+    #8e3158 72%,
+    #4a0e1f 100%
+  );
+
+  border: 1px solid rgba(255,255,255,0.35);
+
+  box-shadow:
+    inset 7px 0 12px rgba(255,255,255,0.22),
+    inset -9px -10px 18px rgba(39,7,16,0.30),
+    0 15px 22px rgba(39,7,16,0.20);
+}
+
+/* Premium lid */
+
+.gift-experience .gift-box-lid {
+  background: linear-gradient(
+    135deg,
+    #fff0f5 0%,
+    #edb2ca 40%,
+    #a84e75 100%
+  );
+
+  border: 1px solid rgba(255,255,255,0.55);
+
+  box-shadow:
+    inset 0 4px 8px rgba(255,255,255,0.35),
+    0 7px 12px rgba(39,7,16,0.18);
+
+  transform-origin: center bottom;
+
+  transition:
+    transform 0.7s cubic-bezier(.2,.8,.2,1),
+    opacity 0.4s ease;
+}
+
+/* Gold-like ribbon */
+
+.gift-experience .gift-ribbon-vertical,
+.gift-experience .gift-ribbon-horizontal,
+.gift-experience .gift-lid-ribbon {
+  background: linear-gradient(
+    90deg,
+    #b68b45,
+    #ffe8a6,
+    #d0a452,
+    #fff0bc
+  );
+
+  box-shadow:
+    inset 1px 0 2px rgba(255,255,255,0.6),
+    0 0 5px rgba(255,220,150,0.18);
+}
+
+/* Open animation */
+
+.gift-experience .birthday-wish-button.gift-open {
+  pointer-events: none;
+  animation: none;
+}
+
+.gift-experience .birthday-wish-button.gift-open .gift-box-lid {
+  transform:
+    translate3d(20px, -105px, 80px)
+    rotateX(65deg)
+    rotateZ(12deg);
+
+  opacity: 0;
+}
+
+.gift-experience .birthday-wish-button.gift-open .gift-box-body {
+  transform: translateY(20px) scale(0.88);
+  opacity: 0;
+  transition:
+    transform 0.65s ease,
+    opacity 0.45s ease 0.15s;
+}
+
+.gift-experience .birthday-wish-button.gift-open .gift-sparkle,
+.gift-experience .birthday-wish-button.gift-open .gift-tap {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+/* Remove box from layout after opening */
+
+.gift-experience .birthday-wish-button.gift-disappear {
+  display: none;
+}
+
+/* =========================================
+   PANDA REVEAL
+========================================= */
+
+.panda-gift-reveal {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transform: scale(0.55);
+
+  position: absolute;
+  top: 50%;
+  left: 0;
+
+  transition:
+    opacity 0.6s ease,
+    visibility 0.6s ease,
+    transform 0.85s cubic-bezier(.16,1,.3,1);
+}
+
+.panda-gift-reveal.panda-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+
+  transform: translateY(-50%) scale(1);
+}
+
+/* Panda PNG */
+
+.panda-bouquet-image {
+  display: block;
+
+  width: min(100%, 340px);
+  max-height: 340px;
+
+  object-fit: contain;
+
+  filter: drop-shadow(
+    0 18px 24px rgba(74,14,31,0.13)
+  );
+
+  transform: scale(0.7);
+
+  transition: transform 0.85s cubic-bezier(.16,1,.3,1);
+}
+
+.panda-visible .panda-bouquet-image {
+  transform: scale(1);
+}
+
+/* Romantic message */
+
+.panda-romantic-message {
+  width: min(90%, 420px);
+  margin: 18px auto 0;
+  padding: 0 12px;
+
+  color: #4a0e1f;
+
+  font-family: "Playfair Display", serif;
+  font-size: clamp(17px, 3vw, 23px);
+  line-height: 1.65;
+  font-weight: 500;
+
+  opacity: 0;
+  transform: translateY(14px);
+
+  transition:
+    opacity 0.6s ease 0.45s,
+    transform 0.6s ease 0.45s;
+}
+
+.panda-visible .panda-romantic-message {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+  .gift-experience {
+    min-height: 240px;
+    margin: 22px auto;
+    padding: 0 12px;
+  }
+
+  .panda-bouquet-image {
+    width: min(100%, 280px);
+    max-height: 290px;
+  }
+
+  .panda-romantic-message {
+    margin-top: 12px;
+    font-size: 18px;
+  }
+}
+
+/* Respect reduced-motion preferences */
+
+@media (prefers-reduced-motion: reduce) {
+  .panda-gift-reveal,
+  .panda-bouquet-image,
+  .panda-romantic-message,
+  .gift-experience .birthday-wish-button,
+  .gift-experience .gift-box-lid {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* LUVORA — PANDA MESSAGE FIELD VISIBILITY FIX */
+
+#customizationPanel .customization-inner > .customization-field {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  width: 100% !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+  margin: 25px 0 !important;
+  padding: 18px !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(214, 137, 164, 0.4) !important;
+  border-radius: 16px !important;
+  box-sizing: border-box !important;
+}
+
+#customizationPanel #customerPandaMessage {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  width: 100% !important;
+  min-height: 110px !important;
+  height: auto !important;
+  max-height: none !important;
+  padding: 14px !important;
+  margin-top: 10px !important;
+  color: #270710 !important;
+  background: #ffffff !important;
+  border: 1px solid #D689A4 !important;
+  border-radius: 10px !important;
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+  box-sizing: border-box !important;
+  resize: vertical !important;
+}
+
+#customizationPanel .customization-field label,
+#customizationPanel .customization-field small {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
