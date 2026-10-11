@@ -1062,6 +1062,24 @@
 
     <div class="customization-form">
 
+<div class="form-group full-width">
+  <label for="customerPhone">Your Mobile Number</label>
+
+  <input
+    type="tel"
+    id="customerPhone"
+    placeholder="Enter your mobile number"
+    inputmode="numeric"
+    maxlength="10"
+    pattern="[6-9][0-9]{9}"
+    required
+  >
+
+  <small style="color: #d00000; font-size: 12px;">
+    ⚠️ Enter your own number (invoice only).
+  </small>
+</div>
+
       <div class="form-group">
         <label for="customerName">
           Name
@@ -1070,8 +1088,9 @@
         <input
           type="text"
           id="customerName"
-          placeholder="Enter their name"
+          placeholder="Enter Their Name"
         >
+       <small style="color: red; font-weight: 600;">❤️ Enter the name of your loved                       one.</small>
       </div>
 
 
