@@ -1772,6 +1772,7 @@ function setupCustomizationSystem() {
 
   const customerName = document.getElementById("customerName");
   const customerDate = document.getElementById("customerDate");
+  const phoneInput = document.getElementById("customerPhone");
   const customerPhotos = document.getElementById("customerPhotos");
   const customerVideo = document.getElementById("customerVideo");
   const customerPandaMessage = document.getElementById("customerPandaMessage");
@@ -2453,16 +2454,14 @@ if (createSurpriseButton) {
           ? customerName.value.trim()
           : "";
 
-      const date =
-        customerDate
-          ? customerDate.value
-          : "";
+    const date =
+  customerDate
+    ? customerDate.value
+    : "";
 
-       const phone =
-        customerPhone
-             ? customerPhone.value.trim()
-             : "";
-       
+const phone = phoneInput
+  ? phoneInput.value.trim()
+  : "";
 
 if (!name) {
 
@@ -2481,13 +2480,9 @@ if (!date) {
 }
 
 if (!/^[6-9]\d{9}$/.test(phone)) {
-
-  alert(
-    "Please enter a valid 10-digit mobile number."
-  );
-
+  alert("Please enter a valid 10-digit mobile number.");
+  phoneInput.focus();
   return;
-
 }
 
       /* =================================================
@@ -2519,12 +2514,19 @@ const surpriseData = {
     date,
 
   phone:
-    phone,
+     phone,
 
-  mediaStorage:
+  mediaStorage:s
     "indexeddb"
 
 };
+
+console.log("PHONE BEFORE SAVE:", phone);
+console.log("PHONE INPUT VALUE:", document.getElementById("customerPhone")?.value);
+console.log("SURPRISE DATA BEFORE SAVE:", surpriseData);
+
+
+
       /* =================================================
          SERIALIZE DATA
          ================================================= */
@@ -2536,6 +2538,10 @@ const surpriseData = {
 
       /* =================================================
          SAVE TO SESSION STORAGE
+      );
+
+      /* =================================================
+
          ================================================= */
 
       sessionStorage.setItem(
