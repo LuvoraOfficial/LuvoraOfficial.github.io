@@ -23,7 +23,6 @@
 </head>
 
 <body>
-  
 
   <!-- =========================================================
        BACKGROUND EFFECT LAYERS
@@ -1083,9 +1082,23 @@
         <input
           type="text"
           id="customerDate"
-          placeholder="e.g. 12 October 2026"
+          placeholder="e.g. 12 October"
         >
       </div>
+
+<div class="form-group">
+  <label for="customerPhone">Mobile Number *</label>
+  <input
+    type="tel"
+    id="customerPhone"
+    name="customerPhone"
+    placeholder="Enter 10-digit mobile number"
+    maxlength="10"
+    inputmode="numeric"
+    pattern="[6-9][0-9]{9}"
+    required
+  >
+<small style="color: red;">* Please enter your 10-digit mobile number to receive the invoice.</small></div>
 
 
       <div class="form-group full-width">
