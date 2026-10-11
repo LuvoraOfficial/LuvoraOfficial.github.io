@@ -304,9 +304,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
             birthday_date:
               surpriseData.date || "",
-
-            phone:
-              surpriseData.phone || "",
+            customer_phone: 
+               surpriseData.phone || "",
+          
 
             template:
               surpriseData.template ||
