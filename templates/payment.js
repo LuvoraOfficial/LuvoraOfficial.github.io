@@ -8,7 +8,8 @@ const LUVORA_DRAFT_STORE = "draftFiles";
 
 function openDraftDatabase() {
 
-  return new Promise((resolve, reject) => {
+ 
+   return new Promise((resolve, reject) => {
 
     const request =
       indexedDB.open(LUVORA_DRAFT_DB, 1);
