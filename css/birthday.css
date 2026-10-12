@@ -7091,14 +7091,6 @@ text-overflow: clip !important;
   }
 }
 
-/* Final surprise mode: hide editor controls */
-.luvora-final-mode #customizationPanel,
-.luvora-final-mode #previewActions,
-.luvora-final-mode #editSurpriseButton,
-.luvora-final-mode #previewStatus {
-  display: none !important;
-}
-
 @media (max-width: 480px) {
   .luvora-welcome {
     padding: 40px 24px;
@@ -7138,5 +7130,8 @@ html.luvora-final-mode #previewActions,
 html.luvora-final-mode #editSurpriseButton,
 html.luvora-final-mode #previewStatus,
 html.luvora-final-mode #previewCreateButton {
+  display: none !important;
+}
+html.luvora-final-mode .birthday-footer a[href="templates.html"] {
   display: none !important;
 }
