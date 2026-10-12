@@ -7135,3 +7135,35 @@ html.luvora-final-mode #previewCreateButton {
 html.luvora-final-mode .birthday-footer a[href="templates.html"] {
   display: none !important;
 }
+
+/* ==========================================
+   LUVORA — FULL-SCREEN WELCOME OVERLAY
+========================================== */
+
+/* Prevent the surprise page from scrolling */
+html.luvora-welcome-active,
+html.luvora-welcome-active body {
+  overflow: hidden !important;
+  height: 100% !important;
+  overscroll-behavior: none;
+}
+
+/* Keep Welcome above the entire surprise page */
+#luvoraWelcome {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  z-index: 99999 !important;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* Fade out Welcome after clicking the button */
+html.luvora-welcome-open #luvoraWelcome {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transition: opacity 0.7s ease, visibility 0.7s ease;
+}
