@@ -8,8 +8,7 @@ const LUVORA_DRAFT_STORE = "draftFiles";
 
 function openDraftDatabase() {
 
- 
-   return new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
 
     const request =
       indexedDB.open(LUVORA_DRAFT_DB, 1);
@@ -330,6 +329,11 @@ document.addEventListener("DOMContentLoaded", () => {
             "Luvora payment request:",
             requestData
           );
+
+console.log("SURPRISE DATA:", surpriseData);
+console.log("SAVED PHONE:", surpriseData.phone);
+console.log("PHONE INPUT:", document.getElementById("customerPhone")?.value);
+
 
 
           /* -------------------------------------------------
