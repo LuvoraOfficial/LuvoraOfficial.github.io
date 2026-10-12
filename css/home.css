@@ -4004,3 +4004,89 @@ body.occasion-modal-open {
     padding: 28px 38px !important;
   }
 }
+/* =========================================================
+LUVORA — FULL-SCREEN WELCOME COVER
+Covers the complete birthday surprise until opened.
+========================================================= */
+
+#luvoraWelcome {
+position: fixed !important;
+inset: 0 !important;
+
+width: 100% !important;
+height: 100vh !important;
+height: 100dvh !important;
+
+margin: 0 !important;
+padding: 30px 24px !important;
+
+display: flex;
+align-items: center;
+justify-content: center;
+
+overflow-y: auto;
+overscroll-behavior: contain;
+
+z-index: 9999 !important;
+
+opacity: 1;
+visibility: visible;
+pointer-events: auto;
+
+background:
+radial-gradient(
+circle at 50% 30%,
+rgba(110, 38, 75, 0.35),
+transparent 50%
+),
+linear-gradient(
+145deg,
+#160d1d 0%,
+#241126 55%,
+#120914 100%
+);
+
+transition:
+opacity 0.65s ease,
+visibility 0.65s ease;
+}
+
+/* Keep the welcome content centered */
+
+#luvoraWelcome .welcome-content {
+position: relative;
+z-index: 2;
+
+width: min(100%, 650px);
+margin: auto;
+}
+
+/* Hide the cover after clicking OPEN YOUR SURPRISE */
+
+html.luvora-welcome-open #luvoraWelcome {
+opacity: 0;
+visibility: hidden;
+pointer-events: none;
+}
+
+/* The welcome cover must never create extra page spacing */
+
+#luvoraWelcome {
+flex-shrink: 0;
+}
+
+/* Mobile adjustments */
+
+@media (max-width: 480px) {
+#luvoraWelcome {
+padding: 24px 20px !important;
+}
+}
+
+/* Respect reduced-motion preferences */
+
+@media (prefers-reduced-motion: reduce) {
+#luvoraWelcome {
+transition: none;
+}
+}
