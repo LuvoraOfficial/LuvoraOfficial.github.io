@@ -2733,6 +2733,35 @@ a:focus-visible {
   transform: translateY(0);
 }
 
+/* CUSTOMIZATION OVERLAY */
+
+.customization-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  height: 100dvh;
+  margin: 0;
+  padding: 24px 16px;
+  overflow-y: auto;
+  background: rgba(15, 5, 12, 0.92);
+  backdrop-filter: blur(14px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.customization-inner {
+  width: 100%;
+  margin: auto;
+}
+
+body.preview-mode .customization-panel {
+  display: none;
+}
+
 /* PREVIEW MODE */
 
 body.preview-mode .customization-panel {
@@ -6891,4 +6920,223 @@ text-overflow: clip !important;
     pointer-events: none !important;
   }
 
+}
+
+/* =========================================================
+   LUVORA — FINAL SURPRISE VIEW
+   ========================================================= */
+
+.luvora-final-mode #customizationPanel,
+.luvora-final-mode #editSurpriseButton,
+.luvora-final-mode #previewActions,
+.luvora-final-mode #previewStatus,
+.luvora-final-mode #previewCreateButton {
+  display: none !important;
+}
+
+/* =========================================
+   LUVORA — WELCOME SCREEN
+========================================= */
+
+.luvora-welcome {
+  min-height: 100vh;
+  min-height: 100svh;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 22px;
+  text-align: center;
+  color: #f1e8db;
+  background:
+    radial-gradient(
+      ellipse at 50% 35%,
+      rgba(214, 137, 164, 0.19),
+      transparent 60%
+    ),
+    linear-gradient(145deg, #4a0e1f, #270710 75%);
+}
+
+.welcome-content {
+  width: 100%;
+  max-width: 650px;
+  position: relative;
+  z-index: 2;
+  animation: luvoraWelcomeAppear 1s ease both;
+}
+
+.welcome-eyebrow {
+  display: block;
+  margin-bottom: 26px;
+  color: #d689a4;
+  font-size: 11px;
+  letter-spacing: 3px;
+  line-height: 1.8;
+}
+
+.welcome-heart {
+  color: #d689a4;
+  font-family: Georgia, serif;
+  font-size: 76px;
+  line-height: 1;
+  margin-bottom: 20px;
+  animation: luvoraHeartBeat 2.2s ease-in-out infinite;
+}
+
+.luvora-welcome h1 {
+  margin: 0 auto 22px;
+  max-width: 620px;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(34px, 6vw, 59px);
+  font-weight: 500;
+  line-height: 1.2;
+  color: #f1e8db;
+}
+
+.luvora-welcome h1 span {
+  display: block;
+  margin-top: 8px;
+  color: #d689a4;
+  font-style: italic;
+}
+
+.luvora-welcome p {
+  max-width: 470px;
+  margin: 0 auto 34px;
+  color: rgba(241, 232, 219, 0.8);
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+#openYourSurprise {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 52px;
+  padding: 15px 28px;
+  border: 1px solid rgba(241, 232, 219, 0.45);
+  border-radius: 40px;
+  background: #d689a4;
+  color: #270710;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+#openYourSurprise:hover {
+  transform: translateY(-3px);
+  background: #f1b5cb;
+  box-shadow: 0 10px 35px rgba(214, 137, 164, 0.2);
+}
+
+#openYourSurprise:focus-visible {
+  outline: 3px solid #f1e8db;
+  outline-offset: 5px;
+}
+
+.luvora-welcome small {
+  display: block;
+  margin-top: 28px;
+  color: rgba(241, 232, 219, 0.55);
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+.welcome-decoration {
+  position: absolute;
+  color: rgba(214, 137, 164, 0.55);
+  pointer-events: none;
+}
+
+.welcome-star-one {
+  top: 15%;
+  left: 12%;
+  font-size: 30px;
+}
+
+.welcome-star-two {
+  right: 13%;
+  bottom: 18%;
+  font-size: 38px;
+}
+
+@keyframes luvoraWelcomeAppear {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes luvoraHeartBeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* Final surprise mode: hide editor controls */
+.luvora-final-mode #customizationPanel,
+.luvora-final-mode #previewActions,
+.luvora-final-mode #editSurpriseButton,
+.luvora-final-mode #previewStatus {
+  display: none !important;
+}
+
+@media (max-width: 480px) {
+  .luvora-welcome {
+    padding: 40px 24px;
+  }
+
+  .welcome-eyebrow {
+    font-size: 9px;
+    letter-spacing: 2px;
+  }
+
+  .luvora-welcome p {
+    font-size: 14px;
+  }
+
+  #openYourSurprise {
+    width: 100%;
+    max-width: 300px;
+    padding: 15px 18px;
+    font-size: 11px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .welcome-content,
+  .welcome-heart {
+    animation: none;
+  }
+
+  #openYourSurprise {
+    transition: none;
+  }
+}
+
+/* FINAL SURPRISE — HIDE ALL EDITING CONTROLS */
+html.luvora-final-mode #customizationPanel,
+html.luvora-final-mode #previewActions,
+html.luvora-final-mode #editSurpriseButton,
+html.luvora-final-mode #previewStatus,
+html.luvora-final-mode #previewCreateButton {
+  display: none !important;
 }
