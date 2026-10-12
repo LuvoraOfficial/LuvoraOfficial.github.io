@@ -2800,9 +2800,9 @@ if (cakeName) {
   });
 }
 
-/* =========================================
+/* ==========================================
    LUVORA — WELCOME SCREEN CONTROLLER
-========================================= */
+========================================== */
 
 (function () {
   const welcome = document.getElementById("luvoraWelcome");
@@ -2814,25 +2814,42 @@ if (cakeName) {
   const shareId = params.get("id");
 
   /*
-    Only a shared URL containing ?id=... enters
-    final-surprise mode.
-
-    IMPORTANT:
-    This identifies the mode; it does not fetch
-    personalized data from Supabase.
+    Show Welcome only on the final shared surprise link.
+    Keep the customization page behavior unchanged.
   */
 
-  if (shareId) {
-    document.documentElement.classList.add("luvora-final-mode");
+  if (!shareId) {
+    welcome.hidden = true;
+    return;
   }
 
-  openButton.addEventListener("click", function () {
-    welcome.style.transition = "opacity 0.7s ease";
-    welcome.style.opacity = "0";
+  // Activate final-surprise mode and lock page scrolling.
+  document.documentElement.classList.add(
+    "luvora-final-mode",
+    "luvora-welcome-active"
+  );
 
+  welcome.hidden = false;
+
+  // Open the surprise after the button is clicked.
+  openButton.addEventListener("click", function () {
+    if (document.documentElement.classList.contains("luvora-welcome-open")) {
+      return;
+    }
+
+    // Start the Welcome fade-out animation.
+    document.documentElement.classList.add("luvora-welcome-open");
+
+    // Wait until the animation finishes.
     window.setTimeout(function () {
+      // Remove Welcome completely so it cannot leave any gap.
       welcome.hidden = true;
 
+      document.documentElement.classList.remove(
+        "luvora-welcome-active"
+      );
+
+      // Start the surprise from the Birthday Hero section.
       const hero = document.getElementById("birthdayHero");
 
       if (hero) {
@@ -2842,8 +2859,11 @@ if (cakeName) {
         });
       }
     }, 700);
+
+    openButton.blur();
   });
 })();
+
 /* =========================================================
 LUVORA — OPEN THE BIRTHDAY SURPRISE
 ========================================================= */
