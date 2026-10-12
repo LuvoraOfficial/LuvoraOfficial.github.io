@@ -2844,3 +2844,44 @@ if (cakeName) {
     }, 700);
   });
 })();
+/* =========================================================
+LUVORA — OPEN THE BIRTHDAY SURPRISE
+========================================================= */
+
+(function initLuvoraWelcomeCover() {
+const welcomeScreen =
+document.getElementById("luvoraWelcome");
+
+const openButton =
+document.getElementById("openYourSurprise");
+
+if (!welcomeScreen || !openButton) {
+return;
+}
+
+// Show the welcome cover only on the final shared surprise.
+const params = new URLSearchParams(window.location.search);
+const isFinalSurprise = Boolean(params.get("id"));
+
+if (!isFinalSurprise) {
+welcomeScreen.style.display = "none";
+return;
+}
+
+// Keep the cover visible until the visitor opens it.
+document.documentElement.classList.remove(
+"luvora-welcome-open"
+);
+
+openButton.addEventListener("click", function () {
+document.documentElement.classList.add(
+"luvora-welcome-open"
+);
+
+```
+// Prevent the hidden welcome content from being focused.
+openButton.blur();
+```
+
+});
+})();
