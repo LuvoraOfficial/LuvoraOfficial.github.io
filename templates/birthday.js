@@ -1,4 +1,23 @@
 /* =========================================================
+   LUVORA — CUSTOMIZATION / FINAL SURPRISE MODE
+   ========================================================= */
+
+const LUVORA_URL_PARAMS =
+  new URLSearchParams(window.location.search);
+
+const LUVORA_SHARE_ID =
+  LUVORA_URL_PARAMS.get("id");
+
+const LUVORA_IS_FINAL_SURPRISE =
+  Boolean(LUVORA_SHARE_ID);
+
+if (LUVORA_IS_FINAL_SURPRISE) {
+  document.documentElement.classList.add("luvora-final-mode");
+}
+
+
+
+/* =========================================================
    LUVORA — BIRTHDAY STORY
    BIRTHDAY PAGE INTERACTION ENGINE
    ========================================================= */
@@ -1768,9 +1787,35 @@ function startBackgroundHearts() {
 
 function setupCustomizationSystem() {
   const editButton = document.getElementById("editSurpriseButton");
-  const customizationPanel = document.getElementById("customizationPanel");
 
+  // Shared surprise link: editor open korbe na
+  if (LUVORA_IS_FINAL_SURPRISE) {
+    document.body.classList.add("preview-mode");
+
+    if (editButton) {
+      editButton.style.display = "none";
+    }
+
+    const customizationPanel =
+      document.getElementById("customizationPanel");
+
+    if (customizationPanel) {
+      customizationPanel.style.display = "none";
+    }
+
+    return;
+  }
+
+  document.body.classList.remove("preview-mode");
+  const customizationPanel =
+    document.getElementById("customizationPanel");
+
+  if (customizationPanel) {
+    customizationPanel.classList.add("active");
+  }
+ 
   const customerName = document.getElementById("customerName");
+  const customerPhone = document.getElementById("customerPhone");
   const customerDate = document.getElementById("customerDate");
   const customerPhotos = document.getElementById("customerPhotos");
   const customerVideo = document.getElementById("customerVideo");
@@ -2372,9 +2417,89 @@ if (customVideoName) {
 }
 
   if (previewButton) {
-
   previewButton.addEventListener("click", () => {
+    const errors = [];
 
+    const name = customerName
+      ? customerName.value.trim()
+      : "";
+
+    const date = customerDate
+      ? customerDate.value.trim()
+      : "";
+
+    const phone = customerPhone
+      ? customerPhone.value.trim()
+      : "";
+
+    const photoPreview =
+      document.getElementById("customPhotoPreview");
+
+    const photoCount = photoPreview
+      ? photoPreview.querySelectorAll(".custom-photo-item").length
+      : 0;
+
+    const customVideoName =
+      document.getElementById("customVideoName");
+
+    const hasVideo = Boolean(
+      (customerVideo && customerVideo.files.length > 0) ||
+      (customVideoName && customVideoName.textContent.trim())
+    );
+
+    // Name validation
+    if (!name) {
+      errors.push("Please enter the name.");
+    }
+
+    // Date validation
+    if (!date || Number.isNaN(Date.parse(date))) {
+      errors.push("Please enter a valid special date.");
+    }
+
+    // Indian mobile number validation
+    if (!/^[6-9]\d{9}$/.test(phone)) {
+      errors.push("Please enter a valid 10-digit Indian mobile number.");
+    }
+
+    // Exactly 6 photos required
+    if (photoCount !== 6) {
+      errors.push(
+        `Exactly 6 photos are required. Currently uploaded: ${photoCount}.`
+      );
+    }
+
+    // Video required
+    if (!hasVideo) {
+      errors.push("Please upload a video.");
+    }
+
+    // Stop preview if any validation fails
+    if (errors.length > 0) {
+      if (previewStatus) {
+        previewStatus.classList.add("show");
+        previewStatus.textContent =
+          "Please fix the following errors: " +
+          errors.join(" ");
+      }
+
+      if (previewActions) {
+        previewActions.classList.remove("show");
+      }
+
+      document.body.classList.remove("preview-mode");
+
+      if (previewStatus) {
+        previewStatus.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+      }
+
+      return;
+    }
+
+    // All validations passed
     if (previewStatus) {
       previewStatus.classList.add("show");
       previewStatus.textContent =
@@ -2399,9 +2524,7 @@ if (customVideoName) {
 
     createFloatingHearts();
     createMiniConfetti();
-
   });
-
 }
 
 
@@ -2463,32 +2586,6 @@ if (createSurpriseButton) {
              ? customerPhone.value.trim()
              : "";
        
-
-if (!name) {
-
-  alert("Please enter a name.");
-
-  return;
-
-}
-
-if (!date) {
-
-  alert("Please select the special date.");
-
-  return;
-
-}
-
-if (!/^[6-9]\d{9}$/.test(phone)) {
-
-  alert(
-    "Please enter a valid 10-digit mobile number."
-  );
-
-  return;
-
-}
 
       /* =================================================
          CREATE TEMPORARY DRAFT ID
@@ -2587,7 +2684,46 @@ const surpriseData = {
 }
     }
 
- function initializeBirthdayExperience() {
+async function loadSharedSurprise() {
+  if (!LUVORA_IS_FINAL_SURPRISE) return;
+
+  try {
+    const { data, error } = await supabaseClient
+      .from("surprises")
+      .select("name, birthday_date, photos, video, payment_status")
+      .eq("share_id", LUVORA_SHARE_ID)
+      .eq("payment_status", "paid")
+      .maybeSingle();
+
+    if (error) throw error;
+
+    if (!data) {
+      console.error("Surprise not found or payment not verified.");
+      return;
+    }
+
+    BIRTHDAY_CONFIG.name = data.name || "My Love";
+    BIRTHDAY_CONFIG.date = data.birthday_date || "";
+    BIRTHDAY_CONFIG.photos = Array.isArray(data.photos)
+      ? data.photos
+      : [];
+    BIRTHDAY_CONFIG.video = data.video || "";
+
+  } catch (error) {
+    console.error("Unable to load shared surprise:", error);
+  }
+}
+
+async function initializeBirthdayExperience() {
+  const isFinalSurprise = Boolean(LUVORA_SHARE_ID);
+
+  if (isFinalSurprise) {
+    document.documentElement.classList.add("luvora-final-mode");
+    document.body.classList.add("preview-mode");
+  }
+
+  await loadSharedSurprise();
+
   loadCustomerDataFromURL();
   loadCustomerPhotosFromURL();
   loadBirthdayInformation();
@@ -2596,8 +2732,6 @@ const surpriseData = {
   setupCustomizationSystem();
   startBackgroundHearts();
 }
-
-
 /* =========================================================
    20 — START
    ========================================================= */
@@ -2665,3 +2799,48 @@ if (cakeName) {
     subtree: true
   });
 }
+
+/* =========================================
+   LUVORA — WELCOME SCREEN CONTROLLER
+========================================= */
+
+(function () {
+  const welcome = document.getElementById("luvoraWelcome");
+  const openButton = document.getElementById("openYourSurprise");
+
+  if (!welcome || !openButton) return;
+
+  const params = new URLSearchParams(window.location.search);
+  const shareId = params.get("id");
+
+  /*
+    Only a shared URL containing ?id=... enters
+    final-surprise mode.
+
+    IMPORTANT:
+    This identifies the mode; it does not fetch
+    personalized data from Supabase.
+  */
+
+  if (shareId) {
+    document.documentElement.classList.add("luvora-final-mode");
+  }
+
+  openButton.addEventListener("click", function () {
+    welcome.style.transition = "opacity 0.7s ease";
+    welcome.style.opacity = "0";
+
+    window.setTimeout(function () {
+      welcome.hidden = true;
+
+      const hero = document.getElementById("birthdayHero");
+
+      if (hero) {
+        hero.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+      }
+    }, 700);
+  });
+})();
