@@ -15,8 +15,6 @@ if (LUVORA_IS_FINAL_SURPRISE) {
   document.documentElement.classList.add("luvora-final-mode");
 }
 
-
-
 /* =========================================================
    LUVORA — BIRTHDAY STORY
    BIRTHDAY PAGE INTERACTION ENGINE
@@ -84,17 +82,6 @@ const BIRTHDAY_CONFIG = {
     "Life feels a little sweeter because you're in it. 💕",
     "If I could give you one thing, it would be the ability to see yourself through my eyes. 💗"
   ],
-
-  /* Customer photos can later be inserted here */
-
-  photos: [
-  "assets/images/demo-1.jpg",
-  "assets/images/demo-2.jpg",
-  "assets/images/demo-3.jpg",
-  "assets/images/demo-4.jpg",
-  "assets/images/demo-5.jpg",
-  "assets/images/demo-6.jpg"
-],
 
   /* Customer video can later be inserted here */
 
@@ -1780,21 +1767,122 @@ function startBackgroundHearts() {
 
 }
 
+/* =========================================================
+RESET SURPRISE INTERACTIONS BEFORE A NEW PREVIEW
+========================================================= */
+
+function resetSurpriseInteractions() {
+
+// Reset balloon interactions
+poppedBalloons = 0;
+
+balloons.forEach((balloon) => {
+balloon.classList.remove("popped");
+});
+
+document.querySelectorAll(".mobile-balloon-message")
+.forEach((message) => message.remove());
+
+if (balloonMessage) {
+balloonMessage.classList.remove(
+"visible",
+"mobile-final-balloon-message"
+);
+
+
+balloonMessage.style.left = "";
+balloonMessage.style.top = "";
+
+
+}
+
+if (balloonMessageText) {
+balloonMessageText.textContent = "";
+}
+
+// Reset love letter
+if (loveEnvelope) {
+loveEnvelope.classList.remove("open");
+}
+
+// Reset candles
+blownCandles = 0;
+
+candles.forEach((candle) => {
+candle.classList.remove("blown");
+});
+
+document.querySelectorAll(".realistic-candle-smoke")
+.forEach((smoke) => smoke.remove());
+
+// Reset cake reveal
+const cakeScene = document.querySelector(".cake-scene");
+const cake = document.querySelector(".birthday-cake");
+
+if (cakeScene) {
+cakeScene.classList.remove("magical-reveal");
+
+cakeScene.querySelectorAll(
+  ".cake-light-burst, .cake-sparkle, .cake-reveal-heart"
+).forEach((element) => element.remove());
+
+
+}
+
+if (cake) {
+cake.classList.remove("cake-magical-glow");
+}
+
+// Reset gift box and panda reveal
+if (birthdayWishButton) {
+birthdayWishButton.classList.remove(
+"magical-wish-ready",
+"gift-open",
+"gift-disappear"
+);
+}
+
+if (pandaGiftReveal) {
+pandaGiftReveal.classList.remove("panda-visible");
+}
+
+// Reset memory book to its cover
+const memoryBook = document.getElementById("memoryBook");
+const memoryCover = document.getElementById("memoryCover");
+const memoryBackCover = document.getElementById("memoryBackCover");
+
+if (memoryBook && memoryCover && memoryBackCover) {
+
+memoryCover.classList.remove("memory-cover-open");
+memoryCover.style.display = "flex";
+memoryCover.style.pointerEvents = "auto";
+
+memoryBook.querySelectorAll(".memory-page").forEach((page) => {
+  page.classList.remove("active");
+  page.style.opacity = "0";
+  page.style.pointerEvents = "none";
+});
+
+memoryBackCover.style.opacity = "0";
+memoryBackCover.style.pointerEvents = "none";
+
+}
+}
+
+
 
 /* =========================================================
    19 — INITIALIZE
    ========================================================= */
 
 function setupCustomizationSystem() {
-  const editButton = document.getElementById("editSurpriseButton");
 
   // Shared surprise link: editor open korbe na
+
   if (LUVORA_IS_FINAL_SURPRISE) {
     document.body.classList.add("preview-mode");
 
-    if (editButton) {
-      editButton.style.display = "none";
-    }
+  
 
     const customizationPanel =
       document.getElementById("customizationPanel");
@@ -1814,9 +1902,29 @@ function setupCustomizationSystem() {
     customizationPanel.classList.add("active");
   }
  
-  const customerName = document.getElementById("customerName");
-  const customerPhone = document.getElementById("customerPhone");
-  const customerDate = document.getElementById("customerDate");
+ const customerName = document.getElementById("customerName");
+const customerPhone = document.getElementById("customerPhone");
+const customerDate = document.getElementById("customerDate");
+
+// Enter key: move to the next input
+if (customerPhone && customerName && customerDate) {
+
+customerPhone.addEventListener("keydown", function (event) {
+if (event.key === "Enter") {
+event.preventDefault();
+customerName.focus();
+}
+});
+
+customerName.addEventListener("keydown", function (event) {
+if (event.key === "Enter") {
+event.preventDefault();
+customerDate.focus();
+}
+});
+
+}
+
   const customerPhotos = document.getElementById("customerPhotos");
   const customerVideo = document.getElementById("customerVideo");
   const customerPandaMessage = document.getElementById("customerPandaMessage");
@@ -1850,22 +1958,6 @@ if (customerDate) {
   const letterRecipients = document.querySelectorAll(".letter-recipient");
 
 
-if (editButton && customizationPanel) {
-  editButton.addEventListener("click", () => {
-
-    document.body.classList.remove("preview-mode");
-
-    if (previewActions) {
-      previewActions.classList.remove("show");
-    }
-
-    customizationPanel.scrollIntoView({
-      behavior: "auto",
-      block: "start"
-    });
-
-  });
-} 
 
 if (customerPandaMessage && pandaRomanticMessage) {
 
@@ -1937,15 +2029,7 @@ if (customerPhotos) {
   const photoPreview =
     document.getElementById("customPhotoPreview");
 
-  const DEMO_PHOTOS = [
-    "assets/images/demo-1.jpg",
-    "assets/images/demo-2.jpg",
-    "assets/images/demo-3.jpg",
-    "assets/images/demo-4.jpg",
-    "assets/images/demo-5.jpg",
-    "assets/images/demo-6.jpg"
-  ];
-
+ 
   let uploadedPhotoUrls = [];
 
   let uploadedPhotoFiles = [];
@@ -1955,13 +2039,10 @@ if (customerPhotos) {
      UPDATE PHOTO GALLERY
      ===================================================== */
 
-  function updateCustomPhotos() {
+    function updateCustomPhotos() {
 
     BIRTHDAY_CONFIG.photos =
-      DEMO_PHOTOS.map(
-        (demoPhoto, index) =>
-          uploadedPhotoUrls[index] || demoPhoto
-      );
+      uploadedPhotoUrls.slice(0, 6);
 
     loadMemoryGallery();
 
@@ -2452,10 +2533,17 @@ if (customVideoName) {
       errors.push("Please enter the name.");
     }
 
-    // Date validation
-    if (!date || Number.isNaN(Date.parse(date))) {
-      errors.push("Please enter a valid special date.");
-    }
+   // Date validation: Year is required
+
+if (
+  !date ||
+  !/\b\d{4}\b/.test(date) ||
+  Number.isNaN(Date.parse(date))
+) {
+  errors.push(
+    "Please enter a valid special date including the year (e.g. 12 October 2026)."
+  );
+}
 
     // Indian mobile number validation
     if (!/^[6-9]\d{9}$/.test(phone)) {
@@ -2499,12 +2587,7 @@ if (customVideoName) {
       return;
     }
 
-    // All validations passed
-    if (previewStatus) {
-      previewStatus.classList.add("show");
-      previewStatus.textContent =
-        "✨ Your personalized preview is ready.";
-    }
+   resetSurpriseInteractions();
 
     if (previewActions) {
       previewActions.classList.add("show");
@@ -2515,41 +2598,35 @@ if (customVideoName) {
     const hero =
       document.getElementById("birthdayHero");
 
-    if (hero) {
-      hero.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
-    }
-
+   
     createFloatingHearts();
     createMiniConfetti();
   });
 }
 
-
 if (backToEditButton) {
-  backToEditButton.addEventListener("click", () => {
-
-    if (previewActions) {
-      previewActions.classList.remove("show");
-    }
+backToEditButton.addEventListener("click", () => {
+if (previewActions) {
+previewActions.classList.remove("show");
+}
 
 document.body.classList.remove("preview-mode");
 
-    if (previewStatus) {
-      previewStatus.classList.remove("show");
-    }
+if (previewStatus) {
+  previewStatus.classList.remove("show");
+}
 
-    if (customizationPanel) {
-      customizationPanel.classList.add("active");
+if (customizationPanel) {
+  customizationPanel.classList.add("active");
 
-      customizationPanel.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
-    }
+  customizationPanel.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
   });
+}
+
+
+});
 }
 
 /* =========================================================
@@ -2837,6 +2914,65 @@ if (cakeName) {
       return;
     }
 
+    // Create premium golden dust particles.
+let dustContainer = welcome.querySelector(".welcome-golden-dust");
+
+if (!dustContainer) {
+  dustContainer = document.createElement("div");
+  dustContainer.className = "welcome-golden-dust";
+  dustContainer.setAttribute("aria-hidden", "true");
+  welcome.appendChild(dustContainer);
+}
+
+dustContainer.innerHTML = "";
+
+for (let i = 0; i < 44; i++) {
+  const dust = document.createElement("span");
+
+  const leftSide = i % 2 === 0;
+
+  dust.style.setProperty(
+    "--dust-x",
+    leftSide
+      ? `${20 + Math.random() * 29}%`
+      : `${51 + Math.random() * 29}%`
+  );
+
+  dust.style.setProperty(
+    "--dust-y",
+    `${12 + Math.random() * 76}%`
+  );
+
+  dust.style.setProperty(
+    "--dust-size",
+    `${2 + Math.random() * 3}px`
+  );
+
+  dust.style.setProperty(
+    "--dust-x-move",
+    `${leftSide
+      ? -(35 + Math.random() * 100)
+      : 35 + Math.random() * 100}px`
+  );
+
+  dust.style.setProperty(
+    "--dust-y-move",
+    `${-25 - Math.random() * 100}px`
+  );
+
+  dust.style.setProperty(
+    "--dust-duration",
+    `${1.0 + Math.random() * 0.9}s`
+  );
+
+  dust.style.setProperty(
+    "--dust-delay",
+    `${Math.random() * 0.45}s`
+  );
+
+  dustContainer.appendChild(dust);
+}
+
     // Start the Welcome fade-out animation.
     document.documentElement.classList.add("luvora-welcome-open");
 
@@ -2858,48 +2994,9 @@ if (cakeName) {
           block: "start"
         });
       }
-    }, 700);
+    }, 1600);
 
     openButton.blur();
   });
 })();
 
-/* =========================================================
-LUVORA — OPEN THE BIRTHDAY SURPRISE
-========================================================= */
-
-(function initLuvoraWelcomeCover() {
-const welcomeScreen =
-document.getElementById("luvoraWelcome");
-
-const openButton =
-document.getElementById("openYourSurprise");
-
-if (!welcomeScreen || !openButton) {
-return;
-}
-
-// Show the welcome cover only on the final shared surprise.
-const params = new URLSearchParams(window.location.search);
-const isFinalSurprise = Boolean(params.get("id"));
-
-if (!isFinalSurprise) {
-welcomeScreen.style.display = "none";
-return;
-}
-
-// Keep the cover visible until the visitor opens it.
-document.documentElement.classList.remove(
-"luvora-welcome-open"
-);
-
-openButton.addEventListener("click", function () {
-document.documentElement.classList.add(
-"luvora-welcome-open"
-);
-
-// Prevent the hidden welcome content from being focused.
-openButton.blur();
-
-});
-})();
