@@ -2382,33 +2382,13 @@ a:focus-visible {
   background: rgba(255, 255, 255, 0.21);
 }
 
-.edit-surprise-button {
-  margin-top: 16px;
-  padding: 12px 22px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 999px;
-  cursor: pointer;
-  background: rgba(255, 255, 255, 0.08);
-  color: inherit;
-  font: inherit;
-  font-weight: 600;
-  transition:
-    transform 0.25s ease,
-    background 0.25s ease;
-}
-
-.edit-surprise-button:hover {
-  transform: translateY(-2px);
-  background: rgba(255, 255, 255, 0.15);
-}
-
-
 /* MOBILE */
+
 @media (max-width: 700px) {
 
   .customization-panel {
-    margin: 50px auto;
-    padding: 45px 16px;
+    margin: 10px auto 30px;
+    padding: 10px 16px 45px;
   }
 
   .customization-inner {
@@ -2430,30 +2410,31 @@ a:focus-visible {
 
 }
 
+
+
 .custom-photo-preview {
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
+  align-items: flex-start;
   gap: 10px;
+  width: 100%;
   margin-top: 14px;
 }
 
 .custom-photo-item {
   position: relative;
+  flex: 0 0 72px;
   width: 72px;
   height: 72px;
   overflow: hidden;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow:
-    0 8px 18px rgba(0, 0, 0, 0.18),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .custom-photo-item img {
+  display: block;
   width: 100%;
   height: 100%;
-  display: block;
   object-fit: cover;
 }
 
@@ -6182,15 +6163,14 @@ text-overflow: clip !important;
 @media (max-width: 700px) {
 
   .customization-panel,
-  .customization-panel.active {
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    margin: 30px auto;
-    padding: 20px 12px;
-    box-sizing: border-box;
-  }
-
+.customization-panel.active {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 10px 12px 20px;
+  box-sizing: border-box;
+}
   .customization-inner {
     width: 100%;
     max-width: 100%;
@@ -6772,34 +6752,27 @@ text-overflow: clip !important;
 
 }
 
-/* =========================================================
-   LUVORA — FINAL SURPRISE VIEW
-   ========================================================= */
-
-.luvora-final-mode #customizationPanel,
-.luvora-final-mode #editSurpriseButton,
-.luvora-final-mode #previewActions,
-.luvora-final-mode #previewStatus,
-.luvora-final-mode #previewCreateButton {
-  display: none !important;
-}
 
 /* =========================================
    LUVORA — WELCOME SCREEN
 ========================================= */
 
 .luvora-welcome {
-  min-height: 100vh;
-  min-height: 100svh;
   box-sizing: border-box;
   position: relative;
-  overflow: hidden;
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow-x: hidden;
+  overflow-y: auto;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 50px 22px;
+
+  padding: clamp(28px, 5vh, 56px) 22px;
   text-align: center;
   color: #f1e8db;
+
   background:
     radial-gradient(
       ellipse at 50% 35%,
@@ -6810,76 +6783,84 @@ text-overflow: clip !important;
 }
 
 .welcome-content {
-  width: 100%;
-  max-width: 650px;
-  position: relative;
-  z-index: 2;
-  animation: luvoraWelcomeAppear 1s ease both;
+width: 100%;
+max-width: 650px;
+margin: auto;
+position: relative;
+z-index: 2;
+animation: luvoraWelcomeAppear 1s ease both;
 }
 
 .welcome-eyebrow {
-  display: block;
-  margin-bottom: 26px;
-  color: #d689a4;
-  font-size: 11px;
-  letter-spacing: 3px;
-  line-height: 1.8;
+display: block;
+margin-bottom: clamp(16px, 3vh, 26px);
+color: #d689a4;
+font-size: clamp(9px, 1vw, 11px);
+letter-spacing: clamp(1.5px, 0.25vw, 3px);
+line-height: 1.8;
 }
 
 .welcome-heart {
-  color: #d689a4;
-  font-family: Georgia, serif;
-  font-size: 76px;
-  line-height: 1;
-  margin-bottom: 20px;
-  animation: luvoraHeartBeat 2.2s ease-in-out infinite;
+color: #d689a4;
+font-family: Georgia, serif;
+font-size: clamp(52px, 7vw, 76px);
+line-height: 1;
+margin-bottom: clamp(14px, 2.5vh, 20px);
+animation: luvoraHeartBeat 2.2s ease-in-out infinite;
 }
 
 .luvora-welcome h1 {
-  margin: 0 auto 22px;
-  max-width: 620px;
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: clamp(34px, 6vw, 59px);
-  font-weight: 500;
-  line-height: 1.2;
-  color: #f1e8db;
+width: 100%;
+max-width: 620px;
+margin: 0 auto clamp(16px, 2.5vh, 22px);
+font-family: "Playfair Display", Georgia, serif;
+font-size: clamp(32px, 4.2vw, 59px);
+font-weight: 500;
+line-height: 1.2;
+letter-spacing: -0.4px;
+color: #f1e8db;
+overflow-wrap: break-word;
 }
 
 .luvora-welcome h1 span {
-  display: block;
-  margin-top: 8px;
-  color: #d689a4;
-  font-style: italic;
+display: block;
+margin-top: clamp(5px, 1vh, 8px);
+color: #d689a4;
+font-style: italic;
 }
 
 .luvora-welcome p {
-  max-width: 470px;
-  margin: 0 auto 34px;
-  color: rgba(241, 232, 219, 0.8);
-  font-size: 15px;
-  line-height: 1.9;
+width: 100%;
+max-width: 470px;
+margin: 0 auto clamp(22px, 3.5vh, 34px);
+color: rgba(241, 232, 219, 0.8);
+font-size: clamp(13px, 1.2vw, 15px);
+line-height: 1.8;
+text-wrap: pretty;
 }
 
 #openYourSurprise {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  min-height: 52px;
-  padding: 15px 28px;
-  border: 1px solid rgba(241, 232, 219, 0.45);
-  border-radius: 40px;
-  background: #d689a4;
-  color: #270710;
-  font: inherit;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  cursor: pointer;
-  transition:
-    transform 0.25s ease,
-    background 0.25s ease,
-    box-shadow 0.25s ease;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+gap: 12px;
+min-height: 52px;
+max-width: 100%;
+box-sizing: border-box;
+padding: 15px clamp(20px, 3vw, 28px);
+border: 1px solid rgba(241, 232, 219, 0.45);
+border-radius: 40px;
+background: #d689a4;
+color: #270710;
+font: inherit;
+font-size: 12px;
+font-weight: 700;
+letter-spacing: 1.5px;
+cursor: pointer;
+transition:
+transform 0.25s ease,
+background 0.25s ease,
+box-shadow 0.25s ease;
 }
 
 #openYourSurprise:hover {
@@ -6894,11 +6875,12 @@ text-overflow: clip !important;
 }
 
 .luvora-welcome small {
-  display: block;
-  margin-top: 28px;
-  color: rgba(241, 232, 219, 0.55);
-  font-size: 11px;
-  letter-spacing: 1px;
+display: block;
+margin-top: clamp(18px, 3vh, 28px);
+color: rgba(241, 232, 219, 0.55);
+font-size: clamp(10px, 1vw, 11px);
+line-height: 1.7;
+letter-spacing: 1px;
 }
 
 .welcome-decoration {
@@ -6943,8 +6925,9 @@ text-overflow: clip !important;
 
 @media (max-width: 480px) {
   .luvora-welcome {
-    padding: 40px 24px;
-  }
+padding: 28px 22px;
+align-items: center;
+}
 
   .welcome-eyebrow {
     font-size: 9px;
@@ -6963,6 +6946,44 @@ text-overflow: clip !important;
   }
 }
 
+@media (min-width: 481px) and (max-width: 1024px) {
+.luvora-welcome {
+padding: 36px 32px;
+}
+
+.welcome-content {
+max-width: 600px;
+}
+
+.luvora-welcome h1 {
+font-size: clamp(36px, 5.2vw, 52px);
+}
+
+.luvora-welcome p {
+max-width: 440px;
+}
+}
+
+@media (max-height: 650px) and (min-width: 481px) {
+.luvora-welcome {
+padding-top: 24px;
+padding-bottom: 24px;
+}
+
+.welcome-eyebrow {
+margin-bottom: 14px;
+}
+
+.welcome-heart {
+margin-bottom: 12px;
+}
+
+.luvora-welcome small {
+margin-top: 16px;
+}
+}
+
+
 @media (prefers-reduced-motion: reduce) {
   .welcome-content,
   .welcome-heart {
@@ -6977,7 +6998,6 @@ text-overflow: clip !important;
 /* FINAL SURPRISE — HIDE ALL EDITING CONTROLS */
 html.luvora-final-mode #customizationPanel,
 html.luvora-final-mode #previewActions,
-html.luvora-final-mode #editSurpriseButton,
 html.luvora-final-mode #previewStatus,
 html.luvora-final-mode #previewCreateButton {
   display: none !important;
@@ -7357,5 +7377,31 @@ transition-duration: .01ms;
   }
 }
 
+/* LUVORA FIX — Respect the hidden attribute */
+#luvoraWelcome[hidden] {
+  display: none !important;
+}
 
 
+/* FIX: Uploaded photo previews side by side */
+
+#customPhotoPreview,
+.custom-photo-preview {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  gap: 8px !important;
+  width: 100% !important;
+}
+
+#customPhotoPreview > .custom-photo-item,
+.custom-photo-preview > .custom-photo-item {
+  display: block !important;
+  flex: 0 0 62px !important;
+  width: 62px !important;
+  min-width: 62px !important;
+  max-width: 62px !important;
+  height: 62px !important;
+}
