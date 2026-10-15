@@ -2898,10 +2898,8 @@ document.documentElement.classList.add(
 "luvora-welcome-open"
 );
 
-```
 // Prevent the hidden welcome content from being focused.
 openButton.blur();
-```
 
 });
 })();
