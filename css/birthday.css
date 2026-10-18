@@ -7405,3 +7405,1305 @@ transition-duration: .01ms;
   max-width: 62px !important;
   height: 62px !important;
 }
+
+/* ==========================================
+   LUVORA — CUTE BIRTHDAY BALLOON FACES 🎈
+========================================== */
+
+/* Balloon face positioning */
+.birthday-balloon,
+.decor-balloon {
+  position: relative;
+  overflow: visible !important;
+}
+
+/* Cute face */
+.balloon-cute-face {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 52%;
+  height: 35%;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Eyes */
+.balloon-cute-eye {
+  position: absolute;
+  top: 10%;
+  width: 19%;
+  height: 30%;
+  background: #39212c;
+  border-radius: 50%;
+  box-shadow: inset 1px 1px 0 rgba(255,255,255,.7);
+}
+
+.balloon-cute-eye.left {
+  left: 15%;
+}
+
+.balloon-cute-eye.right {
+  right: 15%;
+}
+
+/* Tiny eye sparkle */
+.balloon-cute-eye::after {
+  content: "";
+  position: absolute;
+  top: 15%;
+  left: 20%;
+  width: 30%;
+  height: 25%;
+  border-radius: 50%;
+  background: white;
+}
+
+/* Cheeks */
+.balloon-cute-cheek {
+  position: absolute;
+  top: 47%;
+  width: 23%;
+  height: 15%;
+  border-radius: 50%;
+  background: rgba(255, 105, 155, .62);
+  filter: blur(1px);
+}
+
+.balloon-cute-cheek.left {
+  left: -2%;
+}
+
+.balloon-cute-cheek.right {
+  right: -2%;
+}
+
+/* Cute smile */
+.balloon-cute-mouth {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  width: 25%;
+  height: 20%;
+  transform: translateX(-50%);
+  border-bottom: 2px solid #542339;
+  border-radius: 0 0 50% 50%;
+}
+
+/* Different expressions */
+.balloon-cute-face.expression-happy .balloon-cute-mouth {
+  width: 29%;
+  height: 24%;
+  background: #8d3456;
+  border: 0;
+  border-radius: 5px 5px 50% 50%;
+}
+
+.balloon-cute-face.expression-wink .balloon-cute-eye.right {
+  height: 3px;
+  top: 23%;
+  border-radius: 50%;
+}
+
+.balloon-cute-face.expression-ooh .balloon-cute-mouth {
+  width: 13%;
+  height: 15%;
+  border: 2px solid #542339;
+  border-radius: 50%;
+  background: transparent;
+}
+
+.balloon-cute-face.expression-love .balloon-cute-mouth {
+  width: 25%;
+  height: 20%;
+  border-bottom: 2px solid #542339;
+}
+
+/* Tiny floating hearts */
+.balloon-cute-heart {
+  position: absolute;
+  z-index: 6;
+  top: 12%;
+  right: 8%;
+  color: #fff4f8;
+  font-size: 17px;
+  line-height: 1;
+  animation: cuteHeartFloat 2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes cuteHeartFloat {
+  0%, 100% {
+    transform: translateY(0) rotate(-10deg) scale(1);
+  }
+
+  50% {
+    transform: translateY(-5px) rotate(10deg) scale(1.15);
+  }
+}
+
+/* ==========================================
+   UNIQUE CURLY BALLOON STRINGS 🎀
+========================================== */
+
+.birthday-balloon .balloon-string {
+  width: 3px;
+  border-radius: 50%;
+  opacity: .9;
+
+  background: repeating-linear-gradient(
+    180deg,
+    #ffd8e8 0px,
+    #ffd8e8 7px,
+    #e99abb 7px,
+    #e99abb 12px,
+    #fff1f7 12px,
+    #fff1f7 17px
+  );
+
+  filter: drop-shadow(1px 1px 2px rgba(100, 25, 60, .15));
+  transform-origin: top center;
+  animation: cuteStringSway 3s ease-in-out infinite;
+}
+
+/* Different string movements */
+.birthday-balloon:nth-child(2) .balloon-string {
+  animation-delay: -.7s;
+}
+
+.birthday-balloon:nth-child(3) .balloon-string {
+  animation-delay: -1.3s;
+}
+
+.birthday-balloon:nth-child(4) .balloon-string {
+  animation-delay: -.4s;
+}
+
+.birthday-balloon:nth-child(5) .balloon-string {
+  animation-delay: -1.8s;
+}
+
+@keyframes cuteStringSway {
+  0%, 100% {
+    rotate: -5deg;
+  }
+
+  50% {
+    rotate: 7deg;
+  }
+}
+
+/* Decorative balloon strings */
+.balloon-bunch::after {
+  width: 3px;
+  border-radius: 50%;
+
+  background: repeating-linear-gradient(
+    180deg,
+    #ffe0ec 0px,
+    #ffe0ec 6px,
+    #d98aab 6px,
+    #d98aab 10px
+  );
+
+  opacity: .8;
+}
+
+/* Small balloons: keep the face compact */
+.decor-balloon .balloon-cute-face {
+  top: 43%;
+  width: 65%;
+  height: 35%;
+}
+
+.decor-balloon .balloon-cute-eye {
+  width: 17%;
+  height: 25%;
+}
+
+.decor-balloon .balloon-cute-cheek {
+  height: 12%;
+}
+
+.decor-balloon .balloon-cute-mouth {
+  border-bottom-width: 1.5px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+  .balloon-cute-heart {
+    font-size: 13px;
+  }
+
+  .birthday-balloon .balloon-string {
+    width: 2px;
+  }
+}
+
+/* =========================================
+   LUVORA — LIVING BALLOON EXPRESSIONS 🎈
+========================================= */
+
+.balloon-cute-face {
+  animation: balloonFaceFloat 3s ease-in-out infinite;
+  transform-origin: center;
+}
+
+/* Natural blinking eyes */
+.balloon-cute-eye {
+  animation: balloonBlink 4s infinite;
+  transform-origin: center;
+}
+
+.balloon-cute-eye.right {
+  animation-delay: 0.15s;
+}
+
+@keyframes balloonBlink {
+  0%, 42%, 46%, 100% {
+    transform: scaleY(1);
+  }
+
+  44% {
+    transform: scaleY(0.08);
+  }
+}
+
+@keyframes balloonFaceFloat {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -2px; }
+}
+
+/* Kiss expression */
+.balloon-cute-face.expression-kiss .balloon-cute-mouth {
+  width: 13%;
+  height: 13%;
+  top: 43%;
+  background: #8d3456;
+  border: 2px solid #8d3456;
+  border-radius: 50%;
+  animation: kissPucker 1.8s ease-in-out infinite;
+}
+
+@keyframes kissPucker {
+  0%, 100% { scale: 1; }
+  50% { scale: 1.3; }
+}
+
+/* Close eyes while blowing a kiss */
+.balloon-cute-face.expression-kiss .balloon-cute-eye.left {
+  height: 3px;
+  top: 24%;
+  border-radius: 50%;
+  animation: kissEye 1.8s ease-in-out infinite;
+}
+
+.balloon-cute-face.expression-kiss .balloon-cute-eye.right {
+  height: 3px;
+  top: 24%;
+  border-radius: 50%;
+  animation: kissEye 1.8s ease-in-out infinite;
+}
+
+@keyframes kissEye {
+  0%, 25%, 100% { transform: scaleY(1); }
+  35%, 75% { transform: scaleY(0.4); }
+}
+
+/* Flying heart from the balloon's mouth */
+.balloon-flying-heart {
+  position: absolute;
+  z-index: 20;
+  left: 50%;
+  top: 40%;
+  font-size: 19px;
+  line-height: 1;
+  pointer-events: none;
+  opacity: 0;
+  animation: flyingKissHeart 2.2s ease-out infinite;
+  animation-delay: var(--heart-delay, 0s);
+}
+
+@keyframes flyingKissHeart {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 0) scale(0.25) rotate(-15deg);
+  }
+
+  15% {
+    opacity: 1;
+    transform: translate(-30%, -10px) scale(1) rotate(10deg);
+  }
+
+  70% {
+    opacity: 1;
+    transform: translate(35%, -43px) scale(1.15) rotate(-10deg);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(55%, -62px) scale(0.65) rotate(15deg);
+  }
+}
+
+/* Happy smile */
+.balloon-cute-face.expression-happy .balloon-cute-mouth {
+  animation: happySmile 2s ease-in-out infinite;
+}
+
+@keyframes happySmile {
+  0%, 100% { scale: 1; }
+  50% { scale: 1.15; }
+}
+
+/* Surprised face */
+.balloon-cute-face.expression-ooh .balloon-cute-mouth {
+  animation: surprisedMouth 1.6s ease-in-out infinite;
+}
+
+@keyframes surprisedMouth {
+  0%, 100% { scale: 1; }
+  50% { scale: 1.25; }
+}
+
+/* Blushing cheeks */
+.balloon-cute-cheek {
+  animation: cheekBlush 3s ease-in-out infinite;
+}
+
+@keyframes cheekBlush {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .balloon-cute-face,
+  .balloon-cute-eye,
+  .balloon-cute-mouth,
+  .balloon-cute-cheek,
+  .balloon-flying-heart {
+    animation: none !important;
+  }
+}
+
+/* ===== FULL SCREEN LOVE RAIN ===== */
+
+#luvoraBirthdayOverlay {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  overflow: hidden !important;
+}
+
+#luvoraBirthdayOverlay .birthday-floating-hearts {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+#luvoraBirthdayOverlay .birthday-floating-hearts span,
+#luvoraBirthdayOverlay .luvora-floating-heart {
+  position: absolute !important;
+  top: -60px !important;
+  display: block !important;
+  font-size: 28px !important;
+  color: #ff7eae !important;
+  text-shadow: 0 0 12px #ff4f91 !important;
+  animation-name: luvoraFullLoveRain !important;
+  animation-timing-function: linear !important;
+  animation-iteration-count: infinite !important;
+}
+
+@keyframes luvoraFullLoveRain {
+  0% {
+    transform: translateY(-60px) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+#luvoraBirthdayOverlay .birthday-overlay-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* ===== LUVORA OVERLAY: FIT SCREEN WITHOUT SCROLLBARS ===== */
+
+html:has(#luvoraBirthdayOverlay:not([hidden])),
+body:has(#luvoraBirthdayOverlay:not([hidden])) {
+  overflow: hidden !important;
+  height: 100% !important;
+}
+
+#luvoraBirthdayOverlay {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  height: 100dvh !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  padding: 8px !important;
+}
+
+#luvoraBirthdayOverlay .birthday-overlay-content {
+  width: min(100%, 560px) !important;
+  max-height: 100% !important;
+  height: 100% !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+  padding: 6px 8px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 5px !important;
+}
+
+/* =========================================
+   LUVORA — COMPACT ARCHERY GAME
+========================================= */
+
+/* Archery section compact */
+#luvoraBirthdayOverlay .luvora-archery {
+  width: 100%;
+  max-width: 210px !important;
+  margin: 5px auto !important;
+}
+
+/* Reduce bow size by approximately 50%
+   and rotate it upward */
+#luvoraBirthdayOverlay #luvoraBow {
+  width: 37.5px !important;
+  height: 47.5px !important;
+  transform: rotate(-90deg);
+  transform-origin: center;
+  margin: 0 auto !important;
+}
+
+/* Make arrow clearly visible */
+#luvoraBirthdayOverlay #luvoraArrow {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+
+  width: min(90px, 30vw) !important;
+  height: auto !important;
+
+  z-index: 10 !important;
+  cursor: grab;
+  overflow: visible !important;
+
+  filter: drop-shadow(0 0 3px rgba(248, 229, 169, 0.65));
+}
+
+/* Compact archery area */
+#luvoraBirthdayOverlay .archery-stage {
+  min-height: 55px !important;
+  margin: 3px auto !important;
+  overflow: visible !important;
+}
+
+/* Make instructions and text very small */
+#luvoraBirthdayOverlay #archeryInstruction {
+  font-size: 9px !important;
+  line-height: 1.3 !important;
+  margin: 3px auto !important;
+}
+
+
+/* Reduce extra spacing */
+#luvoraBirthdayOverlay .luvora-archery p {
+  margin-top: 3px !important;
+  margin-bottom: 3px !important;
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  #luvoraBirthdayOverlay .luvora-archery {
+    max-width: 180px !important;
+  }
+
+  #luvoraBirthdayOverlay #luvoraArrow {
+    width: min(80px, 28vw) !important;
+  }
+
+  #luvoraBirthdayOverlay #archeryInstruction {
+    font-size: 8px !important;
+  }
+
+  #luvoraBirthdayOverlay .archery-footer {
+    font-size: 7px !important;
+  }
+}
+
+/* Luvora Birthday Archery - Size Fix */
+
+#luvoraBirthdayOverlay .bow,
+#luvoraBirthdayOverlay .archery-bow {
+  width: 37.5px;
+  height: 47.5px;
+}
+
+#luvoraBirthdayOverlay .arrow {
+  width: min(90px, 30vw);
+  transform: translate(-50%, -50%) rotate(-90deg);
+}
+
+#luvoraBirthdayOverlay .instruction,
+#luvoraBirthdayOverlay .archery-instruction {
+  font-size: 12px;
+}
+
+@media (max-width: 600px) {
+  #luvoraBirthdayOverlay .instruction,
+  #luvoraBirthdayOverlay .archery-instruction {
+    font-size: 11px;
+  }
+}
+
+/* ===== LUVORA ARROW: SHORTER & FULLY VISIBLE ===== */
+
+#luvoraBirthdayOverlay #luvoraArrow {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+
+  /* Arrow length smaller */
+  width: min(65px, 22vw) !important;
+  height: auto !important;
+
+  /* Make the complete arrow prominent */
+  overflow: visible !important;
+  z-index: 999 !important;
+  filter:
+    drop-shadow(0 0 2px #ff0000)
+    drop-shadow(0 0 5px rgba(255, 40, 40, 0.95))
+    drop-shadow(0 0 7px rgba(255, 215, 0, 0.85)) !important;
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  #luvoraBirthdayOverlay #luvoraArrow {
+    width: min(58px, 20vw) !important;
+  }
+}
+/* ===== FIX: MAKE THE COMPLETE ARROW SHAFT VISIBLE ===== */
+
+#luvoraBirthdayOverlay #luvoraArrow path:first-of-type {
+  stroke: #FF3030 !important;
+  stroke-width: 10px !important;
+  stroke-linecap: round !important;
+  opacity: 1 !important;
+  filter: drop-shadow(0 0 3px #FF3030);
+}
+
+/* Keep arrowhead and golden tail visible */
+#luvoraBirthdayOverlay #luvoraArrow path:nth-of-type(2),
+#luvoraBirthdayOverlay #luvoraArrow path:nth-of-type(3),
+#luvoraBirthdayOverlay #luvoraArrow path:nth-of-type(4) {
+  opacity: 1 !important;
+  filter: drop-shadow(0 0 3px #FFD700);
+}
+
+/* Keep the arrow compact */
+#luvoraBirthdayOverlay #luvoraArrow {
+  width: min(65px, 22vw) !important;
+  height: auto !important;
+  overflow: visible !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* ===== LUVORA ARROW: SLIM & CLEAN ===== */
+
+#luvoraBirthdayOverlay #luvoraArrow path:first-of-type {
+  stroke: #FF3030 !important;
+  stroke-width: 3px !important;
+  stroke-linecap: round !important;
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+#luvoraBirthdayOverlay #luvoraArrow path:nth-of-type(2),
+#luvoraBirthdayOverlay #luvoraArrow path:nth-of-type(3),
+#luvoraBirthdayOverlay #luvoraArrow path:nth-of-type(4) {
+  filter: none !important;
+  opacity: 1 !important;
+}
+/* Bow arrow: smaller without changing its original direction */
+#luvoraBirthdayOverlay #luvoraArrow {
+  width: min(45px, 16vw) !important;
+  height: auto !important;
+  translate: 0 -4px;
+  overflow: visible !important;
+}
+
+@media (max-width: 480px) {
+  #luvoraBirthdayOverlay #luvoraArrow {
+    width: min(42px, 15vw) !important;
+    translate: 0 -4px;  }
+}
+
+/* =========================================
+   LUVORA — COMPACT ROMANTIC CALENDAR
+   ========================================= */
+
+#luvoraBirthdayOverlay .birthday-overlay-calendar {
+  width: min(100%, 350px) !important;
+  margin: 12px auto !important;
+  padding: 13px 14px !important;
+
+  border: 1px solid rgba(214, 137, 164, 0.42) !important;
+  border-radius: 18px !important;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(74, 14, 31, 0.96),
+      rgba(39, 7, 16, 0.98)
+    ) !important;
+
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(241, 232, 219, 0.08) !important;
+}
+
+#luvoraBirthdayOverlay .birthday-calendar-heading {
+  margin-bottom: 10px !important;
+  color: #f1e8db !important;
+  font-size: 13px !important;
+  letter-spacing: 2px !important;
+}
+
+#luvoraBirthdayOverlay .birthday-calendar-weekdays {
+  margin-bottom: 5px !important;
+  color: #d689a4 !important;
+  font-size: 10px !important;
+  letter-spacing: 0.5px !important;
+}
+
+#luvoraBirthdayOverlay .birthday-calendar-days {
+  gap: 3px !important;
+}
+
+#luvoraBirthdayOverlay .luvora-calendar-day {
+  min-height: 26px !important;
+  font-size: 12px !important;
+  border-radius: 50% !important;
+}
+
+#luvoraBirthdayOverlay .luvora-birthday-target {
+  background: linear-gradient(
+    145deg,
+    #f1c5d5,
+    #d689a4
+  ) !important;
+
+  color: #4a0e1f !important;
+  border: 1px solid #f1e8db !important;
+
+  box-shadow:
+    0 0 10px rgba(214, 137, 164, 0.45) !important;
+
+  transform: scale(1.04) !important;
+}
+
+@media (max-width: 480px) {
+  #luvoraBirthdayOverlay .birthday-overlay-calendar {
+    width: min(100%, 320px) !important;
+    padding: 10px 11px !important;
+    margin: 8px auto !important;
+  }
+
+  #luvoraBirthdayOverlay .luvora-calendar-day {
+    min-height: 24px !important;
+    font-size: 11px !important;
+  }
+}
+
+/* ==========================================
+   LUVORA — ROMANTIC LOVE CALENDAR
+   Compact • Elegant • Perfectly Aligned
+   ========================================== */
+
+#luvoraBirthdayOverlay .birthday-overlay-calendar {
+  width: min(290px, 88%) !important;
+  margin: 10px auto !important;
+  padding: 14px 13px !important;
+  box-sizing: border-box !important;
+
+  background: linear-gradient(
+    155deg,
+    #3a0b1d 0%,
+    #270710 100%
+  ) !important;
+
+  border: 1px solid rgba(214, 137, 164, 0.55) !important;
+  border-radius: 18px !important;
+
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+}
+
+/* Romantic calendar heading */
+#luvoraBirthdayOverlay .birthday-calendar-heading {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 9px !important;
+
+  margin: 0 0 13px !important;
+  color: #f1c5d5 !important;
+
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  letter-spacing: 2px !important;
+  line-height: 1.4 !important;
+  text-align: center !important;
+}
+
+#luvoraBirthdayOverlay .birthday-calendar-heading span:first-child,
+#luvoraBirthdayOverlay .birthday-calendar-heading span:last-child {
+  color: #d689a4 !important;
+  font-size: 10px !important;
+}
+
+/* Weekdays: equal width, readable and aligned */
+#luvoraBirthdayOverlay .birthday-calendar-weekdays {
+  display: grid !important;
+  grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+  align-items: center !important;
+
+  width: 100% !important;
+  margin: 0 0 7px !important;
+  padding: 0 !important;
+
+  color: #e5a8bf !important;
+  text-align: center !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0 !important;
+  line-height: 1.5 !important;
+}
+
+/* Every date gets the same small cell */
+#luvoraBirthdayOverlay .birthday-calendar-days {
+  display: grid !important;
+  grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+  gap: 5px 2px !important;
+
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  align-items: center !important;
+}
+
+/* Date numbers */
+#luvoraBirthdayOverlay .luvora-calendar-day {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  width: 27px !important;
+  height: 27px !important;
+  min-height: 27px !important;
+  max-width: 100% !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+
+  box-sizing: border-box !important;
+  border: 1px solid transparent !important;
+  border-radius: 50% !important;
+
+  color: #f1e8db !important;
+  background: transparent !important;
+
+  font-size: 11px !important;
+  font-weight: 400 !important;
+  line-height: 1 !important;
+}
+
+/* Special birthday — soft rose highlight */
+#luvoraBirthdayOverlay .luvora-birthday-target {
+  width: 27px !important;
+  height: 27px !important;
+  min-height: 27px !important;
+
+  color: #4a0e1f !important;
+  background: linear-gradient(
+    145deg,
+    #f8dce6,
+    #d689a4
+  ) !important;
+
+  border: 1px solid #f1c5d5 !important;
+  border-radius: 50% !important;
+
+  font-size: 11px !important;
+  font-weight: 700 !important;
+
+  box-shadow: 0 0 10px rgba(214, 137, 164, 0.4) !important;
+  transform: none !important;
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  #luvoraBirthdayOverlay .birthday-overlay-calendar {
+    width: min(275px, 90%) !important;
+    padding: 12px 10px !important;
+    margin: 8px auto !important;
+  }
+
+  #luvoraBirthdayOverlay .birthday-calendar-days {
+    gap: 4px 1px !important;
+  }
+
+  #luvoraBirthdayOverlay .luvora-calendar-day,
+  #luvoraBirthdayOverlay .luvora-birthday-target {
+    width: 25px !important;
+    height: 25px !important;
+    min-height: 25px !important;
+    font-size: 10px !important;
+  }
+
+  #luvoraBirthdayOverlay .birthday-calendar-weekdays {
+    font-size: 9px !important;
+  }
+}
+
+/* LUVORA — EXTRA COMPACT LOVE CALENDAR */
+
+#luvoraBirthdayOverlay .birthday-overlay-calendar {
+  width: min(235px, 82%) !important;
+  padding: 9px 8px !important;
+  margin: 6px auto !important;
+  border-radius: 14px !important;
+}
+
+#luvoraBirthdayOverlay .birthday-calendar-heading {
+  font-size: 8px !important;
+  letter-spacing: 1.5px !important;
+  gap: 6px !important;
+  margin-bottom: 8px !important;
+}
+
+#luvoraBirthdayOverlay .birthday-calendar-heading span {
+  font-size: 8px !important;
+}
+
+#luvoraBirthdayOverlay .birthday-calendar-weekdays {
+  font-size: 8px !important;
+  margin-bottom: 4px !important;
+  line-height: 1.2 !important;
+}
+
+#luvoraBirthdayOverlay .birthday-calendar-days {
+  gap: 3px 0 !important;
+}
+
+#luvoraBirthdayOverlay .luvora-calendar-day,
+#luvoraBirthdayOverlay .luvora-birthday-target {
+  width: 21px !important;
+  height: 21px !important;
+  min-height: 21px !important;
+  font-size: 9px !important;
+  margin: 0 auto !important;
+}
+
+#luvoraBirthdayOverlay .luvora-birthday-target {
+  box-shadow: 0 0 6px rgba(214, 137, 164, 0.35) !important;
+}
+
+@media (max-width: 480px) {
+  #luvoraBirthdayOverlay .birthday-overlay-calendar {
+    width: min(220px, 80%) !important;
+    padding: 8px 6px !important;
+  }
+
+  #luvoraBirthdayOverlay .luvora-calendar-day,
+  #luvoraBirthdayOverlay .luvora-birthday-target {
+    width: 19px !important;
+    height: 19px !important;
+    min-height: 19px !important;
+    font-size: 8px !important;
+  }
+
+  #luvoraBirthdayOverlay .birthday-calendar-weekdays {
+    font-size: 7px !important;
+  }
+}
+
+
+/* =========================================
+   LUVORA — ROMANTIC AMBIENT LIGHT ANIMATION
+   ========================================= */
+
+#luvoraBirthdayOverlay .birthday-overlay-calendar {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: visible !important;
+  z-index: 1;
+
+  animation: luvoraCalendarBreath 4s ease-in-out infinite;
+}
+
+/* Soft light behind the calendar */
+#luvoraBirthdayOverlay .birthday-overlay-calendar::before {
+  content: "";
+  position: absolute;
+  inset: -12px;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: 25px;
+
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    rgba(214, 137, 164, 0.30) 0%,
+    rgba(143, 36, 74, 0.16) 40%,
+    transparent 72%
+  );
+
+  filter: blur(13px);
+  animation: luvoraRomanticGlow 5s ease-in-out infinite alternate;
+}
+
+/* Subtle moving light across the calendar */
+#luvoraBirthdayOverlay .birthday-overlay-calendar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  border-radius: inherit;
+
+  background: linear-gradient(
+    115deg,
+    transparent 25%,
+    rgba(255, 225, 238, 0.08) 45%,
+    rgba(255, 255, 255, 0.17) 50%,
+    rgba(255, 225, 238, 0.06) 55%,
+    transparent 75%
+  );
+
+  background-size: 250% 100%;
+  animation: luvoraLightSweep 7s ease-in-out infinite;
+}
+
+/* Gentle romantic breathing */
+@keyframes luvoraCalendarBreath {
+  0%, 100% {
+    box-shadow:
+      0 0 10px rgba(214, 137, 164, 0.10),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  50% {
+    box-shadow:
+      0 0 20px rgba(214, 137, 164, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.10);
+  }
+}
+
+/* Ambient pink light slowly changes intensity */
+@keyframes luvoraRomanticGlow {
+  0% {
+    opacity: 0.45;
+    transform: scale(0.96);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+
+/* Slow, elegant light sweep */
+@keyframes luvoraLightSweep {
+  0%, 15% {
+    background-position: 150% 0;
+    opacity: 0;
+  }
+
+  35% {
+    opacity: 1;
+  }
+
+  65% {
+    background-position: -150% 0;
+    opacity: 0.7;
+  }
+
+  80%, 100% {
+    background-position: -150% 0;
+    opacity: 0;
+  }
+}
+
+/* Accessibility: stop motion if the user prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  #luvoraBirthdayOverlay .birthday-overlay-calendar,
+  #luvoraBirthdayOverlay .birthday-overlay-calendar::before,
+  #luvoraBirthdayOverlay .birthday-overlay-calendar::after {
+    animation: none !important;
+  }
+}
+
+/* =========================================
+   LUVORA — 3D FOIL HEART BALLOON DATE
+   ========================================= */
+
+/* Special date */
+#luvoraBirthdayOverlay .luvora-birthday-target {
+  position: relative !important;
+  isolation: isolate !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  width: 38px !important;
+  height: 35px !important;
+  min-height: 35px !important;
+
+  margin: 0 auto !important;
+  padding: 0 !important;
+
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+
+  color: #ffffff !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+
+  transform: none !important;
+  animation: luvoraFoilHeartBeat 1.15s ease-in-out infinite !important;
+}
+
+/* Heart-shaped metallic balloon */
+#luvoraBirthdayOverlay .luvora-birthday-target::before {
+  content: "" !important;
+
+  position: absolute !important;
+  z-index: -1 !important;
+  inset: 0 !important;
+
+  background:
+    radial-gradient(
+      ellipse at 32% 23%,
+      rgba(255, 255, 255, 0.95) 0%,
+      rgba(255, 238, 246, 0.7) 7%,
+      transparent 24%
+    ),
+    radial-gradient(
+      ellipse at 65% 72%,
+      rgba(137, 0, 48, 0.65) 0%,
+      transparent 45%
+    ),
+    linear-gradient(
+      135deg,
+      #ffb6d0 0%,
+      #ff5c99 22%,
+      #f01869 48%,
+      #c90050 70%,
+      #ff82b0 88%,
+      #ffd5e5 100%
+    ) !important;
+
+  clip-path: path("M 19 34 C 15 29 1 19 1 11 C 1 0 14 -3 19 7 C 24 -3 37 0 37 11 C 37 19 23 29 19 34 Z");
+
+  filter:
+    drop-shadow(0 2px 1px #a90043)
+    drop-shadow(0 4px 4px rgba(0, 0, 0, 0.4))
+    drop-shadow(0 0 7px rgba(255, 66, 139, 0.65)) !important;
+
+  pointer-events: none !important;
+}
+
+/* Tiny glossy reflection on the balloon */
+#luvoraBirthdayOverlay .luvora-birthday-target::after {
+  content: "" !important;
+
+  position: absolute !important;
+  z-index: 1 !important;
+
+  top: 5px !important;
+  left: 8px !important;
+
+  width: 7px !important;
+  height: 11px !important;
+
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.7) !important;
+  filter: blur(1px) !important;
+
+  transform: rotate(28deg) !important;
+  pointer-events: none !important;
+}
+
+/* Balloon heartbeat */
+@keyframes luvoraFoilHeartBeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+
+  14% {
+    transform: scale(1.13);
+  }
+
+  28% {
+    transform: scale(1);
+  }
+
+  42% {
+    transform: scale(1.09);
+  }
+
+  58% {
+    transform: scale(1);
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  #luvoraBirthdayOverlay .luvora-birthday-target {
+    width: 32px !important;
+    height: 30px !important;
+    min-height: 30px !important;
+    font-size: 9px !important;
+  }
+
+  #luvoraBirthdayOverlay .luvora-birthday-target::before {
+    clip-path: path("M 16 29 C 12 25 1 17 1 10 C 1 0 12 -2 16 6 C 20 -2 31 0 31 10 C 31 17 20 25 16 29 Z");
+  }
+
+  #luvoraBirthdayOverlay .luvora-birthday-target::after {
+    top: 4px !important;
+    left: 6px !important;
+    width: 5px !important;
+    height: 8px !important;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  #luvoraBirthdayOverlay .luvora-birthday-target {
+    animation: none !important;
+  }
+}
+
+/* LUVORA — SMALL, STRAIGHT, SOFT HEART BALLOON */
+
+#luvoraBirthdayOverlay .luvora-birthday-target {
+  width: 30px !important;
+  height: 28px !important;
+  min-height: 28px !important;
+
+  transform: none !important;
+  rotate: none !important;
+
+  filter: none !important;
+  animation: luvoraSmallHeartBeat 1.15s ease-in-out infinite !important;
+}
+
+#luvoraBirthdayOverlay .luvora-birthday-target::before {
+  filter: none !important;
+
+  /* Remove dark/black shadow; keep soft pink glow */
+  background:
+    radial-gradient(
+      ellipse at 32% 22%,
+      rgba(255, 255, 255, 0.95),
+      transparent 25%
+    ),
+    linear-gradient(
+     135deg,
+  #f4a0bd 0%,
+  #e83e78 25%,
+  #c21850 55%,
+  #970d3b 78%,
+  #d9366d 100%
+) !important;
+
+  clip-path: path(
+    "M 15 27 C 11 23 1 16 1 9 C 1 0 11 -2 15 5 C 19 -2 29 0 29 9 C 29 16 19 23 15 27 Z"
+  );
+
+  filter: drop-shadow(
+    0 0 5px rgba(255, 105, 165, 0.45)
+  ) !important;
+}
+
+#luvoraBirthdayOverlay .luvora-birthday-target::after {
+  transform: none !important;
+}
+
+@keyframes luvoraSmallHeartBeat {
+  0%, 100% { scale: 1; }
+  14% { scale: 1.10; }
+  28% { scale: 1; }
+  42% { scale: 1.07; }
+  58% { scale: 1; }
+}
+
+@media (max-width: 480px) {
+  #luvoraBirthdayOverlay .luvora-birthday-target {
+    width: 27px !important;
+    height: 25px !important;
+    min-height: 25px !important;
+  }
+}
+/* Remove white shine from birthday heart */
+#luvoraBirthdayOverlay .luvora-birthday-target::after {
+  display: none !important;
+}
+
+
+.luvora-flying-arrow {
+  position: fixed !important;
+  z-index: 2147483646 !important;
+  pointer-events: none !important;
+  overflow: visible !important;
+  will-change: left, top, transform;
+}
+
+@keyframes luvoraLoveBurst {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.25);
+  }
+
+  35% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.4);
+  }
+
+  70% {
+    opacity: 1;
+    transform: translate(-50%, -70%) scale(1.1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -100%) scale(1.5);
+  }
+}
