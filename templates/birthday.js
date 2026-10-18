@@ -269,6 +269,8 @@ const balloonStage =
 const balloons =
   document.querySelectorAll(".birthday-balloon");
 
+
+
 const balloonMessage =
   document.getElementById("balloonMessage");
 
@@ -2592,15 +2594,14 @@ if (
     if (previewActions) {
       previewActions.classList.add("show");
     }
+document.body.classList.add("preview-mode");
 
-    document.body.classList.add("preview-mode");
 
-    const hero =
-      document.getElementById("birthdayHero");
+createFloatingHearts();
+createMiniConfetti();
 
-   
-    createFloatingHearts();
-    createMiniConfetti();
+// Show the premium birthday overlay first
+showLuvoraBirthdayOverlay();
   });
 }
 
@@ -2877,6 +2878,709 @@ if (cakeName) {
   });
 }
 
+/* =========================================================
+   LUVORA — PREMIUM BIRTHDAY OVERLAY & ARCHERY GAME
+========================================================= */
+
+function showLuvoraBirthdayOverlay() {
+  const overlay = document.getElementById("luvoraBirthdayOverlay");
+
+  if (!overlay) {
+    console.error("Luvora Birthday Overlay not found.");
+    return;
+  }
+
+  const nameInput = document.getElementById("customerName") || document.getElementById("birthdayName");
+const dateInput = document.getElementById("customerDate") || document.getElementById("birthdayDate");
+
+  const nameElement = document.getElementById("overlayBirthdayName");
+  const monthElement = document.getElementById("overlayCalendarMonth");
+  const daysElement = document.getElementById("overlayCalendarDays");
+
+  const stage = document.getElementById("archeryStage");
+  const arrow = document.getElementById("luvoraArrow");
+  const instruction = document.getElementById("archeryInstruction");
+
+  if (!nameElement || !monthElement || !daysElement ||
+      !stage || !arrow) {
+    console.error("Required birthday overlay elements are missing.");
+    return;
+  }
+
+  /* ---------- OVERLAY DESIGN ---------- */
+
+  if (!document.getElementById("luvoraOverlayGameStyles")) {
+    const style = document.createElement("style");
+    style.id = "luvoraOverlayGameStyles";
+
+    style.textContent = `
+      #luvoraBirthdayOverlay {
+        position: fixed;
+        inset: 0;
+        z-index: 999999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 16px;
+        background:
+          radial-gradient(ellipse at top, #6b1836 0%, transparent 65%),
+          linear-gradient(145deg, #270710, #4a0e1f, #21050d);
+        color: #f1e8db;
+        isolation: isolate;
+      }
+
+      #luvoraBirthdayOverlay[hidden] {
+        display: none !important;
+      }
+
+      #luvoraBirthdayOverlay .birthday-overlay-content {
+        position: relative;
+        z-index: 2;
+        width: min(100%, 520px);
+        max-height: calc(100dvh - 32px);
+        overflow-y: auto;
+        text-align: center;
+        scrollbar-width: thin;
+        padding: 12px 10px;
+        box-sizing: border-box;
+      }
+
+      #luvoraBirthdayOverlay .birthday-overlay-title {
+        color: #f1e8db;
+      }
+
+      #luvoraBirthdayOverlay #overlayBirthdayName {
+        color: #d689a4;
+        overflow-wrap: anywhere;
+      }
+
+      #luvoraBirthdayOverlay .birthday-couple-image {
+        max-width: 100%;
+        max-height: 115px;
+        object-fit: contain;
+      }
+
+      #luvoraBirthdayOverlay .birthday-calendar-days {
+        display: grid;
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+        gap: 5px;
+      }
+
+      #luvoraBirthdayOverlay .luvora-calendar-day {
+        position: relative;
+        display: grid;
+        place-items: center;
+        min-height: 30px;
+        color: #f1e8db;
+        font-size: 13px;
+      }
+
+      #luvoraBirthdayOverlay .luvora-birthday-target {
+        color: #fff;
+        font-weight: 900;
+        background: linear-gradient(145deg, #d689a4, #8f244a);
+        border: 2px solid #f8e5a9;
+        border-radius: 50%;
+        box-shadow: 0 0 12px #f8e5a9, inset 0 2px 5px #ffffff55;
+        transform: scale(1.08);
+      }
+
+      #luvoraBirthdayOverlay .luvora-archery {
+        margin: 12px auto;
+        max-width: 420px;
+      }
+
+      #luvoraBirthdayOverlay .archery-stage {
+        position: relative;
+        min-height: 100px;
+        touch-action: pan-y;
+        overflow: visible;
+      }
+
+      #luvoraBirthdayOverlay #luvoraBow {
+        width: 75px;
+        height: 95px;
+        display: block;
+        margin: 0 auto;
+      }
+
+      #luvoraBirthdayOverlay #luvoraArrow {
+        width: min(180px, 55vw);
+        height: auto;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        cursor: grab;
+        touch-action: none;
+        z-index: 4;
+      }
+
+      #luvoraBirthdayOverlay .luvora-floating-heart {
+        position: absolute;
+        top: -25px;
+        color: #d689a4;
+        pointer-events: none;
+        animation: luvoraHeartFall linear forwards;
+      }
+
+      @keyframes luvoraHeartFall {
+        to {
+          transform: translate3d(25px, 110vh, 0) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+  .luvora-flying-arrow {
+  position: fixed;
+  z-index: 1000002;
+  pointer-events: none;
+  overflow: visible;
+  transform-origin: center;
+}
+
+      .luvora-hit-flash {
+        position: fixed;
+        z-index: 1000003;
+        pointer-events: none;
+        font-size: 45px;
+        animation: luvoraHitFlash .8s ease-out forwards;
+      }
+
+      @keyframes luvoraHitFlash {
+        0% { transform: scale(.3); opacity: 0; }
+        35% { transform: scale(1.5); opacity: 1; }
+        100% { transform: scale(2.2); opacity: 0; }
+      }
+
+      @media (max-width: 480px) {
+        #luvoraBirthdayOverlay {
+          padding: 8px;
+        }
+
+        #luvoraBirthdayOverlay .birthday-overlay-content {
+          max-height: calc(100dvh - 16px);
+          padding: 8px 5px;
+        }
+
+        #luvoraBirthdayOverlay .birthday-overlay-wish {
+          font-size: 12px;
+        }
+
+        #luvoraBirthdayOverlay .birthday-calendar-days {
+          gap: 3px;
+        }
+      }
+    `;
+
+    document.head.appendChild(style);
+  }
+
+  /* ---------- PERSONALIZED NAME ---------- */
+
+  nameElement.textContent =
+    nameInput && nameInput.value.trim()
+      ? nameInput.value.trim()
+      : "Someone Special";
+
+  /* ---------- PERSONALIZED CALENDAR ---------- */
+
+ function parseBirthdayDate(value) {
+  if (!value) return null;
+
+  const input = value.trim();
+
+  // YYYY-MM-DD
+  let match = input.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+
+  if (match) {
+    return makeValidDate(+match[1], +match[2], +match[3]);
+  }
+
+  // DD/MM/YYYY or DD-MM-YYYY
+  match = input.match(/^(\d{1,2})[/-](\d{1,2})[/-](\d{4})$/);
+
+  if (match) {
+    return makeValidDate(+match[3], +match[2], +match[1]);
+  }
+
+  // DD Month YYYY, e.g. 17 October 2026
+  match = input.match(/^(\d{1,2})\s+([a-zA-Z]+)\s+(\d{4})$/);
+
+  if (match) {
+    const months = [
+      "january", "february", "march", "april",
+      "may", "june", "july", "august",
+      "september", "october", "november", "december"
+    ];
+
+    const month = months.indexOf(match[2].toLowerCase());
+
+    if (month !== -1) {
+      return makeValidDate(+match[3], month + 1, +match[1]);
+    }
+  }
+
+  // Month DD, YYYY
+  match = input.match(/^([a-zA-Z]+)\s+(\d{1,2}),?\s+(\d{4})$/);
+
+  if (match) {
+    const months = [
+      "january", "february", "march", "april",
+      "may", "june", "july", "august",
+      "september", "october", "november", "december"
+    ];
+
+    const month = months.indexOf(match[1].toLowerCase());
+
+    if (month !== -1) {
+      return makeValidDate(+match[3], month + 1, +match[2]);
+    }
+  }
+
+  return null;
+
+  function makeValidDate(year, month, day) {
+    const date = new Date(year, month - 1, day);
+
+    if (
+      date.getFullYear() !== year ||
+      date.getMonth() !== month - 1 ||
+      date.getDate() !== day
+    ) {
+      return null;
+    }
+
+    return date;
+  }
+}
+
+  const birthday = parseBirthdayDate(
+    dateInput ? dateInput.value : ""
+  );
+
+  daysElement.innerHTML = "";
+
+  if (birthday && !Number.isNaN(birthday.getTime())) {
+    monthElement.textContent = birthday.toLocaleDateString(
+      "en-US",
+      { month: "long", year: "numeric" }
+    );
+
+    const year = birthday.getFullYear();
+    const month = birthday.getMonth();
+    const firstDay = new Date(year, month, 1).getDay();
+    const totalDays = new Date(year, month + 1, 0).getDate();
+
+    for (let i = 0; i < firstDay; i++) {
+      const blank = document.createElement("span");
+      blank.className = "luvora-calendar-day";
+      daysElement.appendChild(blank);
+    }
+
+    for (let day = 1; day <= totalDays; day++) {
+      const cell = document.createElement("span");
+      cell.className = "luvora-calendar-day";
+      cell.textContent = day;
+
+      if (day === birthday.getDate()) {
+        cell.classList.add("luvora-birthday-target");
+        cell.id = "luvoraBirthdayTarget";
+       cell.textContent = day;
+        cell.setAttribute(
+          "aria-label",
+          "Birthday: " + birthday.getDate()
+        );
+        cell.title = "Your special day";
+      }
+
+      daysElement.appendChild(cell);
+    }
+  } else {
+    monthElement.textContent = "YOUR SPECIAL DAY";
+
+    const message = document.createElement("p");
+    message.textContent =
+      "Your birthday date could not be read. Please check the date format.";
+    message.style.gridColumn = "1 / -1";
+    message.style.fontSize = "12px";
+    daysElement.appendChild(message);
+  }
+
+  /* ---------- PREPARE THE GAME ---------- */
+
+  overlay.hidden = false;
+  overlay.setAttribute("aria-modal", "true");
+  overlay.setAttribute("role", "dialog");
+
+  const target = document.getElementById("luvoraBirthdayTarget");
+
+  if (!target) {
+    if (instruction) {
+      instruction.textContent =
+        "Please enter a valid birthday date to play.";
+    }
+    return;
+  }
+
+  if (overlay.dataset.gameReady === "true") return;
+  overlay.dataset.gameReady = "true";
+
+  const originalArrowParent = arrow.parentElement;
+
+  arrow.style.display = "block";
+
+  let dragging = false;
+  let startX = 0;
+  let startY = 0;
+  let aimOffset = 0;
+  let launching = false;
+
+/* Free-direction aiming: pull the arrow backwards, then release. */
+
+arrow.style.transform = "translate(-50%, -50%) rotate(-90deg)";
+arrow.style.transformOrigin = "center center";
+arrow.style.cursor = "grab";
+arrow.style.touchAction = "none";
+
+let dragDistanceY = 0;
+let dragDistanceX = 0;
+let aimAngle = -90;
+
+arrow.addEventListener("pointerdown", function (event) {
+  if (launching) return;
+
+  dragging = true;
+  startX = event.clientX;
+  startY = event.clientY;
+
+  aimOffset = 0;
+  dragDistanceX = 0;
+  dragDistanceY = 0;
+  aimAngle = -90;
+
+  arrow.setPointerCapture?.(event.pointerId);
+  arrow.style.cursor = "grabbing";
+
+  event.preventDefault();
+});
+
+
+arrow.addEventListener("pointermove", function (event) {
+  if (!dragging || launching) return;
+
+  const deltaX = event.clientX - startX;
+  const deltaY = event.clientY - startY;
+
+  dragDistanceX = deltaX;
+  dragDistanceY = deltaY;
+
+  // Restrict aiming to a realistic bow angle.
+  const rawAngle = Math.atan2(-deltaY, -deltaX) * (180 / Math.PI);
+
+  // Default direction is upward (-90 degrees).
+  // Allow aiming only between -135 and -45 degrees.
+  aimAngle = Math.max(-135, Math.min(-45, rawAngle));
+
+  aimOffset = aimAngle + 90;
+
+  // Allow only a small downward pull.
+  const pullDistance = Math.min(
+    8,
+    Math.max(0, deltaY * 0.08)
+  );
+
+  arrow.style.transform =
+    `translate(-50%, calc(-50% + ${pullDistance}px)) rotate(${aimAngle}deg)`;
+
+  event.preventDefault();
+});
+
+arrow.addEventListener("pointerup", function (event) {
+  if (!dragging || launching) return;
+
+  dragging = false;
+  arrow.style.cursor = "grab";
+
+  const pullLength = Math.hypot(dragDistanceX, dragDistanceY);
+
+  if (pullLength < 15) {
+    // Too little pull: don't launch; let the player try again.
+    arrow.style.transform =
+      "translate(-50%, -50%) rotate(-90deg)";
+
+    aimOffset = 0;
+    dragDistanceX = 0;
+    dragDistanceY = 0;
+    aimAngle = -90;
+    return;
+  }
+
+  arrow.style.transform =
+    `translate(-50%, -50%) rotate(${aimAngle}deg)`;
+
+  launchArrow(aimOffset);
+
+  event.preventDefault();
+});
+
+arrow.addEventListener("pointercancel", function () {
+  if (launching) return;
+
+  dragging = false;
+  aimOffset = 0;
+  dragDistanceX = 0;
+  dragDistanceY = 0;
+  aimAngle = -90;
+
+  arrow.style.cursor = "grab";
+  arrow.style.transform =
+    "translate(-50%, -50%) rotate(-90deg)";
+});
+
+/* =====================================================
+   LUVORA — ARROW LAUNCH CONTROLLER
+
+   Controls:
+   1. Arrow flight
+   2. Original arrow hiding
+   3. Miss animation
+   4. Empty bow pause
+   5. Arrow reload
+===================================================== */
+
+function launchArrow(offsetDegrees) {
+  if (launching) return;
+
+  launching = true;
+
+  if (instruction) {
+    instruction.textContent = "Your arrow is flying… ♥";
+  }
+
+  const targetRect = target.getBoundingClientRect();
+  const arrowRect = arrow.getBoundingClientRect();
+
+  const targetX = targetRect.left + targetRect.width / 2;
+  const targetY = targetRect.top + targetRect.height / 2;
+
+  const startX = arrowRect.left + arrowRect.width / 2;
+  const startY = arrowRect.top + arrowRect.height / 2;
+
+  // Follow the player's actual aiming direction.
+  const finalAngle = (-90 + offsetDegrees) * Math.PI / 180;
+  const angleDegrees = finalAngle * 180 / Math.PI;
+
+  const travelDistance = Math.hypot(
+    window.innerWidth,
+    window.innerHeight
+  ) * 1.5;
+
+  const endX = startX + Math.cos(finalAngle) * travelDistance;
+  const endY = startY + Math.sin(finalAngle) * travelDistance;
+
+  // Check whether the arrow's flight path crosses the heart.
+  const vx = endX - startX;
+  const vy = endY - startY;
+  const lengthSquared = vx * vx + vy * vy;
+
+  const projection = Math.max(0, Math.min(1,
+    (
+      (targetX - startX) * vx +
+      (targetY - startY) * vy
+    ) / lengthSquared
+  ));
+
+  const closestX = startX + projection * vx;
+  const closestY = startY + projection * vy;
+
+  const missDistance = Math.hypot(
+    targetX - closestX,
+    targetY - closestY
+  );
+
+  const hitRadius = Math.max(
+  35,
+  Math.min(targetRect.width, targetRect.height) * 0.9
+);
+
+const isHit = projection > 0 && missDistance <= hitRadius;
+
+  // Stop at the closest point to the heart, not beyond it.
+  const hitX = closestX;
+  const hitY = closestY;
+
+  // Create a separate arrow above all page content.
+  const flyingArrow = arrow.cloneNode(true);
+
+  flyingArrow.removeAttribute("id");
+  flyingArrow.classList.add("luvora-flying-arrow");
+
+  Object.assign(flyingArrow.style, {
+    position: "fixed",
+    display: "block",
+    visibility: "visible",
+    opacity: "1",
+    pointerEvents: "none",
+    zIndex: "2147483647",
+    width: arrowRect.width + "px",
+    height: arrowRect.height + "px",
+    maxWidth: "none",
+    maxHeight: "none",
+    margin: "0",
+    left: startX + "px",
+    top: startY + "px",
+    transformOrigin: "center center",
+    transform: `translate(-50%, -50%) rotate(${angleDegrees}deg)`
+  });
+
+  document.body.appendChild(flyingArrow);
+
+  arrow.style.setProperty("visibility", "hidden", "important");
+  arrow.style.setProperty("opacity", "0", "important");
+  arrow.style.setProperty("pointer-events", "none", "important");
+
+  // A successful shot ends at the heart.
+  const destinationX = isHit ? hitX : endX;
+  const destinationY = isHit ? hitY : endY;
+
+  const flight = flyingArrow.animate(
+    [
+      { left: startX + "px", top: startY + "px" },
+      { left: destinationX + "px", top: destinationY + "px" }
+    ],
+    {
+      duration: isHit
+        ? Math.max(250, 1000 * Math.hypot(hitX - startX, hitY - startY) / travelDistance)
+        : 1000,
+      easing: "linear",
+      fill: "forwards"
+    }
+  );
+
+  flight.onfinish = function () {
+    if (isHit) {
+      // Freeze the arrow at the heart.
+      flyingArrow.style.left = hitX + "px";
+      flyingArrow.style.top = hitY + "px";
+      flyingArrow.style.zIndex = "2147483647";
+
+      showHitAnimation(hitX, hitY);
+
+      if (instruction) {
+        instruction.textContent = "A perfect shot! Love unlocked. 💖";
+      }
+
+      // Keep the arrow visible while the love burst plays.
+      window.setTimeout(function () {
+        overlay.hidden = true;
+
+        flyingArrow.remove();
+
+        arrow.style.transition = "none";
+        arrow.style.transform =
+          "translate(-50%, -50%) rotate(-90deg)";
+
+        arrow.style.setProperty("visibility", "visible", "important");
+        arrow.style.setProperty("opacity", "1", "important");
+        arrow.style.setProperty("pointer-events", "auto", "important");
+
+        aimOffset = 0;
+        dragDistanceY = 0;
+        launching = false;
+
+        delete overlay.dataset.gameReady;
+      }, 1200);
+
+      return;
+    }
+
+    // Miss: remove the arrow and let the player try again.
+    flyingArrow.remove();
+
+    if (instruction) {
+      instruction.textContent =
+        "You missed! Aim carefully and try again. ♥";
+    }
+
+    arrow.style.transition = "none";
+    arrow.style.transform =
+      "translate(-50%, -50%) rotate(-90deg)";
+
+    arrow.style.setProperty("visibility", "visible", "important");
+    arrow.style.setProperty("opacity", "1", "important");
+    arrow.style.setProperty("pointer-events", "auto", "important");
+
+    aimOffset = 0;
+    dragDistanceY = 0;
+
+    requestAnimationFrame(function () {
+      arrow.style.transition = "";
+      launching = false;
+    });
+  };
+}
+
+function showHitAnimation(x, y) {
+  const burst = document.createElement("div");
+
+  burst.className = "luvora-hit-flash";
+
+  Object.assign(burst.style, {
+    position: "fixed",
+    left: x + "px",
+    top: y + "px",
+    transform: "translate(-50%, -50%)",
+    zIndex: "2147483647",
+    pointerEvents: "none",
+    fontSize: "28px",
+    whiteSpace: "nowrap",
+    animation: "luvoraLoveBurst 900ms ease-out forwards"
+  });
+
+  burst.textContent = "💖 ✨ 💘 ✨ 💗";
+
+  document.body.appendChild(burst);
+
+  window.setTimeout(function () {
+    burst.remove();
+  }, 1000);
+}
+
+
+
+  /* ---------- FALLING HEARTS ---------- */
+
+  if (!overlay.dataset.heartsStarted) {
+    overlay.dataset.heartsStarted = "true";
+
+    const heartContainer = overlay.querySelector(
+      ".birthday-floating-hearts"
+    );
+
+    if (heartContainer) {
+      for (let i = 0; i < 14; i++) {
+        const heart = document.createElement("span");
+
+        heart.className = "luvora-floating-heart";
+        heart.textContent = i % 2 ? "♡" : "♥";
+        heart.style.left = Math.random() * 100 + "%";
+        heart.style.animationDuration =
+          (8 + Math.random() * 9) + "s";
+        heart.style.animationDelay =
+          (-Math.random() * 15) + "s";
+        heart.style.fontSize =
+          (12 + Math.random() * 16) + "px";
+
+        heartContainer.appendChild(heart);
+      }
+    }
+  }
+}
+
 /* ==========================================
    LUVORA — WELCOME SCREEN CONTROLLER
 ========================================== */
@@ -2976,27 +3680,77 @@ for (let i = 0; i < 44; i++) {
     // Start the Welcome fade-out animation.
     document.documentElement.classList.add("luvora-welcome-open");
 
-    // Wait until the animation finishes.
-    window.setTimeout(function () {
-      // Remove Welcome completely so it cannot leave any gap.
-      welcome.hidden = true;
 
-      document.documentElement.classList.remove(
-        "luvora-welcome-active"
-      );
+window.setTimeout(function () {
+  // Hide the welcome screen after its exit animation.
+  welcome.hidden = true;
 
-      // Start the surprise from the Birthday Hero section.
-      const hero = document.getElementById("birthdayHero");
+  document.documentElement.classList.remove(
+    "luvora-welcome-active"
+  );
 
-      if (hero) {
-        hero.scrollIntoView({
-          behavior: "smooth",
-          block: "start"
-        });
-      }
-    }, 1600);
+  // Open the premium birthday overlay.
+  if (typeof showLuvoraBirthdayOverlay === "function") {
+    showLuvoraBirthdayOverlay();
+  } else {
+    console.error("Birthday overlay function not found.");
+  }
+
+}, 1600);
 
     openButton.blur();
   });
 })();
 
+/* ===== LUVORA TEST DETAILS PERSISTENCE ===== */
+(function () {
+  const fields = {
+    name: {
+      id: "customerName",
+      key: "luvora_test_name"
+    },
+    date: {
+      id: "customerDate",
+      key: "luvora_test_date"
+    },
+    mobile: {
+      id: "customerPhone",
+      key: "luvora_test_mobile"
+    }
+  };
+
+  function setupSavedDetails() {
+    Object.values(fields).forEach(function (field) {
+      const input = document.getElementById(field.id);
+      if (!input) return;
+
+      try {
+        const savedValue = localStorage.getItem(field.key);
+
+        if (savedValue !== null) {
+          input.value = savedValue;
+        }
+
+        function saveValue() {
+          localStorage.setItem(field.key, input.value);
+        }
+
+        input.addEventListener("input", saveValue);
+        input.addEventListener("change", saveValue);
+
+        const form = input.closest("form");
+        if (form) {
+          form.addEventListener("submit", saveValue, true);
+        }
+      } catch (error) {
+        console.warn("Could not save Luvora test details.", error);
+      }
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setupSavedDetails);
+  } else {
+    setupSavedDetails();
+  }
+})();
