@@ -20,6 +20,506 @@
 
   <!-- Birthday page stylesheet -->
   <link rel="stylesheet" href="css/birthday.css">
+
+<style>
+/* ===== LUVORA BIRTHDAY OVERLAY FIX ===== */
+
+#luvoraBirthdayOverlay {
+  overflow-x: hidden;
+  overflow-y: auto;
+  background:
+    radial-gradient(ellipse at 50% 20%, #791d40, transparent 65%),
+    linear-gradient(145deg, #270710, #4a0e1f, #21050d);
+  color: #f1e8db;
+  font-family: "Playfair Display", Georgia, serif;
+}
+/* =========================================
+   LUVORA — PREMIUM ROMANTIC TYPOGRAPHY
+   Calendar, arrow and game remain untouched
+========================================= */
+
+/* Small, elegant birthday heading */
+#luvoraBirthdayOverlay .birthday-overlay-title {
+  color: #f7e9dc;
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  font-size: clamp(25px, 3.5vw, 39px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: clamp(1.5px, 0.35vw, 4px);
+  text-align: center;
+  text-shadow: none;
+  margin: 8px auto 2px;
+}
+
+/* Premium name — luminous, not glowing */
+#luvoraBirthdayOverlay #overlayBirthdayName {
+  position: relative;
+  display: table;
+  max-width: 94%;
+  margin: 4px auto 10px;
+  padding: 0 8px;
+
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  font-size: clamp(42px, 6.2vw, 68px);
+  font-weight: 600;
+  font-style: italic;
+  line-height: 1.16;
+  letter-spacing: -0.8px;
+  text-align: center;
+  overflow-wrap: anywhere;
+
+  color: #f2c3d1;
+  background: linear-gradient(
+    105deg,
+    #d99aaf 0%,
+    #fff0df 22%,
+    #e8b4c7 42%,
+    #fff8e9 52%,
+    #d99aaf 72%,
+    #f5d9df 100%
+  );
+  background-size: 220% 100%;
+  background-position: 100% 50%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* Remove the old heavy glow */
+  text-shadow: none;
+  animation: luvoraNameShine 6s ease-in-out infinite;
+}
+
+/* Slow, refined shine across the name */
+@keyframes luvoraNameShine {
+  0%, 15% {
+    background-position: 100% 50%;
+  }
+
+  65%, 100% {
+    background-position: -120% 50%;
+  }
+}
+
+/* Tiny twinkling stars beside the name */
+#luvoraBirthdayOverlay #overlayBirthdayName::before,
+#luvoraBirthdayOverlay #overlayBirthdayName::after {
+  position: absolute;
+  color: #f8e5a9;
+  -webkit-text-fill-color: #f8e5a9;
+  font-family: Georgia, serif;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  pointer-events: none;
+  animation: luvoraTinyStar 2.8s ease-in-out infinite;
+}
+
+#luvoraBirthdayOverlay #overlayBirthdayName::before {
+  content: "✦";
+  font-size: 15px;
+  top: 8%;
+  left: -10px;
+}
+
+#luvoraBirthdayOverlay #overlayBirthdayName::after {
+  content: "✧";
+  font-size: 19px;
+  right: -12px;
+  bottom: 12%;
+  animation-delay: 1.3s;
+}
+
+@keyframes luvoraTinyStar {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scale(0.8) rotate(0deg);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.15) rotate(18deg);
+  }
+}
+
+/* Refined eyebrow above the heading */
+#luvoraBirthdayOverlay .birthday-overlay-eyebrow {
+  color: #dfb8c5;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(10px, 1.1vw, 12px);
+  font-weight: 500;
+  letter-spacing: clamp(1.2px, 0.2vw, 2.2px);
+  line-height: 1.6;
+  text-align: center;
+  margin: 0 auto 8px;
+}
+
+/* Birthday wish — smaller, softer and easier to read */
+#luvoraBirthdayOverlay .birthday-overlay-wish {
+  max-width: 490px;
+  width: calc(100% - 32px);
+  margin: 0 auto 10px;
+  color: #f1e4df;
+
+  font-family: "Lora", Georgia, "Times New Roman", serif;
+  font-size: clamp(12px, 1.35vw, 15px);
+  font-weight: 400;
+  line-height: 1.65;
+  letter-spacing: 0.1px;
+  text-align: center;
+  text-wrap: pretty;
+  text-shadow: none;
+}
+
+/* Subtle, professional footer */
+#luvoraBirthdayOverlay .birthday-overlay-footer {
+  color: #d8b9c3;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(11px, 1.15vw, 13px);
+  font-weight: 400;
+  letter-spacing: 0.4px;
+  line-height: 1.5;
+  text-align: center;
+  margin: 12px auto 8px;
+}
+
+/* Mobile typography — preserve the existing layout */
+@media (max-width: 480px) {
+  #luvoraBirthdayOverlay .birthday-overlay-title {
+    font-size: clamp(23px, 7vw, 31px);
+    letter-spacing: 1.5px;
+    line-height: 1.2;
+  }
+
+  #luvoraBirthdayOverlay #overlayBirthdayName {
+    max-width: 92%;
+    font-size: clamp(38px, 11vw, 52px);
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+
+  #luvoraBirthdayOverlay .birthday-overlay-wish {
+    width: calc(100% - 36px);
+    font-size: 12px;
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+
+  #luvoraBirthdayOverlay .birthday-overlay-eyebrow {
+    font-size: 10px;
+    letter-spacing: 1.2px;
+  }
+
+  #luvoraBirthdayOverlay .birthday-overlay-footer {
+    font-size: 11px;
+    margin-top: 10px;
+  }
+}
+
+/* Respect reduced-motion accessibility settings */
+@media (prefers-reduced-motion: reduce) {
+  #luvoraBirthdayOverlay #overlayBirthdayName,
+  #luvoraBirthdayOverlay #overlayBirthdayName::before,
+  #luvoraBirthdayOverlay #overlayBirthdayName::after {
+    animation: none !important;
+  }
+}
+
+/* Bigger couple image */
+#luvoraBirthdayOverlay .birthday-couple-illustration img {
+  width: clamp(130px, 22vw, 210px);
+  max-height: 220px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 12px #d689a4);
+  animation: luvoraCoupleFloat 3s ease-in-out infinite;
+}
+
+@keyframes luvoraCoupleFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+
+/* Calendar */
+#luvoraBirthdayOverlay .birthday-calendar-days {
+  display: grid !important;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 5px;
+  width: 100%;
+}
+
+#luvoraBirthdayOverlay .luvora-calendar-day {
+  min-height: 30px;
+  display: grid;
+  place-items: center;
+  color: #fff0df;
+}
+
+#luvoraBirthdayOverlay .luvora-birthday-target {
+  border-radius: 50%;
+  color: white;
+  background: linear-gradient(145deg, #ff8ab5, #9f174b);
+  box-shadow: 0 0 15px #ff8ab5;
+}
+
+/* Falling hearts */
+#luvoraBirthdayOverlay .birthday-floating-hearts {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+#luvoraBirthdayOverlay .birthday-floating-hearts span,
+#luvoraBirthdayOverlay .luvora-floating-heart {
+  position: absolute;
+  top: -30px;
+  color: #ff8ab5;
+  animation: luvoraHeartRain 9s linear infinite;
+}
+
+#luvoraBirthdayOverlay .birthday-floating-hearts span:nth-child(2n) {
+  animation-duration: 12s;
+  animation-delay: -5s;
+}
+
+@keyframes luvoraHeartRain {
+  from { transform: translateY(-30px) rotate(0deg); opacity: 0; }
+  10% { opacity: .9; }
+  to { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  #luvoraBirthdayOverlay .birthday-overlay-content {
+    width: 100%;
+  }
+
+  #luvoraBirthdayOverlay .birthday-couple-illustration img {
+    width: 145px;
+    max-height: 160px;
+  }
+}
+
+/* ==========================================
+   LUVORA — COMPACT PREMIUM ROMANTIC TEXT
+   Calendar & Arrow: No Changes
+========================================== */
+
+/* Birthday heading: smaller and elegant */
+#luvoraBirthdayOverlay .birthday-overlay-title {
+  font-size: clamp(21px, 2.7vw, 31px);
+  font-weight: 600;
+  letter-spacing: clamp(1.2px, 0.25vw, 3px);
+  line-height: 1.1;
+  margin: 2px auto 0;
+}
+
+/* Name: prominent but more compact */
+#luvoraBirthdayOverlay #overlayBirthdayName {
+  font-size: clamp(35px, 4.8vw, 53px);
+  line-height: 1.05;
+  letter-spacing: -0.6px;
+  margin: 0 auto 7px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+/* Premium romantic wish section */
+#luvoraBirthdayOverlay .birthday-overlay-wish {
+  position: relative;
+  box-sizing: border-box;
+  width: calc(100% - 32px);
+  max-width: 420px;
+
+  margin: 2px auto 8px;
+  padding: 10px 16px;
+
+  font-family: "Lora", Georgia, serif;
+  font-size: clamp(11px, 1.05vw, 13px);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.65;
+  letter-spacing: 0.15px;
+  text-align: center;
+
+  color: #f4dce5;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 230, 239, 0.055),
+    rgba(255, 255, 255, 0.015),
+    rgba(214, 137, 164, 0.06)
+  );
+
+  border-top: 1px solid rgba(241, 213, 222, 0.3);
+  border-bottom: 1px solid rgba(241, 213, 222, 0.2);
+  border-radius: 10px;
+
+  text-shadow: none;
+  box-shadow: none;
+}
+
+/* Delicate decorative accents */
+#luvoraBirthdayOverlay .birthday-overlay-wish::before {
+  content: "✧  ";
+  color: #e8c49a;
+  font-style: normal;
+}
+
+#luvoraBirthdayOverlay .birthday-overlay-wish::after {
+  content: "  ✧";
+  color: #e8c49a;
+  font-style: normal;
+}
+
+/* Mobile: preserve vertical space */
+@media (max-width: 480px) {
+  #luvoraBirthdayOverlay .birthday-overlay-title {
+    font-size: clamp(20px, 6vw, 26px);
+    letter-spacing: 1.2px;
+  }
+
+  #luvoraBirthdayOverlay #overlayBirthdayName {
+    font-size: clamp(33px, 9vw, 43px);
+    margin-bottom: 5px;
+  }
+
+  #luvoraBirthdayOverlay .birthday-overlay-wish {
+    width: calc(100% - 28px);
+    max-width: 350px;
+    margin: 2px auto 6px;
+    padding: 7px 10px;
+    font-size: 11px;
+    line-height: 1.55;
+  }
+}
+
+/* Short screens: compact typography further */
+@media (max-height: 760px) {
+  #luvoraBirthdayOverlay .birthday-overlay-title {
+    font-size: clamp(19px, 2.5vw, 28px);
+  }
+
+  #luvoraBirthdayOverlay #overlayBirthdayName {
+    font-size: clamp(32px, 4.2vw, 46px);
+    margin-bottom: 4px;
+  }
+
+  #luvoraBirthdayOverlay .birthday-overlay-wish {
+    margin-top: 0;
+    margin-bottom: 5px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    line-height: 1.45;
+  }
+}
+
+/* =========================================
+   LUVORA — LUXURY ROMANTIC WISH
+   Burgundy • Champagne • Dusty Rose
+========================================= */
+
+#luvoraBirthdayOverlay .birthday-overlay-wish {
+  position: relative;
+  box-sizing: border-box;
+
+  width: calc(100% - 32px);
+  max-width: 430px;
+
+  margin: 3px auto 8px;
+  padding: 13px 20px;
+
+  /* Elegant romantic typography */
+  font-family: "Cormorant Garamond", "Palatino Linotype",
+               "Book Antiqua", Georgia, serif;
+  font-size: clamp(13px, 1.2vw, 15px);
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.7;
+  letter-spacing: 0.25px;
+  text-align: center;
+
+  /* Premium colours that complement burgundy */
+  color: #f3dfe3;
+
+  background: linear-gradient(
+    120deg,
+    rgba(246, 218, 226, 0.025),
+    rgba(255, 240, 220, 0.075),
+    rgba(214, 137, 164, 0.035)
+  );
+
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  text-shadow: none;
+}
+
+/* Remove the previous star decorations */
+#luvoraBirthdayOverlay .birthday-overlay-wish::before,
+#luvoraBirthdayOverlay .birthday-overlay-wish::after {
+  position: absolute;
+  top: 50%;
+
+  width: 30px;
+  height: 1px;
+
+  content: "";
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #cda47e
+  );
+
+  opacity: 0.8;
+  transform: translateY(-50%);
+}
+
+/* Fine ornamental line on the left */
+#luvoraBirthdayOverlay .birthday-overlay-wish::before {
+  left: 0;
+}
+
+/* Mirrored ornamental line on the right */
+#luvoraBirthdayOverlay .birthday-overlay-wish::after {
+  right: 0;
+  transform: translateY(-50%) rotate(180deg);
+}
+
+/* Mobile refinement */
+@media (max-width: 480px) {
+  #luvoraBirthdayOverlay .birthday-overlay-wish {
+    width: calc(100% - 28px);
+    max-width: 350px;
+
+    padding: 9px 15px;
+    margin-top: 2px;
+    margin-bottom: 6px;
+
+    font-size: 12px;
+    line-height: 1.65;
+    letter-spacing: 0.15px;
+  }
+
+  #luvoraBirthdayOverlay .birthday-overlay-wish::before,
+  #luvoraBirthdayOverlay .birthday-overlay-wish::after {
+    width: 20px;
+  }
+}
+
+/* Short-screen adjustment */
+@media (max-height: 760px) {
+  #luvoraBirthdayOverlay .birthday-overlay-wish {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    line-height: 1.5;
+  }
+}
+
+
+</style>
+
+
 </head>
 
 <body>
@@ -84,8 +584,6 @@
          01 — OPENING / HERO
     ======================================================== -->
 
-  
-<!-- LUVORA WELCOME SCREEN -->
 <section class="luvora-welcome" id="luvoraWelcome">
   <div class="welcome-decoration welcome-star-one">✦</div>
   <div class="welcome-decoration welcome-star-two">✧</div>
@@ -111,6 +609,201 @@
     </button>
 
     <small>Made with love, just for you · Luvora</small>
+  </div>
+</section>
+
+
+<!-- ==========================================
+     LUVORA PREMIUM BIRTHDAY OVERLAY
+========================================== -->
+<section id="luvoraBirthdayOverlay" class="luvora-birthday-overlay" hidden>
+
+  <!-- Floating hearts -->
+  <div class="birthday-floating-hearts" aria-hidden="true">
+    <span>♥</span>
+    <span>♡</span>
+    <span>♥</span>
+    <span>♡</span>
+    <span>♥</span>
+    <span>♡</span>
+    <span>♥</span>
+    <span>♡</span>
+  </div>
+
+  <!-- Birthday content -->
+  <div class="birthday-overlay-content">
+
+    <p class="birthday-overlay-eyebrow">A LITTLE MOMENT, A LOT OF LOVE</p>
+
+    <h1 class="birthday-overlay-title">
+      HAPPY <span>BIRTHDAY</span>
+    </h1>
+
+       <h2 id="overlayBirthdayName">Someone Special</h2>
+
+    <p class="birthday-overlay-wish">
+      May your life bloom with happiness, your heart overflow with love,
+      and every beautiful dream find its way to you.
+    </p>
+
+   <!-- Couple Image -->
+<div class="birthday-couple-illustration">
+  <img
+    src="assets/images/couple.png"
+    alt="A special birthday memory"
+    class="birthday-couple-image"
+  >
+</div>
+
+    <!-- Birthday calendar -->
+    <div class="birthday-overlay-calendar">
+      <div class="birthday-calendar-heading">
+        <span>✦</span>
+        <span id="overlayCalendarMonth">YOUR SPECIAL DAY</span>
+        <span>✦</span>
+      </div>
+
+      <div class="birthday-calendar-weekdays">
+        <span>Sun</span>
+        <span>Mon</span>
+        <span>Tue</span>
+        <span>Wed</span>
+        <span>Thu</span>
+        <span>Fri</span>
+        <span>Sat</span>
+      </div>
+
+      <div id="overlayCalendarDays" class="birthday-calendar-days"></div>
+    </div>
+
+    <!-- Bow and arrow -->
+    
+
+ 
+<!-- PREMIUM INTERACTIVE BOW & ARROW -->
+<div class="luvora-archery" id="luvoraArchery">
+
+  <p class="archery-instruction" id="archeryInstruction">
+    Touch & draw the bow to release your love
+  </p>
+
+  <div class="archery-stage" id="archeryStage">
+
+    <!-- Bow -->
+    <svg
+      id="luvoraBow"
+      class="luvora-bow"
+      viewBox="0 0 180 240"
+      role="button"
+      tabindex="0"
+      aria-label="Touch and pull the bow to launch the arrow"
+    >
+      <defs>
+        <linearGradient id="bowGoldGradient" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#F8E5A9"/>
+          <stop offset="45%" stop-color="#C6A15B"/>
+          <stop offset="100%" stop-color="#8D632B"/>
+        </linearGradient>
+
+        <filter id="bowGoldenGlow">
+          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </defs>
+
+      <!-- Curved bow -->
+      <path
+        id="bowBody"
+        d="M 120 18
+           C 15 50, 15 190, 120 222"
+        fill="none"
+        stroke="url(#bowGoldGradient)"
+        stroke-width="8"
+        stroke-linecap="round"
+        filter="url(#bowGoldenGlow)"
+      />
+
+      <!-- Bowstring -->
+      <path
+        id="bowString"
+        d="M 120 18 L 120 222"
+        fill="none"
+        stroke="#9C7542"
+        stroke-width="1.8"
+      />
+
+      <!-- Decorative grip -->
+      <path
+        d="M 67 105 Q 55 120 67 135"
+        fill="none"
+        stroke="#C98291"
+        stroke-width="7"
+        stroke-linecap="round"
+      />
+
+      <circle cx="120" cy="18" r="4" fill="#F8E5A9"/>
+      <circle cx="120" cy="222" r="4" fill="#F8E5A9"/>
+    </svg>
+
+    <!-- Arrow -->
+    <svg
+      id="luvoraArrow"
+      class="luvora-arrow"
+      viewBox="0 0 280 44"
+      aria-hidden="true"
+    >
+      <defs>
+        <linearGradient id="arrowGoldGradient" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#8D632B"/>
+          <stop offset="50%" stop-color="#F8E5A9"/>
+          <stop offset="100%" stop-color="#C6A15B"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Arrow shaft -->
+      <path
+        d="M 10 22 L 252 22"
+        stroke="url(#arrowGoldGradient)"
+        stroke-width="5"
+        stroke-linecap="round"
+      />
+
+      <!-- Arrowhead -->
+      <path
+        d="M 250 12 L 277 22 L 250 32 L 256 22 Z"
+        fill="#C6A15B"
+      />
+
+      <!-- Feather fletching -->
+      <path
+        d="M 18 22 L 3 9 L 28 16 Z"
+        fill="#C98291"
+      />
+      <path
+        d="M 18 22 L 3 35 L 28 28 Z"
+        fill="#C98291"
+      />
+
+      <!-- Golden tip -->
+      <circle cx="267" cy="22" r="3" fill="#FFF2C7"/>
+    </svg>
+
+    <!-- Golden launch trail -->
+    <div class="luvora-arrow-trail" id="luvoraArrowTrail"></div>
+
+  </div>
+
+  <p class="birthday-arrow-instruction">
+      Aim for the birthday star
+  </p>
+
+</div>
+
+    <p class="birthday-overlay-footer">Made with ♥ by Luvora</p>
+
   </div>
 </section>
 
@@ -974,7 +1667,7 @@
   <div class="panda-gift-reveal" id="pandaGiftReveal">
 
     <img
-      src="assets/images/panda-bouquet.png"
+      src="assets/images/panda.png"
       alt="A cute panda offering a flower bouquet"
       class="panda-bouquet-image"
       id="pandaBouquetImage"
@@ -1116,11 +1809,7 @@
           Special Date
         </label>
 
-        <input
-          type="text"
-          id="customerDate"
-          placeholder="e.g. 12 October 2026"
-        >
+      <input type="date" id="customerDate" required>
       </div>
 
 
@@ -1262,5 +1951,263 @@
  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="assets/js/site-config.js"></script>
 <script src="templates/birthday.js"></script>
+
+
+<script>
+(() => {
+  const expressions = [
+    "expression-happy",
+    "expression-wow",
+    "expression-love",
+    "expression-kiss"
+  ];
+
+  function addBalloonStyles() {
+    if (document.getElementById("luvora-realistic-balloon-styles")) return;
+
+    const style = document.createElement("style");
+    style.id = "luvora-realistic-balloon-styles";
+
+    style.textContent = `
+      .balloon-cute-face {
+        position: absolute;
+        left: 50%;
+        top: 42%;
+        transform: translate(-50%, -50%);
+        width: 48%;
+        height: 30%;
+        z-index: 5;
+        pointer-events: none;
+      }
+
+      .balloon-cute-eye {
+        position: absolute;
+        top: 10%;
+        width: 25%;
+        height: 39%;
+        background: radial-gradient(
+          circle at 35% 30%,
+          #ffffff 0 12%,
+          #33201e 16% 56%,
+          #100b0b 72%
+        );
+        border-radius: 50%;
+        box-shadow: 0 1px 2px #0003;
+        animation: luvora-blink 4.2s infinite;
+        transform-origin: center;
+      }
+
+      .balloon-cute-eye.left { left: 12%; }
+      .balloon-cute-eye.right { right: 12%; }
+
+      @keyframes luvora-blink {
+        0%, 43%, 47%, 82%, 86%, 100% {
+          transform: scaleY(1);
+        }
+        45%, 84% {
+          transform: scaleY(0.08);
+        }
+      }
+
+      .balloon-cute-cheek {
+        position: absolute;
+        top: 51%;
+        width: 20%;
+        height: 13%;
+        border-radius: 50%;
+        background: #ff7897;
+        opacity: 0.65;
+        filter: blur(2px);
+      }
+
+      .balloon-cute-cheek.left { left: 0; }
+      .balloon-cute-cheek.right { right: 0; }
+
+      .balloon-cute-mouth {
+        position: absolute;
+        left: 50%;
+        top: 55%;
+        width: 30%;
+        height: 17%;
+        transform: translateX(-50%);
+        border-bottom: 2.5px solid #57212a;
+        border-radius: 0 0 50% 50%;
+      }
+
+      /* Natural happy smile */
+      .expression-happy .balloon-cute-mouth {
+        width: 36%;
+        height: 23%;
+        background: #762b3c;
+        border: 1px solid #57212a;
+        border-radius: 5% 5% 50% 50%;
+        overflow: hidden;
+      }
+
+      .expression-happy .balloon-cute-mouth::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 12%;
+        width: 76%;
+        height: 28%;
+        background: #fff4ed;
+        border-radius: 0 0 3px 3px;
+      }
+
+      /* Surprised WOW face */
+      .expression-wow .balloon-cute-eye {
+        width: 29%;
+        height: 44%;
+        animation: none;
+        background: radial-gradient(
+          circle at 38% 30%,
+          white 0 10%,
+          #33201e 15% 52%,
+          #100b0b 70%
+        );
+        box-shadow: 0 0 0 1px #4c2925;
+      }
+
+      .expression-wow .balloon-cute-mouth {
+        width: 19%;
+        height: 27%;
+        top: 55%;
+        background: #64202b;
+        border: 1px solid #4a1822;
+        border-radius: 50%;
+      }
+
+      /* Both eyes become love hearts */
+      .expression-love .balloon-cute-eye {
+        width: 29%;
+        height: 34%;
+        background: none;
+        border-radius: 0;
+        box-shadow: none;
+        animation: none;
+      }
+
+      .expression-love .balloon-cute-eye::before {
+        content: "♥";
+        position: absolute;
+        inset: -35% 0 0;
+        color: #ed245b;
+        font-size: clamp(12px, 2.2vw, 24px);
+        line-height: 1;
+        text-align: center;
+        text-shadow: 0 1px 2px #fff8;
+      }
+
+      .expression-love .balloon-cute-mouth {
+        width: 27%;
+        height: 17%;
+        border-bottom: 2.5px solid #8c263e;
+      }
+
+      /* Kiss lips */
+      .expression-kiss .balloon-cute-mouth {
+        width: 20%;
+        height: 16%;
+        top: 56%;
+        background: #d94d70;
+        border: 2px solid #8b2846;
+        border-radius: 45% 45% 50% 50%;
+        box-shadow: 0 0 2px #fff7;
+      }
+
+      .balloon-flying-heart {
+        position: absolute;
+        left: 58%;
+        top: 30%;
+        z-index: 8;
+        font-size: 17px;
+        pointer-events: none;
+        animation: luvora-heart-fly 1.8s ease-out infinite;
+      }
+
+      @keyframes luvora-heart-fly {
+        0% {
+          opacity: 0;
+          transform: translate(0, 0) scale(.4);
+        }
+        20% { opacity: 1; }
+        100% {
+          opacity: 0;
+          transform: translate(24px, -36px) scale(1.15);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .balloon-cute-eye,
+        .balloon-flying-heart {
+          animation: none !important;
+        }
+      }
+    `;
+
+    document.head.appendChild(style);
+  }
+
+  function animateCuteBalloons() {
+    addBalloonStyles();
+
+    const balloons = document.querySelectorAll(
+      ".birthday-balloon, .decor-balloon"
+    );
+
+    balloons.forEach((balloon, index) => {
+      let face = balloon.querySelector(".balloon-cute-face");
+
+      if (!face) {
+        face = document.createElement("span");
+        face.className = "balloon-cute-face";
+
+        face.innerHTML = `
+          <span class="balloon-cute-eye left"></span>
+          <span class="balloon-cute-eye right"></span>
+          <span class="balloon-cute-cheek left"></span>
+          <span class="balloon-cute-cheek right"></span>
+          <span class="balloon-cute-mouth"></span>
+        `;
+
+        balloon.appendChild(face);
+      }
+
+      const expression = expressions[index % expressions.length];
+
+      face.classList.remove(...expressions, "expression-wink", "expression-ooh");
+      face.classList.add(expression);
+
+      if (expression === "expression-kiss") {
+        if (!balloon.querySelector(".balloon-flying-heart")) {
+          const heart = document.createElement("span");
+          heart.className = "balloon-flying-heart";
+          heart.textContent = "❤️";
+          heart.setAttribute("aria-hidden", "true");
+          balloon.appendChild(heart);
+        }
+      }
+
+      /* Keep one small floating heart on selected balloons */
+      if (index % 2 === 0 &&
+          !balloon.querySelector(".balloon-cute-heart")) {
+        const tinyHeart = document.createElement("span");
+        tinyHeart.className = "balloon-cute-heart";
+        tinyHeart.textContent = "♥";
+        balloon.appendChild(tinyHeart);
+      }
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", animateCuteBalloons, {
+      once: true
+    });
+  } else {
+    animateCuteBalloons();
+  }
+})();
+</script>
 </body>
 </html>
