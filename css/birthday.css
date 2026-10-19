@@ -8707,3 +8707,3448 @@ body:has(#luvoraBirthdayOverlay:not([hidden])) {
     transform: translate(-50%, -100%) scale(1.5);
   }
 }
+
+/* =========================================================
+   LUVORA — MYSTERY GIFT
+   PART 1: GIFT BOX LAYOUT & DESIGN
+
+   No background replacement.
+   No MIX animation in this part.
+========================================================= */
+
+
+/* 1. MAIN GAME CONTAINER */
+
+#luvoraGiftGame {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  background: transparent;
+  overflow: hidden;
+}
+
+#luvoraGiftGame *,
+#luvoraGiftGame *::before,
+#luvoraGiftGame *::after {
+  box-sizing: border-box;
+}
+
+#luvoraGiftGame [hidden] {
+  display: none !important;
+}
+
+#luvoraGiftGame .luvora-game-inner {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  margin-inline: auto;
+  padding: 30px 20px;
+  text-align: center;
+}
+
+
+/* 2. GAME HEADING */
+
+#luvoraGiftGame .luvora-game-heading {
+  position: relative;
+  width: 100%;
+  margin: 0 auto 24px;
+}
+
+#luvoraGiftGame .luvora-game-eyebrow {
+  display: block;
+  margin-bottom: 10px;
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  line-height: 1.6;
+  text-transform: uppercase;
+
+  color: #b47b87;
+}
+
+#luvoraGiftGame .luvora-game-heading h2 {
+  margin: 0;
+
+  font-family: inherit;
+  font-size: clamp(30px, 5vw, 48px);
+  font-weight: 600;
+  line-height: 1.2;
+
+  color: #7d344b;
+}
+
+#luvoraGiftGame .luvora-game-heading h2 span {
+  color: #c17b91;
+}
+
+#luvoraGiftGame .luvora-game-description {
+  max-width: 470px;
+  margin: 13px auto 0;
+
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.8;
+
+  color: #8f6570;
+}
+
+
+/* 3. STATUS / QUESTION AREA */
+
+#luvoraGiftGame .luvora-game-status {
+  position: relative;
+  width: 100%;
+  max-width: 470px;
+
+  margin: 0 auto 26px;
+  padding: 12px 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  background: transparent;
+  border: 1px solid rgba(174, 107, 130, 0.28);
+  border-radius: 14px;
+}
+
+#luvoraGiftGame .luvora-status-icon {
+  flex: 0 0 auto;
+  font-size: 20px;
+  line-height: 1;
+}
+
+#luvoraGiftGame #luvoraGameInstruction {
+  margin: 0;
+
+  font-size: 14px;
+  line-height: 1.65;
+
+  color: #805361;
+}
+
+
+/* 4. GIFT STAGE
+   The stage holds all three boxes in one shared area. */
+
+#luvoraGiftGame .luvora-gift-stage {
+  position: relative;
+
+  width: 100%;
+  max-width: 620px;
+  min-height: 210px;
+
+  margin: 0 auto;
+  padding: 24px 8px 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(12px, 4vw, 38px);
+
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+
+  isolation: isolate;
+}
+
+
+/* 5. INDIVIDUAL GIFT BUTTON */
+
+#luvoraGiftGame .luvora-gift-card {
+  --gift-main: #c96f88;
+  --gift-light: #f6c4d0;
+  --gift-dark: #a84d68;
+  --gift-ribbon: #f9e5b5;
+
+  position: relative;
+  flex: 1 1 0;
+
+  width: 100%;
+  max-width: 150px;
+  min-width: 0;
+  height: 165px;
+
+  margin: 0;
+  padding: 0;
+
+  display: block;
+
+  border: 0;
+  border-radius: 12px;
+  outline-offset: 7px;
+
+  background: transparent;
+  color: inherit;
+  font: inherit;
+
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+
+  perspective: 700px;
+  transform: translateZ(0);
+
+  transition:
+    filter 180ms ease,
+    transform 180ms ease;
+}
+
+/* LUVORA — Premium Champagne Rose Gift Boxes */
+
+#luvoraGiftGame #luvoraGiftA,
+#luvoraGiftGame #luvoraGiftB,
+#luvoraGiftGame #luvoraGiftC {
+  --gift-main: #B86F83;
+  --gift-light: #E8BFC9;
+  --gift-dark: #88465B;
+  --gift-ribbon: #E8CC91;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  #luvoraGiftGame .luvora-gift-card:hover {
+    transform: translateY(-5px);
+    filter: brightness(1.04);
+  }
+}
+
+#luvoraGiftGame .luvora-gift-card:focus-visible {
+  outline: 2px solid #a84d68;
+}
+
+#luvoraGiftGame .luvora-gift-card:disabled {
+  cursor: default;
+}
+
+
+/* 6. GIFT INNER WRAPPER */
+
+#luvoraGiftGame .luvora-gift-card-inner {
+  position: absolute;
+  inset: 0;
+
+  display: block;
+
+  transform-style: preserve-3d;
+}
+
+
+/* 7. GIFT BODY */
+
+#luvoraGiftGame .luvora-gift-box-body {
+  position: absolute;
+
+  left: 8%;
+  right: 8%;
+  bottom: 12px;
+
+  height: 104px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      100deg,
+      var(--gift-dark) 0%,
+      var(--gift-main) 22%,
+      var(--gift-light) 48%,
+      var(--gift-main) 74%,
+      var(--gift-dark) 100%
+    );
+
+  border: 1px solid rgba(111, 54, 69, 0.20);
+  border-radius: 4px 4px 9px 9px;
+
+  box-shadow:
+    inset 0 3px 5px rgba(255, 255, 255, 0.32),
+    inset 0 -7px 10px rgba(91, 39, 55, 0.13),
+    0 8px 12px rgba(93, 48, 62, 0.13);
+
+  z-index: 2;
+}
+
+
+/* 8. VERTICAL RIBBON */
+
+#luvoraGiftGame .luvora-gift-ribbon-vertical {
+  position: absolute;
+
+  top: 0;
+  bottom: 0;
+  left: 39%;
+
+  width: 22%;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(160, 112, 50, 0.15),
+      var(--gift-ribbon) 30%,
+      #fff9e9 50%,
+      var(--gift-ribbon) 72%,
+      rgba(160, 112, 50, 0.16)
+    );
+
+  border-left: 1px solid rgba(255, 255, 255, 0.35);
+  border-right: 1px solid rgba(139, 93, 45, 0.12);
+
+  z-index: 3;
+}
+
+
+/* 9. HORIZONTAL RIBBON */
+
+#luvoraGiftGame .luvora-gift-ribbon-horizontal {
+  position: absolute;
+
+  top: 34%;
+  left: 0;
+  right: 0;
+
+  height: 17%;
+
+  background:
+    linear-gradient(
+      180deg,
+      #fff8e6,
+      var(--gift-ribbon) 45%,
+      #e9d29d
+    );
+
+  box-shadow:
+    0 1px 2px rgba(104, 63, 32, 0.13);
+
+  z-index: 4;
+}
+
+
+/* 10. GIFT SYMBOL */
+
+#luvoraGiftGame .luvora-gift-symbol {
+  position: relative;
+  z-index: 5;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 52px;
+  height: 52px;
+
+  font-family:
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    "Noto Color Emoji",
+    sans-serif;
+
+  font-size: clamp(25px, 4vw, 34px);
+  line-height: 1;
+
+  border-radius: 50%;
+
+  background: rgba(255, 250, 244, 0.91);
+
+  box-shadow:
+    0 2px 9px rgba(88, 42, 55, 0.13),
+    inset 0 1px 2px rgba(255, 255, 255, 0.95);
+
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+
+
+/* 11. GIFT LID */
+
+#luvoraGiftGame .luvora-gift-lid {
+  position: absolute;
+
+  left: 3%;
+  right: 3%;
+  bottom: 109px;
+
+  height: 31px;
+
+  display: block;
+
+  background:
+    linear-gradient(
+      100deg,
+      var(--gift-dark) 0%,
+      var(--gift-main) 24%,
+      var(--gift-light) 50%,
+      var(--gift-main) 76%,
+      var(--gift-dark) 100%
+    );
+
+  border: 1px solid rgba(111, 54, 69, 0.20);
+  border-radius: 5px 5px 3px 3px;
+
+  box-shadow:
+    inset 0 3px 4px rgba(255, 255, 255, 0.30),
+    0 3px 4px rgba(80, 37, 51, 0.12);
+
+  transform-origin: 50% 100%;
+
+  z-index: 5;
+}
+
+
+/* Ribbon across the lid */
+
+#luvoraGiftGame .luvora-gift-lid-ribbon {
+  position: absolute;
+
+  top: 0;
+  bottom: 0;
+  left: 39%;
+
+  width: 22%;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--gift-ribbon),
+      #fff9e9 50%,
+      var(--gift-ribbon)
+    );
+
+  z-index: 2;
+}
+
+
+/* Small decorative bow */
+
+#luvoraGiftGame .luvora-gift-lid-bow {
+  position: absolute;
+
+  width: 29px;
+  height: 19px;
+
+  top: -12px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  border: 5px solid var(--gift-ribbon);
+  border-radius: 80% 20% 80% 20%;
+
+  filter: drop-shadow(0 1px 1px rgba(87, 48, 39, 0.14));
+
+  z-index: 3;
+}
+
+#luvoraGiftGame .luvora-gift-lid-bow::after {
+  content: "";
+
+  position: absolute;
+
+  width: 15px;
+  height: 12px;
+
+  top: -2px;
+  left: 5px;
+
+  border: 4px solid var(--gift-ribbon);
+  border-radius: 20% 80% 20% 80%;
+}
+
+
+/* 12. LOWER BOX EDGE */
+
+#luvoraGiftGame .luvora-gift-box-base {
+  position: absolute;
+
+  left: 8%;
+  right: 8%;
+  bottom: 7px;
+
+  height: 8px;
+
+  background: var(--gift-dark);
+  border-radius: 0 0 4px 4px;
+
+  box-shadow: 0 5px 7px rgba(85, 43, 56, 0.10);
+
+  z-index: 1;
+}
+
+
+/* 13. NO GIFT LABELS */
+
+#luvoraGiftGame .luvora-gift-card-label {
+  display: none !important;
+}
+
+
+/* 14. GAME ACTION AREA */
+
+#luvoraGiftGame .luvora-game-actions {
+  position: relative;
+  width: 100%;
+
+  margin: 20px auto 0;
+
+  text-align: center;
+}
+
+#luvoraGiftGame .luvora-game-start {
+  min-width: 190px;
+  min-height: 48px;
+
+  padding: 13px 23px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 999px;
+
+  background:
+    linear-gradient(135deg, #bd7188, #9e4d68);
+
+  color: #fffaf7;
+
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 5px 14px rgba(147, 68, 95, 0.18);
+
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  #luvoraGiftGame .luvora-game-start:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+      0 8px 18px rgba(147, 68, 95, 0.23);
+  }
+}
+
+#luvoraGiftGame .luvora-game-start:focus-visible,
+#luvoraGiftGame .luvora-reward-unlock:focus-visible {
+  outline: 2px solid #8d3d58;
+  outline-offset: 4px;
+}
+
+#luvoraGiftGame .luvora-game-start:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+#luvoraGiftGame .luvora-game-start-icon {
+  font-size: 17px;
+  line-height: 1;
+}
+
+#luvoraGiftGame .luvora-game-hint {
+  max-width: 400px;
+
+  margin: 12px auto 0;
+
+  font-size: 12px;
+  line-height: 1.7;
+
+  color: #987581;
+}
+
+
+/* 15. MOBILE LAYOUT */
+
+@media (max-width: 600px) {
+  #luvoraGiftGame .luvora-game-inner {
+    padding: 24px 12px;
+  }
+
+  #luvoraGiftGame .luvora-game-heading {
+    margin-bottom: 20px;
+  }
+
+  #luvoraGiftGame .luvora-game-eyebrow {
+    font-size: 9px;
+    letter-spacing: 2.2px;
+  }
+
+  #luvoraGiftGame .luvora-game-description {
+    max-width: 330px;
+    font-size: 13px;
+  }
+
+  #luvoraGiftGame .luvora-game-status {
+    margin-bottom: 18px;
+    padding: 11px 12px;
+    gap: 8px;
+  }
+
+  #luvoraGiftGame #luvoraGameInstruction {
+    font-size: 12px;
+  }
+
+  #luvoraGiftGame .luvora-gift-stage {
+    min-height: 160px;
+
+    padding: 22px 2px 14px;
+
+    gap: clamp(8px, 3vw, 18px);
+  }
+
+  #luvoraGiftGame .luvora-gift-card {
+    height: 133px;
+    max-width: 112px;
+  }
+
+  #luvoraGiftGame .luvora-gift-box-body {
+    bottom: 10px;
+    height: 82px;
+  }
+
+  #luvoraGiftGame .luvora-gift-lid {
+    bottom: 86px;
+    height: 25px;
+  }
+
+  #luvoraGiftGame .luvora-gift-box-base {
+    bottom: 5px;
+    height: 7px;
+  }
+
+  #luvoraGiftGame .luvora-gift-symbol {
+    width: 39px;
+    height: 39px;
+    font-size: 25px;
+  }
+
+  #luvoraGiftGame .luvora-game-actions {
+    margin-top: 15px;
+  }
+
+  #luvoraGiftGame .luvora-game-start {
+    min-width: 175px;
+    min-height: 46px;
+    padding: 12px 18px;
+    font-size: 11px;
+  }
+}
+
+
+/* 16. VERY SMALL SCREENS */
+
+@media (max-width: 360px) {
+  #luvoraGiftGame .luvora-game-inner {
+    padding-inline: 8px;
+  }
+
+  #luvoraGiftGame .luvora-gift-stage {
+    gap: 6px;
+  }
+
+  #luvoraGiftGame .luvora-gift-card {
+    height: 120px;
+  }
+
+  #luvoraGiftGame .luvora-gift-box-body {
+    height: 74px;
+  }
+
+  #luvoraGiftGame .luvora-gift-lid {
+    bottom: 78px;
+    height: 23px;
+  }
+
+  #luvoraGiftGame .luvora-gift-symbol {
+    width: 34px;
+    height: 34px;
+    font-size: 22px;
+  }
+}
+
+
+/* 17. REDUCED MOTION SUPPORT */
+
+@media (prefers-reduced-motion: reduce) {
+  #luvoraGiftGame .luvora-gift-card,
+  #luvoraGiftGame .luvora-gift-symbol,
+  #luvoraGiftGame .luvora-game-start {
+    transition: none !important;
+  }
+}
+
+/* =========================================================
+   END — CSS PART 1
+   Gift Box Layout & Design
+========================================================= */
+
+/* LUVORA — Hide symbols during shuffle and guessing */
+
+#luvoraGiftGame .luvora-gift-card.is-closed .luvora-gift-symbol,
+#luvoraGiftGame .luvora-gift-card.is-shuffling .luvora-gift-symbol {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* =========================================================
+   LUVORA — MYSTERY GIFT
+   PART 2: PREMIUM UI ENHANCEMENTS
+   Symbols • Buttons • Retry • Success • Scratch Card
+========================================================= */
+
+
+/* =========================================================
+   1. PREMIUM GIFT SYMBOLS
+========================================================= */
+
+#luvoraGiftGame .luvora-gift-symbol {
+  width: 54px;
+  height: 54px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: clamp(27px, 4vw, 35px);
+  line-height: 1;
+
+  background:
+    radial-gradient(
+      circle at 32% 25%,
+      #ffffff 0%,
+      #fffaf5 42%,
+      #f6e6df 100%
+    );
+
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 50%;
+
+  box-shadow:
+    0 4px 12px rgba(83, 37, 53, 0.18),
+    0 0 0 4px rgba(255, 246, 240, 0.18),
+    inset 0 2px 4px rgba(255, 255, 255, 0.95);
+
+  transform: translateZ(0);
+
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    opacity 180ms ease;
+}
+
+/* Correct gift selected */
+
+#luvoraGiftGame .luvora-gift-card.is-correct .luvora-gift-symbol {
+  box-shadow:
+    0 0 0 4px rgba(235, 202, 145, 0.35),
+    0 0 22px rgba(232, 204, 145, 0.65),
+    0 5px 14px rgba(83, 37, 53, 0.18);
+}
+
+/* Keep the symbol hidden while gifts are closed or shuffling */
+
+#luvoraGiftGame .luvora-gift-card.is-closed .luvora-gift-symbol,
+#luvoraGiftGame .luvora-gift-card.is-shuffling .luvora-gift-symbol {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+
+/* =========================================================
+   2. PREMIUM MIX THE GIFTS BUTTON
+========================================================= */
+
+#luvoraGiftGame .luvora-game-start {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
+  min-width: 205px;
+  min-height: 52px;
+
+  padding: 14px 25px;
+
+  gap: 14px;
+
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #d69aaa 0%,
+      #bd7188 38%,
+      #9e4d68 100%
+    );
+
+  color: #fffaf8;
+
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+
+  box-shadow:
+    0 8px 20px rgba(142, 61, 87, 0.20),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    filter 220ms ease;
+}
+
+/* Soft light sweep */
+
+#luvoraGiftGame .luvora-game-start::before {
+  content: "";
+
+  position: absolute;
+  top: 0;
+  left: -120%;
+
+  width: 65%;
+  height: 100%;
+
+  background:
+    linear-gradient(
+      110deg,
+      transparent,
+      rgba(255, 255, 255, 0.25),
+      transparent
+    );
+
+  transform: skewX(-20deg);
+
+  transition: left 550ms ease;
+
+  pointer-events: none;
+  z-index: -1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  #luvoraGiftGame .luvora-game-start:hover {
+    transform: translateY(-3px);
+
+    filter: brightness(1.04);
+
+    box-shadow:
+      0 12px 25px rgba(142, 61, 87, 0.26),
+      inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  }
+
+  #luvoraGiftGame .luvora-game-start:hover::before {
+    left: 150%;
+  }
+}
+
+#luvoraGiftGame .luvora-game-start:active {
+  transform: translateY(0) scale(0.98);
+}
+
+#luvoraGiftGame .luvora-game-start-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 23px;
+  height: 23px;
+
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.12);
+
+  font-size: 15px;
+}
+
+
+/* =========================================================
+   3. STATUS MESSAGE POLISH
+========================================================= */
+
+#luvoraGiftGame .luvora-game-status {
+  background: rgba(255, 250, 247, 0.55);
+
+  border: 1px solid rgba(174, 107, 130, 0.24);
+  border-radius: 15px;
+
+  box-shadow:
+    0 5px 16px rgba(113, 64, 78, 0.035),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75);
+
+  transition:
+    background 220ms ease,
+    border-color 220ms ease;
+}
+
+/* Status variations controlled by JavaScript */
+
+#luvoraGiftGame .luvora-game-status[data-state="wrong"] {
+  background: rgba(255, 238, 240, 0.82);
+  border-color: rgba(204, 91, 112, 0.38);
+}
+
+#luvoraGiftGame .luvora-game-status[data-state="won"] {
+  background: rgba(255, 247, 224, 0.88);
+  border-color: rgba(196, 157, 83, 0.48);
+}
+
+#luvoraGiftGame .luvora-game-status[data-state="ready"] {
+  background: rgba(255, 250, 247, 0.72);
+}
+
+
+/* =========================================================
+   4. PREMIUM RETRY CARD
+========================================================= */
+
+#luvoraGiftGame .luvora-game-retry {
+  position: relative;
+
+  width: 100%;
+  max-width: 390px;
+
+  margin: 24px auto 0;
+  padding: 17px 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fff7f5 0%,
+      #ffedef 100%
+    );
+
+  border: 1px solid rgba(207, 130, 149, 0.34);
+  border-radius: 17px;
+
+  box-shadow:
+    0 8px 22px rgba(144, 72, 93, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+
+  animation: luvoraRetryEnter 350ms ease both;
+}
+
+#luvoraGiftGame .luvora-game-retry > span {
+  flex: 0 0 auto;
+
+  width: 38px;
+  height: 38px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #ffffff;
+  border: 1px solid rgba(207, 130, 149, 0.22);
+  border-radius: 50%;
+
+  font-size: 21px;
+
+  box-shadow: 0 3px 9px rgba(144, 72, 93, 0.08);
+}
+
+#luvoraGiftGame #luvoraGameRetryText {
+  margin: 0;
+
+  color: #984b63;
+
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.6;
+  letter-spacing: 0.2px;
+}
+
+@keyframes luvoraRetryEnter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* =========================================================
+   5. PREMIUM SUCCESS CARD
+========================================================= */
+
+#luvoraGiftGame .luvora-game-success {
+  position: relative;
+  isolation: isolate;
+
+  width: 100%;
+  max-width: 470px;
+
+  margin: 25px auto 0;
+  padding: 30px 24px;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(255, 237, 214, 0.85),
+      transparent 58%
+    ),
+    linear-gradient(
+      145deg,
+      #fffaf6 0%,
+      #fff0f3 100%
+    );
+
+  border: 1px solid rgba(205, 157, 118, 0.40);
+  border-radius: 24px;
+
+  box-shadow:
+    0 14px 35px rgba(119, 58, 77, 0.11),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+
+  animation: luvoraSuccessEnter 450ms ease both;
+}
+
+#luvoraGiftGame .luvora-game-success::before {
+  content: "";
+
+  position: absolute;
+  inset: 7px;
+
+  border: 1px solid rgba(199, 158, 113, 0.20);
+  border-radius: 18px;
+
+  pointer-events: none;
+  z-index: -1;
+}
+
+#luvoraGiftGame .luvora-success-icon {
+  width: 68px;
+  height: 68px;
+
+  margin: 0 auto 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    linear-gradient(
+      145deg,
+      #fffdf9,
+      #fce6d5
+    );
+
+  border: 1px solid rgba(208, 168, 119, 0.38);
+  border-radius: 50%;
+
+  font-size: 34px;
+
+  box-shadow:
+    0 6px 17px rgba(157, 106, 68, 0.12),
+    inset 0 1px 0 #ffffff;
+}
+
+#luvoraGiftGame .luvora-game-success h3 {
+  margin: 0;
+
+  color: #87435a;
+
+  font-family: inherit;
+  font-size: clamp(22px, 4vw, 29px);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+#luvoraGiftGame .luvora-game-success > p {
+  max-width: 330px;
+
+  margin: 12px auto 22px;
+
+  color: #916a74;
+
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   6. REVEAL YOUR REWARD BUTTON
+========================================================= */
+
+#luvoraGiftGame .luvora-reward-unlock {
+  position: relative;
+  overflow: hidden;
+
+  min-height: 49px;
+  max-width: 100%;
+
+  padding: 13px 23px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #c98799,
+      #a95672
+    );
+
+  border: 1px solid rgba(255, 255, 255, 0.68);
+  border-radius: 999px;
+
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.35px;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 7px 18px rgba(143, 65, 91, 0.19),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24);
+
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease;
+}
+
+#luvoraGiftGame .luvora-reward-unlock > span:last-child {
+  font-size: 21px;
+  line-height: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  #luvoraGiftGame .luvora-reward-unlock:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+      0 10px 23px rgba(143, 65, 91, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+}
+
+#luvoraGiftGame .luvora-reward-unlock:active {
+  transform: scale(0.98);
+}
+
+@keyframes luvoraSuccessEnter {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+/* =========================================================
+   7. SCRATCH CARD SECTION
+========================================================= */
+
+#luvoraGiftGame .luvora-scratch-area {
+  position: relative;
+
+  width: 100%;
+  max-width: 460px;
+
+  margin: 28px auto 0;
+  padding: 26px 18px;
+
+  text-align: center;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 250, 247, 0.97),
+      rgba(255, 240, 243, 0.96)
+    );
+
+  border: 1px solid rgba(205, 157, 170, 0.32);
+  border-radius: 25px;
+
+  box-shadow:
+    0 12px 32px rgba(119, 58, 77, 0.09),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+
+  animation: luvoraScratchEnter 400ms ease both;
+}
+
+#luvoraGiftGame .luvora-scratch-eyebrow {
+  display: block;
+
+  margin-bottom: 10px;
+
+  color: #b17b89;
+
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.7;
+  letter-spacing: 1.7px;
+  text-transform: uppercase;
+}
+
+#luvoraGiftGame .luvora-scratch-area > h3 {
+  margin: 0;
+
+  color: #87435a;
+
+  font-family: inherit;
+  font-size: clamp(23px, 4vw, 30px);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+#luvoraGiftGame .luvora-scratch-area > p {
+  margin: 10px auto 22px;
+
+  color: #916a74;
+
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+
+/* =========================================================
+   8. TRUE SQUARE SCRATCH CARD
+========================================================= */
+
+#luvoraGiftGame .luvora-scratch-card {
+  position: relative;
+
+  width: 100%;
+  max-width: 340px;
+
+  aspect-ratio: 1 / 1;
+  height: auto;
+  min-height: 0;
+
+  margin: 0 auto;
+
+  overflow: hidden;
+
+  isolation: isolate;
+
+  background:
+    radial-gradient(
+      circle at 50% 35%,
+      #fff8f2 0%,
+      #fce8e6 58%,
+      #f2d5db 100%
+    );
+
+  border: 5px solid #ffffff;
+  border-radius: 23px;
+
+  box-shadow:
+    0 10px 25px rgba(112, 57, 74, 0.15),
+    0 0 0 1px rgba(194, 137, 153, 0.28),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.75);
+}
+
+/* Scratch cover — canvas is created by JavaScript */
+
+#luvoraGiftGame .luvora-scratch-cover {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      135deg,
+      #e8cc91 0%,
+      #f8e9c4 24%,
+      #d7b66e 48%,
+      #f7e5b6 72%,
+      #c9a35c 100%
+    );
+
+  color: #795638;
+
+  text-align: center;
+
+  border-radius: 17px;
+
+  cursor: crosshair;
+
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#luvoraGiftGame .luvora-scratch-cover::before {
+  content: "";
+
+  position: absolute;
+  inset: 9px;
+
+  border: 1px solid rgba(255, 255, 255, 0.68);
+  border-radius: 12px;
+
+  pointer-events: none;
+}
+
+#luvoraGiftGame .luvora-scratch-cover > span {
+  position: relative;
+  z-index: 1;
+
+  font-size: clamp(45px, 9vw, 66px);
+  line-height: 1;
+
+  filter: drop-shadow(0 4px 5px rgba(101, 72, 39, 0.14));
+}
+
+#luvoraGiftGame .luvora-scratch-cover > strong {
+  position: relative;
+  z-index: 3;
+
+  max-width: 85%;
+
+  padding: 11px 15px;
+
+  color: #795638;
+
+  background: rgba(255, 250, 234, 0.76);
+
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 999px;
+
+  font-size: clamp(10px, 2.5vw, 13px);
+  font-weight: 800;
+  line-height: 1.5;
+  letter-spacing: 1.5px;
+}
+
+/* Keep the JavaScript scratch canvas above the cover decoration */
+
+#luvoraGiftGame .luvora-scratch-card canvas {
+  position: absolute;
+  inset: 0;
+
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  border-radius: 17px;
+
+  touch-action: none;
+  cursor: crosshair;
+
+  z-index: 5;
+}
+
+/* Reward underneath the scratch layer */
+
+#luvoraGiftGame .luvora-scratch-result {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+
+  padding: 24px;
+
+  background:
+    radial-gradient(
+      circle at 50% 30%,
+      #ffffff 0%,
+      #fff6f1 48%,
+      #f9e1e8 100%
+    );
+
+  border-radius: 17px;
+
+  text-align: center;
+
+  z-index: 2;
+}
+
+#luvoraGiftGame .luvora-scratch-result > span {
+  font-size: clamp(42px, 8vw, 60px);
+  line-height: 1;
+
+  filter: drop-shadow(0 4px 8px rgba(167, 80, 111, 0.14));
+}
+
+#luvoraGiftGame #luvoraScratchRewardText {
+  max-width: 100%;
+
+  margin: 0;
+
+  color: #87435a;
+
+  font-family: inherit;
+  font-size: clamp(16px, 3.5vw, 21px);
+  font-weight: 700;
+  line-height: 1.65;
+
+  overflow-wrap: anywhere;
+}
+
+/* Revealed state */
+
+#luvoraGiftGame .luvora-scratch-area.is-revealed .luvora-scratch-card {
+  border-color: #f0d6ad;
+
+  box-shadow:
+    0 12px 30px rgba(112, 57, 74, 0.14),
+    0 0 0 4px rgba(232, 204, 145, 0.18);
+}
+
+@keyframes luvoraScratchEnter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* =========================================================
+   9. MOBILE POLISH
+========================================================= */
+
+@media (max-width: 600px) {
+  #luvoraGiftGame .luvora-gift-symbol {
+    width: 43px;
+    height: 43px;
+
+    font-size: 26px;
+  }
+
+  #luvoraGiftGame .luvora-game-start {
+    min-width: 185px;
+    min-height: 48px;
+
+    padding: 12px 20px;
+
+    font-size: 11px;
+    letter-spacing: 1.5px;
+  }
+
+  #luvoraGiftGame .luvora-game-retry {
+    max-width: 340px;
+
+    margin-top: 20px;
+    padding: 14px 15px;
+
+    border-radius: 15px;
+  }
+
+  #luvoraGiftGame .luvora-game-success {
+    margin-top: 20px;
+    padding: 27px 18px;
+
+    border-radius: 21px;
+  }
+
+  #luvoraGiftGame .luvora-success-icon {
+    width: 59px;
+    height: 59px;
+
+    font-size: 30px;
+  }
+
+  #luvoraGiftGame .luvora-game-success > p {
+    font-size: 13px;
+  }
+
+  #luvoraGiftGame .luvora-reward-unlock {
+    min-height: 47px;
+
+    padding: 12px 19px;
+
+    font-size: 12px;
+  }
+
+  #luvoraGiftGame .luvora-scratch-area {
+    margin-top: 22px;
+    padding: 23px 13px;
+
+    border-radius: 21px;
+  }
+
+  #luvoraGiftGame .luvora-scratch-card {
+    max-width: 100%;
+
+    border-width: 4px;
+    border-radius: 19px;
+  }
+
+  #luvoraGiftGame .luvora-scratch-cover,
+  #luvoraGiftGame .luvora-scratch-result {
+    border-radius: 14px;
+  }
+
+  #luvoraGiftGame .luvora-scratch-card canvas {
+    border-radius: 14px;
+  }
+
+  #luvoraGiftGame .luvora-scratch-cover > strong {
+    padding: 9px 12px;
+
+    letter-spacing: 1px;
+  }
+}
+
+
+/* =========================================================
+   10. REDUCED MOTION ACCESSIBILITY
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  #luvoraGiftGame .luvora-game-retry,
+  #luvoraGiftGame .luvora-game-success,
+  #luvoraGiftGame .luvora-scratch-area {
+    animation: none !important;
+  }
+
+  #luvoraGiftGame .luvora-game-start,
+  #luvoraGiftGame .luvora-reward-unlock,
+  #luvoraGiftGame .luvora-gift-symbol {
+    transition: none !important;
+  }
+}
+
+/* =========================================================
+   END — CSS PART 2
+========================================================= */
+
+/* LUVORA — Hide scratch cover text after revealing reward */
+
+#luvoraGiftGame .luvora-scratch-area.is-revealed
+.luvora-scratch-cover > span,
+#luvoraGiftGame .luvora-scratch-area.is-revealed
+.luvora-scratch-cover > strong {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Hide the scratch canvas after reveal */
+
+#luvoraGiftGame .luvora-scratch-area.is-revealed
+.luvora-scratch-card canvas {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* LUVORA — Hide duplicate scratch instruction text */
+
+#luvoraGiftGame .luvora-scratch-cover > strong {
+  display: none !important;
+}
+
+/* Hide the gift emoji if it is also appearing above the scratch layer */
+#luvoraGiftGame .luvora-scratch-cover > span {
+  display: none !important;
+}
+
+/* LUVORA — Remove golden scratch cover visually */
+
+#luvoraGiftGame .luvora-scratch-cover {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* Remove any decorative overlay from the scratch cover */
+#luvoraGiftGame .luvora-scratch-cover::before,
+#luvoraGiftGame .luvora-scratch-cover::after {
+  display: none !important;
+}
+
+/* =========================================
+   LUVORA — PREMIUM GAME INSTRUCTION CARD
+   Replace the dull grey instruction section
+========================================= */
+
+#luvoraGiftGame .luvora-game-status {
+  background: linear-gradient(
+    135deg,
+    #fff8f8 0%,
+    #fff0f3 55%,
+    #fce8ed 100%
+  ) !important;
+
+  border: 1px solid rgba(184, 111, 131, 0.25) !important;
+  border-radius: 18px !important;
+
+  box-shadow:
+    0 6px 20px rgba(145, 73, 96, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+
+  color: #7d344b !important;
+}
+
+/* Instruction text */
+#luvoraGiftGame #luvoraGameInstruction {
+  color: #805361 !important;
+  line-height: 1.7;
+}
+
+/* Status icon */
+#luvoraGiftGame .luvora-status-icon {
+  color: #b86f83 !important;
+}
+/* =========================================
+   LUVORA — PREMIUM MIX THE GIFTS BUTTON
+========================================= */
+
+#luvoraGiftGame .luvora-game-start {
+  background: linear-gradient(
+    135deg,
+    #87364f 0%,
+    #a74764 48%,
+    #7b2e47 100%
+  ) !important;
+
+  color: #ffffff !important;
+
+  border: 1px solid rgba(232, 204, 145, 0.65) !important;
+  border-radius: 14px !important;
+
+  box-shadow:
+    0 5px 14px rgba(125, 52, 75, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+
+  font-weight: 700 !important;
+  letter-spacing: 0.4px;
+
+  text-shadow: 0 1px 2px rgba(50, 10, 25, 0.18);
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    filter 0.25s ease !important;
+}
+
+/* Professional hover effect */
+@media (hover: hover) {
+  #luvoraGiftGame .luvora-game-start:hover {
+    filter: brightness(1.08);
+
+    box-shadow:
+      0 8px 20px rgba(125, 52, 75, 0.28),
+      inset 0 1px 0 rgba(255, 255, 255, 0.22) !important;
+
+    transform: translateY(-2px);
+  }
+}
+
+/* Button press effect */
+#luvoraGiftGame .luvora-game-start:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Keyboard accessibility */
+#luvoraGiftGame .luvora-game-start:focus-visible {
+  outline: 3px solid #e8cc91;
+  outline-offset: 4px;
+}
+
+/* =====================================================
+   LUVORA — PREMIUM REWARD REVEAL
+   Warm Ivory | Deep Wine | Burgundy | Rose Red
+===================================================== */
+
+/* 1. PREMIUM REWARD SECTION */
+
+#luvoraGiftGame .luvora-game-success {
+  position: relative;
+
+  box-sizing: border-box;
+
+  background: linear-gradient(
+    145deg,
+    #fffdf8 0%,
+    #fbf4eb 55%,
+    #f8eee5 100%
+  ) !important;
+
+  border: 1px solid #e8d3c3 !important;
+  border-radius: 24px !important;
+
+  padding: 30px 24px !important;
+
+  box-shadow:
+    0 12px 35px rgba(73, 31, 43, 0.09),
+    0 3px 10px rgba(73, 31, 43, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+
+  color: #4a1728 !important;
+
+  opacity: 1 !important;
+  filter: none !important;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+/* 2. SUCCESS ICON */
+
+#luvoraGiftGame .luvora-success-icon {
+  color: #a52f50 !important;
+
+  filter: drop-shadow(
+    0 3px 5px rgba(128, 35, 62, 0.12)
+  );
+
+  opacity: 1 !important;
+}
+
+
+/* 3. SUCCESS HEADING */
+
+#luvoraGiftGame .luvora-game-success h3 {
+  color: #571b30 !important;
+
+  font-weight: 800 !important;
+  letter-spacing: -0.4px;
+
+  line-height: 1.3;
+
+  text-shadow: none !important;
+
+  opacity: 1 !important;
+}
+
+
+/* 4. SUCCESS DESCRIPTION */
+
+#luvoraGiftGame .luvora-game-success p {
+  color: #72505a !important;
+
+  font-weight: 500 !important;
+  line-height: 1.75;
+
+  opacity: 1 !important;
+  text-shadow: none !important;
+}
+
+
+/* 5. REWARD UNLOCK BUTTON */
+
+#luvoraGiftGame .luvora-reward-unlock {
+  background: linear-gradient(
+    135deg,
+    #76263f 0%,
+    #a63857 52%,
+    #81243f 100%
+  ) !important;
+
+  color: #fffaf4 !important;
+
+  border: 1px solid #c78d83 !important;
+  border-radius: 14px !important;
+
+  box-shadow:
+    0 7px 18px rgba(102, 30, 54, 0.19),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+
+  font-weight: 750 !important;
+  letter-spacing: 0.35px;
+
+  text-shadow: none !important;
+
+  opacity: 1 !important;
+  filter: none !important;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    filter 0.25s ease !important;
+}
+
+
+/* 6. BUTTON HOVER */
+
+@media (hover: hover) {
+  #luvoraGiftGame .luvora-reward-unlock:hover {
+    filter: brightness(1.08) !important;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+      0 11px 24px rgba(102, 30, 54, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.22) !important;
+  }
+}
+
+
+/* 7. BUTTON PRESS */
+
+#luvoraGiftGame .luvora-reward-unlock:active {
+  transform: scale(0.98);
+}
+
+
+/* 8. PREVENT FADED TEXT INSIDE SUCCESS SECTION */
+
+#luvoraGiftGame .luvora-game-success h3,
+#luvoraGiftGame .luvora-game-success p,
+#luvoraGiftGame .luvora-success-icon,
+#luvoraGiftGame .luvora-reward-unlock {
+  visibility: visible;
+}
+
+
+/* 9. MOBILE RESPONSIVENESS */
+
+@media (max-width: 600px) {
+  #luvoraGiftGame .luvora-game-success {
+    padding: 25px 18px !important;
+    border-radius: 20px !important;
+  }
+
+  #luvoraGiftGame .luvora-game-success h3 {
+    letter-spacing: -0.25px;
+  }
+
+  #luvoraGiftGame .luvora-reward-unlock {
+    max-width: 100%;
+  }
+}
+/* =========================================================
+   LUVORA — FINAL PREMIUM REWARD DESIGN
+   Strong override for previous CSS
+   Does not modify JavaScript or game functionality
+========================================================= */
+
+
+/* ---------------------------------------------------------
+   1. SUCCESS / GIFT FOUND SECTION
+--------------------------------------------------------- */
+
+#luvoraGiftGame .luvora-game-success {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 540px !important;
+  margin: 30px auto !important;
+  padding: 34px 24px !important;
+
+  background: linear-gradient(
+    145deg,
+    #fffaf5 0%,
+    #fff0ed 55%,
+    #fce5e2 100%
+  ) !important;
+
+  border: 1px solid #e8c5bd !important;
+  border-radius: 26px !important;
+
+  box-shadow:
+    0 18px 45px rgba(91, 32, 48, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+
+  text-align: center !important;
+  color: #592537 !important;
+}
+
+
+/* Success icon */
+
+#luvoraGiftGame .luvora-game-success .luvora-success-icon {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  width: 76px !important;
+  height: 76px !important;
+  margin: 0 auto 20px !important;
+
+  background: linear-gradient(
+    145deg,
+    #fff1df,
+    #f6d4a6
+  ) !important;
+
+  border: 1px solid #e8c18b !important;
+  border-radius: 50% !important;
+
+  box-shadow: 0 8px 22px rgba(155, 101, 48, 0.15) !important;
+}
+
+
+/* Success heading */
+
+#luvoraGiftGame .luvora-game-success h3 {
+  margin: 0 0 14px !important;
+
+  color: #70283e !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: clamp(25px, 4vw, 34px) !important;
+  font-weight: 700 !important;
+  line-height: 1.3 !important;
+  letter-spacing: -0.5px !important;
+}
+
+
+/* Success description */
+
+#luvoraGiftGame .luvora-game-success p {
+  max-width: 410px !important;
+  margin: 0 auto 24px !important;
+
+  color: #795766 !important;
+  font-size: 15px !important;
+  line-height: 1.85 !important;
+}
+
+
+/* ---------------------------------------------------------
+   2. REVEAL YOUR REWARD BUTTON
+--------------------------------------------------------- */
+
+#luvoraGiftGame .luvora-reward-unlock {
+  box-sizing: border-box !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+
+  min-height: 54px !important;
+  padding: 15px 30px !important;
+
+  background: linear-gradient(
+    135deg,
+    #8b3049 0%,
+    #68243b 55%,
+    #4f1b30 100%
+  ) !important;
+
+  color: #fffaf5 !important;
+  border: 1px solid #a85c6e !important;
+  border-radius: 50px !important;
+
+  box-shadow:
+    0 9px 22px rgba(104, 36, 59, 0.23),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
+
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.35px !important;
+
+  cursor: pointer !important;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    filter 0.25s ease !important;
+}
+
+#luvoraGiftGame .luvora-reward-unlock:hover {
+  transform: translateY(-3px) !important;
+
+  box-shadow:
+    0 14px 28px rgba(104, 36, 59, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+
+  filter: brightness(1.08) !important;
+}
+
+#luvoraGiftGame .luvora-reward-unlock:active {
+  transform: translateY(0) !important;
+}
+
+
+/* ---------------------------------------------------------
+   3. YOUR BIRTHDAY REWARD SECTION
+--------------------------------------------------------- */
+
+#luvoraGiftGame .luvora-scratch-area {
+  box-sizing: border-box !important;
+
+  width: 100% !important;
+  max-width: 540px !important;
+  margin: 30px auto !important;
+  padding: 34px 22px 38px !important;
+
+  background: linear-gradient(
+    160deg,
+    #fffaf5 0%,
+    #fff4ef 52%,
+    #fce9e5 100%
+  ) !important;
+
+  border: 1px solid #e8c9c0 !important;
+  border-radius: 28px !important;
+
+  box-shadow:
+    0 18px 48px rgba(91, 32, 48, 0.11),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+
+  text-align: center !important;
+  color: #592537 !important;
+}
+
+
+/* Small eyebrow heading */
+
+#luvoraGiftGame .luvora-scratch-area .luvora-scratch-eyebrow {
+  display: inline-block !important;
+
+  margin: 0 auto 14px !important;
+  padding: 7px 15px !important;
+
+  background: #f7e3d8 !important;
+  color: #8b4657 !important;
+
+  border: 1px solid #e9c9b9 !important;
+  border-radius: 50px !important;
+
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  letter-spacing: 2px !important;
+  line-height: 1.5 !important;
+  text-transform: uppercase !important;
+}
+
+
+/* Main reward heading */
+
+#luvoraGiftGame .luvora-scratch-area h2,
+#luvoraGiftGame .luvora-scratch-area h3 {
+  margin: 0 0 15px !important;
+
+  color: #70283e !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: clamp(28px, 5vw, 39px) !important;
+  font-weight: 700 !important;
+  line-height: 1.25 !important;
+  letter-spacing: -0.7px !important;
+
+  text-shadow: 0 2px 12px rgba(112, 40, 62, 0.06) !important;
+}
+
+
+/* Reward instructions */
+
+#luvoraGiftGame .luvora-scratch-area > p {
+  max-width: 390px !important;
+  margin: 0 auto 25px !important;
+
+  color: #80616c !important;
+  font-size: 14px !important;
+  line-height: 1.9 !important;
+}
+
+
+/* ---------------------------------------------------------
+   4. SCRATCH CARD — PRESERVE EXISTING FUNCTIONALITY
+--------------------------------------------------------- */
+
+#luvoraGiftGame .luvora-scratch-card {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 340px !important;
+  margin: 25px auto 0 !important;
+
+  aspect-ratio: 1 / 1 !important;
+
+  background: #fff9f1 !important;
+  border: 2px solid #dfb98b !important;
+  border-radius: 22px !important;
+
+  box-shadow:
+    0 14px 32px rgba(91, 32, 48, 0.16),
+    0 0 0 6px rgba(226, 190, 151, 0.15) !important;
+}
+
+
+/* Actual reward underneath the scratch layer */
+
+#luvoraGiftGame .luvora-scratch-card .luvora-scratch-result {
+  position: absolute !important;
+  inset: 0 !important;
+
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  padding: 24px !important;
+
+  background: linear-gradient(
+    145deg,
+    #fff9ed 0%,
+    #fbe8d5 48%,
+    #f3d3b9 100%
+  ) !important;
+
+  color: #70283e !important;
+  text-align: center !important;
+  border-radius: 19px !important;
+}
+
+
+/* Reward text */
+
+#luvoraGiftGame #luvoraScratchRewardText {
+  color: #70283e !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: clamp(20px, 4vw, 29px) !important;
+  font-weight: 700 !important;
+  line-height: 1.5 !important;
+  overflow-wrap: anywhere !important;
+}
+
+
+/* ---------------------------------------------------------
+   5. SCRATCH COVER — KEEP IT TRANSPARENT
+   Preserve your previous scratch-cover fix.
+--------------------------------------------------------- */
+
+#luvoraGiftGame .luvora-scratch-cover {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+#luvoraGiftGame .luvora-scratch-cover::before,
+#luvoraGiftGame .luvora-scratch-cover::after {
+  display: none !important;
+}
+
+
+/* Keep scratch instructions hidden as in your existing setup */
+
+#luvoraGiftGame .luvora-scratch-cover > span,
+#luvoraGiftGame .luvora-scratch-cover > strong {
+  display: none !important;
+}
+
+
+/* Hide scratch canvas after the reward has been revealed */
+
+#luvoraGiftGame .luvora-scratch-area.is-revealed
+.luvora-scratch-card canvas {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+
+/* ---------------------------------------------------------
+   6. MOBILE RESPONSIVE OVERRIDE
+--------------------------------------------------------- */
+
+@media (max-width: 600px) {
+
+  #luvoraGiftGame .luvora-game-success {
+    margin: 22px auto !important;
+    padding: 28px 18px !important;
+    border-radius: 22px !important;
+  }
+
+  #luvoraGiftGame .luvora-game-success h3 {
+    font-size: 27px !important;
+  }
+
+  #luvoraGiftGame .luvora-reward-unlock {
+    max-width: 100% !important;
+    padding: 14px 23px !important;
+    font-size: 14px !important;
+  }
+
+  #luvoraGiftGame .luvora-scratch-area {
+    margin: 22px auto !important;
+    padding: 28px 16px 30px !important;
+    border-radius: 23px !important;
+  }
+
+  #luvoraGiftGame .luvora-scratch-area h2,
+  #luvoraGiftGame .luvora-scratch-area h3 {
+    font-size: 29px !important;
+  }
+
+  #luvoraGiftGame .luvora-scratch-card {
+    max-width: 100% !important;
+    border-radius: 18px !important;
+  }
+
+  #luvoraGiftGame .luvora-scratch-card .luvora-scratch-result {
+    padding: 18px !important;
+    border-radius: 15px !important;
+  }
+
+  #luvoraGiftGame #luvoraScratchRewardText {
+    font-size: 23px !important;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   7. IMPORTANT: PRESERVE HIDDEN ELEMENT BEHAVIOUR
+--------------------------------------------------------- */
+
+#luvoraGiftGame [hidden] {
+  display: none !important;
+}
+
+/* LUVORA — Stack question and instruction vertically */
+
+#luvoraGiftGame .luvora-game-status {
+  white-space: pre-line !important;
+  text-align: center !important;
+  line-height: 1.8 !important;
+}
+
+/* ==========================================
+   LUVORA — ROMANTIC CAMERA SECTION
+========================================== */
+
+.luvora-camera-section,
+.luvora-camera-section * {
+  box-sizing: border-box;
+}
+
+.luvora-camera-section {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+
+  padding: 85px 20px 90px;
+
+  text-align: center;
+
+  background:
+    radial-gradient(
+      ellipse at 50% 35%,
+      rgba(112, 31, 58, 0.16),
+      transparent 65%
+    );
+
+  color: #f8e8ed;
+}
+
+
+/* ==========================================
+   HEADING
+========================================== */
+
+.luvora-camera-heading {
+  position: relative;
+  z-index: 1;
+
+  max-width: 650px;
+  margin: 0 auto 38px;
+}
+
+.luvora-camera-eyebrow {
+  display: block;
+
+  margin-bottom: 14px;
+
+  color: #c987a0;
+
+  font-size: 10px;
+  letter-spacing: 4px;
+  font-weight: 600;
+}
+
+.luvora-camera-heading h2 {
+  margin: 0 0 13px;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(27px, 4vw, 43px);
+  font-weight: 400;
+
+  line-height: 1.25;
+  letter-spacing: -0.5px;
+}
+
+.luvora-camera-heading > p {
+  margin: 0;
+
+  color: #c9a9b5;
+
+  font-family: Georgia, serif;
+  font-size: 15px;
+  font-style: italic;
+  line-height: 1.7;
+}
+
+
+/* ==========================================
+   CAMERA STAGE
+========================================== */
+
+.luvora-camera-stage {
+  position: relative;
+
+  width: min(100%, 540px);
+  aspect-ratio: 1470 / 1070;
+
+  margin: 0 auto;
+
+  isolation: isolate;
+}
+
+
+/* ==========================================
+   PHOTO PRINT
+========================================== */
+
+.luvora-camera-print {
+  position: absolute;
+
+  /*
+    Initial position:
+    Close to the camera's bottom print slot.
+
+    These coordinates are relative to the
+    camera image's complete canvas.
+  */
+
+  left: 50%;
+  top: 75.5%;
+
+  width: 36%;
+
+  transform: translateX(-50%) translateY(-4%);
+
+  opacity: 0;
+  visibility: hidden;
+
+  z-index: 3;
+
+  pointer-events: none;
+}
+
+.luvora-photo-frame {
+  width: 100%;
+
+  padding: 5px 5px 0;
+
+  background: #fffdf9;
+
+  border-radius: 2px 2px 3px 3px;
+
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.20),
+    0 15px 28px rgba(0, 0, 0, 0.22);
+
+  overflow: hidden;
+}
+
+.luvora-photo-frame > img {
+  display: block;
+
+  width: 100%;
+  aspect-ratio: 1 / 1;
+
+  object-fit: cover;
+  object-position: center;
+
+  background: #f3e8eb;
+}
+
+.luvora-photo-caption {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 33px;
+
+  color: #7d314b;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(8px, 1.7vw, 12px);
+  font-style: italic;
+
+  white-space: nowrap;
+}
+
+
+/* ==========================================
+   SLOT COVER
+========================================== */
+
+/*
+  This narrow layer covers the photo where
+  it starts inside the black slot.
+
+  The print emerges from beneath this strip.
+*/
+
+.luvora-camera-slot-cover {
+  position: absolute;
+
+  left: 26%;
+  top: 75.3%;
+
+  width: 48%;
+  height: 5.1%;
+
+  z-index: 4;
+
+  border-radius: 30px;
+
+  background: linear-gradient(
+    to bottom,
+    #151214 0%,
+    #090809 48%,
+    #171215 100%
+  );
+
+  box-shadow:
+    inset 0 2px 3px rgba(0, 0, 0, 0.85),
+    0 1px 2px rgba(255, 255, 255, 0.05);
+
+  pointer-events: none;
+}
+
+
+/* ==========================================
+   CLICKABLE CAMERA
+========================================== */
+
+.luvora-camera-trigger {
+  position: absolute;
+  inset: 0;
+
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  z-index: 5;
+
+  transition:
+    transform 0.35s ease,
+    opacity 0.7s ease,
+    filter 0.2s ease;
+}
+
+.luvora-camera-image {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  user-select: none;
+  -webkit-user-drag: none;
+
+  pointer-events: none;
+}
+
+.luvora-camera-trigger:not(:disabled):hover {
+  filter: brightness(1.05);
+}
+
+.luvora-camera-trigger:not(:disabled):active {
+  transform: scale(0.985);
+}
+
+.luvora-camera-trigger:focus-visible {
+  outline: 2px solid #d99ab0;
+  outline-offset: 5px;
+  border-radius: 12px;
+}
+
+
+/* ==========================================
+   CAMERA CLICK HINT
+========================================== */
+
+.luvora-camera-click-hint {
+  position: absolute;
+
+  left: 50%;
+  top: 65%;
+
+  transform: translateX(-50%);
+
+  padding: 8px 12px;
+
+  color: #fff0f5;
+
+  background: rgba(48, 13, 27, 0.78);
+
+  border: 1px solid rgba(228, 158, 183, 0.42);
+  border-radius: 30px;
+
+  font-family: Arial, sans-serif;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+
+  white-space: nowrap;
+
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+
+  transition: opacity 0.3s ease;
+}
+
+.luvora-camera-trigger:disabled {
+  cursor: default;
+}
+
+
+/* ==========================================
+   CAMERA FLASH
+========================================== */
+
+.luvora-camera-flash {
+  position: absolute;
+  inset: 0;
+
+  z-index: 10;
+
+  background: #fffafc;
+
+  opacity: 0;
+
+  pointer-events: none;
+}
+
+.luvora-camera-flash.is-flashing {
+  animation: luvoraCameraFlash 0.55s ease-out forwards;
+}
+
+@keyframes luvoraCameraFlash {
+  0% {
+    opacity: 0;
+  }
+
+  12% {
+    opacity: 0.98;
+  }
+
+  35% {
+    opacity: 0.8;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+
+/* ==========================================
+   PRINT ANIMATION
+========================================== */
+
+.luvora-camera-print.is-printing {
+  visibility: visible;
+
+  animation: luvoraPhotoPrint 4.8s ease-in-out forwards;
+}
+
+@keyframes luvoraPhotoPrint {
+
+  /* Photo starts hidden inside the slot */
+
+  0% {
+    top: 75.5%;
+
+    opacity: 0;
+
+    transform: translateX(-50%) translateY(-5%);
+  }
+
+  /* First half emerges slowly */
+
+  12% {
+    opacity: 1;
+  }
+
+  45% {
+    top: 84%;
+
+    opacity: 1;
+
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* Remaining photo comes out faster */
+
+  100% {
+    top: 108%;
+
+    opacity: 1;
+
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+
+/* ==========================================
+   CAMERA MOVES AWAY AFTER PRINT
+========================================== */
+
+.luvora-camera-stage.is-camera-moving
+.luvora-camera-trigger {
+  animation: luvoraCameraMoveAway 1.05s ease-in forwards;
+  pointer-events: none;
+}
+
+@keyframes luvoraCameraMoveAway {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-35px) scale(0.96);
+  }
+}
+
+
+/* ==========================================
+   STATUS
+========================================== */
+
+.luvora-camera-status {
+  min-height: 24px;
+
+  margin: 24px auto 0;
+
+  color: #c99aab;
+
+  font-family: Georgia, serif;
+  font-size: 13px;
+  font-style: italic;
+
+  letter-spacing: 0.3px;
+
+  transition: opacity 0.3s ease;
+}
+
+
+/* ==========================================
+   ROMANTIC MESSAGE
+========================================== */
+
+.luvora-romantic-message {
+  width: min(100%, 580px);
+
+  margin: 32px auto 0;
+
+  opacity: 0;
+
+  transform: translateY(12px);
+
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+
+  pointer-events: none;
+}
+
+.luvora-romantic-message.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.luvora-romantic-label {
+  margin: 0 0 17px;
+
+  color: #bc8298;
+
+  font-family: Arial, sans-serif;
+  font-size: 9px;
+  letter-spacing: 3px;
+}
+
+.luvora-romantic-typing {
+  min-height: 100px;
+
+  margin: 0;
+
+  color: #f6e2e9;
+
+  font-family:
+    "Palatino Linotype",
+    "Book Antiqua",
+    Georgia,
+    serif;
+
+  font-size: clamp(18px, 2.8vw, 25px);
+  font-style: italic;
+
+  line-height: 1.8;
+
+  white-space: pre-wrap;
+
+  text-shadow: 0 0 20px rgba(196, 112, 144, 0.12);
+}
+
+
+/* ==========================================
+   SELFIE UPLOAD
+========================================== */
+
+.luvora-selfie-upload {
+  width: min(100%, 520px);
+
+  margin: 50px auto 0;
+  padding: 32px 22px 26px;
+
+  border: 1px solid rgba(194, 120, 147, 0.20);
+  border-radius: 18px;
+
+  background: rgba(100, 29, 54, 0.10);
+
+  transition:
+    border-color 0.3s ease,
+    background 0.3s ease;
+}
+
+.luvora-upload-heart {
+  display: block;
+
+  margin-bottom: 12px;
+
+  color: #d795ac;
+
+  font-size: 30px;
+
+  animation: luvoraHeartPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes luvoraHeartPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.10);
+  }
+}
+
+.luvora-selfie-upload h3 {
+  margin: 0 0 12px;
+
+  color: #f7e6ec;
+
+  font-family: Georgia, serif;
+  font-size: clamp(21px, 3vw, 27px);
+  font-weight: 400;
+
+  line-height: 1.4;
+}
+
+.luvora-upload-description {
+  max-width: 440px;
+
+  margin: 0 auto 23px;
+
+  color: #cdb1bb;
+
+  font-family: Georgia, serif;
+  font-size: 14px;
+  font-style: italic;
+
+  line-height: 1.9;
+}
+
+.luvora-upload-button {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 46px;
+
+  padding: 0 26px;
+
+  color: #fff4f7;
+
+  background: linear-gradient(
+    135deg,
+    #81334e,
+    #592038
+  );
+
+  border: 1px solid rgba(233, 172, 193, 0.38);
+  border-radius: 30px;
+
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.8px;
+
+  cursor: pointer;
+
+  box-shadow: 0 6px 20px rgba(39, 7, 19, 0.20);
+
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.luvora-upload-button:hover {
+  transform: translateY(-2px);
+
+  background: linear-gradient(
+    135deg,
+    #98425f,
+    #71304b
+  );
+
+  box-shadow: 0 9px 25px rgba(39, 7, 19, 0.28);
+}
+
+.luvora-upload-button:focus-within {
+  outline: 2px solid #d99ab0;
+  outline-offset: 4px;
+}
+
+.luvora-upload-optional {
+  margin: 15px 0 0;
+
+  color: #a98795;
+
+  font-family: Georgia, serif;
+  font-size: 11px;
+  font-style: italic;
+}
+
+.luvora-upload-status {
+  min-height: 18px;
+
+  margin: 12px 0 0;
+
+  color: #e4b9ca;
+
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 600px) {
+
+  .luvora-camera-section {
+    padding: 62px 15px 65px;
+  }
+
+  .luvora-camera-heading {
+    margin-bottom: 30px;
+  }
+
+  .luvora-camera-eyebrow {
+    font-size: 9px;
+    letter-spacing: 2.5px;
+  }
+
+  .luvora-camera-heading h2 {
+    font-size: clamp(25px, 7vw, 34px);
+  }
+
+  .luvora-camera-heading > p {
+    font-size: 13px;
+  }
+
+  .luvora-camera-stage {
+    width: 100%;
+    max-width: 430px;
+  }
+
+  .luvora-camera-print {
+    width: 36%;
+  }
+
+  .luvora-camera-click-hint {
+    top: 64%;
+
+    padding: 7px 10px;
+
+    font-size: 8px;
+    letter-spacing: 1px;
+  }
+
+  .luvora-camera-status {
+    margin-top: 17px;
+    font-size: 12px;
+  }
+
+  .luvora-romantic-message {
+    margin-top: 25px;
+  }
+
+  .luvora-romantic-typing {
+    min-height: 120px;
+    line-height: 1.75;
+  }
+
+  .luvora-selfie-upload {
+    margin-top: 35px;
+    padding: 28px 17px 23px;
+  }
+
+  .luvora-upload-description {
+    font-size: 13px;
+  }
+}
+
+
+/* ==========================================
+   REDUCED MOTION ACCESSIBILITY
+========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .luvora-camera-section *,
+  .luvora-camera-section *::before,
+  .luvora-camera-section *::after {
+    scroll-behavior: auto !important;
+  }
+
+}
+
+
+/* ==========================================
+   LUVORA — SLOT EJECTION + CARD REVEAL
+========================================== */
+
+#luvoraCameraSection #luvoraCameraStage {
+  overflow: visible;
+  perspective: 1000px;
+}
+
+/* Camera image stays still until the photo takes over */
+#luvoraCameraSection .luvora-camera-trigger {
+  z-index: 5;
+  opacity: 1;
+  transform: none;
+  animation: none !important;
+  transition: none !important;
+}
+
+/* Flash originates near the camera's actual flash unit */
+#luvoraCameraSection #luvoraCameraFlash {
+  z-index: 12;
+  background: radial-gradient(
+    circle at 70% 26%,
+    #fff 0%,
+    rgba(255,255,255,.96) 1.5%,
+    rgba(255,231,240,.72) 4%,
+    rgba(255,180,208,.24) 9%,
+    transparent 19%
+  );
+  mix-blend-mode: screen;
+  opacity: 0;
+  pointer-events: none;
+}
+
+#luvoraCameraSection #luvoraCameraFlash.is-flashing {
+  animation: luvoraFlashBlast .32s ease-out forwards;
+}
+
+@keyframes luvoraFlashBlast {
+  0%   { opacity: 0; }
+  6%   { opacity: 1; }
+  15%  { opacity: .92; }
+  35%  { opacity: .3; }
+  100% { opacity: 0; }
+}
+
+/* Photo sits ABOVE the camera layer, not underneath it */
+#luvoraCameraSection #luvoraCameraPrint {
+  position: absolute;
+  left: 50%;
+  top: 75.5%;
+  width: 36%;
+
+  z-index: 8;
+  opacity: 0;
+  visibility: hidden;
+
+  transform:
+    translateX(-50%)
+    rotateX(-72deg)
+    rotateZ(0deg);
+
+  transform-origin: 50% 0%;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+
+  clip-path: inset(0 0 100% 0);
+  pointer-events: none;
+  will-change: top, width, transform, clip-path, opacity;
+}
+
+/* Clean white instant-film frame */
+#luvoraCameraSection .luvora-photo-frame {
+  width: 100%;
+  padding: 5px 5px 0;
+  overflow: hidden;
+
+  background: #fffdf9;
+  border-radius: 3px;
+
+  box-shadow:
+    0 3px 8px rgba(0,0,0,.20),
+    0 18px 38px rgba(0,0,0,.25);
+}
+
+#luvoraCameraSection #luvoraCameraImage {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  background: #f4e9ed;
+}
+
+/* Keep the slot rim visible over the emerging paper */
+#luvoraCameraSection .luvora-camera-slot-cover {
+  z-index: 9;
+  pointer-events: none;
+}
+
+/* Phase 1: paper feeds out slowly from the slot.
+   Phase 2: the paper bends forward and drops.
+   Phase 3: the card snaps into the camera's place. */
+#luvoraCameraSection #luvoraCameraPrint.is-printing {
+  visibility: visible;
+  animation: luvoraSlotToCard 4.2s linear forwards;
+}
+
+@keyframes luvoraSlotToCard {
+  /* Hidden inside the mouth */
+  0% {
+    top: 75.5%;
+    width: 36%;
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+    transform:
+      translateX(-50%)
+      rotateX(-72deg)
+      rotateZ(0deg);
+  }
+
+  /* A tiny edge appears */
+  8% {
+    opacity: 1;
+    clip-path: inset(0 0 91% 0);
+    transform:
+      translateX(-50%)
+      rotateX(-55deg)
+      rotateZ(-1deg);
+  }
+
+  /* Slow feed */
+  32% {
+    top: 77%;
+    width: 36%;
+    clip-path: inset(0 0 57% 0);
+    transform:
+      translateX(-50%)
+      rotateX(-30deg)
+      rotateZ(-1.5deg);
+  }
+
+  /* Paper bends forward as more comes out */
+  50% {
+    top: 81%;
+    width: 37%;
+    clip-path: inset(0 0 14% 0);
+    transform:
+      translateX(-50%)
+      rotateX(-12deg)
+      rotateZ(2deg);
+  }
+
+  /* Full print becomes visible below the slot */
+  66% {
+    top: 84%;
+    width: 39%;
+    clip-path: inset(0 0 0 0);
+    transform:
+      translateX(-50%)
+      rotateX(0deg)
+      rotateZ(2.5deg);
+  }
+
+  /* Sudden card reveal: replaces the camera visually */
+  77% {
+    top: 18%;
+    width: 58%;
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+    transform:
+      translateX(-50%)
+      rotateX(0deg)
+      rotateZ(-1.5deg);
+  }
+
+  88% {
+    top: 4%;
+    width: 70%;
+    transform:
+      translateX(-50%)
+      rotateX(0deg)
+      rotateZ(.6deg);
+  }
+
+  100% {
+    top: 3.5%;
+    width: 70%;
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    transform:
+      translateX(-50%)
+      rotateX(0deg)
+      rotateZ(0deg);
+  }
+}
+
+/* Hold the final card in place */
+#luvoraCameraSection #luvoraCameraPrint.is-printed {
+  top: 3.5%;
+  left: 50%;
+  width: 70%;
+  z-index: 11;
+
+  opacity: 1;
+  visibility: visible;
+  clip-path: inset(0 0 0 0);
+
+  transform: translateX(-50%);
+  animation: none;
+}
+
+/* Camera is covered by the card; no fade-out animation */
+#luvoraCameraSection #luvoraCameraStage.is-card-revealed
+.luvora-camera-trigger {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Caption is part of the card */
+#luvoraCameraSection .luvora-photo-caption {
+  min-height: 35px;
+  color: #78334c;
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+}
+
+/* Romantic text now lives inside the Polaroid card */
+#luvoraCameraSection .luvora-photo-frame
+.luvora-romantic-message {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 10px 8px 17px;
+
+  background: #fffdf9;
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+#luvoraCameraSection .luvora-photo-frame
+.luvora-romantic-label {
+  margin: 2px 0 8px;
+  color: #a16a7e;
+  font-size: 8px;
+  letter-spacing: 1.5px;
+}
+
+#luvoraCameraSection .luvora-photo-frame
+.luvora-romantic-typing {
+  min-height: 0;
+  color: #713149;
+  font-family: "Palatino Linotype", Georgia, serif;
+  font-size: clamp(10px, 1.55vw, 15px);
+  font-style: italic;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+/* Upload section remains below the stage */
+#luvoraCameraSection .luvora-selfie-upload {
+  position: relative;
+  z-index: 1;
+}
+
+/* Mobile proportions */
+@media (max-width: 600px) {
+  #luvoraCameraSection #luvoraCameraPrint.is-printed {
+    top: 4%;
+    width: 76%;
+  }
+
+  #luvoraCameraSection .luvora-photo-frame {
+    padding: 4px 4px 0;
+  }
+
+  #luvoraCameraSection .luvora-photo-caption {
+    min-height: 28px;
+  }
+
+  #luvoraCameraSection .luvora-photo-frame
+  .luvora-romantic-message {
+    padding: 7px 6px 11px;
+  }
+
+  #luvoraCameraSection .luvora-photo-frame
+  .luvora-romantic-typing {
+    font-size: 10px;
+    line-height: 1.45;
+  }
+}
+
+
+/* ==========================================
+   LUVORA — FINAL CARD / SLOT / UPLOAD FIX
+========================================== */
+
+/* Reserve space for the taller finished card */
+#luvoraCameraSection #luvoraCameraStage {
+  margin-bottom: 105px;
+}
+
+/* The card must be the topmost layer after printing */
+#luvoraCameraSection #luvoraCameraPrint.is-printed {
+  z-index: 30 !important;
+}
+
+/* Never leave the black slot cover over the finished card */
+#luvoraCameraSection #luvoraCameraStage.is-card-revealed
+.luvora-camera-slot-cover {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* Hide the complete camera, including its black slot,
+   after the card takes its place */
+#luvoraCameraSection #luvoraCameraStage.is-card-revealed
+.luvora-camera-trigger {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Keep romantic text inside the card, below the photo */
+#luvoraCameraSection #luvoraCameraPrint .luvora-romantic-message {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 10px 9px 16px;
+  overflow: visible;
+  background: #fffdf9;
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  pointer-events: auto;
+}
+
+/* Upload section is completely absent at first */
+#luvoraCameraSection .luvora-selfie-upload {
+  display: none;
+  width: min(100%, 460px);
+  margin: 0 auto;
+  padding: 22px 18px 18px;
+  border-radius: 15px;
+  opacity: 0;
+  transform: translateY(22px) scale(.98);
+}
+
+/* Added only after the entire message has finished typing */
+#luvoraCameraSection .luvora-selfie-upload.is-upload-revealed {
+  display: block;
+  animation: luvoraUploadReveal .85s cubic-bezier(.2,.7,.2,1) forwards;
+}
+
+@keyframes luvoraUploadReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(22px) scale(.98);
+  }
+  65% {
+    opacity: 1;
+    transform: translateY(-3px) scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Compact typography and spacing */
+#luvoraCameraSection .luvora-selfie-upload .luvora-upload-heart {
+  margin-bottom: 6px;
+  font-size: 24px;
+}
+
+#luvoraCameraSection .luvora-selfie-upload h3 {
+  margin-bottom: 8px;
+  font-size: clamp(19px, 2.5vw, 23px);
+}
+
+#luvoraCameraSection .luvora-selfie-upload .luvora-upload-description {
+  margin-bottom: 15px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+#luvoraCameraSection .luvora-selfie-upload .luvora-upload-button {
+  min-height: 40px;
+  padding: 0 21px;
+}
+
+#luvoraCameraSection .luvora-selfie-upload .luvora-upload-optional {
+  margin-top: 10px;
+}
+
+@media (max-width: 600px) {
+  #luvoraCameraSection #luvoraCameraStage {
+    margin-bottom: 85px;
+  }
+
+  #luvoraCameraSection .luvora-selfie-upload {
+    padding: 19px 14px 16px;
+  }
+
+  #luvoraCameraSection .luvora-selfie-upload h3 {
+    font-size: 19px;
+  }
+
+  #luvoraCameraSection .luvora-selfie-upload .luvora-upload-description {
+    font-size: 12px;
+  }
+}
+
+
+/* ==========================================
+   LUVORA — REMOVE EXTRA PRINT MOUTH
+   AND MOVE UPLOAD SECTION LOWER
+========================================== */
+
+/* Remove the artificial black slot overlay.
+   Keep the original slot inside camera.png. */
+#luvoraCameraSection .luvora-camera-slot-cover {
+  display: none !important;
+}
+
+/* Keep the actual camera image behind the print */
+#luvoraCameraSection .luvora-camera-trigger {
+  z-index: 5;
+}
+
+/* Photo card remains in front when fully printed */
+#luvoraCameraSection #luvoraCameraPrint.is-printed {
+  z-index: 30 !important;
+}
+
+/* Give the finished photo card more breathing room */
+#luvoraCameraSection #luvoraCameraStage {
+  margin-bottom: 155px;
+}
+
+/* Move the upload section further down */
+#luvoraCameraSection .luvora-selfie-upload {
+  margin-top: 45px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Preserve the extra space on smaller screens too */
+@media (max-width: 600px) {
+  #luvoraCameraSection #luvoraCameraStage {
+    margin-bottom: 125px;
+  }
+
+  #luvoraCameraSection .luvora-selfie-upload {
+    margin-top: 35px;
+  }
+}
+
+/* LUVORA — Couple Image with Ambient Light */
+
+.luvora-couple-image-wrap {
+  position: relative;
+  width: min(90%, 420px);
+  aspect-ratio: 3 / 2;
+  margin: 22px auto;
+  border-radius: 18px;
+  isolation: isolate;
+}
+
+
+.luvora-couple-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: 18px;
+  position: relative;
+}
