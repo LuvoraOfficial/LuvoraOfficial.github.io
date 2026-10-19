@@ -843,6 +843,17 @@
        
       </div>
 
+
+  <div class="luvora-couple-image-wrap">
+  <img
+    src="assets/images/couple.png"
+    alt="A little surprise for my love"
+    class="luvora-couple-image"
+  />
+</div>
+
+     
+
       <div class="hero-decoration">
 
         <div class="floating-star star-one">✦</div>
@@ -992,6 +1003,153 @@
       </div>
 
     </section>
+
+
+<!-- ==========================================
+     LUVORA — ROMANTIC INSTANT CAMERA
+========================================== -->
+
+<section id="luvoraCameraSection" class="luvora-camera-section">
+
+  <div class="luvora-camera-heading">
+    <span class="luvora-camera-eyebrow">A LITTLE MOMENT OF LOVE</span>
+
+    <h2>One Click, One Beautiful Memory</h2>
+
+    <p>Some moments deserve to stay forever.</p>
+  </div>
+
+
+  <!-- CAMERA STAGE -->
+
+  <div class="luvora-camera-stage" id="luvoraCameraStage">
+
+    <!-- Flash -->
+
+    <div class="luvora-camera-flash" id="luvoraCameraFlash"></div>
+
+
+    <!-- Printed Photograph -->
+
+    <div class="luvora-camera-print" id="luvoraCameraPrint">
+
+      <div class="luvora-photo-frame">
+
+        <img
+          id="luvoraCameraImage"
+          src="assets/images/selfie.png"
+          alt="Our beautiful memory"
+        >
+
+        <div class="luvora-photo-caption">
+          <span>our little forever ♡</span>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Slot Cover: hides the photo inside the slot initially -->
+
+    <div class="luvora-camera-slot-cover"></div>
+
+
+    <!-- Clickable Camera -->
+
+    <button
+      type="button"
+      class="luvora-camera-trigger"
+      id="luvoraPrintButton"
+      aria-label="Click the camera to print your memory"
+    >
+
+      <img
+        src="assets/images/camera.png"
+        alt="Romantic instant camera"
+        class="luvora-camera-image"
+      >
+
+      <span class="luvora-camera-click-hint" id="luvoraCameraHint">
+        CLICK TO CAPTURE ♡
+      </span>
+
+    </button>
+
+  </div>
+
+
+  <!-- Status -->
+
+  <p
+    class="luvora-camera-status"
+    id="luvoraCameraStatus"
+    aria-live="polite"
+  >
+    Your little love story is waiting...
+  </p>
+
+
+  <!-- Romantic Message -->
+
+  <div
+    class="luvora-romantic-message"
+    id="luvoraRomanticMessage"
+    aria-live="polite"
+  >
+
+    <p class="luvora-romantic-label">A NOTE FROM THE HEART</p>
+
+    <p
+      class="luvora-romantic-typing"
+      id="luvoraRomanticTyping"
+    ></p>
+
+  </div>
+
+
+  <!-- Selfie Upload -->
+
+  <div class="luvora-selfie-upload">
+
+    <span class="luvora-upload-heart">♡</span>
+
+    <h3>Make This Moment Even More Special</h3>
+
+    <p class="luvora-upload-description">
+      Add your own couple selfie and let your partner feel
+      as if you're right there beside them, sharing a little
+      moment of love.
+    </p>
+
+    <label
+      for="luvoraSelfieInput"
+      class="luvora-upload-button"
+      id="luvoraUploadButton"
+    >
+      Add Our Selfie
+    </label>
+
+    <input
+      type="file"
+      id="luvoraSelfieInput"
+      accept="image/jpeg,image/png,image/webp"
+      hidden
+    >
+
+    <p class="luvora-upload-optional">
+      Optional — your moment, your choice.
+    </p>
+
+    <p
+      class="luvora-upload-status"
+      id="luvoraUploadStatus"
+      aria-live="polite"
+    ></p>
+
+  </div>
+
+</section>
 
 
 
@@ -1684,6 +1842,284 @@
 
     </section>
 
+<!-- =========================================================
+     LUVORA — THE MYSTERY GIFT GAME
+     Replace the complete previous Mystery Gift section
+========================================================= -->
+
+<section
+  class="birthday-section luvora-gift-game"
+  id="luvoraGiftGame"
+  aria-labelledby="luvoraGameTitle"
+>
+  <div class="luvora-game-inner">
+
+    <!-- GAME HEADING -->
+
+    <header class="luvora-game-heading">
+      <span class="luvora-game-eyebrow">
+        A LITTLE EXTRA SURPRISE
+      </span>
+
+      <h2 id="luvoraGameTitle">
+        The Mystery <span>Gift</span> 🎁
+      </h2>
+
+      <p class="luvora-game-description">
+        Three gifts. Three hidden treasures.
+        Watch carefully and find the right one!
+      </p>
+    </header>
+
+
+    <!-- GAME INSTRUCTION / QUESTION -->
+
+    <div
+      class="luvora-game-status"
+      id="luvoraGameStatus"
+      aria-live="polite"
+      aria-atomic="true"
+    >
+      <span
+        class="luvora-status-icon"
+        id="luvoraStatusIcon"
+        aria-hidden="true"
+      >✨</span>
+
+      <p id="luvoraGameInstruction">
+        Take a look inside each gift before the magic begins.
+      </p>
+    </div>
+
+
+    <!-- GIFT BOX STAGE
+         Symbols remain inside their original gift elements.
+         JavaScript will move the boxes, not the symbols. -->
+
+    <div
+      class="luvora-gift-stage"
+      id="luvoraGiftStage"
+      data-game-state="preview"
+      aria-label="Three mystery gift boxes"
+    >
+
+      <!-- GIFT A -->
+
+      <button
+        class="luvora-gift-card"
+        id="luvoraGiftA"
+        type="button"
+        data-gift-id="A"
+        aria-label="Mystery gift containing a hidden symbol"
+        aria-pressed="false"
+      >
+        <span class="luvora-gift-card-inner">
+
+          <!-- Gift lid -->
+
+          <span class="luvora-gift-lid" aria-hidden="true">
+            <span class="luvora-gift-lid-ribbon"></span>
+            <span class="luvora-gift-lid-bow"></span>
+          </span>
+
+          <!-- Gift body -->
+
+          <span class="luvora-gift-box-body" aria-hidden="true">
+            <span class="luvora-gift-ribbon-vertical"></span>
+            <span class="luvora-gift-ribbon-horizontal"></span>
+
+            <span class="luvora-gift-symbol">❤️</span>
+          </span>
+
+          <!-- Decorative base -->
+
+          <span class="luvora-gift-box-base" aria-hidden="true"></span>
+
+        </span>
+      </button>
+
+
+      <!-- GIFT B -->
+
+      <button
+        class="luvora-gift-card"
+        id="luvoraGiftB"
+        type="button"
+        data-gift-id="B"
+        aria-label="Mystery gift containing a hidden symbol"
+        aria-pressed="false"
+      >
+        <span class="luvora-gift-card-inner">
+
+          <span class="luvora-gift-lid" aria-hidden="true">
+            <span class="luvora-gift-lid-ribbon"></span>
+            <span class="luvora-gift-lid-bow"></span>
+          </span>
+
+          <span class="luvora-gift-box-body" aria-hidden="true">
+            <span class="luvora-gift-ribbon-vertical"></span>
+            <span class="luvora-gift-ribbon-horizontal"></span>
+
+            <span class="luvora-gift-symbol">🌹</span>
+          </span>
+
+          <span class="luvora-gift-box-base" aria-hidden="true"></span>
+
+        </span>
+      </button>
+
+
+      <!-- GIFT C -->
+
+      <button
+        class="luvora-gift-card"
+        id="luvoraGiftC"
+        type="button"
+        data-gift-id="C"
+        aria-label="Mystery gift containing a hidden symbol"
+        aria-pressed="false"
+      >
+        <span class="luvora-gift-card-inner">
+
+          <span class="luvora-gift-lid" aria-hidden="true">
+            <span class="luvora-gift-lid-ribbon"></span>
+            <span class="luvora-gift-lid-bow"></span>
+          </span>
+
+          <span class="luvora-gift-box-body" aria-hidden="true">
+            <span class="luvora-gift-ribbon-vertical"></span>
+            <span class="luvora-gift-ribbon-horizontal"></span>
+
+            <span class="luvora-gift-symbol">💎</span>
+          </span>
+
+          <span class="luvora-gift-box-base" aria-hidden="true"></span>
+
+        </span>
+      </button>
+
+    </div>
+
+
+    <!-- MIX / START ACTION -->
+
+    <div class="luvora-game-actions" id="luvoraGameActions">
+
+      <button
+        class="luvora-game-start"
+        id="luvoraGameStart"
+        type="button"
+      >
+        <span class="luvora-game-start-label">MIX THE GIFTS</span>
+        <span class="luvora-game-start-icon" aria-hidden="true">✦</span>
+      </button>
+
+      <p class="luvora-game-hint" id="luvoraGameHint">
+        Remember the symbols. Then follow the gifts!
+      </p>
+
+    </div>
+
+
+    <!-- WRONG ANSWER / TRY AGAIN -->
+
+    <div
+      class="luvora-game-retry"
+      id="luvoraGameRetry"
+      role="status"
+      aria-live="polite"
+      hidden
+    >
+      <span aria-hidden="true">💫</span>
+
+      <p id="luvoraGameRetryText">
+        Try Again!
+      </p>
+    </div>
+
+
+    <!-- CORRECT ANSWER -->
+
+    <div
+      class="luvora-game-success"
+      id="luvoraGameSuccess"
+      hidden
+      aria-live="polite"
+    >
+      <span
+        class="luvora-success-icon"
+        aria-hidden="true"
+      >🎉</span>
+
+      <h3>You Found the Right Gift!</h3>
+
+      <p>
+        Your special birthday reward is waiting for you.
+      </p>
+
+      <button
+        class="luvora-reward-unlock"
+        id="luvoraRewardUnlock"
+        type="button"
+      >
+        <span>Reveal Your Reward</span>
+        <span aria-hidden="true">♡</span>
+      </button>
+    </div>
+
+
+    <!-- SCRATCH CARD REWARD
+         JavaScript can place this inside the same gift stage. -->
+
+    <div
+      class="luvora-scratch-area"
+      id="luvoraScratchArea"
+      hidden
+    >
+      <span class="luvora-scratch-eyebrow">
+        A LITTLE GIFT FROM YOUR SPECIAL SOMEONE
+      </span>
+
+      <h3>Your Birthday Reward 💝</h3>
+
+      <p>Scratch away to reveal your surprise!</p>
+
+      <div
+        class="luvora-scratch-card"
+        id="luvoraScratchCard"
+        role="group"
+        aria-label="Birthday scratch card"
+      >
+        <div
+          class="luvora-scratch-cover"
+          id="luvoraScratchCover"
+        >
+          <span aria-hidden="true">🎁</span>
+
+          <strong>SCRATCH TO REVEAL</strong>
+        </div>
+
+        <div
+          class="luvora-scratch-result"
+          id="luvoraScratchResult"
+          aria-live="polite"
+          hidden
+        >
+          <span aria-hidden="true">💖</span>
+
+          <p id="luvoraScratchRewardText">
+            A special surprise awaits you!
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- =========================================================
+     END — LUVORA MYSTERY GIFT GAME
+========================================================= -->
 
 
     <!-- =======================================================
