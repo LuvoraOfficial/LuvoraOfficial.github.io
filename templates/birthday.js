@@ -3754,3 +3754,1535 @@ window.setTimeout(function () {
     setupSavedDetails();
   }
 })();
+
+/* =========================================================
+   LUVORA — MYSTERY GIFT GAME + SCRATCH REVEAL
+   Replace only the previous Mystery Gift module.
+   ========================================================= */
+
+(function initLuvoraMysteryGift() {
+  "use strict";
+
+  const ROOT_ID = "luvoraGiftGame";
+
+  const GAME_IDS = {
+    start: "luvoraGameStart",
+    status: "luvoraGameStatus",
+    success: "luvoraGameSuccess",
+    unlock: "luvoraRewardUnlock",
+    retry: "luvoraGameRetry",
+    retryText: "luvoraGameRetryText",
+    scratchArea: "luvoraScratchArea",
+    scratchCard: "luvoraScratchCard",
+    scratchCover: "luvoraScratchCover",
+    scratchResult: "luvoraScratchResult",
+    rewardText: "luvoraScratchRewardText",
+    boxes: [
+      "luvoraGiftA",
+      "luvoraGiftB",
+      "luvoraGiftC"
+    ]
+  };
+
+  const SYMBOLS = ["❤️", "🌹", "💎"];
+  const SHUFFLE_DURATION = 700;
+  const SHUFFLE_ROUNDS = 2;
+  const RETRY_DELAY = 1100;
+
+/* -----------------------------------------
+   QUESTION CYCLE — AVOID IMMEDIATE REPEATS
+----------------------------------------- */
+
+let questionPool = [];
+let lastTargetSymbol = null;
+
+function getNextTargetSymbol() {
+  if (questionPool.length === 0) {
+    questionPool = SYMBOLS.slice();
+
+for (let i = questionPool.length - 1; i > 0; i--) {
+  const j = Math.floor(Math.random() * (i + 1));
+
+  [questionPool[i], questionPool[j]] =
+    [questionPool[j], questionPool[i]];
+}
+
+    /*
+     * Avoid repeating the previous question
+     * when a new question cycle begins.
+     */
+    if (
+      questionPool.length > 1 &&
+      questionPool[0] === lastTargetSymbol
+    ) {
+      [
+        questionPool[0],
+        questionPool[1]
+      ] = [
+        questionPool[1],
+        questionPool[0]
+      ];
+    }
+  }
+
+  const nextSymbol = questionPool.shift();
+
+  lastTargetSymbol = nextSymbol;
+
+  return nextSymbol;
+}
+
+
+  function onReady(callback) {
+    if (document.readyState === "loading") {
+      document.addEventListener(
+        "DOMContentLoaded",
+        callback,
+        { once: true }
+      );
+    } else {
+      callback();
+    }
+  }
+
+  function getRewardText() {
+    if (
+      typeof BIRTHDAY_CONFIG !== "undefined" &&
+      BIRTHDAY_CONFIG.reward
+    ) {
+      return String(BIRTHDAY_CONFIG.reward).trim();
+    }
+
+    if (window.LUVORA_REWARD) {
+      return String(window.LUVORA_REWARD).trim();
+    }
+
+    try {
+      const sources = [
+        window.sessionStorage,
+        window.localStorage
+      ];
+
+      for (const storage of sources) {
+        const raw = storage.getItem("luvoraSurpriseData");
+
+        if (!raw) continue;
+
+        const data = JSON.parse(raw);
+
+        const reward =
+          data.reward ||
+          data.customerReward ||
+          data.mysteryGiftReward;
+
+        if (
+          typeof reward === "string" &&
+          reward.trim()
+        ) {
+          return reward.trim();
+        }
+      }
+    } catch (error) {
+      console.warn(
+        "Luvora reward data could not be read.",
+        error
+      );
+    }
+
+    return "Tonight’s dinner is on me, my love✨";
+  }
+
+  function init() {
+    const root = document.getElementById(ROOT_ID);
+
+    if (
+      !root ||
+      root.dataset.luvoraMysteryGiftReady === "true"
+    ) {
+      return;
+    }
+
+    const startButton =
+      document.getElementById(GAME_IDS.start);
+
+    const status =
+      document.getElementById(GAME_IDS.status);
+
+    const success =
+      document.getElementById(GAME_IDS.success);
+
+    const unlockButton =
+      document.getElementById(GAME_IDS.unlock);
+
+    const retryPanel =
+      document.getElementById(GAME_IDS.retry);
+
+    const retryText =
+      document.getElementById(GAME_IDS.retryText);
+
+    const scratchArea =
+      document.getElementById(GAME_IDS.scratchArea);
+
+    const scratchCard =
+      document.getElementById(GAME_IDS.scratchCard);
+
+    let scratchCover =
+      document.getElementById(GAME_IDS.scratchCover);
+
+    const scratchResult =
+      document.getElementById(GAME_IDS.scratchResult);
+
+    const rewardText =
+      document.getElementById(GAME_IDS.rewardText);
+
+    const boxes = GAME_IDS.boxes.map(function (id) {
+      return document.getElementById(id);
+    });
+
+    if (
+      !startButton ||
+      !status ||
+      !scratchArea ||
+      boxes.some(function (box) {
+        return !box;
+      })
+    ) {
+      console.warn(
+        "Luvora Mystery Gift: required HTML elements are missing."
+      );
+      return;
+    }
+
+    const boxStage =
+      root.querySelector(
+        ".luvora-gift-stage, " +
+        ".luvora-game-stage, " +
+        ".luvora-gift-play-area"
+      ) || boxes[0].parentElement;
+
+    if (!boxStage) return;
+
+    root.dataset.luvoraMysteryGiftReady = "true";
+
+    const originalScratchParent =
+      scratchArea.parentElement;
+
+    const originalScratchNext =
+      scratchArea.nextSibling;
+
+    let targetBox = null;
+    let targetSymbol = "❤️";
+
+    let roundLocked = true;
+    let scratchInitialized = false;
+
+    let roundTimer = null;
+    let shuffleTimer = null;
+    let consecutiveWrongAnswers = 0;
+    let questionChosenEarly = false;
+
+    let scratchCanvas = null;
+
+    /* -----------------------------------------
+       COMMON HELPERS
+    ----------------------------------------- */
+
+    function setVisible(element, visible) {
+      if (!element) return;
+
+      element.hidden = !visible;
+
+      element.setAttribute(
+        "aria-hidden",
+        String(!visible)
+      );
+    }
+
+    function setStatus(message, state) {
+      status.textContent = message;
+
+      status.dataset.state = state || "info";
+
+      status.setAttribute("role", "status");
+
+      status.setAttribute("aria-live", "polite");
+    }
+
+    function clearTimers() {
+      if (roundTimer !== null) {
+        window.clearTimeout(roundTimer);
+        roundTimer = null;
+      }
+
+      if (shuffleTimer !== null) {
+        window.clearTimeout(shuffleTimer);
+        shuffleTimer = null;
+      }
+    }
+
+    function shuffleArray(items) {
+      const result = items.slice();
+
+      for (let i = result.length - 1; i > 0; i--) {
+        const j = Math.floor(
+          Math.random() * (i + 1)
+        );
+
+        [result[i], result[j]] =
+          [result[j], result[i]];
+      }
+
+      return result;
+    }
+
+    function setBoxSymbol(box, symbolValue) {
+      box.dataset.symbol = symbolValue;
+
+      let symbol = box.querySelector(
+        ".luvora-gift-symbol"
+      );
+
+      if (!symbol) {
+        symbol = document.createElement("span");
+
+        symbol.className = "luvora-gift-symbol";
+
+        box.appendChild(symbol);
+      }
+
+      symbol.textContent = symbolValue;
+
+      symbol.setAttribute("aria-hidden", "true");
+    }
+
+    function resetBoxVisuals() {
+      boxes.forEach(function (box) {
+        box.disabled = true;
+
+        box.classList.remove(
+          "is-correct",
+          "is-wrong",
+          "is-shuffling",
+          "is-selected",
+          "is-closed"
+        );
+
+        box.removeAttribute("aria-pressed");
+
+        box.style.removeProperty("transform");
+
+        box.style.removeProperty("transition");
+      });
+
+      boxStage.dataset.gameState = "preview";
+    }
+
+    /* -----------------------------------------
+       START / RESET A ROUND
+    ----------------------------------------- */
+
+    function beginRound(isRestart) {
+      clearTimers();
+
+      roundLocked = true;
+
+      targetBox = null;
+
+      targetSymbol = "❤️";
+
+      setVisible(success, false);
+
+      if (success) {
+        success.classList.remove("is-unlocked");
+      }
+
+      setVisible(scratchArea, false);
+
+      setVisible(startButton, true);
+
+      setVisible(status, true);
+
+      setVisible(retryPanel, false);
+
+      setVisible(boxStage, true);
+
+      boxes.forEach(function (box) {
+        setVisible(box, true);
+      });
+
+      resetBoxVisuals();
+
+      /*
+       * Randomly place the three symbols inside
+       * the three existing physical gift boxes.
+       */
+      const symbolOrder = shuffleArray(SYMBOLS);
+
+      boxes.forEach(function (box, index) {
+        setBoxSymbol(box, symbolOrder[index]);
+      });
+
+      startButton.disabled = false;
+
+      startButton.textContent = "MIX THE GIFTS";
+
+      startButton.setAttribute(
+        "aria-label",
+        "Mix the gifts"
+      );
+
+      /*
+       * IMPORTANT:
+       * Unlock the start button for this round.
+       * Box clicks remain disabled until the shuffle ends.
+       */
+      roundLocked = false;
+      /*
+       * After three consecutive wrong answers,
+       * show the question before the next shuffle.
+       */
+    if (consecutiveWrongAnswers >= 3) {
+  questionChosenEarly = true;
+
+  targetSymbol = getNextTargetSymbol();
+
+        targetBox =
+          boxes.find(function (box) {
+            return box.dataset.symbol === targetSymbol;
+          }) || boxes[0];
+
+        let question;
+
+        if (targetSymbol === "❤️") {
+          question = "Where is the Love? ❤️";
+        } else if (targetSymbol === "🌹") {
+          question = "Where is the Rose? 🌹";
+        } else {
+          question = "Where is the Diamond? 💎";
+        }
+
+        startButton.textContent = "START SHUFFLE";
+
+        startButton.setAttribute(
+          "aria-label",
+          "Start gift shuffle"
+        );
+
+        setStatus(
+  question + "\nRead carefully. Shuffle starts in 5 seconds!",
+  "ready"
+);
+
+        startButton.disabled = true;
+
+        roundLocked = true;
+
+        roundTimer = window.setTimeout(function () {
+          if (
+            boxStage.dataset.gameState !== "preview"
+          ) {
+            return;
+          }
+
+       startButton.disabled = false;
+
+roundLocked = false;
+
+mixGifts();
+        }, 5000);
+
+      } else {
+        setStatus(
+          isRestart
+            ? "Try Again! Look at the symbols, then mix the gifts."
+            : "Look closely at the three symbols, then mix the gifts.",
+          isRestart ? "retry" : "ready"
+        );
+      }
+      }
+
+
+    /* -----------------------------------------
+       PHYSICAL GIFT BOX SHUFFLE
+    ----------------------------------------- */
+
+    function mixGifts() {
+      if (
+        roundLocked ||
+        boxStage.dataset.gameState !== "preview"
+      ) {
+        return;
+      }
+
+      roundLocked = true;
+
+      startButton.disabled = true;
+
+      setVisible(startButton, false);
+
+      setVisible(retryPanel, false);
+
+    /*
+     * Choose the next target without repeating
+     * a question until the question pool is exhausted.
+     */
+
+   if (!questionChosenEarly) {
+  targetSymbol = getNextTargetSymbol();
+}
+
+questionChosenEarly = false;
+
+targetBox =
+  boxes.find(function (box) {
+    return box.dataset.symbol === targetSymbol;
+  }) || boxes[0];
+
+      /*
+       * Close the lids and hide the symbols.
+       */
+      boxStage.dataset.gameState = "mixing";
+
+      boxes.forEach(function (box) {
+        box.disabled = true;
+
+        box.classList.add(
+          "is-closed",
+          "is-shuffling"
+        );
+      });
+
+      setStatus(
+        "Mixing the gifts… watch carefully!",
+        "mixing"
+      );
+
+      /*
+       * DOUBLE SHUFFLE — two consecutive movements
+       */
+
+      function performShuffle(remainingRounds) {
+        if (remainingRounds <= 0) {
+          boxes.forEach(function (box) {
+            box.classList.remove("is-shuffling");
+            box.style.removeProperty("transform");
+            box.style.removeProperty("transition");
+            box.disabled = false;
+            box.setAttribute("aria-pressed", "false");
+          });
+
+          boxStage.dataset.gameState = "guess";
+
+          let question;
+
+          if (targetSymbol === "❤️") {
+            question = "Where is the Love? ❤️";
+          } else if (targetSymbol === "🌹") {
+            question = "Where is the Rose? 🌹";
+          } else {
+            question = "Where is the Diamond? 💎";
+          }
+
+          setStatus(question, "guess");
+          roundLocked = false;
+          return;
+        }
+
+        const originalPositions = new Map();
+
+        boxes.forEach(function (box) {
+          originalPositions.set(
+            box,
+            box.getBoundingClientRect()
+          );
+        });
+
+        const currentOrder = boxes.slice().sort(function (a, b) {
+          const ra = originalPositions.get(a);
+          const rb = originalPositions.get(b);
+
+          if (Math.abs(ra.top - rb.top) > 2) {
+            return ra.top - rb.top;
+          }
+
+          return ra.left - rb.left;
+        });
+
+        let newOrder = shuffleArray(currentOrder);
+
+        if (
+          newOrder.every(function (box, index) {
+            return box === currentOrder[index];
+          })
+        ) {
+          newOrder = [
+            currentOrder[1],
+            currentOrder[2],
+            currentOrder[0]
+          ];
+        }
+
+        newOrder.forEach(function (box) {
+          boxStage.appendChild(box);
+        });
+
+        const offsets = new Map();
+
+        boxes.forEach(function (box) {
+          const first = originalPositions.get(box);
+          const last = box.getBoundingClientRect();
+
+          offsets.set(box, {
+            x: first.left - last.left,
+            y: first.top - last.top
+          });
+        });
+
+        boxes.forEach(function (box) {
+          const offset = offsets.get(box);
+
+          box.style.transition = "none";
+
+          box.style.transform =
+            "translate(" +
+            offset.x +
+            "px, " +
+            offset.y +
+            "px)";
+        });
+
+        void boxStage.offsetWidth;
+
+        window.requestAnimationFrame(function () {
+          boxes.forEach(function (box) {
+            box.style.transition =
+              "transform " +
+              SHUFFLE_DURATION +
+              "ms cubic-bezier(.22,.75,.25,1)";
+
+            box.style.transform = "translate(0, 0)";
+          });
+        });
+
+        shuffleTimer = window.setTimeout(function () {
+          boxes.forEach(function (box) {
+            box.style.removeProperty("transform");
+            box.style.removeProperty("transition");
+          });
+
+          performShuffle(remainingRounds - 1);
+        }, SHUFFLE_DURATION + 50);
+      }
+
+      performShuffle(SHUFFLE_ROUNDS);
+      }
+
+    /* -----------------------------------------
+       CORRECT ANSWER
+    ----------------------------------------- */
+
+   function revealWin(chosenBox) {
+  consecutiveWrongAnswers = 0;
+
+  roundLocked = true;
+
+      boxes.forEach(function (box) {
+        box.disabled = true;
+
+        box.classList.remove(
+          "is-wrong",
+          "is-selected"
+        );
+
+        if (box === chosenBox) {
+          box.classList.add(
+            "is-correct",
+            "is-selected"
+          );
+
+          box.classList.remove("is-closed");
+        }
+      });
+
+      boxStage.dataset.gameState = "won";
+
+      if (targetSymbol === "❤️") {
+        setStatus(
+          "You found the Love! Your mystery gift is waiting. 💝",
+          "won"
+        );
+      } else if (targetSymbol === "🌹") {
+        setStatus(
+          "You found the Rose! Your mystery gift is waiting. 💝",
+          "won"
+        );
+      } else {
+        setStatus(
+          "You found the Diamond! Your mystery gift is waiting. 💝",
+          "won"
+        );
+      }
+
+      setVisible(success, true);
+
+      if (success) {
+        success.classList.add("is-unlocked");
+      }
+
+      if (unlockButton) {
+        setVisible(unlockButton, true);
+      }
+    }
+
+    /* -----------------------------------------
+       SCRATCH CARD
+    ----------------------------------------- */
+
+    function prepareScratchInSameSpot() {
+      if (!scratchCard) return;
+
+      if (scratchArea.parentElement !== boxStage) {
+        boxStage.appendChild(scratchArea);
+      }
+
+      setVisible(boxStage, true);
+
+      boxes.forEach(function (box) {
+        setVisible(box, false);
+      });
+
+      setVisible(startButton, false);
+
+      setVisible(status, false);
+
+      setVisible(success, false);
+
+      setVisible(retryPanel, false);
+
+      setVisible(scratchArea, true);
+
+      if (scratchResult) {
+        setVisible(scratchResult, false);
+      }
+
+      if (rewardText) {
+        rewardText.textContent = getRewardText();
+      }
+
+      setupScratchSurface();
+    }
+
+    function setupScratchSurface() {
+      if (scratchInitialized || !scratchCard) {
+        return;
+      }
+
+      scratchInitialized = true;
+
+      /*
+       * Reuse the existing canvas if one exists.
+       */
+      scratchCover =
+        document.getElementById(GAME_IDS.scratchCover);
+
+      let canvas = scratchCover;
+
+      if (!(canvas instanceof HTMLCanvasElement)) {
+        canvas = document.createElement("canvas");
+
+        canvas.id = GAME_IDS.scratchCover;
+
+        canvas.className = "luvora-scratch-canvas";
+
+        scratchCard.appendChild(canvas);
+      }
+
+      scratchCanvas = canvas;
+
+      canvas.setAttribute(
+        "aria-label",
+        "Scratch here to reveal your mystery gift"
+      );
+
+      canvas.setAttribute("role", "button");
+
+      canvas.setAttribute("tabindex", "0");
+
+      const context = canvas.getContext("2d");
+
+      if (!context) {
+        canvas.style.display = "none";
+
+        if (scratchResult) {
+          setVisible(scratchResult, true);
+        }
+
+        return;
+      }
+
+      let isScratching = false;
+      let revealed = false;
+      let lastPoint = null;
+      let scratchCount = 0;
+
+      const brushSize = 28;
+
+      function sizeCanvas() {
+        const rect = scratchCard.getBoundingClientRect();
+
+        const width = Math.max(
+          240,
+          Math.round(rect.width || 320)
+        );
+
+        const height = Math.max(
+          140,
+          Math.round(rect.height || 190)
+        );
+
+        const dpr = Math.max(
+          1,
+          Math.min(2, window.devicePixelRatio || 1)
+        );
+
+        canvas.width = Math.round(width * dpr);
+
+        canvas.height = Math.round(height * dpr);
+
+        canvas.style.width = "100%";
+
+        canvas.style.height = "100%";
+
+        canvas.style.position = "absolute";
+
+        canvas.style.inset = "0";
+
+        canvas.style.touchAction = "none";
+
+        context.setTransform(
+          dpr,
+          0,
+          0,
+          dpr,
+          0,
+          0
+        );
+
+        const gradient = context.createLinearGradient(
+          0,
+          0,
+          width,
+          height
+        );
+
+        gradient.addColorStop(0, "#f8dbe7");
+
+        gradient.addColorStop(0.48, "#dca7bf");
+
+        gradient.addColorStop(1, "#f4d5a1");
+
+        context.globalCompositeOperation = "source-over";
+
+        context.fillStyle = gradient;
+
+        context.fillRect(
+          0,
+          0,
+          width,
+          height
+        );
+
+        context.fillStyle = "rgba(86, 32, 61, .82)";
+
+        context.font = "600 16px system-ui, sans-serif";
+
+        context.textAlign = "center";
+
+        context.textBaseline = "middle";
+
+        context.fillText(
+          "SCRATCH TO REVEAL",
+          width / 2,
+          height / 2
+        );
+
+        context.globalCompositeOperation = "destination-out";
+
+        scratchCount = 0;
+      }
+
+      function getPoint(event) {
+        const rect = canvas.getBoundingClientRect();
+
+        return {
+          x: event.clientX - rect.left,
+          y: event.clientY - rect.top
+        };
+      }
+
+      function scratchTo(point) {
+        if (!lastPoint) {
+          lastPoint = point;
+        }
+
+        context.beginPath();
+
+        context.lineCap = "round";
+
+        context.lineJoin = "round";
+
+        context.lineWidth = brushSize;
+
+        context.moveTo(
+          lastPoint.x,
+          lastPoint.y
+        );
+
+        context.lineTo(
+          point.x,
+          point.y
+        );
+
+        context.stroke();
+
+        context.beginPath();
+
+        context.arc(
+          point.x,
+          point.y,
+          brushSize / 2,
+          0,
+          Math.PI * 2
+        );
+
+        context.fill();
+
+        lastPoint = point;
+
+        scratchCount++;
+
+        if (scratchCount % 7 === 0) {
+          checkRevealProgress();
+        }
+      }
+
+      function checkRevealProgress() {
+        if (revealed) return;
+
+        try {
+          const pixels = context.getImageData(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+          ).data;
+
+          let transparent = 0;
+
+          const stride = 4 * 12;
+
+          for (
+            let i = 3;
+            i < pixels.length;
+            i += stride
+          ) {
+            if (pixels[i] < 80) {
+              transparent++;
+            }
+          }
+
+          const sampledPixels = Math.ceil(
+            pixels.length / stride
+          );
+
+          if (
+            transparent / sampledPixels > 0.34
+          ) {
+            revealScratch();
+          }
+        } catch (error) {
+          if (scratchCount > 55) {
+            revealScratch();
+          }
+        }
+      }
+
+      function revealScratch() {
+        if (revealed) return;
+
+        revealed = true;
+
+        canvas.style.transition = "opacity .35s ease";
+
+        canvas.style.opacity = "0";
+
+        window.setTimeout(function () {
+          canvas.style.display = "none";
+
+          if (scratchResult) {
+            setVisible(scratchResult, true);
+          }
+
+          scratchArea.classList.add("is-revealed");
+
+        }, 360);
+      }
+
+      canvas.addEventListener(
+        "pointerdown",
+        function (event) {
+          if (revealed) return;
+
+          isScratching = true;
+
+          lastPoint = getPoint(event);
+
+          try {
+            canvas.setPointerCapture(event.pointerId);
+          } catch (error) {}
+
+          scratchTo(lastPoint);
+
+          event.preventDefault();
+        }
+      );
+
+      canvas.addEventListener(
+        "pointermove",
+        function (event) {
+          if (!isScratching || revealed) return;
+
+          scratchTo(getPoint(event));
+
+          event.preventDefault();
+        }
+      );
+
+      function stopScratch() {
+        isScratching = false;
+        lastPoint = null;
+      }
+
+      canvas.addEventListener("pointerup", stopScratch);
+
+      canvas.addEventListener("pointercancel", stopScratch);
+
+      canvas.addEventListener("pointerleave", stopScratch);
+
+      canvas.addEventListener(
+        "keydown",
+        function (event) {
+          if (
+            (event.key === "Enter" || event.key === " ") &&
+            !revealed
+          ) {
+            event.preventDefault();
+            revealScratch();
+          }
+        }
+      );
+
+      window.addEventListener(
+        "resize",
+        function () {
+          if (
+            !revealed &&
+            canvas.style.display !== "none"
+          ) {
+            sizeCanvas();
+          }
+        }
+      );
+
+      scratchCard.style.position = "relative";
+
+      scratchCard.style.overflow = "hidden";
+
+      sizeCanvas();
+    }
+
+    /* -----------------------------------------
+       GIFT BOX CLICK HANDLERS
+    ----------------------------------------- */
+
+    boxes.forEach(function (box) {
+      box.addEventListener("click", function () {
+        if (
+          roundLocked ||
+          box.disabled ||
+          boxStage.dataset.gameState !== "guess"
+        ) {
+          return;
+        }
+
+        if (box === targetBox) {
+          revealWin(box);
+          return;
+        }
+
+        /*
+         * Wrong answer:
+         * show Try Again, then start a fresh round.
+         */
+
+        consecutiveWrongAnswers++;
+        roundLocked = true;
+
+        box.disabled = true;
+
+        box.classList.add("is-wrong");
+
+        setStatus(
+          "Not this one — Try Again!",
+          "wrong"
+        );
+
+        if (retryText) {
+          retryText.textContent = "Try Again!";
+        }
+
+        setVisible(retryPanel, Boolean(retryPanel));
+
+        roundTimer = window.setTimeout(
+          function () {
+            beginRound(true);
+          },
+          RETRY_DELAY
+        );
+      });
+
+      box.setAttribute(
+        "aria-label",
+        "Mystery gift box"
+      );
+
+      box.setAttribute(
+        "aria-pressed",
+        "false"
+      );
+    });
+
+    /* -----------------------------------------
+       BUTTON HANDLERS
+    ----------------------------------------- */
+
+    startButton.addEventListener(
+      "click",
+      mixGifts
+    );
+
+    if (unlockButton) {
+      unlockButton.addEventListener(
+        "click",
+        function (event) {
+          event.preventDefault();
+
+          if (boxStage.dataset.gameState !== "won") {
+            return;
+          }
+
+          prepareScratchInSameSpot();
+        }
+      );
+    }
+
+    const directScratchTrigger = root.querySelector(
+      "[data-luvora-reveal-reward]"
+    );
+
+    if (directScratchTrigger) {
+      directScratchTrigger.addEventListener(
+        "click",
+        function (event) {
+          event.preventDefault();
+
+          if (boxStage.dataset.gameState !== "won") {
+            return;
+          }
+
+          prepareScratchInSameSpot();
+        }
+      );
+    }
+
+    /* -----------------------------------------
+       RESET EVENT
+    ----------------------------------------- */
+
+    root.addEventListener(
+      "luvora:mysterygift:reset",
+      function () {
+        clearTimers();
+
+        if (
+          originalScratchParent &&
+          scratchArea.parentElement !== originalScratchParent
+        ) {
+          if (
+            originalScratchNext &&
+            originalScratchNext.parentNode === originalScratchParent
+          ) {
+            originalScratchParent.insertBefore(
+              scratchArea,
+              originalScratchNext
+            );
+          } else {
+            originalScratchParent.appendChild(scratchArea);
+          }
+        }
+
+        /*
+         * Remove only the scratch canvas created by this module.
+         * Keep all existing page and birthday elements untouched.
+         */
+        if (scratchCanvas && scratchCanvas.isConnected) {
+          scratchCanvas.remove();
+        }
+
+        scratchCanvas = null;
+
+        scratchInitialized = false;
+
+        scratchCover =
+          document.getElementById(GAME_IDS.scratchCover);
+
+        scratchArea.classList.remove("is-revealed");
+
+        setVisible(scratchArea, false);
+
+        beginRound(false);
+      }
+    );
+
+    /* -----------------------------------------
+       INITIAL STATE
+    ----------------------------------------- */
+
+    setVisible(scratchArea, false);
+
+    setVisible(success, false);
+
+    setVisible(retryPanel, false);
+
+    beginRound(false);
+  }
+
+  onReady(init);
+
+})();
+
+
+/* ================================================
+   LUVORA — SLOT PRINT TO ROMANTIC PHOTO CARD
+================================================ */
+
+(function () {
+  "use strict";
+
+  const section = document.getElementById("luvoraCameraSection");
+  if (!section || section.dataset.cameraV3 === "ready") return;
+  section.dataset.cameraV3 = "ready";
+
+  const get = (id) => section.querySelector("#" + id);
+
+  const stage = get("luvoraCameraStage");
+  const button = get("luvoraPrintButton");
+  const flash = get("luvoraCameraFlash");
+  const print = get("luvoraCameraPrint");
+  const photo = get("luvoraCameraImage");
+  const status = get("luvoraCameraStatus");
+  const hint = get("luvoraCameraHint");
+  const message = get("luvoraRomanticMessage");
+  const typing = get("luvoraRomanticTyping");
+  const input = get("luvoraSelfieInput");
+  const uploadStatus = get("luvoraUploadStatus");
+  const uploadButton = get("luvoraUploadButton");
+  const uploadSection = section.querySelector(".luvora-selfie-upload");
+
+  if (
+    !stage || !button || !flash || !print || !photo ||
+    !status || !hint || !message || !typing ||
+    !input || !uploadStatus || !uploadButton
+  ) {
+    console.error("LUVORA Camera: Missing required HTML elements.");
+    return;
+  }
+
+  const cameraImage = button.querySelector(".luvora-camera-image");
+  const photoFrame = print.querySelector(".luvora-photo-frame");
+  const caption = print.querySelector(".luvora-photo-caption");
+
+  const DEFAULT_SELFIE = "assets/images/selfie.png";
+
+  const LOVE_MESSAGE =
+    "If I could keep one moment forever, it would be the one where I'm close to you. You make ordinary moments feel like a beautiful love story.";
+
+  let uploadedURL = null;
+  let printing = false;
+  let printed = false;
+  let typingTimer = null;
+  let flashTimer = null;
+  let revealTimer = null;
+
+  /*
+    Put the romantic message INSIDE the Polaroid card,
+    beneath the photograph and caption.
+  */
+  if (photoFrame && message.parentElement !== photoFrame) {
+    photoFrame.appendChild(message);
+  }
+
+  function stopTimers() {
+    clearTimeout(typingTimer);
+    clearTimeout(flashTimer);
+    clearTimeout(revealTimer);
+
+    typingTimer = null;
+    flashTimer = null;
+    revealTimer = null;
+  }
+
+
+function typeLoveMessage(onComplete) {
+  clearTimeout(typingTimer);
+  typing.textContent = "";
+
+  const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  if (reducedMotion) {
+    typing.textContent = LOVE_MESSAGE;
+    if (typeof onComplete === "function") onComplete();
+    return;
+  }
+
+  let index = 0;
+
+  function next() {
+    if (index >= LOVE_MESSAGE.length) {
+      typingTimer = null;
+
+      // Reveal upload only after every character is typed.
+      if (typeof onComplete === "function") {
+        onComplete();
+      }
+
+      return;
+    }
+
+    const character = LOVE_MESSAGE[index++];
+    typing.textContent += character;
+
+    let delay = 32;
+    if (character === ",") delay = 170;
+    if (character === ".") delay = 300;
+
+    typingTimer = setTimeout(next, delay);
+  }
+
+  next();
+}  function restartFlash() {
+    flash.classList.remove("is-flashing");
+    void flash.offsetWidth;
+    flash.classList.add("is-flashing");
+  }
+
+  function resetCamera() {
+    if (uploadSection) {
+       uploadSection.classList.remove("is-upload-revealed");
+       }
+    stopTimers();
+
+    printing = false;
+    printed = false;
+
+    stage.classList.remove("is-card-revealed");
+
+    button.disabled = false;
+    button.style.removeProperty("opacity");
+    button.style.removeProperty("visibility");
+    button.style.removeProperty("pointer-events");
+
+    hint.style.opacity = "1";
+
+    print.classList.remove("is-printing", "is-printed");
+
+    [
+      "top", "width", "opacity", "visibility",
+      "transform", "z-index", "animation", "clip-path"
+    ].forEach(function (property) {
+      print.style.removeProperty(property);
+    });
+
+    flash.classList.remove("is-flashing");
+
+    typing.textContent = "";
+    status.textContent = "Your little love story is waiting...";
+  }
+
+  async function printMemory() {
+    if (printing || printed) return;
+
+    printing = true;
+    printed = true;
+    button.disabled = true;
+    hint.style.opacity = "0";
+
+    const selectedPhoto = uploadedURL || DEFAULT_SELFIE;
+
+    status.textContent = "Capturing your little moment...";
+
+    try {
+      // Confirm that the selected image is actually available.
+      await new Promise(function (resolve, reject) {
+        const testImage = new Image();
+        testImage.onload = resolve;
+        testImage.onerror = reject;
+        testImage.src = selectedPhoto;
+      });
+    } catch (error) {
+      console.error("LUVORA photo loading error:", error);
+
+      status.textContent =
+        "Couldn't load the photo. Please check the image path.";
+
+      printing = false;
+      printed = false;
+      button.disabled = false;
+      hint.style.opacity = "1";
+      return;
+    }
+
+    // Do not continue if the camera was reset while loading.
+    if (!printing || !printed) return;
+
+    photo.src = selectedPhoto;
+    photo.alt = uploadedURL
+      ? "Your uploaded couple selfie"
+      : "Our beautiful memory";
+
+    // Instant flash burst, then the print starts.
+    restartFlash();
+
+    flashTimer = setTimeout(function () {
+      if (!printing) return;
+
+      print.classList.remove("is-printed");
+      print.classList.add("is-printing");
+
+      status.textContent = "Your photograph is coming to life...";
+
+    }, 100);
+
+    // CSS print animation runs for 4.2 seconds.
+    revealTimer = setTimeout(function () {
+      if (!printing) return;
+
+      print.classList.remove("is-printing");
+      print.classList.add("is-printed");
+
+      // The card takes over the camera's position.
+      // The camera is covered, not faded away.
+      stage.classList.add("is-card-revealed");
+
+      status.textContent = "A little piece of forever ♡";
+
+      // Begin typing after the card reveal.
+      
+setTimeout(function () {
+  if (!printed) return;
+
+  typeLoveMessage(function () {
+    if (!printed || !uploadSection) return;
+
+    uploadSection.classList.add("is-upload-revealed");
+  });
+
+  status.textContent =
+    "Some moments deserve to stay forever.";
+
+  printing = false;
+}, 250);
+
+     
+      revealTimer = null;
+
+    }, 4300);
+  }
+
+  button.addEventListener("click", function () {
+    if (printing || printed) return;
+    printMemory();
+  });
+
+  input.addEventListener("change", async function () {
+    const file = input.files && input.files[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      uploadStatus.textContent = "Please choose an image file.";
+      input.value = "";
+      return;
+    }
+
+    if (file.size > 12 * 1024 * 1024) {
+      uploadStatus.textContent =
+        "Please choose an image smaller than 12 MB.";
+      input.value = "";
+      return;
+    }
+
+    uploadButton.style.pointerEvents = "none";
+    uploadButton.style.opacity = ".6";
+    uploadStatus.textContent = "Preparing your photograph...";
+
+    const newURL = URL.createObjectURL(file);
+
+    try {
+      await new Promise(function (resolve, reject) {
+        const testImage = new Image();
+        testImage.onload = resolve;
+        testImage.onerror = reject;
+        testImage.src = newURL;
+      });
+
+      if (uploadedURL) URL.revokeObjectURL(uploadedURL);
+      uploadedURL = newURL;
+
+      // Upload resets the camera for the next single click.
+      resetCamera();
+
+      uploadStatus.textContent =
+        "Your selfie is ready! Click the camera to print it ♡";
+
+      status.textContent = "Your own memory is ready to print.";
+
+    // Jump directly back to the camera section after upload.
+section.scrollIntoView({
+  behavior: "instant",
+  block: "start"
+});
+
+    } catch (error) {
+      URL.revokeObjectURL(newURL);
+
+      uploadStatus.textContent =
+        "Couldn't read that photo. Please try another image.";
+
+    } finally {
+      uploadButton.style.pointerEvents = "";
+      uploadButton.style.opacity = "";
+      input.value = "";
+    }
+  });
+
+  if (cameraImage) {
+    cameraImage.addEventListener("error", function () {
+      status.textContent = "Check assets/images/camera.png";
+    });
+  }
+
+  resetCamera();
+
+})();
