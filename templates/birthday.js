@@ -560,32 +560,270 @@ balloons.forEach((balloon, index) => {
 
 });
 
-
 /* =========================================================
-   06 — ENVELOPE / LOVE LETTER
+   LUVORA — ROYAL LOVE LETTER
+   Typing Animation + Personal Editor + Auto Font Size
    ========================================================= */
 
-if (loveEnvelope) {
+const letterMessage = document.getElementById("letterMessage");
+const editLetterButton = document.getElementById("editLetterButton");
+const letterEditor = document.getElementById("letterEditor");
+const letterMessageInput = document.getElementById("letterMessageInput");
+const saveLetterButton = document.getElementById("saveLetterButton");
+const cancelLetterButton = document.getElementById("cancelLetterButton");
 
-  loveEnvelope.addEventListener(
-    "click",
-    () => {
+const LUVORA_LETTER_STORAGE_KEY = "luvora_personal_love_letter_v1";
 
-      const isOpen =
-        loveEnvelope.classList.contains("open");
+let letterTypingTimer = null;
+let letterTypingStarted = false;
+let letterTypingCancelled = false;
 
-      if (!isOpen) {
 
-        loveEnvelope.classList.add("open");
+/* ---------------------------------------------------------
+   1. GET CURRENT LETTER TEXT
+--------------------------------------------------------- */
 
-        createFloatingHearts(8);
+function getLetterText() {
+  if (!letterMessage) return "";
 
-      }
-
-    }
-  );
-
+  return Array.from(letterMessage.querySelectorAll("p"))
+    .map(function (paragraph) {
+      return paragraph.textContent.trim();
+    })
+    .filter(Boolean)
+    .join("\n\n");
 }
+
+
+/* ---------------------------------------------------------
+   2. AUTOMATIC FONT SIZE
+--------------------------------------------------------- */
+
+function adjustLetterFontSize() {
+  if (!letterMessage) return;
+
+  const text = getLetterText();
+  const wordCount = text.trim()
+    ? text.trim().split(/\s+/).length
+    : 0;
+
+  let fontSize;
+
+  if (wordCount > 180) {
+    fontSize = 12;
+  } else if (wordCount > 130) {
+    fontSize = 13;
+  } else if (wordCount > 85) {
+    fontSize = 14;
+  } else if (wordCount > 45) {
+    fontSize = 15;
+  } else {
+    fontSize = 16;
+  }
+
+  const paragraphs = letterMessage.querySelectorAll("p");
+
+  paragraphs.forEach(function (paragraph) {
+    paragraph.style.setProperty(
+      "font-size",
+      `clamp(${Math.max(12, fontSize - 1)}px, ${fontSize}px, ${fontSize}px)`,
+      "important"
+    );
+
+    paragraph.style.setProperty(
+      "line-height",
+      "1.65",
+      "important"
+    );
+  });
+}
+
+
+/* ---------------------------------------------------------
+   3. DISPLAY LETTER TEXT
+--------------------------------------------------------- */
+
+function renderLetterText(text, shouldAnimate) {
+  if (!letterMessage) return;
+
+  letterTypingCancelled = true;
+
+  if (letterTypingTimer) {
+    clearTimeout(letterTypingTimer);
+    letterTypingTimer = null;
+  }
+
+  const paragraphs = text
+    .split(/\n\s*\n/)
+    .map(function (paragraph) {
+      return paragraph.trim();
+    })
+    .filter(Boolean);
+
+  letterMessage.replaceChildren();
+
+  paragraphs.forEach(function (paragraphText) {
+    const paragraph = document.createElement("p");
+    paragraph.textContent = shouldAnimate ? "" : paragraphText;
+    paragraph.dataset.fullText = paragraphText;
+
+    letterMessage.appendChild(paragraph);
+  });
+
+  adjustLetterFontSize();
+
+  if (!shouldAnimate) return;
+
+  letterTypingCancelled = false;
+
+  let paragraphIndex = 0;
+  let characterIndex = 0;
+
+  const paragraphElements = letterMessage.querySelectorAll("p");
+
+  function typeNextCharacter() {
+    if (letterTypingCancelled) return;
+
+    if (paragraphIndex >= paragraphElements.length) {
+      letterTypingTimer = null;
+      adjustLetterFontSize();
+      return;
+    }
+
+    const paragraph = paragraphElements[paragraphIndex];
+    const fullText = paragraph.dataset.fullText;
+
+    if (characterIndex < fullText.length) {
+      paragraph.textContent += fullText.charAt(characterIndex);
+      characterIndex++;
+
+      letterTypingTimer = setTimeout(typeNextCharacter, 13);
+    } else {
+      paragraphIndex++;
+      characterIndex = 0;
+
+      letterTypingTimer = setTimeout(typeNextCharacter, 180);
+    }
+  }
+
+  typeNextCharacter();
+}
+
+
+/* ---------------------------------------------------------
+   4. RESTORE SAVED PERSONAL LETTER
+--------------------------------------------------------- */
+
+function restorePersonalLetter() {
+  try {
+    const savedLetter = localStorage.getItem(
+      LUVORA_LETTER_STORAGE_KEY
+    );
+
+    if (savedLetter && savedLetter.trim()) {
+      renderLetterText(savedLetter, false);
+    }
+  } catch (error) {
+    console.warn("LUVORA letter could not be restored.", error);
+  }
+}
+
+restorePersonalLetter();
+
+
+/* ---------------------------------------------------------
+   5. OPEN ENVELOPE + START TYPING
+--------------------------------------------------------- */
+
+if (loveEnvelope) {
+  loveEnvelope.addEventListener("click", function (event) {
+    // Do not toggle the envelope when clicking its contents.
+    if (event.target.closest("a, input, textarea, select, label")) {
+      return;
+    }
+
+    const isOpen = loveEnvelope.classList.contains("open");
+
+    if (!isOpen) {
+      loveEnvelope.classList.add("open");
+
+      createFloatingHearts(8);
+
+      if (!letterTypingStarted && letterMessage) {
+        letterTypingStarted = true;
+
+        const currentText = getLetterText();
+
+        if (currentText) {
+          renderLetterText(currentText, true);
+        }
+      }
+    }
+  });
+}
+
+
+/* ---------------------------------------------------------
+   6. EDIT LETTER
+--------------------------------------------------------- */
+
+if (editLetterButton && letterEditor && letterMessageInput) {
+  editLetterButton.addEventListener("click", function () {
+    letterMessageInput.value = getLetterText();
+    letterEditor.hidden = false;
+    letterMessageInput.focus();
+  });
+}
+
+
+/* ---------------------------------------------------------
+   7. SAVE PERSONAL LETTER
+--------------------------------------------------------- */
+
+if (saveLetterButton && letterMessageInput) {
+  saveLetterButton.addEventListener("click", function () {
+    const newText = letterMessageInput.value.trim();
+
+    if (!newText) {
+      alert("Please write something for your letter first.");
+      letterMessageInput.focus();
+      return;
+    }
+
+    letterTypingCancelled = true;
+
+    if (letterTypingTimer) {
+      clearTimeout(letterTypingTimer);
+      letterTypingTimer = null;
+    }
+
+    renderLetterText(newText, false);
+    letterTypingStarted = true;
+
+    try {
+      localStorage.setItem(
+        LUVORA_LETTER_STORAGE_KEY,
+        newText
+      );
+    } catch (error) {
+      console.warn("LUVORA could not save this letter.", error);
+    }
+
+    letterEditor.hidden = true;
+  });
+}
+
+
+/* ---------------------------------------------------------
+   8. CANCEL EDITING
+--------------------------------------------------------- */
+
+if (cancelLetterButton && letterEditor) {
+  cancelLetterButton.addEventListener("click", function () {
+    letterEditor.hidden = true;
+  });
+}
+
 
 /* =========================================================
    07 — MEMORY BOOK
