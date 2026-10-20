@@ -1207,26 +1207,27 @@
                 </strong>,
               </p>
 
-              <p>
-                Some people enter our lives and somehow
-                ordinary moments start feeling extraordinary.
-              </p>
+             
+<div class="letter-message" id="letterMessage">
+  <p>
+    Some people enter our lives and somehow
+    ordinary moments start feeling extraordinary.
+  </p>
 
-              <p>
-                You are one of those people.
-              </p>
+  <p>You are one of those people.</p>
 
-              <p>
-                On your birthday, I hope you remember
-                just how loved, appreciated and special
-                you truly are.
-              </p>
+  <p>
+    On your birthday, I hope you remember
+    just how loved, appreciated and special
+    you truly are.
+  </p>
 
-              <p>
-                Keep smiling.
-                Keep dreaming.
-                Keep being beautifully you.
-              </p>
+  <p>
+    Keep smiling.
+    Keep dreaming.
+    Keep being beautifully you.
+  </p>
+</div>
 
               <div class="letter-signature">
 
@@ -1251,6 +1252,35 @@
           </div>
 
         </button>
+
+
+<div class="letter-edit-tools">
+  <button type="button" id="editLetterButton">
+    ✎ Edit Letter
+  </button>
+</div>
+
+<div class="letter-editor" id="letterEditor" hidden>
+  <label for="letterMessageInput">
+    Write your own feelings
+  </label>
+
+  <textarea
+    id="letterMessageInput"
+    rows="7"
+    placeholder="Write your heart out..."
+  ></textarea>
+
+  <div class="letter-editor-actions">
+    <button type="button" id="saveLetterButton">
+      Save Letter
+    </button>
+
+    <button type="button" id="cancelLetterButton">
+      Cancel
+    </button>
+  </div>
+</div>
 
 
         <p class="envelope-hint">
@@ -2146,7 +2176,7 @@
         </span>
 
         <h2>
-          Happy Birthday,
+          Happy Birthday once again!
           <br>
 
           <span id="finalBirthdayName">
@@ -2645,5 +2675,33 @@
   }
 })();
 </script>
+
+<!-- LUVORA Birthday Background Music -->
+
+<audio
+id="luvoraBirthdayMusic"
+src="assets/music/birthdaytune.mp3"
+loop
+preload="auto"
+
+> </audio>
+
+<!-- Floating Music Mute Button -->
+
+<button
+id="luvoraMusicToggle"
+type="button"
+aria-label="Mute birthday music"
+aria-pressed="false"
+title="Mute music"
+
+>
+
+🔊 </button>
+
+
+
+
+
 </body>
 </html>
