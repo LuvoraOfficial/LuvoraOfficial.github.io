@@ -13589,3 +13589,85 @@ html body #giftExperience + section {
   }
 })();
 
+/* ==========================================
+LUVORA — CUTE BALLOON & CAMERA SOUNDS
+No external audio files required
+========================================== */
+
+const luvoraSoundContext = window.AudioContext
+? new AudioContext()
+: window.webkitAudioContext
+? new webkitAudioContext()
+: null;
+
+/* 🎈 Cute Balloon Pop Sound */
+
+function playLuvoraBalloonPop() {
+if (!luvoraSoundContext) return;
+
+const ctx = luvoraSoundContext;
+
+if (ctx.state === "suspended") {
+ctx.resume();
+}
+
+const now = ctx.currentTime;
+
+// Soft, cute pop
+const oscillator = ctx.createOscillator();
+const gain = ctx.createGain();
+
+oscillator.type = "sine";
+
+oscillator.frequency.setValueAtTime(700, now);
+oscillator.frequency.exponentialRampToValueAtTime(
+180,
+now + 0.12
+);
+
+gain.gain.setValueAtTime(0.0001, now);
+gain.gain.exponentialRampToValueAtTime(0.32, now + 0.012);
+gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.16);
+
+oscillator.connect(gain);
+gain.connect(ctx.destination);
+
+oscillator.start(now);
+oscillator.stop(now + 0.17);
+}
+
+/* 📸 Instant Camera Shutter Click */
+
+function playLuvoraCameraClick() {
+if (!luvoraSoundContext) return;
+
+const ctx = luvoraSoundContext;
+
+if (ctx.state === "suspended") {
+ctx.resume();
+}
+
+const now = ctx.currentTime;
+
+// Short mechanical shutter click
+const oscillator = ctx.createOscillator();
+const gain = ctx.createGain();
+
+oscillator.type = "triangle";
+
+oscillator.frequency.setValueAtTime(1500, now);
+oscillator.frequency.exponentialRampToValueAtTime(
+420,
+now + 0.045
+);
+
+gain.gain.setValueAtTime(0.0001, now);
+gain.gain.exponentialRampToValueAtTime(0.28, now + 0.004);
+gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.07);
+
+oscillator.connect(gain);
+gain.connect(ctx.destination);
+
+oscillator.start(now);
+oscillator.stop(now + 0.075);
+}
