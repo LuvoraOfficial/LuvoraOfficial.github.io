@@ -2,424 +2,500 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Luvora — Turn Moments Into Memories. Create beautiful digital surprises for the people you love.">
+  <title>Luvora — Turn Moments Into Memories</title>
 
-  <meta
-    name="description"
-    content="A beautiful personalized birthday surprise filled with memories, love and little magical moments."
+<link rel="canonical" href="https://LuvoraOfficial.github.io/">
+
+<meta property="og:title" content="Luvora — Turn Moments Into Memories">
+<meta property="og:description" content="Create beautiful personalized digital surprises for the people you love.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://LuvoraOfficial.github.io/">
+
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+  <link rel="stylesheet" href="css/home.css">
+  <script src="assets/js/site-config.js"></script>
+</head>
+<body>
+
+ 
+<header class="site-header">
+  <a href="#" class="brand" aria-label="Luvora Home">
+    <img
+      class="brand-logo"
+      src="assets/icons/luvora-logo.svg"
+      alt="Luvora"
+      data-site-brand
+    >
+  </a>
+
+  <nav class="nav" id="mainNav" aria-label="Main navigation">
+    <a href="#occasions">Occasions</a>
+    <a href="#templates">Templates</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#help">Help</a>
+  </nav>
+
+  <a href="templates.html" class="header-btn">
+    Create a Surprise <span>♡</span>
+  </a>
+
+  <button
+    class="menu-toggle"
+    id="menuToggle"
+    type="button"
+    aria-label="Open menu"
+    aria-expanded="false"
+    aria-controls="mainNav"
   >
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</header>
 
-  <title>Birthday Story — Luvora</title>
+  <main>
 
-  <link
-    rel="icon"
-    type="image/svg+xml"
-    href="assets/icons/favicon.svg"
-  >
+    <section class="hero">
+      <div class="hero-noise" aria-hidden="true"></div>
 
-  <!-- Birthday page stylesheet -->
-  <link rel="stylesheet" href="css/birthday.css">
+      <div class="hero-copy reveal">
+        <div class="eyebrow"><span class="eyebrow-line"></span> A little surprise. A lot of love.</div>
+        <h1>Make someone<br><em>feel loved.</em></h1>
+        <p>
+          Turn your memories, words and little moments into a beautiful
+          digital surprise they'll want to keep forever.
+        </p>
 
-<style>
-/* ===== LUVORA BIRTHDAY OVERLAY FIX ===== */
+        <div class="hero-actions">
+          <a href="templates.html" class="primary-btn">Create Your Surprise <span>→</span></a>
+          <a href="#how-it-works" class="text-btn">Discover the Magic <span>↗</span></a>
+        </div>
+      </div>
 
-#luvoraBirthdayOverlay {
-  overflow-x: hidden;
-  overflow-y: auto;
-  background:
-    radial-gradient(ellipse at 50% 20%, #791d40, transparent 65%),
-    linear-gradient(145deg, #270710, #4a0e1f, #21050d);
-  color: #f1e8db;
-  font-family: "Playfair Display", Georgia, serif;
-}
-/* =========================================
-   LUVORA — PREMIUM ROMANTIC TYPOGRAPHY
-   Calendar, arrow and game remain untouched
-========================================= */
+      <div class="hero-stage reveal" aria-label="Romantic Luvora keepsake composition">
+        <div class="hero-art">
+          <!-- The reference composition already contains its own note cards/text. Nothing is overlaid here. -->
+          <img
+            class="hero-reference"
+            src="assets/images/heroimage.png"
+            alt="Romantic letter, rose, ribbon and memory photograph arrangement"
+            fetchpriority="high">
+          <div class="petal-layer" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
 
-/* Small, elegant birthday heading */
-#luvoraBirthdayOverlay .birthday-overlay-title {
-  color: #f7e9dc;
-  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
-  font-size: clamp(25px, 3.5vw, 39px);
-  font-weight: 600;
-  line-height: 1.15;
-  letter-spacing: clamp(1.5px, 0.35vw, 4px);
-  text-align: center;
-  text-shadow: none;
-  margin: 8px auto 2px;
-}
+    <section class="marquee">
+      <div class="marquee-track">
+        <span>YOUR STORY</span><b>✦</b><span>YOUR MEMORIES</span><b>✦</b>
+        <span>YOUR LOVE</span><b>✦</b><span>YOUR MOMENT</span><b>✦</b>
+        <span>YOUR STORY</span><b>✦</b><span>YOUR MEMORIES</span><b>✦</b>
+        <span>YOUR LOVE</span><b>✦</b><span>YOUR MOMENT</span><b>✦</b>
+      </div>
+    </section>
 
-/* Premium name — luminous, not glowing */
-#luvoraBirthdayOverlay #overlayBirthdayName {
-  position: relative;
-  display: table;
-  max-width: 94%;
-  margin: 4px auto 10px;
-  padding: 0 8px;
+    <section class="section occasions" id="occasions">
+  <div class="section-heading split-heading">
+    <div>
+      <div class="eyebrow">Choose your moment</div>
+      <h2>Every occasion has<br><em>a story.</em></h2>
+    </div>
+    <p>Some moments deserve more than a message. Give yours a story worth remembering.</p>
+  </div>
 
-  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
-  font-size: clamp(42px, 6.2vw, 68px);
-  font-weight: 600;
-  font-style: italic;
-  line-height: 1.16;
-  letter-spacing: -0.8px;
-  text-align: center;
-  overflow-wrap: anywhere;
+  <div class="occasion-grid">
 
-  color: #f2c3d1;
-  background: linear-gradient(
-    105deg,
-    #d99aaf 0%,
-    #fff0df 22%,
-    #e8b4c7 42%,
-    #fff8e9 52%,
-    #d99aaf 72%,
-    #f5d9df 100%
-  );
-  background-size: 220% 100%;
-  background-position: 100% 50%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+    <button class="occasion-card occasion-cover birthday"
+      data-occasion="birthday" type="button">
+      <img src="assets/images/birthday-bloom.jpg"
+        alt="Birthday celebration" class="occasion-cover-img">
+      <span class="occasion-number">01 · BIRTHDAY</span>
+      <span class="occasion-cover-content">
+        <span class="occasion-cover-title">Birthday Bloom</span>
+        <span class="occasion-cover-subtitle">A day made just for you.</span>
+      </span>
+      <span class="occasion-cover-arrow">↗</span>
+    </button>
 
-  /* Remove the old heavy glow */
-  text-shadow: none;
-  animation: luvoraNameShine 6s ease-in-out infinite;
-}
+    <button class="occasion-card occasion-cover anniversary"
+      data-occasion="anniversary" type="button">
+      <img src="assets/images/our-forever.jpg"
+        alt="Romantic anniversary" class="occasion-cover-img">
+      <span class="occasion-number">02 · ANNIVERSARY</span>
+      <span class="occasion-cover-content">
+        <span class="occasion-cover-title">Our Forever</span>
+        <span class="occasion-cover-subtitle">Still choosing you.</span>
+      </span>
+      <span class="occasion-cover-arrow">↗</span>
+    </button>
 
-/* Slow, refined shine across the name */
-@keyframes luvoraNameShine {
-  0%, 15% {
-    background-position: 100% 50%;
+    <button class="occasion-card occasion-cover valentines"
+      data-occasion="valentine" type="button">
+      <img src="assets/images/love-notes.jpg"
+        alt="Valentine's Day roses and love letter" class="occasion-cover-img">
+      <span class="occasion-number">03 · VALENTINE'S</span>
+      <span class="occasion-cover-content">
+        <span class="occasion-cover-title">Love Notes</span>
+        <span class="occasion-cover-subtitle">A little more love.</span>
+      </span>
+      <span class="occasion-cover-arrow">↗</span>
+    </button>
+
+    <button class="occasion-card occasion-cover justbecause"
+      data-occasion="justbecause" type="button">
+      <img src="assets/images/little-reasons.jpg"
+        alt="A little romantic surprise" class="occasion-cover-img">
+      <span class="occasion-number">04 · JUST BECAUSE</span>
+      <span class="occasion-cover-content">
+        <span class="occasion-cover-title">Little Reasons</span>
+        <span class="occasion-cover-subtitle">Just because, always.</span>
+      </span>
+      <span class="occasion-cover-arrow">↗</span>
+    </button>
+
+  </div>
+</section>
+
+<!-- OCCASION STORY POPUP -->
+<div class="occasion-modal" id="occasionModal"
+  aria-hidden="true" role="dialog" aria-modal="true"
+  aria-labelledby="occasionModalTitle">
+
+  <div class="occasion-modal-backdrop" data-close-occasion></div>
+
+  <div class="occasion-modal-box">
+    <button class="occasion-modal-close" type="button"
+      aria-label="Close" data-close-occasion>×</button>
+
+    <button class="occasion-language" id="occasionLanguage"
+      type="button">বাংলা</button>
+
+    <div class="occasion-modal-image">
+      <img id="occasionModalImage" src="" alt="">
+    </div>
+
+    <div class="occasion-modal-content">
+      <div class="occasion-modal-eyebrow">EVERY OCCASION HAS A STORY</div>
+
+      <h2 id="occasionModalTitle"></h2>
+
+      <p id="occasionModalMessage"></p>
+
+           </a>
+    </div>
+  </div>
+</div>
+
+    <section class="story-section" id="how-it-works">
+      <div class="story-visual">
+        <div class="phone-frame">
+          <div class="phone-screen">
+            <div class="phone-small">FOR SOMEONE SPECIAL</div>
+            <div class="phone-heart">♡</div>
+            <div class="phone-script">Made with love.</div>
+            <div class="phone-line"></div>
+            <div class="phone-message">A beautiful surprise is waiting for you...</div>
+            <div class="phone-button">Tap to open</div>
+          </div>
+        </div>
+        <div class="floating-word">memories</div>
+      </div>
+
+      <div class="story-copy">
+        <div class="eyebrow">More than a link</div>
+        <h2>It starts with a<br><em>little feeling.</em></h2>
+        <p>
+          Luvora turns your words, photos and memories into an experience.
+          The person you love doesn't need an account — they simply open your
+          private link and discover the surprise.
+        </p>
+
+        <div class="mini-steps">
+          <div><span>01</span><strong>Choose a template</strong><small>Start with an emotion.</small></div>
+          <div><span>02</span><strong>Make it yours</strong><small>Add your memories.</small></div>
+          <div><span>03</span><strong>Send the moment</strong><small>Share one beautiful link.</small></div>
+        </div>
+      </div>
+    </section>
+
+   
+<section class="section templates" id="templates">
+
+  <div class="section-heading center-heading">
+    <div class="eyebrow">Made for emotions</div>
+
+    <h2>
+      Templates that feel<br>
+      <em>like you.</em>
+    </h2>
+
+    <p>Six beautiful ways to begin your story.</p>
+  </div>
+
+  <div class="template-showcase">
+
+    <!-- 01 -->
+    <article class="template-item template-rose">
+      <div class="template-number">01</div>
+      <div class="template-category">BIRTHDAY</div>
+
+      <div class="template-preview">
+        <span>Happy</span>
+        <strong>Birthday</strong>
+        <i>♡</i>
+      </div>
+
+      <div class="template-line"></div>
+      <h3>The Birthday Story</h3>
+    </article>
+
+
+    <!-- 02 -->
+    <article class="template-item template-peach">
+      <div class="template-number">02</div>
+      <div class="template-category">BIRTHDAY</div>
+
+      <div class="template-preview">
+        <span>Birthday</span>
+        <strong>Memories</strong>
+        <i>✦</i>
+      </div>
+
+      <div class="template-line"></div>
+      <h3>Birthday Memories</h3>
+    </article>
+
+
+    <!-- 03 -->
+    <article class="template-item template-wine">
+      <div class="template-number">03</div>
+      <div class="template-category">ANNIVERSARY</div>
+
+      <div class="template-preview">
+        <span>Our</span>
+        <strong>Journey</strong>
+        <i>∞</i>
+      </div>
+
+      <div class="template-line"></div>
+      <h3>Our Journey</h3>
+    </article>
+
+
+    <!-- 04 -->
+    <article class="template-item template-taupe">
+      <div class="template-number">04</div>
+      <div class="template-category">ANNIVERSARY</div>
+
+      <div class="template-preview">
+        <span>Through</span>
+        <strong>the Years</strong>
+        <i>◇</i>
+      </div>
+
+      <div class="template-line"></div>
+      <h3>Through the Years</h3>
+    </article>
+
+
+    <!-- 05 -->
+    <article class="template-item template-ivory">
+      <div class="template-number">05</div>
+      <div class="template-category">LOVE LETTER</div>
+
+      <div class="template-preview">
+        <span>A Letter</span>
+        <strong>from Heart</strong>
+        <i>♡</i>
+      </div>
+
+      <div class="template-line"></div>
+      <h3>A Letter from Heart</h3>
+    </article>
+
+
+    <!-- 06 -->
+    <article class="template-item template-plum">
+      <div class="template-number">06</div>
+      <div class="template-category">JUST BECAUSE</div>
+
+      <div class="template-preview">
+        <span>Just</span>
+        <strong>Because</strong>
+        <i>✦</i>
+      </div>
+
+      <div class="template-line"></div>
+      <h3>Just Because</h3>
+    </article>
+
+  </div>
+
+</section>
+
+
+    <section class="video-section">
+      <div class="video-copy">
+        <div class="eyebrow">Your memories, moving</div>
+        <h2>Add a video.<br><em>Make it real.</em></h2>
+        <p>
+          Add your favourite video to your surprise. It appears as a
+          beautiful reels-style memory card inside the experience.
+        </p>
+        <span class="coming-pill">VIDEO FEATURE · COMING IN EDITOR</span>
+      </div>
+
+      <div class="video-card-placeholder">
+        <div class="video-top"><span>YOUR VIDEO</span><span>9:16</span></div>
+        <div class="play-circle">▶</div>
+        <div class="video-bottom"><span>One moment. One memory.</span><span>♡</span></div>
+      </div>
+    </section>
+
+  <section class="pricing-section" id="pricing">
+  <div class="price-card">
+
+    <div class="price-copy">
+      <span class="price-label">A LITTLE LOVE, A SPECIAL PRICE</span>
+
+      <h2>Make their day unforgettable.</h2>
+
+      <p>
+        Create a beautiful surprise letter and share
+        your feelings with someone special.
+      </p>
+
+      <div class="price-offer">
+        <span class="old-price">₹99</span>
+        <span class="save-badge">SAVE ₹50</span>
+      </div>
+
+      <div class="price-main">
+        <span class="currency">₹</span>
+        <strong>49</strong>
+        <span class="price-once">/ one-time</span>
+      </div>
+
+      <p class="price-note">
+        One beautiful surprise. A memory to keep forever.
+      </p>
+
+      <a href="templates.html" class="price-btn">
+        Create Your Surprise <span>→</span>
+      </a>
+    </div>
+
+    <div class="price-divider"></div>
+
+    <div class="price-benefits">
+      <span class="benefit-label">YOUR SURPRISE INCLUDES</span>
+
+      <div class="benefit-item">
+        <span class="benefit-check">✓</span>
+        Beautiful romantic templates
+      </div>
+
+      <div class="benefit-item">
+        <span class="benefit-check">✓</span>
+        Personalised love letter
+      </div>
+
+      <div class="benefit-item">
+        <span class="benefit-check">✓</span>
+        Add your own photos
+      </div>
+
+      <div class="benefit-item">
+        <span class="benefit-check">✓</span>
+        Shareable surprise link
+      </div>
+
+      <div class="benefit-item">
+        <span class="benefit-check">✓</span>
+        A special memory made by you
+      </div>
+
+      <div class="price-heart">♡</div>
+    </div>
+
+  </div>
+</section>
+    
+    <section class="final-cta" id="create">
+      <div class="final-heart">♡</div>
+      <div class="eyebrow">Some feelings deserve more</div>
+      <h2>Give them a moment<br><em>they'll never forget.</em></h2>
+     
+    </section>
+
+      <section class="help-section section" id="help">
+      <div class="help-inner">
+        <div>
+          <div class="eyebrow"><span class="eyebrow-line"></span> We’re here for you</div>
+          <h2>Need a little<br><em>help?</em></h2>
+          <p>Have a question about creating or sharing a surprise? Reach us through any of the options below.</p>
+        </div>
+
+        <div class="help-actions">
+          <!-- Replace the placeholder contact details below with Luvora's real contacts. -->
+          <a class="help-card" href="mailto: luvoraofficial@outlook.com">
+            <span class="help-icon">✉</span>
+            <span><strong>Email</strong><small>luvoraofficial@outlook.com</small></span>
+            <b>↗</b>
+          </a>
+          <a class="help-card" href="https://wa.me/918371083186" target="_blank" rel="noopener">
+            <span class="help-icon">◌</span>
+            <span><strong>WhatsApp</strong><small>Chat with us</small></span>
+            <b>↗</b>
+          </a>
+          <a class="help-card" href="tel:+918371083186">
+            <span class="help-icon">⌕</span>
+            <span><strong>Call</strong><small>+918371083186</small></span>
+            <b>↗</b>
+          </a>
+        </div>
+      </div>
+    </section>
+
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-main">
+      <div>
+        <img class="brand-logo footer-logo" src="assets/icons/luvora-logo.svg" alt="Luvora" data-site-brand>
+        <p data-site-tagline>Turn Moments Into Memories.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#occasions">Occasions</a>
+       
+        <a href="#how-it-works">How It Works</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#help">Help</a>
+      </div>
+    </div>
+    <div class="footer-bottom"><span>© <span data-site-year>2026</span> <span data-site-brand>Luvora</span></span><span>Made for meaningful moments ♡</span></div>
+  </footer>
+
+  <script src="assets/js/home.js" defer></script>
+
+<script>
+  if ("scrollRestoration" in history) {
+    history.scrollRestoration = "manual";
   }
 
-  65%, 100% {
-    background-position: -120% 50%;
-  }
-}
+  window.addEventListener("load", () => {
+    window.scrollTo(0, 0);
+  });
+</script>
 
-/* Tiny twinkling stars beside the name */
-#luvoraBirthdayOverlay #overlayBirthdayName::before,
-#luvoraBirthdayOverlay #overlayBirthdayName::after {
-  position: absolute;
-  color: #f8e5a9;
-  -webkit-text-fill-color: #f8e5a9;
-  font-family: Georgia, serif;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 1;
-  pointer-events: none;
-  animation: luvoraTinyStar 2.8s ease-in-out infinite;
-}
 
-#luvoraBirthdayOverlay #overlayBirthdayName::before {
-  content: "✦";
-  font-size: 15px;
-  top: 8%;
-  left: -10px;
-}
 
-#luvoraBirthdayOverlay #overlayBirthdayName::after {
-  content: "✧";
-  font-size: 19px;
-  right: -12px;
-  bottom: 12%;
-  animation-delay: 1.3s;
-}
 
-@keyframes luvoraTinyStar {
-  0%, 100% {
-    opacity: 0.35;
-    transform: scale(0.8) rotate(0deg);
-  }
-
-  50% {
-    opacity: 1;
-    transform: scale(1.15) rotate(18deg);
-  }
-}
-
-/* Refined eyebrow above the heading */
-#luvoraBirthdayOverlay .birthday-overlay-eyebrow {
-  color: #dfb8c5;
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: clamp(10px, 1.1vw, 12px);
-  font-weight: 500;
-  letter-spacing: clamp(1.2px, 0.2vw, 2.2px);
-  line-height: 1.6;
-  text-align: center;
-  margin: 0 auto 8px;
-}
-
-/* Birthday wish — smaller, softer and easier to read */
-#luvoraBirthdayOverlay .birthday-overlay-wish {
-  max-width: 490px;
-  width: calc(100% - 32px);
-  margin: 0 auto 10px;
-  color: #f1e4df;
-
-  font-family: "Lora", Georgia, "Times New Roman", serif;
-  font-size: clamp(12px, 1.35vw, 15px);
-  font-weight: 400;
-  line-height: 1.65;
-  letter-spacing: 0.1px;
-  text-align: center;
-  text-wrap: pretty;
-  text-shadow: none;
-}
-
-/* Subtle, professional footer */
-#luvoraBirthdayOverlay .birthday-overlay-footer {
-  color: #d8b9c3;
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: clamp(11px, 1.15vw, 13px);
-  font-weight: 400;
-  letter-spacing: 0.4px;
-  line-height: 1.5;
-  text-align: center;
-  margin: 12px auto 8px;
-}
-
-/* Mobile typography — preserve the existing layout */
-@media (max-width: 480px) {
-  #luvoraBirthdayOverlay .birthday-overlay-title {
-    font-size: clamp(23px, 7vw, 31px);
-    letter-spacing: 1.5px;
-    line-height: 1.2;
-  }
-
-  #luvoraBirthdayOverlay #overlayBirthdayName {
-    max-width: 92%;
-    font-size: clamp(38px, 11vw, 52px);
-    letter-spacing: -0.5px;
-    margin-bottom: 8px;
-  }
-
-  #luvoraBirthdayOverlay .birthday-overlay-wish {
-    width: calc(100% - 36px);
-    font-size: 12px;
-    line-height: 1.6;
-    margin-bottom: 8px;
-  }
-
-  #luvoraBirthdayOverlay .birthday-overlay-eyebrow {
-    font-size: 10px;
-    letter-spacing: 1.2px;
-  }
-
-  #luvoraBirthdayOverlay .birthday-overlay-footer {
-    font-size: 11px;
-    margin-top: 10px;
-  }
-}
-
-/* Respect reduced-motion accessibility settings */
-@media (prefers-reduced-motion: reduce) {
-  #luvoraBirthdayOverlay #overlayBirthdayName,
-  #luvoraBirthdayOverlay #overlayBirthdayName::before,
-  #luvoraBirthdayOverlay #overlayBirthdayName::after {
-    animation: none !important;
-  }
-}
-
-/* Bigger couple image */
-#luvoraBirthdayOverlay .birthday-couple-illustration img {
-  width: clamp(130px, 22vw, 210px);
-  max-height: 220px;
-  height: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 0 12px #d689a4);
-  animation: luvoraCoupleFloat 3s ease-in-out infinite;
-}
-
-@keyframes luvoraCoupleFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-9px); }
-}
-
-/* Calendar */
-#luvoraBirthdayOverlay .birthday-calendar-days {
-  display: grid !important;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 5px;
-  width: 100%;
-}
-
-#luvoraBirthdayOverlay .luvora-calendar-day {
-  min-height: 30px;
-  display: grid;
-  place-items: center;
-  color: #fff0df;
-}
-
-#luvoraBirthdayOverlay .luvora-birthday-target {
-  border-radius: 50%;
-  color: white;
-  background: linear-gradient(145deg, #ff8ab5, #9f174b);
-  box-shadow: 0 0 15px #ff8ab5;
-}
-
-/* Falling hearts */
-#luvoraBirthdayOverlay .birthday-floating-hearts {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 1;
-}
-
-#luvoraBirthdayOverlay .birthday-floating-hearts span,
-#luvoraBirthdayOverlay .luvora-floating-heart {
-  position: absolute;
-  top: -30px;
-  color: #ff8ab5;
-  animation: luvoraHeartRain 9s linear infinite;
-}
-
-#luvoraBirthdayOverlay .birthday-floating-hearts span:nth-child(2n) {
-  animation-duration: 12s;
-  animation-delay: -5s;
-}
-
-@keyframes luvoraHeartRain {
-  from { transform: translateY(-30px) rotate(0deg); opacity: 0; }
-  10% { opacity: .9; }
-  to { transform: translateY(105vh) rotate(360deg); opacity: 0; }
-}
-
-/* Mobile */
-@media (max-width: 480px) {
-  #luvoraBirthdayOverlay .birthday-overlay-content {
-    width: 100%;
-  }
-
-  #luvoraBirthdayOverlay .birthday-couple-illustration img {
-    width: 145px;
-    max-height: 160px;
-  }
-}
-
-/* ==========================================
-   LUVORA — COMPACT PREMIUM ROMANTIC TEXT
-   Calendar & Arrow: No Changes
-========================================== */
-
-/* Birthday heading: smaller and elegant */
-#luvoraBirthdayOverlay .birthday-overlay-title {
-  font-size: clamp(21px, 2.7vw, 31px);
-  font-weight: 600;
-  letter-spacing: clamp(1.2px, 0.25vw, 3px);
-  line-height: 1.1;
-  margin: 2px auto 0;
-}
-
-/* Name: prominent but more compact */
-#luvoraBirthdayOverlay #overlayBirthdayName {
-  font-size: clamp(35px, 4.8vw, 53px);
-  line-height: 1.05;
-  letter-spacing: -0.6px;
-  margin: 0 auto 7px;
-  padding-top: 2px;
-  padding-bottom: 2px;
-}
-
-/* Premium romantic wish section */
-#luvoraBirthdayOverlay .birthday-overlay-wish {
-  position: relative;
-  box-sizing: border-box;
-  width: calc(100% - 32px);
-  max-width: 420px;
-
-  margin: 2px auto 8px;
-  padding: 10px 16px;
-
-  font-family: "Lora", Georgia, serif;
-  font-size: clamp(11px, 1.05vw, 13px);
-  font-weight: 400;
-  font-style: italic;
-  line-height: 1.65;
-  letter-spacing: 0.15px;
-  text-align: center;
-
-  color: #f4dce5;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 230, 239, 0.055),
-    rgba(255, 255, 255, 0.015),
-    rgba(214, 137, 164, 0.06)
-  );
-
-  border-top: 1px solid rgba(241, 213, 222, 0.3);
-  border-bottom: 1px solid rgba(241, 213, 222, 0.2);
-  border-radius: 10px;
-
-  text-shadow: none;
-  box-shadow: none;
-}
-
-/* Delicate decorative accents */
-#luvoraBirthdayOverlay .birthday-overlay-wish::before {
-  content: "✧  ";
-  color: #e8c49a;
-  font-style: normal;
-}
-
-#luvoraBirthdayOverlay .birthday-overlay-wish::after {
-  content: "  ✧";
-  color: #e8c49a;
-  font-style: normal;
-}
-
-/* Mobile: preserve vertical space */
-@media (max-width: 480px) {
-  #luvoraBirthdayOverlay .birthday-overlay-title {
-    font-size: clamp(20px, 6vw, 26px);
-    letter-spacing: 1.2px;
-  }
-
-  #luvoraBirthdayOverlay #overlayBirthdayName {
-    font-size: clamp(33px, 9vw, 43px);
-    margin-bottom: 5px;
-  }
-
-  #luvoraBirthdayOverlay .birthday-overlay-wish {
-    width: calc(100% - 28px);
-    max-width: 350px;
-    margin: 2px auto 6px;
-    padding: 7px 10px;
-    font-size: 11px;
-    line-height: 1.55;
-  }
-}
-
-/* Short screens: compact typography further */
-@media (max-height: 760px) {
-  #luvoraBirthdayOverlay .birthday-overlay-title {
-    font-size: clamp(19px, 2.5vw, 28px);
-  }
-
-  #luvoraBirthdayOverlay #overlayBirthdayName {
-    font-size: clamp(32px, 4.2vw, 46px);
-    margin-bottom: 4px;
-  }
-
-  #luvoraBirthdayOverlay .birthday-overlay-wish {
-    margin-top: 0;
-    margin-bottom: 5px;
-    padding-top: 6px;
-    padding-bottom: 6px;
-    line-height: 1.45;
-  }
-}
-
-/* =========================================
-   LUVORA — LUXURY ROMANTIC WISH
-   Burgundy • Champagne • Dusty Rose
-========================================= */
-
-#luvoraBirthdayOverlay .birthday-overlay-wish {
+</body>
+  </html>thday-overlay-wish {
   position: relative;
   box-sizing: border-box;
 
