@@ -432,7 +432,8 @@ balloons.forEach((balloon, index) => {
     if (balloon.classList.contains("popped")) {
       return;
     }
-
+    
+    playLuvoraBalloonPop();
     poppedBalloons++;
 
     const message =
@@ -5350,6 +5351,22 @@ targetBox =
   let flashTimer = null;
   let revealTimer = null;
 
+
+// LUVORA Real Camera Click Sound
+const luvoraCameraClickSound = new Audio("assets/musics/click.mp3");
+
+luvoraCameraClickSound.preload = "auto";
+luvoraCameraClickSound.volume = 0.8;
+
+function playLuvoraCameraClick() {
+  luvoraCameraClickSound.currentTime = 0;
+
+  luvoraCameraClickSound.play().catch((error) => {
+    console.warn("Camera sound could not play:", error);
+  });
+}
+
+     
   /*
     Put the romantic message INSIDE the Polaroid card,
     beneath the photograph and caption.
@@ -5537,10 +5554,15 @@ setTimeout(function () {
     }, 4300);
   }
 
+ 
   button.addEventListener("click", function () {
     if (printing || printed) return;
+
+    playLuvoraCameraClick();
     printMemory();
   });
+
+
 
   input.addEventListener("change", async function () {
     const file = input.files && input.files[0];
@@ -5677,3 +5699,47 @@ section.scrollIntoView({
     setupMusicToggle();
   }
 })();
+
+// LUVORA Balloon Pop Sound
+window.playLuvoraBalloonPop = function () {
+  try {
+    const AudioContextClass =
+      window.AudioContext || window.webkitAudioContext;
+
+    if (!AudioContextClass) return;
+
+    if (!window.luvoraBalloonAudioContext) {
+      window.luvoraBalloonAudioContext =
+        new AudioContextClass();
+    }
+
+    const ctx = window.luvoraBalloonAudioContext;
+
+    if (ctx.state === "suspended") {
+      ctx.resume();
+    }
+
+    const now = ctx.currentTime;
+    const oscillator = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    oscillator.type = "sine";
+    oscillator.frequency.setValueAtTime(700, now);
+    oscillator.frequency.exponentialRampToValueAtTime(
+      180,
+      now + 0.12
+    );
+
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(0.3, now + 0.012);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.16);
+
+    oscillator.connect(gain);
+    gain.connect(ctx.destination);
+
+    oscillator.start(now);
+    oscillator.stop(now + 0.17);
+  } catch (error) {
+    console.warn("LUVORA balloon sound unavailable:", error);
+  }
+};
