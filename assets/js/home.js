@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
      ORIGINAL LUVORA — REVEAL ANIMATION
      ========================================================= */
 
+  
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
