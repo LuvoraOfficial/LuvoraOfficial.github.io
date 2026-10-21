@@ -1487,6 +1487,55 @@ function loadBirthdayVideo() {
 
 }
 
+/* =========================================================
+   LUVORA — CAKE CELEBRATION SOUND EFFECTS
+   ========================================================= */
+
+function playCakeCelebrationSounds() {
+
+  // Crowd cheer and fireworks start together
+  const cheerSound = new Audio(
+    "assets/musics/crowd-cheer.mp3"
+  );
+
+  const fireworksSound = new Audio(
+    "assets/musics/firework.mp3"
+  );
+
+  // Clapping starts 0.30 seconds later
+  const clappingSound = new Audio(
+    "assets/musics/clapping.mp3"
+  );
+
+  // Play only once; preserve original file durations
+  cheerSound.loop = false;
+  fireworksSound.loop = false;
+  clappingSound.loop = false;
+
+  // Balanced celebration volume
+  cheerSound.volume = 0.3;
+  fireworksSound.volume = 0.65;
+  clappingSound.volume = 0.75;
+
+  // Start cheer and fireworks immediately
+  cheerSound.play().catch(error => {
+    console.warn("Crowd cheer could not play:", error);
+  });
+
+  fireworksSound.play().catch(error => {
+    console.warn("Fireworks could not play:", error);
+  });
+
+  // Start clapping after 300 milliseconds
+  setTimeout(() => {
+
+    clappingSound.play().catch(error => {
+      console.warn("Clapping could not play:", error);
+    });
+
+  }, 300);
+
+}
 
 /* =========================================================
    09 — CANDLE SYSTEM
@@ -1512,15 +1561,18 @@ candles.forEach((candle) => {
        LAST CANDLE — INSTANT MAGICAL REVEAL
        ===================================================== */
 
-    if (blownCandles === candles.length) {
+  if (blownCandles === candles.length) {
 
-      // No pause — reveal starts immediately
-      magicalCakeReveal();
+  // Start celebration sounds immediately
+  playCakeCelebrationSounds();
 
-      createMiniConfetti(45);
-      createFloatingHearts(15);
+  // Existing magical reveal
+  magicalCakeReveal();
 
-    }
+  createMiniConfetti(45);
+  createFloatingHearts(15);
+
+}
 
   });
 
@@ -3594,6 +3646,26 @@ function launchArrow(offsetDegrees) {
   if (launching) return;
 
   launching = true;
+  // LUVORA: Prepare birthday music silently
+  const birthdayMusic = document.getElementById(
+    "luvoraBirthdayMusic"
+  );
+
+  if (birthdayMusic) {
+    birthdayMusic.pause();
+    birthdayMusic.currentTime = 0;
+    birthdayMusic.volume = 0;
+    birthdayMusic.muted = true;
+
+    // Unlock audio playback during the user's arrow interaction.
+    birthdayMusic.play().catch((error) => {
+      console.warn(
+        "Birthday music preparation failed:",
+        error
+      );
+    });
+  }
+
 
   if (instruction) {
     instruction.textContent = "Your arrow is flying… ♥";
@@ -3701,6 +3773,22 @@ const isHit = projection > 0 && missDistance <= hitRadius;
 
   flight.onfinish = function () {
     if (isHit) {
+
+      // LUVORA: Start birthday music when the arrow hits the heart.
+      if (birthdayMusic) {
+        birthdayMusic.pause();
+        birthdayMusic.currentTime = 0;
+        birthdayMusic.muted = false;
+        birthdayMusic.volume = 0.35;
+
+        birthdayMusic.play().catch((error) => {
+          console.error(
+            "Birthday music could not start:",
+            error
+          );
+        });
+      }
+
       // Freeze the arrow at the heart.
       flyingArrow.style.left = hitX + "px";
       flyingArrow.style.top = hitY + "px";
@@ -5523,4 +5611,69 @@ section.scrollIntoView({
 
   resetCamera();
 
+})();
+
+/* ==========================================
+   LUVORA BIRTHDAY MUSIC — MUTE / UNMUTE
+   ========================================== */
+
+(function initLuvoraMusicToggle() {
+  function setupMusicToggle() {
+    const music = document.getElementById("luvoraBirthdayMusic");
+
+    const buttons = document.querySelectorAll(
+      "#luvoraMusicToggle, .luvora-music-toggle, [data-music-toggle]"
+    );
+
+    if (!music || buttons.length === 0) {
+      console.warn("LUVORA music or mute button not found.");
+      return;
+    }
+
+    function updateButton() {
+      buttons.forEach(function (button) {
+        button.textContent = music.muted ? "🔇" : "🔊";
+
+        button.setAttribute(
+          "aria-label",
+          music.muted ? "Unmute birthday music" : "Mute birthday music"
+        );
+
+        button.setAttribute(
+          "aria-pressed",
+          String(!music.muted)
+        );
+      });
+    }
+
+    buttons.forEach(function (button) {
+      // Prevent duplicate click listeners.
+      if (button.dataset.musicToggleReady === "true") {
+        return;
+      }
+
+      button.dataset.musicToggleReady = "true";
+
+      button.addEventListener("click", function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        music.muted = !music.muted;
+
+        updateButton();
+      });
+    });
+
+    updateButton();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener(
+      "DOMContentLoaded",
+      setupMusicToggle,
+      { once: true }
+    );
+  } else {
+    setupMusicToggle();
+  }
 })();
