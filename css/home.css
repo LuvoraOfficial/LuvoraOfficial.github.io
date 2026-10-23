@@ -4090,3 +4090,12 @@ padding: 24px 20px !important;
 transition: none;
 }
 }
+/* LUVORA: Disable falling petals without changing layout */
+.hero-art > .petal-layer,
+.petal-layer {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  animation: none !important;
+}
+
+
