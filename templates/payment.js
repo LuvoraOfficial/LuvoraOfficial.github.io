@@ -72,6 +72,88 @@ function getDraftFile(key) {
 
 }
 
+async function uploadDraftMedia(client, surpriseData) { 
+ const formData = new FormData();
+
+  let hasMedia = false;
+
+  for (let i = 0; i < 6; i++) {
+    const file = await getDraftFile(`photo-${i}`);
+
+    if (file instanceof Blob) {
+      formData.append(
+        `photo-${i}`,
+        file,
+        file.name || `photo-${i}.jpg`
+      );
+
+      hasMedia = true;
+    }
+  }
+
+  const video = await getDraftFile("video");
+
+  if (video instanceof Blob) {
+    formData.append(
+      "video",
+      video,
+      video.name || "birthday-video.mp4"
+    );
+
+    hasMedia = true;
+  }
+
+  if (!hasMedia) {
+    return {
+      photos: [],
+      video: ""
+    };
+  }
+
+  const { data, error } =
+    await client.functions.invoke(
+      "upload-surprise-media",
+      {
+        body: formData
+      }
+    );
+
+  
+  if (error) {
+    let details = "";
+
+    try {
+      const response = error.context;
+
+      if (response && typeof response.clone === "function") {
+        const body = await response.clone().json();
+        details = body?.error || body?.message || JSON.stringify(body);
+      }
+    } catch (parseError) {
+      console.error("Could not read media upload error response:", parseError);
+    }
+
+    console.error("Media upload error details:", error, details);
+
+    throw new Error(
+      details || error.message || "Media upload failed."
+    );
+  }
+
+  if (!data?.success) {
+    throw new Error(
+      data?.error || "Media upload failed."
+    );
+  }
+
+  return {
+    photos: Array.isArray(data.photos)
+      ? data.photos.filter(Boolean)
+      : [],
+    video: data.video || ""
+  };
+}
+
 
 /* =========================================================
    CASHFREE CHECKOUT SDK
@@ -297,7 +379,13 @@ document.addEventListener("DOMContentLoaded", () => {
              CUSTOMER DATA
           ------------------------------------------------- */
 
-          const requestData = {
+    // Upload saved birthday photos and video first
+const uploadedMedia = await uploadDraftMedia(client, surpriseData);
+surpriseData.photos = uploadedMedia.photos;
+surpriseData.video = uploadedMedia.video;
+
+
+  const requestData = {
 
             name:
               surpriseData.name || "",
@@ -329,7 +417,8 @@ document.addEventListener("DOMContentLoaded", () => {
             "Luvora payment request:",
             requestData
           );
-
+console.log("UPLOADED PHOTOS:", requestData.photos);
+console.log("UPLOADED VIDEO:", requestData.video);
 console.log("SURPRISE DATA:", surpriseData);
 console.log("SAVED PHONE:", surpriseData.phone);
 console.log("PHONE INPUT:", document.getElementById("customerPhone")?.value);
