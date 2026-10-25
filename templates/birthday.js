@@ -3057,26 +3057,38 @@ async function loadSharedSurprise() {
   if (!LUVORA_IS_FINAL_SURPRISE) return;
 
   try {
-    const { data, error } = await supabaseClient
-      .from("surprises")
-      .select("name, birthday_date, photos, video, payment_status")
-      .eq("share_id", LUVORA_SHARE_ID)
-      .eq("payment_status", "paid")
-      .maybeSingle();
+    const { data, error } = await supabaseClient.functions.invoke(
+      "get-shared-surprise",
+      {
+        body: {
+          share_id: LUVORA_SHARE_ID
+        }
+      }
+    );
 
-    if (error) throw error;
-
-    if (!data) {
-      console.error("Surprise not found or payment not verified.");
+    if (error) {
+      console.error("Shared surprise function error:", error);
       return;
     }
 
-    BIRTHDAY_CONFIG.name = data.name || "My Love";
-    BIRTHDAY_CONFIG.date = data.birthday_date || "";
-    BIRTHDAY_CONFIG.photos = Array.isArray(data.photos)
-      ? data.photos
+    if (!data?.success || !data?.surprise) {
+      console.error(
+        "Surprise not found or payment not verified:",
+        data?.error
+      );
+      return;
+    }
+
+    const surprise = data.surprise;
+
+    BIRTHDAY_CONFIG.name = surprise.name || "My Love";
+    BIRTHDAY_CONFIG.date = surprise.birthday_date || "";
+
+    BIRTHDAY_CONFIG.photos = Array.isArray(surprise.photos)
+      ? surprise.photos
       : [];
-    BIRTHDAY_CONFIG.video = data.video || "";
+
+    BIRTHDAY_CONFIG.video = surprise.video || "";
 
   } catch (error) {
     console.error("Unable to load shared surprise:", error);
