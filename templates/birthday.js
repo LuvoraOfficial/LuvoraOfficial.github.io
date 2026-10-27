@@ -5976,9 +5976,11 @@ setTimeout(function () {
     uploadButton.style.opacity = ".6";
     uploadStatus.textContent = "Preparing your photograph...";
 
+
     const newURL = URL.createObjectURL(file);
 
     try {
+      // Confirm that the selected image can be loaded.
       await new Promise(function (resolve, reject) {
         const testImage = new Image();
         testImage.onload = resolve;
@@ -5986,59 +5988,38 @@ setTimeout(function () {
         testImage.src = newURL;
       });
 
+      // Save the selfie for payment and shared-link use.
+      await saveDraftFile("camera-selfie", file);
+
       if (uploadedURL) {
-  URL.revokeObjectURL(uploadedURL);
-}
+        URL.revokeObjectURL(uploadedURL);
+      }
 
-try {
-  // Save the selected selfie for the payment and shared-link flow.
-  await saveDraftFile("camera-selfie", file);
+      uploadedURL = newURL;
 
-  uploadedURL = newURL;
-
-  resetCamera();
-
-  uploadStatus.textContent =
-    "Your selfie is ready! Click the camera to print it ♡";
-
-  status.textContent =
-    "Your own memory is ready to print.";
-
-  section.scrollIntoView({
-    behavior: "instant",
-    block: "start"
-  });
-
-} catch (saveError) {
-  URL.revokeObjectURL(newURL);
-
-  uploadStatus.textContent =
-    "Couldn't save your photo. Please try again.";
-
-  console.error(
-    "LUVORA: Could not save camera selfie:",
-    saveError
-  );
-
-  return;
-}
+      resetCamera();
 
       uploadStatus.textContent =
         "Your selfie is ready! Click the camera to print it ♡";
 
-      status.textContent = "Your own memory is ready to print.";
+      status.textContent =
+        "Your own memory is ready to print.";
 
-    // Jump directly back to the camera section after upload.
-section.scrollIntoView({
-  behavior: "instant",
-  block: "start"
-});
+      section.scrollIntoView({
+        behavior: "instant",
+        block: "start"
+      });
 
     } catch (error) {
       URL.revokeObjectURL(newURL);
 
       uploadStatus.textContent =
-        "Couldn't read that photo. Please try another image.";
+        "Couldn't save your photo. Please try again.";
+
+      console.error(
+        "LUVORA: Camera selfie processing failed:",
+        error
+      );
 
     } finally {
       uploadButton.style.pointerEvents = "";
