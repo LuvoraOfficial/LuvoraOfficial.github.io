@@ -166,7 +166,7 @@ if (cameraSelfie instanceof Blob) {
   video: data.video || "",
   cameraSelfie: data.cameraSelfie || ""
 };
-
+}
 
 /* =========================================================
    CASHFREE CHECKOUT SDK
