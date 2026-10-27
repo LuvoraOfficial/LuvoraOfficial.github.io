@@ -14034,3 +14034,11 @@ oscillator.stop(now + 0.075);
 }
 
 /* END — LUVORA SIMPLE REWARD SECTION */
+
+/* LUVORA — HIDE EDITING CONTROLS ON SHARED SURPRISE */
+
+html.luvora-final-mode #luvoraCameraSection .luvora-selfie-upload,
+html.luvora-final-mode #letterSection .letter-edit-tools,
+html.luvora-final-mode #letterSection #letterEditor {
+  display: none !important;
+}
