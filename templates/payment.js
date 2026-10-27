@@ -561,9 +561,7 @@ console.log(
           payNowButton.disabled =
             false;
 
-          payNowButton.innerHTML =
-            `Continue to Payment <span>→</span>`;
-
+          payNowButton.textContent = "Continue to Payment →";
 
           alert(
             error.message ||
