@@ -13671,3 +13671,366 @@ gain.connect(ctx.destination);
 oscillator.start(now);
 oscillator.stop(now + 0.075);
 }
+
+/* ==========================================
+   LUVORA — SIMPLE REWARD SECTION
+   No outer card, border or background
+========================================== */
+
+.luvora-reward-customizer {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+
+  border: none !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+
+  color: inherit;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.luvora-reward-customizer *,
+.luvora-reward-customizer *::before,
+.luvora-reward-customizer *::after {
+  box-sizing: border-box;
+}
+
+/* HEADING */
+
+.luvora-reward-customizer .luvora-reward-heading {
+  display: block;
+  margin: 0 0 9px;
+  padding: 0;
+
+  color: #e83e80;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+/* DROPDOWN BOX — MATCH VIDEO FILE BOX STYLE */
+
+.luvora-reward-dropdown {
+  position: relative;
+  width: 100%;
+  margin: 0;
+}
+
+.luvora-reward-customizer .luvora-reward-dropdown-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  width: 100%;
+  min-height: 42px;
+  margin: 0;
+  padding: 10px 13px;
+
+  border: 1px solid #51434b;
+  border-radius: 10px;
+  background: #352b31;
+  color: #f0e8ed;
+
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: left;
+
+  cursor: pointer;
+  box-shadow: none;
+  transition: border-color 0.2s ease;
+}
+
+.luvora-reward-customizer .luvora-reward-dropdown-toggle:hover,
+.luvora-reward-customizer
+.luvora-reward-dropdown-toggle[aria-expanded="true"] {
+  border-color: #8b6175;
+}
+
+.luvora-reward-customizer
+.luvora-reward-dropdown-toggle:focus-visible {
+  outline: 2px solid #c77a9b;
+  outline-offset: 2px;
+}
+
+.luvora-reward-customizer
+.luvora-reward-dropdown-toggle > span:last-child {
+  flex-shrink: 0;
+  color: #e982aa;
+  font-size: 16px;
+}
+
+/* DROPDOWN LIST */
+
+.luvora-reward-customizer .luvora-reward-options {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+
+  width: 100%;
+  max-height: 126px;
+  margin: 5px 0 0;
+  padding: 4px;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+
+  border: 1px solid #51434b;
+  border-radius: 9px;
+  background: #352b31;
+
+  scrollbar-width: thin;
+  scrollbar-color: #8e6277 #352b31;
+}
+
+.luvora-reward-customizer .luvora-reward-options[hidden] {
+  display: none !important;
+}
+
+.luvora-reward-customizer .luvora-reward-options::-webkit-scrollbar {
+  width: 5px;
+}
+
+.luvora-reward-customizer .luvora-reward-options::-webkit-scrollbar-thumb {
+  background: #8e6277;
+  border-radius: 10px;
+}
+
+.luvora-reward-customizer .luvora-reward-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  flex: 0 0 37px;
+  width: 100%;
+  min-height: 37px;
+  margin: 0;
+  padding: 6px 9px;
+
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: #f0e8ed;
+
+  font-family: inherit;
+  font-size: 11.5px;
+  line-height: 1.4;
+  text-align: left;
+
+  cursor: pointer;
+}
+
+.luvora-reward-customizer .luvora-reward-option:hover,
+.luvora-reward-customizer .luvora-reward-option.is-selected {
+  border-color: #765365;
+  background: #44323d;
+  color: #ffd7e6;
+}
+
+.luvora-reward-customizer .luvora-reward-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 21px;
+  width: 21px;
+  height: 21px;
+
+  border-radius: 5px;
+  background: #46343e;
+  font-size: 12px;
+}
+
+.luvora-reward-customizer .luvora-reward-name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* OR DIVIDER */
+
+.luvora-reward-customizer .luvora-reward-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  margin: 11px 0;
+
+  color: inherit;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.luvora-reward-customizer .luvora-reward-divider span:first-child,
+.luvora-reward-customizer .luvora-reward-divider span:last-child {
+  flex: 1;
+  height: 1px;
+  background: rgba(180, 160, 172, 0.35);
+}
+
+/* CUSTOM GIFT LABEL */
+
+.luvora-reward-customizer .luvora-reward-input-group {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+
+.luvora-reward-customizer .luvora-reward-input-group label {
+  display: block;
+  margin: 0 0 6px;
+  padding: 0;
+
+  color: inherit;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+/* SMALLER, PROFESSIONAL TEXT BOX */
+
+.luvora-reward-customizer #customerCustomReward {
+  display: block;
+
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 64px;
+  height: 64px;
+  margin: 0;
+  padding: 9px 11px;
+
+  border: 1px solid #d9cbd2;
+  border-radius: 9px;
+  background: #f8f4f6;
+  color: #40363b;
+
+  font-family: inherit;
+  font-size: 11.5px;
+  line-height: 1.55;
+
+  resize: vertical;
+  box-shadow: none;
+  transition: border-color 0.2s ease;
+}
+
+.luvora-reward-customizer #customerCustomReward::placeholder {
+  color: #88747f;
+  opacity: 1;
+}
+
+.luvora-reward-customizer #customerCustomReward:focus {
+  border-color: #c77a9b;
+  outline: none;
+}
+
+/* INSTRUCTIONS UNDER THE TEXT BOX */
+
+.luvora-reward-customizer .luvora-reward-note {
+  display: block;
+  width: 100%;
+  margin: 6px 0 0;
+  padding: 0;
+
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  box-shadow: none;
+}
+
+.luvora-reward-customizer .luvora-reward-note-icon {
+  display: none;
+}
+
+.luvora-reward-customizer .luvora-reward-note p {
+  margin: 0;
+  padding: 0;
+
+  color: inherit;
+  font-family: inherit;
+  font-size: 10px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+/* REMOVE EXTRA STATUS */
+
+.luvora-reward-customizer .luvora-reward-selection-status {
+  display: none !important;
+}
+
+/* REMOVE OLD EXTRA CODE INPUT */
+
+.luvora-reward-customizer #customerRewardCode {
+  display: none !important;
+}
+
+/* MOBILE */
+
+@media (max-width: 480px) {
+  .luvora-reward-customizer .luvora-reward-heading {
+    font-size: 14px;
+  }
+
+  .luvora-reward-customizer .luvora-reward-dropdown-toggle {
+    min-height: 41px;
+    padding: 10px 11px;
+    font-size: 11.5px;
+  }
+
+  .luvora-reward-customizer .luvora-reward-options {
+    max-height: 126px;
+  }
+
+  .luvora-reward-customizer .luvora-reward-option {
+    flex-basis: 37px;
+    min-height: 37px;
+    font-size: 11px;
+  }
+
+  .luvora-reward-customizer #customerCustomReward {
+    min-height: 64px;
+    height: 64px;
+    padding: 9px 10px;
+  }
+}
+
+/* LUVORA — REWARD HEADING SPACING */
+
+.luvora-reward-customizer {
+  margin-top: 22px;
+}
+
+.luvora-reward-customizer .luvora-reward-heading {
+  font-size: 17px;
+  margin-bottom: 11px;
+}
+
+@media (max-width: 480px) {
+  .luvora-reward-customizer {
+    margin-top: 18px;
+  }
+
+  .luvora-reward-customizer .luvora-reward-heading {
+    font-size: 16px;
+  }
+}
+
+/* END — LUVORA SIMPLE REWARD SECTION */
