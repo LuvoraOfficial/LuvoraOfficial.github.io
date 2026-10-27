@@ -3230,6 +3230,32 @@ async function loadSharedSurprise() {
 
     const surprise = data.surprise;
 
+// Load the uploaded camera selfie for the paid shared link.
+sharedCameraSelfie =
+  typeof surprise.camera_selfie === "string"
+    ? surprise.camera_selfie.trim()
+    : "";
+
+    // Hide letter editing controls on the paid shared link.
+if (LUVORA_IS_FINAL_SURPRISE) {
+  const letterEditTools = document.querySelector(".letter-edit-tools");
+  const letterEditor = document.getElementById("letterEditor");
+
+  if (letterEditTools) {
+    letterEditTools.hidden = true;
+  }
+
+  if (letterEditor) {
+    letterEditor.hidden = true;
+  }
+
+  const selfieUploadSection = document.querySelector(".luvora-selfie-upload");
+
+  if (selfieUploadSection) {
+    selfieUploadSection.hidden = true;
+  }
+}
+
     // Customer information
     BIRTHDAY_CONFIG.name =
       surprise.name || "My Love";
@@ -5705,6 +5731,7 @@ if (
     "If I could keep one moment forever, it would be the one where I'm close to you. You make ordinary moments feel like a beautiful love story.";
 
   let uploadedURL = null;
+  let sharedCameraSelfie = "";
   let printing = false;
   let printed = false;
   let typingTimer = null;
@@ -5832,7 +5859,10 @@ function typeLoveMessage(onComplete) {
     button.disabled = true;
     hint.style.opacity = "0";
 
-    const selectedPhoto = uploadedURL || DEFAULT_SELFIE;
+    const selectedPhoto =
+  (LUVORA_IS_FINAL_SURPRISE && sharedCameraSelfie)
+    ? sharedCameraSelfie
+    : (uploadedURL || DEFAULT_SELFIE);
 
     status.textContent = "Capturing your little moment...";
 
@@ -5861,9 +5891,10 @@ function typeLoveMessage(onComplete) {
     if (!printing || !printed) return;
 
     photo.src = selectedPhoto;
-    photo.alt = uploadedURL
-      ? "Your uploaded couple selfie"
-      : "Our beautiful memory";
+   photo.alt =
+  (LUVORA_IS_FINAL_SURPRISE && sharedCameraSelfie) || uploadedURL
+    ? "Your uploaded couple selfie"
+    : "Our beautiful memory";
 
     // Instant flash burst, then the print starts.
     restartFlash();
@@ -5955,11 +5986,42 @@ setTimeout(function () {
         testImage.src = newURL;
       });
 
-      if (uploadedURL) URL.revokeObjectURL(uploadedURL);
-      uploadedURL = newURL;
+      if (uploadedURL) {
+  URL.revokeObjectURL(uploadedURL);
+}
 
-      // Upload resets the camera for the next single click.
-      resetCamera();
+try {
+  // Save the selected selfie for the payment and shared-link flow.
+  await saveDraftFile("camera-selfie", file);
+
+  uploadedURL = newURL;
+
+  resetCamera();
+
+  uploadStatus.textContent =
+    "Your selfie is ready! Click the camera to print it ♡";
+
+  status.textContent =
+    "Your own memory is ready to print.";
+
+  section.scrollIntoView({
+    behavior: "instant",
+    block: "start"
+  });
+
+} catch (saveError) {
+  URL.revokeObjectURL(newURL);
+
+  uploadStatus.textContent =
+    "Couldn't save your photo. Please try again.";
+
+  console.error(
+    "LUVORA: Could not save camera selfie:",
+    saveError
+  );
+
+  return;
+}
 
       uploadStatus.textContent =
         "Your selfie is ready! Click the camera to print it ♡";
