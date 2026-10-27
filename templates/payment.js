@@ -384,7 +384,6 @@ const uploadedMedia = await uploadDraftMedia(client, surpriseData);
 surpriseData.photos = uploadedMedia.photos;
 surpriseData.video = uploadedMedia.video;
 
-```javascript
 const requestData = {
   name:
     surpriseData.name || "",
