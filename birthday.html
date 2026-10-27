@@ -2128,18 +2128,33 @@
           <strong>SCRATCH TO REVEAL</strong>
         </div>
 
-        <div
-          class="luvora-scratch-result"
-          id="luvoraScratchResult"
-          aria-live="polite"
-          hidden
-        >
-          <span aria-hidden="true">💖</span>
+      
+<div
+  class="luvora-scratch-result"
+  id="luvoraScratchResult"
+  aria-live="polite"
+  hidden
+>
+  <span aria-hidden="true">💖</span>
 
-          <p id="luvoraScratchRewardText">
-            A special surprise awaits you!
-          </p>
-        </div>
+  <p id="luvoraScratchRewardText"></p>
+
+  <button
+    type="button"
+    id="luvoraCopyReward"
+    class="luvora-copy-reward"
+    hidden
+  >
+    Copy Reward
+  </button>
+
+  <p
+    id="luvoraCopyRewardStatus"
+    aria-live="polite"
+    hidden
+  ></p>
+</div>
+
       </div>
     </div>
 
@@ -2328,22 +2343,126 @@
 
     </div>
 
-<div class="customization-field">
-  <label for="customerPandaMessage">
-    Panda Gift Romantic Message
+<!-- LUVORA — CHOOSE YOUR BIRTHDAY REWARD -->
+
+<div class="luvora-reward-customizer">
+
+  <label class="luvora-reward-heading">
+    Choose Your Reward 💝
+  </label>
+
+  <!-- COMPACT REWARD DROPDOWN -->
+
+  <div class="luvora-reward-dropdown" id="customerRewardDropdown">
+
+    <button
+      type="button"
+      class="luvora-reward-dropdown-toggle"
+      id="customerRewardToggle"
+      aria-expanded="false"
+      aria-controls="customerRewardOptions"
+    >
+      <span id="customerRewardPlaceholder">
+        Select a special reward
+      </span>
+      <span aria-hidden="true">⌄</span>
+    </button>
+
+    <div
+      class="luvora-reward-options"
+      id="customerRewardOptions"
+      role="listbox"
+      aria-label="Choose one birthday reward"
+      hidden
+    >
+
+      <button type="button" class="luvora-reward-option"
+        data-reward="Romantic Dinner Date" aria-pressed="false">
+        <span class="luvora-reward-icon">🕯️</span>
+        <span class="luvora-reward-name">Romantic Dinner Date</span>
+      </button>
+
+      <button type="button" class="luvora-reward-option"
+        data-reward="Lunch Date" aria-pressed="false">
+        <span class="luvora-reward-icon">🍽️</span>
+        <span class="luvora-reward-name">Lunch Date</span>
+      </button>
+
+      <button type="button" class="luvora-reward-option"
+        data-reward="Coffee Date" aria-pressed="false">
+        <span class="luvora-reward-icon">☕</span>
+        <span class="luvora-reward-name">Coffee Date</span>
+      </button>
+
+      <button type="button" class="luvora-reward-option"
+        data-reward="Cake & Dessert Treat" aria-pressed="false">
+        <span class="luvora-reward-icon">🍰</span>
+        <span class="luvora-reward-name">Cake & Dessert Treat</span>
+      </button>
+
+      <button type="button" class="luvora-reward-option"
+        data-reward="Movie Date" aria-pressed="false">
+        <span class="luvora-reward-icon">🎬</span>
+        <span class="luvora-reward-name">Movie Date</span>
+      </button>
+
+      <button type="button" class="luvora-reward-option"
+        data-reward="Surprise Gift" aria-pressed="false">
+        <span class="luvora-reward-icon">🎁</span>
+        <span class="luvora-reward-name">Surprise Gift</span>
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- ALTERNATIVE REWARD -->
+
+  <div class="luvora-reward-divider">
+    <span></span>
+    <span>OR</span>
+    <span></span>
+  </div>
+
+<!-- CUSTOM REWARD OR GIFT CARD -->
+
+<div class="luvora-reward-input-group">
+
+  <label for="customerCustomReward">
+    Create Your Own Special Gift 🎀
   </label>
 
   <textarea
-    id="customerPandaMessage"
-    maxlength="180"
-    rows="3"
-    placeholder="Write your own romantic message..."
-  >If I could gift you one thing, it would be the chance to see yourself through my eyes. ❤️</textarea>
+    id="customerCustomReward"
+    maxlength="300"
+    rows="2"
+    placeholder="Example: A heartfelt message written just for you, a promise to always stand by you, or a little surprise made with love..."
+  ></textarea>
 
-  <small>
-    This message will appear below the panda bouquet.
-  </small>
 </div>
+
+<!-- GIFT CARD INSTRUCTIONS -->
+
+<div class="luvora-reward-note">
+  <p>
+    Write your own special reward above, or paste a gift card or coupon code there.
+    For a gift card, purchase one from Amazon, Flipkart, Myntra, or boAt and enter
+    its code in the same box.
+  </p>
+</div>
+
+
+  <p
+    class="luvora-reward-selection-status"
+    id="customerRewardStatus"
+    aria-live="polite"
+  >
+    Choose one reward option or create your own gift.
+  </p>
+
+</div>
+
+<!-- END — LUVORA REWARD SELECTOR -->
 
 
     <div class="customization-actions">
