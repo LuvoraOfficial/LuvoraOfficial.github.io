@@ -91,6 +91,19 @@ async function uploadDraftMedia(client, surpriseData) {
     }
   }
 
+// Upload the custom camera selfie
+const cameraSelfie = await getDraftFile("camera-selfie");
+
+if (cameraSelfie instanceof Blob) {
+  formData.append(
+    "camera-selfie",
+    cameraSelfie,
+    cameraSelfie.name || "camera-selfie.jpg"
+  );
+
+  hasMedia = true;
+}
+
   const video = await getDraftFile("video");
 
   if (video instanceof Blob) {
@@ -146,13 +159,13 @@ async function uploadDraftMedia(client, surpriseData) {
     );
   }
 
-  return {
-    photos: Array.isArray(data.photos)
-      ? data.photos.filter(Boolean)
-      : [],
-    video: data.video || ""
-  };
-}
+ return {
+  photos: Array.isArray(data.photos)
+    ? data.photos.filter(Boolean)
+    : [],
+  video: data.video || "",
+  cameraSelfie: data.cameraSelfie || ""
+};
 
 
 /* =========================================================
@@ -383,6 +396,8 @@ document.addEventListener("DOMContentLoaded", () => {
 const uploadedMedia = await uploadDraftMedia(client, surpriseData);
 surpriseData.photos = uploadedMedia.photos;
 surpriseData.video = uploadedMedia.video;
+surpriseData.cameraSelfie =
+  uploadedMedia.cameraSelfie || "";
 
 const requestData = {
   name:
@@ -405,6 +420,9 @@ const requestData = {
 
   video:
     surpriseData.video || "",
+
+ camera_selfie:
+  surpriseData.cameraSelfie || "",
 
   selected_rewards:
     Array.isArray(surpriseData.selectedRewards)
@@ -561,7 +579,8 @@ console.log(
           payNowButton.disabled =
             false;
 
-          payNowButton.textContent = "Continue to Payment →";
+       payNowButton.textContent = "Continue to Payment →";
+
 
           alert(
             error.message ||
