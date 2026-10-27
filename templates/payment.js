@@ -384,46 +384,58 @@ const uploadedMedia = await uploadDraftMedia(client, surpriseData);
 surpriseData.photos = uploadedMedia.photos;
 surpriseData.video = uploadedMedia.video;
 
+```javascript
+const requestData = {
+  name:
+    surpriseData.name || "",
 
-  const requestData = {
+  birthday_date:
+    surpriseData.date || "",
 
-            name:
-              surpriseData.name || "",
+  customer_phone:
+    surpriseData.phone || "",
 
-            birthday_date:
-              surpriseData.date || "",
-            customer_phone: 
-               surpriseData.phone || "",
-          
+  template:
+    surpriseData.template ||
+    "birthday-story",
 
-            template:
-              surpriseData.template ||
-              "birthday-story",
+  photos:
+    Array.isArray(surpriseData.photos)
+      ? surpriseData.photos
+      : [],
 
-            photos:
-              Array.isArray(
-                surpriseData.photos
-              )
-                ? surpriseData.photos
-                : [],
+  video:
+    surpriseData.video || "",
 
-            video:
-              surpriseData.video || ""
+  selected_rewards:
+    Array.isArray(surpriseData.selectedRewards)
+      ? surpriseData.selectedRewards
+      : [],
 
-          };
+  custom_reward:
+    typeof surpriseData.customReward === "string"
+      ? surpriseData.customReward.trim().slice(0, 300)
+      : "",
 
+  reward_code:
+    typeof surpriseData.rewardCode === "string"
+      ? surpriseData.rewardCode.trim().slice(0, 200)
+      : ""
+};
 
-          console.log(
-            "Luvora payment request:",
-            requestData
-          );
+console.log(
+  "Luvora payment request:",
+  requestData
+);
+
 console.log("UPLOADED PHOTOS:", requestData.photos);
 console.log("UPLOADED VIDEO:", requestData.video);
 console.log("SURPRISE DATA:", surpriseData);
 console.log("SAVED PHONE:", surpriseData.phone);
-console.log("PHONE INPUT:", document.getElementById("customerPhone")?.value);
-
-
+console.log(
+  "PHONE INPUT:",
+  document.getElementById("customerPhone")?.value
+);
 
           /* -------------------------------------------------
              CALL SUPABASE EDGE FUNCTION
