@@ -2250,19 +2250,157 @@ if (customerDate) {
   const finalBirthdayName = document.getElementById("finalBirthdayName");
   const letterRecipients = document.querySelectorAll(".letter-recipient");
 
+/* ==========================================
+   LUVORA — SINGLE REWARD SELECTOR
+========================================== */
 
+const rewardDropdown = document.getElementById(
+  "customerRewardDropdown"
+);
 
-if (customerPandaMessage && pandaRomanticMessage) {
+const rewardToggle = document.getElementById(
+  "customerRewardToggle"
+);
 
-  customerPandaMessage.addEventListener("input", () => {
+const rewardPlaceholder = document.getElementById(
+  "customerRewardPlaceholder"
+);
 
-    pandaRomanticMessage.textContent =
-      customerPandaMessage.value.trim() ||
-      "You make my world more beautiful. ❤️";
+const rewardOptionsContainer = document.getElementById(
+  "customerRewardOptions"
+);
 
+const rewardOptions = document.querySelectorAll(
+  "#customerRewardOptions .luvora-reward-option"
+);
+
+const customRewardInput = document.getElementById(
+  "customerCustomReward"
+);
+
+/*
+  Return the selected reward.
+  Only one predefined reward is allowed.
+*/
+
+function getSelectedRewards() {
+  const selectedOption = document.querySelector(
+    "#customerRewardOptions .luvora-reward-option.is-selected"
+  );
+
+  return selectedOption
+    ? [selectedOption.dataset.reward]
+    : [];
+}
+
+/*
+  Open or close the dropdown.
+*/
+
+function setRewardDropdownOpen(isOpen) {
+  if (!rewardToggle || !rewardOptionsContainer) return;
+
+  rewardOptionsContainer.hidden = !isOpen;
+
+  rewardToggle.setAttribute(
+    "aria-expanded",
+    String(isOpen)
+  );
+}
+
+/*
+  Clear the predefined reward selection.
+*/
+
+function clearSelectedReward() {
+  rewardOptions.forEach((option) => {
+    option.classList.remove("is-selected");
+    option.setAttribute("aria-pressed", "false");
   });
 
+  if (rewardPlaceholder) {
+    rewardPlaceholder.textContent =
+      "Select a special reward";
+  }
 }
+
+/*
+  Select exactly one predefined reward.
+*/
+
+rewardOptions.forEach((option) => {
+  option.setAttribute("aria-pressed", "false");
+
+  option.addEventListener("click", () => {
+    const rewardName = option.dataset.reward;
+
+    if (!rewardName) return;
+
+    // Remove any previous selection.
+    clearSelectedReward();
+
+    // Select this reward.
+    option.classList.add("is-selected");
+
+    option.setAttribute("aria-pressed", "true");
+
+    // Display the selected reward in the dropdown.
+    if (rewardPlaceholder) {
+      rewardPlaceholder.textContent =
+        option.querySelector(".luvora-reward-name")
+          ?.textContent.trim() || rewardName;
+    }
+
+    // A predefined reward and custom text cannot coexist.
+    if (customRewardInput) {
+      customRewardInput.value = "";
+    }
+
+    // Close the dropdown after selection.
+    setRewardDropdownOpen(false);
+  });
+});
+
+/*
+  Toggle dropdown visibility.
+*/
+
+if (rewardToggle) {
+  rewardToggle.addEventListener("click", () => {
+    const isOpen =
+      rewardToggle.getAttribute("aria-expanded") === "true";
+
+    setRewardDropdownOpen(!isOpen);
+  });
+}
+
+/*
+  Clicking outside the dropdown closes it.
+*/
+
+document.addEventListener("click", (event) => {
+  if (
+    rewardDropdown &&
+    !rewardDropdown.contains(event.target)
+  ) {
+    setRewardDropdownOpen(false);
+  }
+});
+
+/*
+  Typing a custom reward cancels the predefined selection.
+*/
+
+if (customRewardInput) {
+  customRewardInput.addEventListener("input", () => {
+    if (customRewardInput.value.trim()) {
+      clearSelectedReward();
+    }
+  });
+}
+
+/* END — LUVORA SINGLE REWARD SELECTOR */
+
 
 function updateBirthdayName() {
   const name = customerName
@@ -2968,29 +3106,36 @@ if (createSurpriseButton) {
           .toString(36)
           .substring(2, 10);
 
-      /* =================================================
-         CREATE SURPRISE DATA
-         ================================================= */
-const surpriseData = {
+/* =================================================
+   CREATE SURPRISE DATA
+   ================================================= */
 
+const customRewardText = customRewardInput
+  ? customRewardInput.value.trim()
+  : "";
+
+const surpriseData = {
   draftId: draftId,
 
-  template:
-    "birthday-story",
+  template: "birthday-story",
 
-  name:
-    name,
+  name: name,
 
-  date:
-    date,
+  date: date,
 
-  phone:
-    phone,
+  phone: phone,
 
-  mediaStorage:
-    "indexeddb"
+  selectedRewards: customRewardText
+    ? []
+    : getSelectedRewards(),
 
+  customReward: customRewardText,
+
+  rewardCode: "",
+
+  mediaStorage: "indexeddb"
 };
+
       /* =================================================
          SERIALIZE DATA
          ================================================= */
@@ -3057,17 +3202,21 @@ async function loadSharedSurprise() {
   if (!LUVORA_IS_FINAL_SURPRISE) return;
 
   try {
-    const { data, error } = await supabaseClient.functions.invoke(
-      "get-shared-surprise",
-      {
-        body: {
-          share_id: LUVORA_SHARE_ID
+    const { data, error } =
+      await supabaseClient.functions.invoke(
+        "get-shared-surprise",
+        {
+          body: {
+            share_id: LUVORA_SHARE_ID
+          }
         }
-      }
-    );
+      );
 
     if (error) {
-      console.error("Shared surprise function error:", error);
+      console.error(
+        "Shared surprise function error:",
+        error
+      );
       return;
     }
 
@@ -3081,19 +3230,66 @@ async function loadSharedSurprise() {
 
     const surprise = data.surprise;
 
-    BIRTHDAY_CONFIG.name = surprise.name || "My Love";
-    BIRTHDAY_CONFIG.date = surprise.birthday_date || "";
+    // Customer information
+    BIRTHDAY_CONFIG.name =
+      surprise.name || "My Love";
 
-    BIRTHDAY_CONFIG.photos = Array.isArray(surprise.photos)
-      ? surprise.photos
-      : [];
+    BIRTHDAY_CONFIG.date =
+      surprise.birthday_date || "";
 
-    BIRTHDAY_CONFIG.video = surprise.video || "";
+    // Photos and video
+    BIRTHDAY_CONFIG.photos =
+      Array.isArray(surprise.photos)
+        ? surprise.photos
+        : [];
+
+    BIRTHDAY_CONFIG.video =
+      surprise.video || "";
+
+    // Selected predefined rewards
+    BIRTHDAY_CONFIG.selectedRewards =
+      Array.isArray(surprise.selected_rewards)
+        ? surprise.selected_rewards
+        : [];
+
+    // Custom reward or gift card code
+    BIRTHDAY_CONFIG.customReward =
+      typeof surprise.custom_reward === "string"
+        ? surprise.custom_reward.trim()
+        : "";
+
+    BIRTHDAY_CONFIG.rewardCode =
+      typeof surprise.reward_code === "string"
+        ? surprise.reward_code.trim()
+        : "";
+
+    // Reward displayed on the scratch card
+    BIRTHDAY_CONFIG.reward =
+      BIRTHDAY_CONFIG.customReward ||
+      BIRTHDAY_CONFIG.rewardCode ||
+      BIRTHDAY_CONFIG.selectedRewards[0] ||
+      "";
+
+    console.log(
+      "Luvora shared reward loaded:",
+      {
+        selectedRewards:
+          BIRTHDAY_CONFIG.selectedRewards,
+        customReward:
+          BIRTHDAY_CONFIG.customReward,
+        rewardCode:
+          BIRTHDAY_CONFIG.rewardCode
+      }
+    );
 
   } catch (error) {
-    console.error("Unable to load shared surprise:", error);
+    console.error(
+      "Unable to load shared surprise:",
+      error
+    );
   }
 }
+
 
 async function initializeBirthdayExperience() {
   const isFinalSurprise = Boolean(LUVORA_SHARE_ID);
@@ -4184,52 +4380,135 @@ for (let i = questionPool.length - 1; i > 0; i--) {
     }
   }
 
-  function getRewardText() {
-    if (
-      typeof BIRTHDAY_CONFIG !== "undefined" &&
-      BIRTHDAY_CONFIG.reward
-    ) {
-      return String(BIRTHDAY_CONFIG.reward).trim();
-    }
+function getRewardData() {
+  // 1. Read custom reward from the current form, if available.
+  const customInput = document.getElementById(
+    "customerCustomReward"
+  );
 
-    if (window.LUVORA_REWARD) {
-      return String(window.LUVORA_REWARD).trim();
-    }
+  const customReward = customInput
+    ? customInput.value.trim()
+    : "";
 
-    try {
-      const sources = [
-        window.sessionStorage,
-        window.localStorage
-      ];
-
-      for (const storage of sources) {
-        const raw = storage.getItem("luvoraSurpriseData");
-
-        if (!raw) continue;
-
-        const data = JSON.parse(raw);
-
-        const reward =
-          data.reward ||
-          data.customerReward ||
-          data.mysteryGiftReward;
-
-        if (
-          typeof reward === "string" &&
-          reward.trim()
-        ) {
-          return reward.trim();
-        }
-      }
-    } catch (error) {
-      console.warn(
-        "Luvora reward data could not be read.",
-        error
-      );
-    }
-
-    return "Tonight’s dinner is on me, my love✨";
+  if (customReward) {
+    return {
+      text: customReward,
+      copyable: true
+    };
   }
+
+  // 2. Read a selected predefined reward in Preview mode.
+  const selectedOption = document.querySelector(
+    "#customerRewardOptions .luvora-reward-option.is-selected"
+  );
+
+  if (selectedOption) {
+    return {
+      text: selectedOption.dataset.reward || "",
+      copyable: false
+    };
+  }
+
+  // 3. Read rewards loaded from the paid shared link.
+  if (typeof BIRTHDAY_CONFIG !== "undefined") {
+    const sharedCustomReward =
+      typeof BIRTHDAY_CONFIG.customReward === "string"
+        ? BIRTHDAY_CONFIG.customReward.trim()
+        : "";
+
+    if (sharedCustomReward) {
+      return {
+        text: sharedCustomReward,
+        copyable: true
+      };
+    }
+
+    const sharedRewardCode =
+      typeof BIRTHDAY_CONFIG.rewardCode === "string"
+        ? BIRTHDAY_CONFIG.rewardCode.trim()
+        : "";
+
+    if (sharedRewardCode) {
+      return {
+        text: sharedRewardCode,
+        copyable: true
+      };
+    }
+
+    const sharedRewards = Array.isArray(
+      BIRTHDAY_CONFIG.selectedRewards
+    )
+      ? BIRTHDAY_CONFIG.selectedRewards
+      : [];
+
+    if (sharedRewards.length && sharedRewards[0]) {
+      return {
+        text: String(sharedRewards[0]).trim(),
+        copyable: false
+      };
+    }
+
+    // Backward compatibility with the existing reward property.
+    if (BIRTHDAY_CONFIG.reward) {
+      return {
+        text: String(BIRTHDAY_CONFIG.reward).trim(),
+        copyable: true
+      };
+    }
+  }
+
+  // 4. Legacy global reward fallback.
+  if (window.LUVORA_REWARD) {
+    return {
+      text: String(window.LUVORA_REWARD).trim(),
+      copyable: true
+    };
+  }
+
+  // 5. Read saved Preview data as a fallback.
+  try {
+    const raw =
+      sessionStorage.getItem("luvoraSurpriseData") ||
+      localStorage.getItem("luvoraSurpriseData");
+
+    if (raw) {
+      const data = JSON.parse(raw);
+
+      const custom = String(
+        data.customReward || ""
+      ).trim();
+
+      if (custom) {
+        return {
+          text: custom,
+          copyable: true
+        };
+      }
+
+      const rewards = Array.isArray(data.selectedRewards)
+        ? data.selectedRewards
+        : [];
+
+      if (rewards.length && rewards[0]) {
+        return {
+          text: String(rewards[0]).trim(),
+          copyable: false
+        };
+      }
+    }
+  } catch (error) {
+    console.warn(
+      "Could not read Luvora reward data.",
+      error
+    );
+  }
+
+  // No default reward: never show an unrelated old message.
+  return {
+    text: "",
+    copyable: false
+  };
+}
 
   function init() {
     const root = document.getElementById(ROOT_ID);
@@ -4804,12 +5083,81 @@ targetBox =
         setVisible(scratchResult, false);
       }
 
-      if (rewardText) {
-        rewardText.textContent = getRewardText();
-      }
+    const rewardData = getRewardData();
 
+if (rewardText) {
+  rewardText.textContent = rewardData.text;
+}
+
+const copyRewardButton = document.getElementById(
+  "luvoraCopyReward"
+);
+
+const copyRewardStatus = document.getElementById(
+  "luvoraCopyRewardStatus"
+);
+
+if (copyRewardButton) {
+  copyRewardButton.hidden = !(
+    rewardData.copyable && rewardData.text
+  );
+}
+
+if (copyRewardStatus) {
+  copyRewardStatus.hidden = true;
+  copyRewardStatus.textContent = "";
+}
       setupScratchSurface();
     }
+
+/* -----------------------------------------
+   COPY CUSTOM REWARD
+----------------------------------------- */
+
+const copyRewardButton = document.getElementById(
+  "luvoraCopyReward"
+);
+
+const copyRewardStatus = document.getElementById(
+  "luvoraCopyRewardStatus"
+);
+
+if (
+  copyRewardButton &&
+  copyRewardButton.dataset.copyHandlerAttached !== "true"
+) {
+  copyRewardButton.dataset.copyHandlerAttached = "true";
+
+  copyRewardButton.addEventListener("click", async function () {
+    const rewardData = getRewardData();
+
+    if (!rewardData.text || !rewardData.copyable) {
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(rewardData.text);
+
+      copyRewardButton.textContent = "Copied! ✓";
+
+      if (copyRewardStatus) {
+        copyRewardStatus.textContent = "Reward copied successfully!";
+        copyRewardStatus.hidden = false;
+      }
+
+      window.setTimeout(function () {
+        copyRewardButton.textContent = "Copy Reward";
+      }, 1800);
+    } catch (error) {
+      if (copyRewardStatus) {
+        copyRewardStatus.textContent =
+          "Copy unavailable. Please select and copy the reward manually.";
+
+        copyRewardStatus.hidden = false;
+      }
+    }
+  });
+}
 
     function setupScratchSurface() {
       if (scratchInitialized || !scratchCard) {
