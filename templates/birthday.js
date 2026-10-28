@@ -3231,11 +3231,50 @@ async function loadSharedSurprise() {
     const surprise = data.surprise;
 
 // Load the uploaded camera selfie for the paid shared link.
-sharedCameraSelfie =
+window.sharedCameraSelfie = "";
+
+const cameraSelfiePath =
   typeof surprise.camera_selfie === "string"
     ? surprise.camera_selfie.trim()
     : "";
 
+if (cameraSelfiePath) {
+  try {
+    const {
+      data: selfieUrlData,
+      error: selfieUrlError
+    } = await supabaseClient
+      .storage
+      .from("surprise-media")
+      .createSignedUrl(cameraSelfiePath, 60 * 60);
+
+    if (selfieUrlError) {
+      console.error(
+        "Could not load shared camera selfie:",
+        selfieUrlError
+      );
+    } else {
+      window.sharedCameraSelfie =
+        selfieUrlData?.signedUrl || "";
+
+      console.log(
+        "LUVORA shared selfie URL loaded:",
+        Boolean(window.sharedCameraSelfie)
+      );
+    }
+  } catch (selfieError) {
+    console.error(
+      "Shared camera selfie loading failed:",
+      selfieError
+    );
+
+    window.sharedCameraSelfie = "";
+  }
+} else {
+  console.warn(
+    "No camera_selfie path returned for this shared surprise."
+  );
+}
     // Hide letter editing controls on the paid shared link.
 if (LUVORA_IS_FINAL_SURPRISE) {
   const letterEditTools = document.querySelector(".letter-edit-tools");
@@ -5731,7 +5770,7 @@ if (
     "If I could keep one moment forever, it would be the one where I'm close to you. You make ordinary moments feel like a beautiful love story.";
 
   let uploadedURL = null;
-  let sharedCameraSelfie = "";
+  window.sharedCameraSelfie = "";
   let printing = false;
   let printed = false;
   let typingTimer = null;
@@ -5859,9 +5898,9 @@ function typeLoveMessage(onComplete) {
     button.disabled = true;
     hint.style.opacity = "0";
 
-    const selectedPhoto =
-  (LUVORA_IS_FINAL_SURPRISE && sharedCameraSelfie)
-    ? sharedCameraSelfie
+  const selectedPhoto =
+  (LUVORA_IS_FINAL_SURPRISE && window.sharedCameraSelfie)
+    ? window.sharedCameraSelfie
     : (uploadedURL || DEFAULT_SELFIE);
 
     status.textContent = "Capturing your little moment...";
@@ -5891,8 +5930,8 @@ function typeLoveMessage(onComplete) {
     if (!printing || !printed) return;
 
     photo.src = selectedPhoto;
-   photo.alt =
-  (LUVORA_IS_FINAL_SURPRISE && sharedCameraSelfie) || uploadedURL
+photo.alt =
+  (LUVORA_IS_FINAL_SURPRISE && window.sharedCameraSelfie) || uploadedURL
     ? "Your uploaded couple selfie"
     : "Our beautiful memory";
 
