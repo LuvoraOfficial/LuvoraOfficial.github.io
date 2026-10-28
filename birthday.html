@@ -33,15 +33,17 @@
 
 <style>
 
-/* Prevent page flash on paid surprise links */
-html.luvora-final-mode .birthday-background {
-  display: none !important;
-}
 
-html.luvora-final-mode #luvoraWelcome {
+/* Show Welcome only while it is not hidden */
+html.luvora-final-mode #luvoraWelcome:not([hidden]) {
   display: flex !important;
   visibility: visible !important;
   opacity: 1 !important;
+}
+
+/* Never force Welcome to display after it is hidden */
+html.luvora-final-mode #luvoraWelcome[hidden] {
+  display: none !important;
 }
 
 /* ===== LUVORA BIRTHDAY OVERLAY FIX ===== */
