@@ -3229,10 +3229,6 @@ async function loadSharedSurprise() {
     }
 
     const surprise = data.surprise;
-console.log(
-  "DEBUG camera_selfie value:",
-  surprise.camera_selfie
-);
 
 // Load the uploaded camera selfie for the paid shared link.
 window.sharedCameraSelfie = "";
@@ -4297,19 +4293,28 @@ for (let i = 0; i < 44; i++) {
 
 
 window.setTimeout(function () {
+
   // Hide the welcome screen after its exit animation.
-  welcome.hidden = true;
 
-  document.documentElement.classList.remove(
-    "luvora-welcome-active"
-  );
 
-  // Open the premium birthday overlay.
+  window.setTimeout(function () {
+
+  // 1. Show the birthday overlay FIRST.
   if (typeof showLuvoraBirthdayOverlay === "function") {
     showLuvoraBirthdayOverlay();
   } else {
     console.error("Birthday overlay function not found.");
+    return;
   }
+
+  // 2. Hide Welcome only AFTER opening the overlay.
+  welcome.hidden = true;
+
+  // 3. Release the Welcome screen scroll lock.
+  document.documentElement.classList.remove(
+    "luvora-welcome-active",
+    "luvora-welcome-open"
+  );
 
 }, 1600);
 
