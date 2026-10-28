@@ -4288,14 +4288,11 @@ for (let i = 0; i < 44; i++) {
   dustContainer.appendChild(dust);
 }
 
-    // Start the Welcome fade-out animation.
-    document.documentElement.classList.add("luvora-welcome-open");
 
+// Start the Welcome fade-out animation.
+document.documentElement.classList.add("luvora-welcome-open");
 
 window.setTimeout(function () {
-// Hide the welcome screen after its exit animation.
-window.setTimeout(function () {
-
   // 1. Show the birthday overlay first.
   if (typeof showLuvoraBirthdayOverlay === "function") {
     showLuvoraBirthdayOverlay();
@@ -4312,12 +4309,13 @@ window.setTimeout(function () {
     "luvora-welcome-active",
     "luvora-welcome-open"
   );
-
 }, 1600);
 
 openButton.blur();
+
 });
 })();
+
 
 /* ===== LUVORA TEST DETAILS PERSISTENCE ===== */
 (function () {
