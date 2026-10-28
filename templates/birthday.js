@@ -3384,6 +3384,7 @@ async function initializeBirthdayExperience() {
   loadBirthdayVideo();
   setupCustomizationSystem();
   startBackgroundHearts();
+  document.documentElement.classList.remove("luvora-page-booting");
 }
 /* =========================================================
    20 — START
@@ -3656,10 +3657,13 @@ const dateInput = document.getElementById("customerDate") || document.getElement
 
   /* ---------- PERSONALIZED NAME ---------- */
 
-  nameElement.textContent =
-    nameInput && nameInput.value.trim()
-      ? nameInput.value.trim()
-      : "Someone Special";
+ 
+nameElement.textContent =
+  (nameInput && nameInput.value.trim()) ||
+  BIRTHDAY_CONFIG.name ||
+  "Someone Special";
+
+
 
   /* ---------- PERSONALIZED CALENDAR ---------- */
 
@@ -3733,9 +3737,14 @@ const dateInput = document.getElementById("customerDate") || document.getElement
   }
 }
 
-  const birthday = parseBirthdayDate(
-    dateInput ? dateInput.value : ""
-  );
+
+const birthdayDateValue =
+  (dateInput && dateInput.value.trim()) ||
+  BIRTHDAY_CONFIG.date ||
+  "";
+
+const birthday = parseBirthdayDate(birthdayDateValue);
+
 
   daysElement.innerHTML = "";
 
