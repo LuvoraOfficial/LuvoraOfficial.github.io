@@ -4289,30 +4289,28 @@ for (let i = 0; i < 44; i++) {
 }
 
 
-// Start the Welcome fade-out animation.
+// 1. Open the Birthday Overlay immediately.
+if (typeof showLuvoraBirthdayOverlay === "function") {
+  showLuvoraBirthdayOverlay();
+} else {
+  console.error("Birthday overlay function not found.");
+  return;
+}
+
+// 2. Start fading out the Welcome screen.
 document.documentElement.classList.add("luvora-welcome-open");
 
+// 3. Hide Welcome after its fade-out animation.
 window.setTimeout(function () {
-  // 1. Show the birthday overlay first.
-  if (typeof showLuvoraBirthdayOverlay === "function") {
-    showLuvoraBirthdayOverlay();
-  } else {
-    console.error("Birthday overlay function not found.");
-    return;
-  }
-
-  // 2. Hide the Welcome screen.
   welcome.hidden = true;
 
-  // 3. Release the Welcome screen scroll lock.
   document.documentElement.classList.remove(
     "luvora-welcome-active",
     "luvora-welcome-open"
   );
-}, 1600);
+}, 700);
 
 openButton.blur();
-
 });
 })();
 
