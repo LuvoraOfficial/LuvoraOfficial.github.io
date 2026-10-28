@@ -21,7 +21,33 @@
   <!-- Birthday page stylesheet -->
   <link rel="stylesheet" href="css/birthday.css">
 
+<script>
+(function () {
+  const params = new URLSearchParams(window.location.search);
+
+  if (params.has("id") && params.get("id")) {
+    document.documentElement.classList.add("luvora-final-mode");
+  }
+})();
+</script>
+
 <style>
+
+/* Prevent page flash on paid surprise links */
+html.luvora-final-mode .birthday-background {
+  display: none !important;
+}
+
+html.luvora-final-mode .birthday-story > :not(#luvoraWelcome) {
+  display: none !important;
+}
+
+html.luvora-final-mode #luvoraWelcome {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
 /* ===== LUVORA BIRTHDAY OVERLAY FIX ===== */
 
 #luvoraBirthdayOverlay {
