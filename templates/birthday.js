@@ -3229,6 +3229,10 @@ async function loadSharedSurprise() {
     }
 
     const surprise = data.surprise;
+console.log(
+  "DEBUG camera_selfie value:",
+  surprise.camera_selfie
+);
 
 // Load the uploaded camera selfie for the paid shared link.
 window.sharedCameraSelfie = "";
