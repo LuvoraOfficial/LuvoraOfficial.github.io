@@ -4293,13 +4293,10 @@ for (let i = 0; i < 44; i++) {
 
 
 window.setTimeout(function () {
+// Hide the welcome screen after its exit animation.
+window.setTimeout(function () {
 
-  // Hide the welcome screen after its exit animation.
-
-
-  window.setTimeout(function () {
-
-  // 1. Show the birthday overlay FIRST.
+  // 1. Show the birthday overlay first.
   if (typeof showLuvoraBirthdayOverlay === "function") {
     showLuvoraBirthdayOverlay();
   } else {
@@ -4307,7 +4304,7 @@ window.setTimeout(function () {
     return;
   }
 
-  // 2. Hide Welcome only AFTER opening the overlay.
+  // 2. Hide the Welcome screen.
   welcome.hidden = true;
 
   // 3. Release the Welcome screen scroll lock.
@@ -4318,8 +4315,8 @@ window.setTimeout(function () {
 
 }, 1600);
 
-    openButton.blur();
-  });
+openButton.blur();
+});
 })();
 
 /* ===== LUVORA TEST DETAILS PERSISTENCE ===== */
