@@ -23,10 +23,17 @@
 
 <script>
 (function () {
+  const root = document.documentElement;
   const params = new URLSearchParams(window.location.search);
+  const shareId = params.get("id");
 
-  if (params.has("id") && params.get("id")) {
-    document.documentElement.classList.add("luvora-final-mode");
+  if (shareId) {
+    root.classList.add(
+      "luvora-final-mode",
+      "luvora-welcome-active"
+    );
+  } else {
+    root.classList.add("luvora-page-booting");
   }
 })();
 </script>
@@ -539,6 +546,35 @@ html.luvora-final-mode #luvoraWelcome[hidden] {
     line-height: 1.5;
   }
 }
+
+/* Prevent the Birthday Page flash during initialization */
+html.luvora-page-booting .birthday-background {
+  visibility: hidden !important;
+}
+
+html.luvora-page-booting .birthday-story > :not(#customizationPanel) {
+  visibility: hidden !important;
+}
+
+/* Paid link: show Welcome first, not the Birthday Page */
+html.luvora-welcome-active .birthday-background {
+  visibility: hidden !important;
+}
+
+html.luvora-welcome-active .birthday-story > :not(#luvoraWelcome) {
+  visibility: hidden !important;
+}
+
+html.luvora-welcome-active #luvoraWelcome:not([hidden]) {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Respect JavaScript when it hides Welcome */
+html.luvora-welcome-active #luvoraWelcome[hidden] {
+  display: none !important;
+}
+
 
 
 </style>
