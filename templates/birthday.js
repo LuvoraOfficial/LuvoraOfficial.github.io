@@ -3237,35 +3237,45 @@ console.log(
 // Load the uploaded camera selfie for the paid shared link.
 window.sharedCameraSelfie = "";
 
-const cameraSelfiePath =
+const cameraSelfieValue =
   typeof surprise.camera_selfie === "string"
     ? surprise.camera_selfie.trim()
     : "";
 
-if (cameraSelfiePath) {
+if (cameraSelfieValue) {
   try {
-    const {
-      data: selfieUrlData,
-      error: selfieUrlError
-    } = await supabaseClient
-      .storage
-      .from("surprise-media")
-      .createSignedUrl(cameraSelfiePath, 60 * 60);
-
-    if (selfieUrlError) {
-      console.error(
-        "Could not load shared camera selfie:",
-        selfieUrlError
-      );
+    // If a signed URL already exists, use it directly.
+    if (
+      /^https:\/\/[^/]+\/storage\/v1\/object\/sign\/surprise-media\//i
+        .test(cameraSelfieValue)
+    ) {
+      window.sharedCameraSelfie = cameraSelfieValue;
     } else {
+      // Otherwise, treat the value as a Storage object path.
+      const cameraSelfiePath = cameraSelfieValue
+        .replace(/^\/+/, "")
+        .replace(/^surprise-media\//i, "");
+
+      const {
+        data: selfieUrlData,
+        error: selfieUrlError
+      } = await supabaseClient
+        .storage
+        .from("surprise-media")
+        .createSignedUrl(cameraSelfiePath, 60 * 60);
+
+      if (selfieUrlError) {
+        throw selfieUrlError;
+      }
+
       window.sharedCameraSelfie =
         selfieUrlData?.signedUrl || "";
-
-      console.log(
-        "LUVORA shared selfie URL loaded:",
-        Boolean(window.sharedCameraSelfie)
-      );
     }
+
+    console.log(
+      "LUVORA shared selfie ready:",
+      Boolean(window.sharedCameraSelfie)
+    );
   } catch (selfieError) {
     console.error(
       "Shared camera selfie loading failed:",
@@ -3276,9 +3286,10 @@ if (cameraSelfiePath) {
   }
 } else {
   console.warn(
-    "No camera_selfie path returned for this shared surprise."
+    "No camera selfie was found for this shared surprise."
   );
 }
+
     // Hide letter editing controls on the paid shared link.
 if (LUVORA_IS_FINAL_SURPRISE) {
   const letterEditTools = document.querySelector(".letter-edit-tools");
