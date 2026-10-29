@@ -6822,17 +6822,26 @@ text-overflow: clip !important;
   line-height: 1.8;
 }
 
-.welcome-heart {
-  display: block;
-  margin-bottom: 16px;
+#welcomeHeart {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  margin: 0 auto 16px;
+  padding: 0;
+
   color: #d689a4;
   font-family: Georgia, serif;
   font-size: clamp(48px, 6vw, 68px);
   line-height: 1;
+
   text-align: center;
   transform-origin: center center;
-  animation: luvoraHeartBeat 2.2s ease-in-out infinite;
+animation: luvoraWelcomeHeartBeat 2.2s ease-in-out infinite;
 }
+
 .welcome-greeting {
   margin-bottom: 16px;
   color: #f1e8db;
@@ -6946,16 +6955,15 @@ text-overflow: clip !important;
   }
 }
 
-@keyframes luvoraHeartBeat {
+@keyframes luvoraWelcomeHeartBeat {
   0%, 100% {
-    transform: translateX(0) scale(1);
+    transform: scale(1);
   }
 
   50% {
-    transform: translateX(0) scale(1.1);
+    transform: scale(1.1);
   }
 }
-
 /* Mobile */
 @media (max-width: 480px) {
   .luvora-welcome {
@@ -14251,224 +14259,192 @@ html.luvora-final-mode #letterSection #letterEditor {
 }
 
 /* =========================================
-   LUVORA — COMPACT PREMIUM CAKE HEADING
+   LUVORA — MOBILE HANGING MEMORY DIARY
+   PHONE ONLY
 ========================================= */
 
-#cakeSection .section-heading {
-  margin-bottom: clamp(22px, 3vw, 34px);
-  padding-inline: 16px;
+.mobile-memory-diary {
+  display: none;
 }
 
-#cakeSection .section-eyebrow {
-  display: block;
-  margin-bottom: 9px;
-  font-size: clamp(9px, 0.8vw, 11px);
-  font-weight: 600;
-  letter-spacing: 2.2px;
-  line-height: 1.5;
-  color: #d689a4;
-}
+@media screen and (max-width: 600px) {
 
-#cakeSection .section-heading h2 {
-  margin: 0 auto 10px;
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: clamp(27px, 3vw, 38px);
-  font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: -0.4px;
-  color: #f1e8db;
-  text-wrap: balance;
-}
-
-#cakeSection .section-heading h2 span {
-  display: inline-block;
-  font-size: 0.76em;
-  vertical-align: 0.06em;
-}
-
-#cakeSection .section-heading p {
-  max-width: 390px;
-  margin: 0 auto;
-  font-family: "DM Sans", Arial, sans-serif;
-  font-size: clamp(12px, 1.05vw, 14px);
-  font-weight: 500;
-  line-height: 1.65;
-  letter-spacing: 0.05px;
-  color: rgba(241, 232, 219, 0.88);
-  text-wrap: balance;
-}
-
-/* Tablet */
-@media (min-width: 481px) and (max-width: 1024px) {
-  #cakeSection .section-heading {
-    margin-bottom: 26px;
+  .memory-book {
+    zoom: 1 !important;
   }
 
-  #cakeSection .section-heading h2 {
-    font-size: clamp(27px, 3.5vw, 34px);
+  .memory-book-area.mobile-diary-open .memory-book {
+    display: none !important;
   }
 
-  #cakeSection .section-heading p {
-    max-width: 350px;
-    font-size: 12.5px;
-  }
-}
-
-/* Mobile — compact but clearly readable */
-@media (max-width: 480px) {
-  #cakeSection .section-heading {
-    margin-bottom: 20px;
-    padding-inline: 22px;
+  .mobile-memory-diary {
+    display: none;
+    position: relative;
+    width: 100%;
+    min-height: 470px;
+    padding: 28px 17px 35px;
+    box-sizing: border-box;
   }
 
-  #cakeSection .section-eyebrow {
-    margin-bottom: 7px;
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 1.8px;
+  .mobile-memory-diary .mobile-diary-thread {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 38px;
+    background: linear-gradient(
+      to bottom,
+      #a77b70,
+      #e2c5b7
+    );
+    transform: translateX(-50%);
   }
 
-  #cakeSection .section-heading h2 {
+  .mobile-memory-diary .mobile-diary-sheet {
+    position: relative;
+    width: 100%;
+    max-width: 390px;
+    margin: 10px auto 0;
+    padding: 24px 17px 20px;
+    box-sizing: border-box;
+
+    background:
+      linear-gradient(
+        145deg,
+        #fffdf9,
+        #f8edf0 65%,
+        #f1e1e5
+      );
+
+    border: 1px solid rgba(119, 67, 79, .18);
+
+    box-shadow:
+      0 15px 35px rgba(55, 20, 35, .15),
+      0 3px 8px rgba(55, 20, 35, .08);
+
+    transform: rotate(-1deg);
+    animation: diaryPageAppear .45s ease both;
+  }
+
+  .mobile-diary-tape {
+    position: absolute;
+    width: 76px;
+    height: 23px;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-3deg);
+
+    background: rgba(220, 177, 164, .65);
+    border: 1px solid rgba(150, 100, 90, .12);
+    z-index: 3;
+  }
+
+  .mobile-diary-photo {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 7px;
+    box-sizing: border-box;
+
+    background: #fff;
+    border: 1px solid #ead9d9;
+
+    box-shadow: 0 5px 15px rgba(60, 30, 40, .13);
+  }
+
+  .mobile-diary-photo img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 55svh;
+    object-fit: contain;
+  }
+
+  .mobile-diary-quote {
+    margin-top: 20px;
+    padding: 15px 10px 12px;
+    text-align: center;
+
+    border-top: 1px solid rgba(125, 67, 85, .2);
+    border-bottom: 1px solid rgba(125, 67, 85, .2);
+
+    color: #633b4d;
+  }
+
+  .mobile-diary-quote span {
+    display: block;
     margin-bottom: 8px;
-    font-size: clamp(25px, 6.8vw, 30px);
-    font-weight: 600;
-    line-height: 1.25;
-    letter-spacing: -0.3px;
+    color: #b77b91;
+    font-size: 19px;
   }
 
-  #cakeSection .section-heading p {
-    max-width: 300px;
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 1.6;
+  .mobile-diary-quote p {
+    margin: 0;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  .mobile-diary-counter {
+    margin-top: 17px;
+    text-align: center;
+    color: #a47b87;
+    font-family: "DM Sans", sans-serif;
+    font-size: 9px;
+    letter-spacing: 2.5px;
+  }
+
+  .memory-book-area.mobile-diary-open .mobile-memory-diary {
+    display: block;
+  }
+
+  @keyframes diaryPageAppear {
+    from {
+      opacity: 0;
+      transform: translateX(18px) rotate(1deg);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0) rotate(-1deg);
+    }
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .mobile-memory-diary {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .mobile-diary-quote p {
+    font-size: 14px;
   }
 }
 
 /* =========================================
-   LUVORA — MYSTERY GIFT STABLE MOBILE LAYOUT
+   LUVORA — MOBILE & TABLET ENVELOPE CENTER
 ========================================= */
 
-#luvoraGiftGame .luvora-game-inner {
-  width: 100%;
-  box-sizing: border-box;
+@media screen and (max-width: 800px) {
+
+  #letterSection .envelope-area {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    width: 100%;
+    min-height: clamp(420px, 65svh, 620px) !important;
+
+    padding: 30px 12px !important;
+    box-sizing: border-box;
+  }
+
+  #letterSection .love-envelope {
+    display: block;
+    flex: 0 0 auto;
+    margin: 0 auto !important;
+  }
+
 }
-
-#luvoraGiftGame .luvora-game-heading {
-  box-sizing: border-box;
-  min-height: 138px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  text-align: center;
-}
-
-#luvoraGiftGame .luvora-game-eyebrow {
-  line-height: 1.4;
-  margin-bottom: 8px;
-}
-
-#luvoraGiftGame #luvoraGameTitle {
-  margin-top: 0;
-  margin-bottom: 10px;
-  line-height: 1.2;
-  text-wrap: balance;
-}
-
-#luvoraGiftGame .luvora-game-description {
-  margin-top: 0;
-  margin-bottom: 0;
-  line-height: 1.5;
-  max-width: 360px;
-  text-wrap: balance;
-}
-
-#luvoraGiftGame .luvora-game-status {
-  box-sizing: border-box;
-  min-height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
-#luvoraGiftGame #luvoraGameInstruction {
-  margin-top: 0;
-  margin-bottom: 0;
-  line-height: 1.45;
-  text-wrap: balance;
-}
-
-#luvoraGiftGame .luvora-gift-stage {
-  box-sizing: border-box;
-  min-height: 190px;
-  margin-top: 14px;
-  padding-top: 12px;
-  align-items: center;
-}
-
-/* All mobile sizes */
-@media (max-width: 600px) {
-  #luvoraGiftGame .luvora-game-inner {
-    padding-inline: 14px;
-  }
-
-  #luvoraGiftGame .luvora-game-heading {
-    min-height: 126px;
-  }
-
-  #luvoraGiftGame .luvora-game-eyebrow {
-    font-size: 9px;
-    letter-spacing: 1.7px;
-    margin-bottom: 7px;
-  }
-
-  #luvoraGiftGame #luvoraGameTitle {
-    font-size: clamp(25px, 6.2vw, 31px);
-    line-height: 1.2;
-    margin-bottom: 8px;
-  }
-
-  #luvoraGiftGame .luvora-game-description {
-    max-width: 310px;
-    font-size: 12px;
-    line-height: 1.5;
-  }
-
-  #luvoraGiftGame .luvora-game-status {
-    min-height: 62px;
-    padding: 8px 4px;
-  }
-
-  #luvoraGiftGame #luvoraGameInstruction {
-    font-size: 12px;
-    line-height: 1.45;
-  }
-
-  #luvoraGiftGame .luvora-gift-stage {
-    min-height: 180px;
-    margin-top: 12px;
-    padding-top: 16px;
-  }
-}
-
-/* Extra-small phones */
-@media (max-width: 360px) {
-  #luvoraGiftGame .luvora-game-heading {
-    min-height: 126px;
-  }
-
-  #luvoraGiftGame #luvoraGameTitle {
-    font-size: 25px;
-  }
-
-  #luvoraGiftGame .luvora-game-description {
-    font-size: 11.5px;
-  }
-
-  #luvoraGiftGame .luvora-gift-stage {
-    margin-top: 12px;
-    padding-top: 16px;
-  }
-}
-
