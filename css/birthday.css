@@ -6823,14 +6823,16 @@ text-overflow: clip !important;
 }
 
 .welcome-heart {
+  display: block;
   margin-bottom: 16px;
   color: #d689a4;
   font-family: Georgia, serif;
   font-size: clamp(48px, 6vw, 68px);
   line-height: 1;
+  text-align: center;
+  transform-origin: center center;
   animation: luvoraHeartBeat 2.2s ease-in-out infinite;
 }
-
 .welcome-greeting {
   margin-bottom: 16px;
   color: #f1e8db;
@@ -6946,10 +6948,11 @@ text-overflow: clip !important;
 
 @keyframes luvoraHeartBeat {
   0%, 100% {
-    transform: scale(1);
+    transform: translateX(0) scale(1);
   }
+
   50% {
-    transform: scale(1.1);
+    transform: translateX(0) scale(1.1);
   }
 }
 
@@ -14247,4 +14250,225 @@ html.luvora-final-mode #letterSection #letterEditor {
   margin-bottom: 4px;
 }
 
+/* =========================================
+   LUVORA — COMPACT PREMIUM CAKE HEADING
+========================================= */
+
+#cakeSection .section-heading {
+  margin-bottom: clamp(22px, 3vw, 34px);
+  padding-inline: 16px;
+}
+
+#cakeSection .section-eyebrow {
+  display: block;
+  margin-bottom: 9px;
+  font-size: clamp(9px, 0.8vw, 11px);
+  font-weight: 600;
+  letter-spacing: 2.2px;
+  line-height: 1.5;
+  color: #d689a4;
+}
+
+#cakeSection .section-heading h2 {
+  margin: 0 auto 10px;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(27px, 3vw, 38px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.4px;
+  color: #f1e8db;
+  text-wrap: balance;
+}
+
+#cakeSection .section-heading h2 span {
+  display: inline-block;
+  font-size: 0.76em;
+  vertical-align: 0.06em;
+}
+
+#cakeSection .section-heading p {
+  max-width: 390px;
+  margin: 0 auto;
+  font-family: "DM Sans", Arial, sans-serif;
+  font-size: clamp(12px, 1.05vw, 14px);
+  font-weight: 500;
+  line-height: 1.65;
+  letter-spacing: 0.05px;
+  color: rgba(241, 232, 219, 0.88);
+  text-wrap: balance;
+}
+
+/* Tablet */
+@media (min-width: 481px) and (max-width: 1024px) {
+  #cakeSection .section-heading {
+    margin-bottom: 26px;
+  }
+
+  #cakeSection .section-heading h2 {
+    font-size: clamp(27px, 3.5vw, 34px);
+  }
+
+  #cakeSection .section-heading p {
+    max-width: 350px;
+    font-size: 12.5px;
+  }
+}
+
+/* Mobile — compact but clearly readable */
+@media (max-width: 480px) {
+  #cakeSection .section-heading {
+    margin-bottom: 20px;
+    padding-inline: 22px;
+  }
+
+  #cakeSection .section-eyebrow {
+    margin-bottom: 7px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+  }
+
+  #cakeSection .section-heading h2 {
+    margin-bottom: 8px;
+    font-size: clamp(25px, 6.8vw, 30px);
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.3px;
+  }
+
+  #cakeSection .section-heading p {
+    max-width: 300px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.6;
+  }
+}
+
+/* =========================================
+   LUVORA — MYSTERY GIFT STABLE MOBILE LAYOUT
+========================================= */
+
+#luvoraGiftGame .luvora-game-inner {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#luvoraGiftGame .luvora-game-heading {
+  box-sizing: border-box;
+  min-height: 138px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+}
+
+#luvoraGiftGame .luvora-game-eyebrow {
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+
+#luvoraGiftGame #luvoraGameTitle {
+  margin-top: 0;
+  margin-bottom: 10px;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+#luvoraGiftGame .luvora-game-description {
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: 1.5;
+  max-width: 360px;
+  text-wrap: balance;
+}
+
+#luvoraGiftGame .luvora-game-status {
+  box-sizing: border-box;
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+#luvoraGiftGame #luvoraGameInstruction {
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: 1.45;
+  text-wrap: balance;
+}
+
+#luvoraGiftGame .luvora-gift-stage {
+  box-sizing: border-box;
+  min-height: 190px;
+  margin-top: 14px;
+  padding-top: 12px;
+  align-items: center;
+}
+
+/* All mobile sizes */
+@media (max-width: 600px) {
+  #luvoraGiftGame .luvora-game-inner {
+    padding-inline: 14px;
+  }
+
+  #luvoraGiftGame .luvora-game-heading {
+    min-height: 126px;
+  }
+
+  #luvoraGiftGame .luvora-game-eyebrow {
+    font-size: 9px;
+    letter-spacing: 1.7px;
+    margin-bottom: 7px;
+  }
+
+  #luvoraGiftGame #luvoraGameTitle {
+    font-size: clamp(25px, 6.2vw, 31px);
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  #luvoraGiftGame .luvora-game-description {
+    max-width: 310px;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  #luvoraGiftGame .luvora-game-status {
+    min-height: 62px;
+    padding: 8px 4px;
+  }
+
+  #luvoraGiftGame #luvoraGameInstruction {
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  #luvoraGiftGame .luvora-gift-stage {
+    min-height: 180px;
+    margin-top: 12px;
+    padding-top: 16px;
+  }
+}
+
+/* Extra-small phones */
+@media (max-width: 360px) {
+  #luvoraGiftGame .luvora-game-heading {
+    min-height: 126px;
+  }
+
+  #luvoraGiftGame #luvoraGameTitle {
+    font-size: 25px;
+  }
+
+  #luvoraGiftGame .luvora-game-description {
+    font-size: 11.5px;
+  }
+
+  #luvoraGiftGame .luvora-gift-stage {
+    margin-top: 12px;
+    padding-top: 16px;
+  }
+}
 
