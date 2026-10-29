@@ -943,6 +943,66 @@ function initMemoryBook() {
      ======================================================= */
 
   let currentPage = 0;
+/* =========================================
+   LUVORA — MOBILE MEMORY DIARY
+========================================= */
+
+const mobileDiary = document.createElement("div");
+mobileDiary.className = "mobile-memory-diary";
+mobileDiary.setAttribute("aria-live", "polite");
+
+const mobilePhotos = [];
+
+pages.forEach(page => {
+  const photos = page.querySelectorAll(".memory-photo-slot img");
+  const quotes = page.querySelectorAll(".memory-quote");
+
+  photos.forEach((photo, index) => {
+    mobilePhotos.push({
+      src: photo.src,
+      alt: photo.alt,
+      quote: quotes[index]
+        ? quotes[index].querySelector("p")?.innerHTML || ""
+        : ""
+    });
+  });
+});
+
+let mobileSlideIndex = 0;
+
+function renderMobileDiary() {
+  const item = mobilePhotos[mobileSlideIndex];
+
+  if (!item) return;
+
+  mobileDiary.innerHTML = `
+    <div class="mobile-diary-thread"></div>
+
+    <article class="mobile-diary-sheet">
+
+      <div class="mobile-diary-tape"></div>
+
+      <div class="mobile-diary-photo">
+        <img src="${item.src}" alt="${item.alt}">
+      </div>
+
+      <div class="mobile-diary-quote">
+        <span>✦</span>
+        <p>${item.quote}</p>
+      </div>
+
+      <div class="mobile-diary-counter">
+        MEMORY ${mobileSlideIndex + 1} / 6
+      </div>
+
+    </article>
+  `;
+
+  bookArea.classList.add("mobile-diary-open");
+}
+
+bookArea.appendChild(mobileDiary);
+
 
   /* =======================================================
      MOBILE DIARY SCALE
@@ -997,6 +1057,12 @@ function initMemoryBook() {
 
     cover.style.display = "flex";
     cover.style.pointerEvents = "auto";
+
+if (window.innerWidth <= 600) {
+  mobileSlideIndex = 0;
+  renderMobileDiary();
+  return;
+}
 
     pages.forEach(page => {
 
@@ -1118,6 +1184,8 @@ function initMemoryBook() {
      ======================================================= */
 
   function showBackCover() {
+bookArea.classList.remove("mobile-diary-open");
+
 
     currentPage = 4;
 
@@ -1328,6 +1396,35 @@ function initMemoryBook() {
 
       const swipeDistance =
         touchEndX - touchStartX;
+
+if (window.innerWidth <= 600 && currentPage !== 0) {
+
+  if (swipeDistance < -50) {
+
+    if (mobileSlideIndex < 5) {
+      mobileSlideIndex++;
+      renderMobileDiary();
+    } else {
+      showBackCover();
+    }
+
+    return;
+  }
+
+  if (swipeDistance > 50) {
+
+    if (currentPage === 4) {
+      currentPage = 1;
+      mobileSlideIndex = 5;
+      renderMobileDiary();
+    } else if (mobileSlideIndex > 0) {
+      mobileSlideIndex--;
+      renderMobileDiary();
+    }
+
+    return;
+  }
+}
 
 
       /* Swipe left → next */
