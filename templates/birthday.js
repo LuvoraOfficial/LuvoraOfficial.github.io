@@ -334,10 +334,6 @@ function loadCustomerDataFromURL() {
 
 function loadBirthdayInformation() {
 
-  if (birthdayName) {
-    birthdayName.textContent =
-      BIRTHDAY_CONFIG.name;
-  }
 
   if (birthdayDate) {
     birthdayDate.textContent =
@@ -711,26 +707,15 @@ function renderLetterText(text, shouldAnimate) {
 }
 
 
-/* ---------------------------------------------------------
-   4. RESTORE SAVED PERSONAL LETTER
---------------------------------------------------------- */
-
 function restorePersonalLetter() {
   try {
-    const savedLetter = localStorage.getItem(
-      LUVORA_LETTER_STORAGE_KEY
-    );
-
-    if (savedLetter && savedLetter.trim()) {
-      renderLetterText(savedLetter, false);
-    }
+    localStorage.removeItem(LUVORA_LETTER_STORAGE_KEY);
   } catch (error) {
-    console.warn("LUVORA letter could not be restored.", error);
+    console.warn("LUVORA letter reset failed.", error);
   }
 }
 
 restorePersonalLetter();
-
 
 /* ---------------------------------------------------------
    5. OPEN ENVELOPE + START TYPING
@@ -2409,14 +2394,19 @@ function updateBirthdayName() {
 
   if (!name) return;
 
+// Update the birthday overlay name too
+const overlayName = document.getElementById("overlayBirthdayName");
+
+if (overlayName) {
+  overlayName.textContent = name;
+}
+
+
   if (birthdayName) {
     birthdayName.textContent = name;
   }
 
-  letterRecipients.forEach((recipient) => {
-    recipient.textContent = name;
-  });
-
+ 
   // Update the name displayed on the birthday cake
   const cakeName = document.getElementById("cakeBirthdayName");
 
@@ -2637,15 +2627,26 @@ if (customerPhotos) {
       }
 
 
-      const remainingSlots =
-        6 - uploadedPhotoFiles.length;
+     const remainingSlots =
+  6 - uploadedPhotoFiles.length;
 
+if (remainingSlots <= 0) {
+  alert("💗 You can select a maximum of 6 photos.");
+  customerPhotos.value = "";
+  return;
+}
 
-      const filesToAdd =
-        files.slice(
-          0,
-          remainingSlots
-        );
+if (files.length > remainingSlots) {
+  alert(
+    `💗 You can add only ${remainingSlots} photo(s).`
+  );
+}
+
+const filesToAdd =
+  files.slice(0, remainingSlots);
+
+// Allow the same file to be selected again if needed.
+customerPhotos.value = "";
 
 
       for (const file of filesToAdd) {
@@ -2992,6 +2993,18 @@ if (
     if (!hasVideo) {
       errors.push("Please upload a video.");
     }
+// Reward selection validation
+const selectedRewards = getSelectedRewards();
+
+const customGift = customRewardInput
+  ? customRewardInput.value.trim()
+  : "";
+
+if (selectedRewards.length === 0 && !customGift) {
+  errors.push(
+    "Please choose a reward or create a special gift to continue."
+  );
+}
 
     // Stop preview if any validation fails
     if (errors.length > 0) {
@@ -3122,6 +3135,18 @@ const surpriseData = {
   name: name,
 
   date: date,
+
+  letter: (() => {
+    const message = document.getElementById("letterMessage");
+    if (!message) return "";
+
+    return Array.from(message.querySelectorAll("p"))
+      .map(p => p.dataset.fullText || p.textContent)
+      .map(text => text.trim())
+      .filter(Boolean)
+      .join("\n\n")
+      .slice(0, 10000);
+  })(),
 
   phone: phone,
 
@@ -3313,6 +3338,14 @@ if (LUVORA_IS_FINAL_SURPRISE) {
     BIRTHDAY_CONFIG.date =
       surprise.birthday_date || "";
 
+// Load the personalized Love Letter for the paid share link.
+if (
+  typeof surprise.letter === "string" &&
+  surprise.letter.trim()
+) {
+  renderLetterText(surprise.letter, false);
+}
+
     // Photos and video
     BIRTHDAY_CONFIG.photos =
       Array.isArray(surprise.photos)
@@ -3375,11 +3408,26 @@ async function initializeBirthdayExperience() {
     document.body.classList.add("preview-mode");
   }
 
-  await loadSharedSurprise();
+ await loadSharedSurprise();
 
-  loadCustomerDataFromURL();
-  loadCustomerPhotosFromURL();
-  loadBirthdayInformation();
+loadCustomerDataFromURL();
+loadCustomerPhotosFromURL();
+loadBirthdayInformation();
+
+// Populate recipient name on the Welcome Page.
+const welcomeRecipientName = document.getElementById(
+  "welcomeRecipientName"
+);
+
+if (welcomeRecipientName) {
+  welcomeRecipientName.textContent =
+    BIRTHDAY_CONFIG.name || "My Love";
+}
+  const cakeName = document.getElementById("cakeBirthdayName");
+
+if (cakeName) {
+  cakeName.textContent = BIRTHDAY_CONFIG.name || "My Love";
+}
   loadMemoryGallery();
   loadBirthdayVideo();
   setupCustomizationSystem();
@@ -4298,27 +4346,30 @@ for (let i = 0; i < 44; i++) {
 }
 
 
-// 1. Open the Birthday Overlay immediately.
-if (typeof showLuvoraBirthdayOverlay === "function") {
-  showLuvoraBirthdayOverlay();
-} else {
-  console.error("Birthday overlay function not found.");
-  return;
-}
-
-// 2. Start fading out the Welcome screen.
+// 1. Start fading out the Welcome screen.
 document.documentElement.classList.add("luvora-welcome-open");
 
-// 3. Hide Welcome after its fade-out animation.
+// 2. Wait for the fade-out to finish.
 window.setTimeout(function () {
+  // Hide the Welcome screen.
   welcome.hidden = true;
 
+  // Remove Welcome-specific page restrictions.
   document.documentElement.classList.remove(
     "luvora-welcome-active",
     "luvora-welcome-open"
   );
+
+  // 3. Open the Birthday Overlay and Archery Game.
+  if (typeof showLuvoraBirthdayOverlay === "function") {
+    showLuvoraBirthdayOverlay();
+  } else {
+    console.error("Birthday overlay function not found.");
+  }
+
 }, 700);
 
+openButton.blur();
 openButton.blur();
 });
 })();
