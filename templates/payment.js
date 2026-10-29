@@ -406,6 +406,11 @@ const requestData = {
   birthday_date:
     surpriseData.date || "",
 
+letter:
+  typeof surpriseData.letter === "string"
+    ? surpriseData.letter.trim().slice(0, 10000)
+    : "",
+
   customer_phone:
     surpriseData.phone || "",
 
