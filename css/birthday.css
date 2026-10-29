@@ -6752,16 +6752,16 @@ text-overflow: clip !important;
 
 }
 
-
-/* =========================================
-   LUVORA — WELCOME SCREEN
-========================================= */
+/* ========== LUVORA WELCOME SCREEN ========== */
 
 .luvora-welcome {
   box-sizing: border-box;
-  position: relative;
-  min-height: 100vh;
-  min-height: 100svh;
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
   overflow-x: hidden;
   overflow-y: auto;
 
@@ -6769,7 +6769,7 @@ text-overflow: clip !important;
   align-items: center;
   justify-content: center;
 
-  padding: clamp(28px, 5vh, 56px) 22px;
+  padding: 24px;
   text-align: center;
   color: #f1e8db;
 
@@ -6782,91 +6782,124 @@ text-overflow: clip !important;
     linear-gradient(145deg, #4a0e1f, #270710 75%);
 }
 
+.luvora-welcome[hidden] {
+  display: none !important;
+}
+
 .welcome-content {
-width: 100%;
-max-width: 650px;
-margin: auto;
-position: relative;
-z-index: 2;
-animation: luvoraWelcomeAppear 1s ease both;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 760px;
+  margin: auto;
+  padding: clamp(28px, 5vw, 58px);
+
+  position: relative;
+  z-index: 2;
+
+  border: 1px solid rgba(214, 137, 164, 0.32);
+  border-radius: 30px;
+
+  background: linear-gradient(
+    145deg,
+    rgba(74, 14, 31, 0.76),
+    rgba(39, 7, 16, 0.88)
+  );
+
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.22);
+
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  animation: luvoraWelcomeAppear 1s ease both;
 }
 
 .welcome-eyebrow {
-display: block;
-margin-bottom: clamp(16px, 3vh, 26px);
-color: #d689a4;
-font-size: clamp(9px, 1vw, 11px);
-letter-spacing: clamp(1.5px, 0.25vw, 3px);
-line-height: 1.8;
+  display: block;
+  margin-bottom: 18px;
+  color: #d689a4;
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  line-height: 1.8;
 }
 
 .welcome-heart {
-color: #d689a4;
-font-family: Georgia, serif;
-font-size: clamp(52px, 7vw, 76px);
-line-height: 1;
-margin-bottom: clamp(14px, 2.5vh, 20px);
-animation: luvoraHeartBeat 2.2s ease-in-out infinite;
+  margin-bottom: 16px;
+  color: #d689a4;
+  font-family: Georgia, serif;
+  font-size: clamp(48px, 6vw, 68px);
+  line-height: 1;
+  animation: luvoraHeartBeat 2.2s ease-in-out infinite;
+}
+
+.welcome-greeting {
+  margin-bottom: 16px;
+  color: #f1e8db;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(27px, 3.5vw, 40px);
+  font-weight: 500;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.welcome-greeting span {
+  color: #d689a4;
+  font-style: italic;
 }
 
 .luvora-welcome h1 {
-width: 100%;
-max-width: 620px;
-margin: 0 auto clamp(16px, 2.5vh, 22px);
-font-family: "Playfair Display", Georgia, serif;
-font-size: clamp(32px, 4.2vw, 59px);
-font-weight: 500;
-line-height: 1.2;
-letter-spacing: -0.4px;
-color: #f1e8db;
-overflow-wrap: break-word;
+  max-width: 620px;
+  margin: 0 auto 20px;
+  color: #f1e8db;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(32px, 4.2vw, 54px);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.4px;
+  overflow-wrap: anywhere;
 }
 
 .luvora-welcome h1 span {
-display: block;
-margin-top: clamp(5px, 1vh, 8px);
-color: #d689a4;
-font-style: italic;
+  display: block;
+  margin-top: 6px;
+  color: #d689a4;
+  font-style: italic;
 }
 
 .luvora-welcome p {
-width: 100%;
-max-width: 470px;
-margin: 0 auto clamp(22px, 3.5vh, 34px);
-color: rgba(241, 232, 219, 0.8);
-font-size: clamp(13px, 1.2vw, 15px);
-line-height: 1.8;
-text-wrap: pretty;
+  max-width: 470px;
+  margin: 0 auto 28px;
+  color: rgba(241, 232, 219, 0.8);
+  font-size: 14px;
+  line-height: 1.8;
 }
 
 #openYourSurprise {
-display: inline-flex;
-align-items: center;
-justify-content: center;
-gap: 12px;
-min-height: 52px;
-max-width: 100%;
-box-sizing: border-box;
-padding: 15px clamp(20px, 3vw, 28px);
-border: 1px solid rgba(241, 232, 219, 0.45);
-border-radius: 40px;
-background: #d689a4;
-color: #270710;
-font: inherit;
-font-size: 12px;
-font-weight: 700;
-letter-spacing: 1.5px;
-cursor: pointer;
-transition:
-transform 0.25s ease,
-background 0.25s ease,
-box-shadow 0.25s ease;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 52px;
+  max-width: 100%;
+  padding: 15px 26px;
+
+  border: 1px solid rgba(241, 232, 219, 0.45);
+  border-radius: 40px;
+  background: #d689a4;
+  color: #270710;
+
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+
+  transition: transform 0.25s ease, background 0.25s ease;
 }
 
 #openYourSurprise:hover {
   transform: translateY(-3px);
   background: #f1b5cb;
-  box-shadow: 0 10px 35px rgba(214, 137, 164, 0.2);
 }
 
 #openYourSurprise:focus-visible {
@@ -6875,12 +6908,11 @@ box-shadow 0.25s ease;
 }
 
 .luvora-welcome small {
-display: block;
-margin-top: clamp(18px, 3vh, 28px);
-color: rgba(241, 232, 219, 0.55);
-font-size: clamp(10px, 1vw, 11px);
-line-height: 1.7;
-letter-spacing: 1px;
+  display: block;
+  margin-top: 22px;
+  color: rgba(241, 232, 219, 0.55);
+  font-size: 10px;
+  line-height: 1.7;
 }
 
 .welcome-decoration {
@@ -6890,15 +6922,15 @@ letter-spacing: 1px;
 }
 
 .welcome-star-one {
-  top: 15%;
-  left: 12%;
-  font-size: 30px;
+  top: 10%;
+  left: 8%;
+  font-size: 28px;
 }
 
 .welcome-star-two {
-  right: 13%;
-  bottom: 18%;
-  font-size: 38px;
+  right: 8%;
+  bottom: 10%;
+  font-size: 36px;
 }
 
 @keyframes luvoraWelcomeAppear {
@@ -6906,7 +6938,6 @@ letter-spacing: 1px;
     opacity: 0;
     transform: translateY(18px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
@@ -6917,73 +6948,104 @@ letter-spacing: 1px;
   0%, 100% {
     transform: scale(1);
   }
-
   50% {
     transform: scale(1.1);
   }
 }
 
+/* Mobile */
 @media (max-width: 480px) {
   .luvora-welcome {
-padding: 28px 22px;
-align-items: center;
-}
+    padding: 16px;
+  }
+
+  .welcome-content {
+    padding: 30px 22px;
+    border-radius: 24px;
+  }
 
   .welcome-eyebrow {
     font-size: 9px;
-    letter-spacing: 2px;
+    letter-spacing: 1.8px;
+  }
+
+  .welcome-greeting {
+    font-size: clamp(25px, 7vw, 32px);
+  }
+
+  .luvora-welcome h1 {
+    font-size: clamp(28px, 7.5vw, 35px);
   }
 
   .luvora-welcome p {
-    font-size: 14px;
+    font-size: 13px;
+    margin-bottom: 22px;
   }
 
   #openYourSurprise {
     width: 100%;
-    max-width: 300px;
-    padding: 15px 18px;
-    font-size: 11px;
+    max-width: 290px;
+    padding: 14px 12px;
+    font-size: 10px;
+    letter-spacing: 1px;
+  }
+
+  .welcome-star-one {
+    top: 4%;
+    left: 4%;
+    font-size: 20px;
+  }
+
+  .welcome-star-two {
+    right: 4%;
+    bottom: 4%;
+    font-size: 24px;
   }
 }
 
+/* Tablet */
 @media (min-width: 481px) and (max-width: 1024px) {
-.luvora-welcome {
-padding: 36px 32px;
+  .welcome-content {
+    max-width: 700px;
+    padding: 42px;
+  }
 }
 
-.welcome-content {
-max-width: 600px;
+/* Short screens */
+@media (max-height: 650px) {
+  .luvora-welcome {
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+
+  .welcome-content {
+    padding-top: 22px;
+    padding-bottom: 22px;
+  }
+
+  .welcome-heart {
+    margin-bottom: 10px;
+    font-size: 42px;
+  }
+
+  .welcome-greeting {
+    margin-bottom: 10px;
+  }
+
+  .luvora-welcome h1 {
+    margin-bottom: 14px;
+  }
+
+  .luvora-welcome p {
+    margin-bottom: 16px;
+  }
+
+  .luvora-welcome small {
+    margin-top: 12px;
+  }
 }
 
-.luvora-welcome h1 {
-font-size: clamp(36px, 5.2vw, 52px);
-}
-
-.luvora-welcome p {
-max-width: 440px;
-}
-}
-
-@media (max-height: 650px) and (min-width: 481px) {
-.luvora-welcome {
-padding-top: 24px;
-padding-bottom: 24px;
-}
-
-.welcome-eyebrow {
-margin-bottom: 14px;
-}
-
-.welcome-heart {
-margin-bottom: 12px;
-}
-
-.luvora-welcome small {
-margin-top: 16px;
-}
-}
-
-
+/* Respect reduced-motion preference */
 @media (prefers-reduced-motion: reduce) {
   .welcome-content,
   .welcome-heart {
@@ -14042,3 +14104,147 @@ html.luvora-final-mode #letterSection .letter-edit-tools,
 html.luvora-final-mode #letterSection #letterEditor {
   display: none !important;
 }
+
+/* ==========================================
+   LUVORA — PREMIUM CUSTOMIZATION INTRO
+   Only the area above the mobile number
+========================================== */
+
+/* Intro heading area */
+.customization-inner .section-eyebrow {
+  display: inline-block;
+  margin-bottom: 12px;
+  color: #d689a4;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.customization-inner > h2 {
+  margin: 0 0 14px;
+  color: #f1e8db;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(26px, 4vw, 38px);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.5px;
+}
+
+.customization-inner > p {
+  max-width: 520px;
+  margin: 0 auto 20px;
+  color: rgba(241, 232, 219, 0.78);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+/* Premium privacy glass card */
+.customization-inner .privacy-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  max-width: 470px;
+  margin: 0 auto 30px;
+  padding: 14px 18px;
+
+  border: 1px solid rgba(214, 137, 164, 0.22);
+  border-radius: 14px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(214, 137, 164, 0.09),
+    rgba(39, 7, 16, 0.38)
+  );
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.035);
+
+  text-align: left;
+}
+
+.customization-inner .privacy-icon {
+  flex-shrink: 0;
+  font-size: 21px;
+}
+
+.customization-inner .privacy-note p {
+  margin: 0;
+  color: rgba(241, 232, 219, 0.78);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.customization-inner .privacy-note strong {
+  display: block;
+  margin-bottom: 2px;
+  color: #e7b0c3;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+/* Mobile responsive — intro only */
+@media (max-width: 600px) {
+  .customization-inner .section-eyebrow {
+    font-size: 9px;
+    letter-spacing: 2.5px;
+  }
+
+  .customization-inner > h2 {
+    font-size: 27px;
+  }
+
+  .customization-inner > p {
+    font-size: 13px;
+    line-height: 1.75;
+  }
+
+  .customization-inner .privacy-note {
+    gap: 10px;
+    padding: 12px 14px;
+    margin-bottom: 24px;
+  }
+
+  .customization-inner .privacy-note p {
+    font-size: 11px;
+  }
+}
+
+/* Center YOUR STORY, YOUR WAY */
+.customization-inner .section-eyebrow {
+  display: block;
+  width: fit-content;
+  margin: 0 auto 12px;
+  text-align: center;
+}
+
+/* LUVORA — CENTER ALIGNED PRIVACY MESSAGE */
+
+.customization-inner .privacy-note {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.customization-inner .privacy-note .privacy-icon {
+  align-self: center;
+  margin: 0 0 6px;
+}
+
+.customization-inner .privacy-note p {
+  text-align: center;
+  margin: 0;
+}
+
+.customization-inner .privacy-note strong {
+  display: block;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+
