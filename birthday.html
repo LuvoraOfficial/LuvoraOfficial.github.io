@@ -27,16 +27,31 @@
   const params = new URLSearchParams(window.location.search);
   const shareId = params.get("id");
 
-  if (shareId) {
+ const returningFromCake =
+  window.location.hash === "#giftExperience";
+
+  if (returningFromCake) {
+    // Cake page theke fire asche — Welcome screen skip
+    root.classList.remove(
+      "luvora-final-mode",
+      "luvora-welcome-active",
+      "luvora-page-booting",
+      "luvora-welcome-open"
+    );
+
+    root.classList.add("luvora-cake-return");
+
+  } else if (shareId) {
+    // Normal shared link — Welcome screen show
     root.classList.add(
       "luvora-final-mode",
       "luvora-welcome-active"
     );
+
   } else {
     root.classList.add("luvora-page-booting");
   }
-})();
-</script>
+})();</script>
 
 <style>
 
@@ -651,14 +666,13 @@ html.luvora-welcome-active #luvoraWelcome[hidden] {
   <div class="welcome-content">
     <span class="welcome-eyebrow">A LITTLE MOMENT, MADE WITH LOVE</span>
 
- <div class="welcome-heart">♡</div>
-
+<div class="welcome-heart" id="welcomeHeart">♡</div>
 <div class="welcome-greeting">
   Hey, <span id="welcomeRecipientName">My Love</span>
 </div>
 
 <h1>
-  Someone has created
+  <span id="welcomeSenderName">Someone</span> has created
   <span>something special</span>
   just for you.
 </h1>
@@ -710,14 +724,6 @@ html.luvora-welcome-active #luvoraWelcome[hidden] {
       and every beautiful dream find its way to you.
     </p>
 
-   <!-- Couple Image -->
-<div class="birthday-couple-illustration">
-  <img
-    src="assets/images/couple.png"
-    alt="A special birthday memory"
-    class="birthday-couple-image"
-  >
-</div>
 
     <!-- Birthday calendar -->
     <div class="birthday-overlay-calendar">
@@ -861,7 +867,7 @@ html.luvora-welcome-active #luvoraWelcome[hidden] {
   </div>
 
   <p class="birthday-arrow-instruction">
-      Aim for the birthday star
+      Pull the arrow & hit the heart
   </p>
 
 </div>
@@ -925,6 +931,20 @@ html.luvora-welcome-active #luvoraWelcome[hidden] {
         <div class="floating-star star-three">✦</div>
 
         <div class="moon-decoration"></div>
+
+      </div>
+
+      <!-- SCROLL UP INDICATOR -->
+
+      <div class="birthday-scroll-hint">
+
+        <div class="scroll-chevron-animation">
+          <span>⌃</span>
+          <span>⌃</span>
+          <span>⌃</span>
+        </div>
+
+        <p>Swipe Up to Explore</p>
 
       </div>
 
@@ -1047,14 +1067,7 @@ html.luvora-welcome-active #luvoraWelcome[hidden] {
       </div>
 
 
-      <p class="interaction-hint">
-        ✦ Tap the balloons one by one ✦
-      </p>
-
-
-      <!-- Hidden message area -->
-
-      <div
+        <div
         class="balloon-message"
         id="balloonMessage"
         aria-live="polite"
@@ -1066,14 +1079,27 @@ html.luvora-welcome-active #luvoraWelcome[hidden] {
 
       </div>
 
-    </section>
 
+      <!-- PREMIUM CONTINUE BUTTON -->
+      <div class="balloon-continue-wrap">
+
+        <button
+          type="button"
+          class="balloon-continue-button"
+          id="balloonContinueButton"
+        >
+          Continue <span>✦</span>
+        </button>
+
+      </div>
+
+    </section>
 
 <!-- ==========================================
      LUVORA — ROMANTIC INSTANT CAMERA
 ========================================== -->
 
-<section id="luvoraCameraSection" class="luvora-camera-section">
+<section id="luvoraCameraSection" class="luvora-camera-section camera-section-hidden birthday-flow-hidden">
 
   <div class="luvora-camera-heading">
     <span class="luvora-camera-eyebrow">A LITTLE MOMENT OF LOVE</span>
@@ -1143,16 +1169,9 @@ html.luvora-welcome-active #luvoraWelcome[hidden] {
   </div>
 
 
-  <!-- Status -->
 
-  <p
-    class="luvora-camera-status"
-    id="luvoraCameraStatus"
-    aria-live="polite"
-  >
-    Your little love story is waiting...
-  </p>
 
+  
 
   <!-- Romantic Message -->
 
@@ -1215,6 +1234,19 @@ html.luvora-welcome-active #luvoraWelcome[hidden] {
 
 </section>
 
+<!-- CAMERA CONTINUE BUTTON -->
+
+<div class="birthday-flow-continue-wrap">
+  <button
+    type="button"
+    class="birthday-flow-continue-button"
+    id="cameraContinueButton"
+  >
+    Continue <span>✦</span>
+  </button>
+</div>
+
+
 
 
     <!-- =======================================================
@@ -1222,7 +1254,7 @@ html.luvora-welcome-active #luvoraWelcome[hidden] {
     ======================================================== -->
 
     <section
-      class="birthday-section letter-section"
+  class="birthday-section letter-section birthday-flow-hidden"
       id="letterSection"
     >
 
@@ -1293,15 +1325,22 @@ html.luvora-welcome-active #luvoraWelcome[hidden] {
   </p>
 </div>
 
-              <div class="letter-signature">
+           <div class="letter-signature">
 
-                <span>With all my heart,</span>
+  <span>With all my heart,</span>
 
-                <strong>
-                  Always yours ♡
-                </strong>
+  <strong
+    id="letterSignatureName"
+    class="letter-signature-name"
+  >
+    My Love ♡
+  </strong>
 
-              </div>
+  <small class="letter-signature-closing">
+    Forever cherished, forever special.
+  </small>
+
+</div>
 
             </div>
 
@@ -1346,14 +1385,21 @@ html.luvora-welcome-active #luvoraWelcome[hidden] {
   </div>
 </div>
 
-
-        <p class="envelope-hint">
-          Tap the envelope to open your letter
-        </p>
-
       </div>
 
     </section>
+
+<!-- LETTER CONTINUE BUTTON -->
+
+<div class="birthday-flow-continue-wrap">
+  <button
+    type="button"
+    class="birthday-flow-continue-button"
+    id="letterContinueButton"
+  >
+    Continue <span>✦</span>
+  </button>
+</div>
 
 
 
@@ -1362,7 +1408,7 @@ html.luvora-welcome-active #luvoraWelcome[hidden] {
     ======================================================== -->
 
    <section
-  class="birthday-section memories-section"
+  class="birthday-section memories-section birthday-flow-hidden"
   id="memoriesSection"
 >
 
@@ -1376,11 +1422,7 @@ html.luvora-welcome-active #luvoraWelcome[hidden] {
       Our little memories
                       </h2>
 
-    <p>
-      Because the best moments deserve
-      a place to stay forever.
-    </p>
-
+   
   </div>
 
 
@@ -1694,6 +1736,18 @@ html.luvora-welcome-active #luvoraWelcome[hidden] {
 
 </section>
 
+<!-- MEMORY BOOK CONTINUE BUTTON -->
+
+<div class="birthday-flow-continue-wrap">
+  <button
+    type="button"
+    class="birthday-flow-continue-button"
+    id="memoryContinueButton"
+  >
+    Continue <span>✦</span>
+  </button>
+</div>
+
 
 
     <!-- =======================================================
@@ -1701,7 +1755,7 @@ html.luvora-welcome-active #luvoraWelcome[hidden] {
     ======================================================== -->
 
     <section
-      class="birthday-section video-section"
+  class="birthday-section video-section birthday-flow-hidden"
       id="videoSection"
     >
 
@@ -1713,7 +1767,6 @@ html.luvora-welcome-active #luvoraWelcome[hidden] {
 
         <h2>
           Your Story in Motion...
-          <span>🎬</span>
         </h2>
 
         <p>
@@ -1722,175 +1775,181 @@ html.luvora-welcome-active #luvoraWelcome[hidden] {
 
       </div>
 
+<!-- PRIVATE CINEMA INVITATION -->
 
-      <div class="birthday-video-wrapper">
+<div class="cinema-invitation" id="cinemaInvitation">
 
-<!-- DESKTOP PORTRAIT VIDEO DECORATION -->
+  <span class="cinema-invitation-label">
+    A PRIVATE PREMIERE
+  </span>
 
-<div class="portrait-decoration portrait-decoration-left">
-  <div class="balloon-bunch">
-    <span class="decor-balloon balloon-pink"></span>
-    <span class="decor-balloon balloon-lilac"></span>
-    <span class="decor-balloon balloon-gold"></span>
-  </div>
+  <div class="cinema-invitation-icon">🎬</div>
 
-  <div class="decor-flower flower-one">✿</div>
-  <div class="decor-flower flower-two">✿</div>
-  <div class="decor-sparkle sparkle-one">✦</div>
-  <div class="decor-sparkle sparkle-two">✧</div>
+  <h3>Tonight, the Whole Screen Belongs to You.</h3>
+
+  <p>
+    A little movie, a little magic, and a moment made
+    just for you. Sit back and enjoy.
+  </p>
+
+  <button
+    type="button"
+    class="begin-movie-button"
+    id="beginMovieButton"
+  >
+    🎬 Begin Your Movie
+  </button>
+
+  <span class="cinema-invitation-footer">
+    EXCLUSIVELY FOR YOU · WITH LOVE ❤️
+  </span>
+
 </div>
 
-<div class="portrait-decoration portrait-decoration-right">
-  <div class="balloon-bunch">
-    <span class="decor-balloon balloon-peach"></span>
-    <span class="decor-balloon balloon-blue"></span>
-    <span class="decor-balloon balloon-pink"></span>
-  </div>
+<!-- LUVORA MINI CINEMA -->
 
-  <div class="decor-flower flower-one">✿</div>
-  <div class="decor-flower flower-two">✿</div>
-  <div class="decor-sparkle sparkle-one">✦</div>
-  <div class="decor-sparkle sparkle-two">✧</div>
-</div>
+<div class="birthday-video-wrapper luvora-projector-stage">
 
-        <div class="video-frame-decoration"></div>
+  <!-- PROJECTOR LIGHT EFFECT -->
+  <div class="projector-light"></div>
 
-        <video
-          id="birthdayVideo"
-          class="birthday-video"
-          controls
-          playsinline
-          preload="metadata"
-        >
+  <!-- VIDEO SCREEN -->
+  <div class="cinema-screen">
 
-          <source
-            id="birthdayVideoSource"
-            src=""
-            type="video/mp4"
-          >
-
-          Your browser does not support video playback.
-
-        </video>
-
-        <div
-          class="video-placeholder"
-          id="videoPlaceholder"
-        >
-
-          <span>▶</span>
-
-          <p>
-            Your special video will appear here.
-          </p>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-
-    <!-- =======================================================
-         06 — BIRTHDAY CAKE / CANDLE MOMENT
-    ======================================================== -->
-
-    <section
-      class="birthday-section cake-section"
-      id="cakeSection"
+    <video
+      id="birthdayVideo"
+      class="birthday-video"
+      controls
+      playsinline
+      preload="metadata"
     >
 
-      <div class="section-heading">
+      <source
+        id="birthdayVideoSource"
+        src=""
+        type="video/mp4"
+      >
 
-        <span class="section-eyebrow">
-          THE BIG MOMENT
-        </span>
+      Your browser does not support video playback.
 
-        <h2>
-          Make a wish
-          <span>🕯️</span>
-        </h2>
+    </video>
 
-        <p>
-          Light the moment, close your eyes
-          and make your birthday wish.
-        </p>
+   <div class="video-placeholder" id="videoPlaceholder">
 
-      </div>
+  <div class="movie-preview-content">
 
-
-      <!-- 3D CAKE -->
-
-      <div class="cake-scene">
-
-        <div class="cake-glow"></div>
-
-
-<div class="birthday-cake">
-
-  <img
-    class="birthday-cake-image"
-    src="assets/images/birthday-cake.png"
-    alt="Romantic birthday cake"
-    draggable="false"
-  >
-
-  <div class="cake-personal-message" aria-hidden="true">
-
-    <span class="cake-message-main">
-      Happy Birthday
+    <span class="movie-preview-label">
+      ✦ A PRIVATE SCREENING ✦
     </span>
 
-    <strong
-      class="cake-message-name"
-      id="cakeBirthdayName"
-    >
-      My Love
-    </strong>
+    <div class="movie-preview-icon">
+      <span>▶</span>
+    </div>
+
+    <h3>A LITTLE MOVIE,<br>MADE WITH LOVE</h3>
+
+    <p class="movie-preview-subtitle">
+      Some moments deserve more than a photograph.
+    </p>
+
+    <div class="movie-preview-divider">✦</div>
+
+    <strong>Your Special Movie Awaits</strong>
+
+    <small>
+      Add your favourite video and bring this little
+      cinema to life.
+    </small>
 
   </div>
 
+</div>
 
-  <!-- Invisible candle interaction layer -->
 
-  <div class="cake-candles">
+</div>
+</div>
+    
 
-    <button
-      class="cake-candle candle-one"
-      type="button"
-      aria-label="Candle one"
-    >
-      <span class="candle-flame"></span>
-    </button>
+    
+      <!-- OPTIONAL PERSONAL VIDEO UPLOAD -->
 
-    <button
-      class="cake-candle candle-two"
-      type="button"
-      aria-label="Candle two"
-    >
-      <span class="candle-flame"></span>
-    </button>
+    <div class="birthday-video-upload">
 
-    <button
-      class="cake-candle candle-three"
-      type="button"
-      aria-label="Candle three"
-    >
-      <span class="candle-flame"></span>
-    </button>
+  <label for="customerVideo" class="video-upload-label">
+    🎬 Add Birthday Video
+    <span>(Optional)</span>
+  </label>
+
+  <input
+    type="file"
+    id="customerVideo"
+    accept="video/*"
+    hidden
+  >
+
+  <div class="video-file-box" id="videoFileBox">
+
+    <label for="customerVideo" class="video-choose-button">
+      + Choose Video
+    </label>
+
+    <div class="video-selected-file" id="videoSelectedFile" hidden>
+      <span id="customVideoName"></span>
+
+      <button
+        type="button"
+        id="removeCustomerVideo"
+        aria-label="Remove video"
+      >×</button>
+    </div>
 
   </div>
 
-</div>      </div>
+  <small>You can skip this and continue without uploading.</small>
+
+</div>
 
 
-      <p class="candle-instruction">
-        ✦ Tap the candles ✦
-      </p>
+<!-- =====================================================
+     CONTINUE TO CAKE SURPRISE
+====================================================== -->
 
+<section class="cake-surprise-navigation">
+
+  <a
+    href="cake-surprise/cake.html"
+    class="cake-surprise-button"
+    id="continueToCakeButton"
+  >
+    Continue to Cake Surprise 🎂
+  </a>
+
+</section>
+
+</section>
+    
 <!-- PREMIUM GIFT BOX -->
+
 <div class="gift-experience" id="giftExperience">
+
+
+  <!-- GIFT EXPERIENCE HEADING -->
+
+<div class="gift-open-message" id="giftOpenMessage">
+  Har surprise se zyada khoobsurat ho tum. ✨
+</div>
+
+  <div class="gift-experience-heading">
+    <span>JUST FOR YOU · WITH LOVE</span>
+
+    <h2>
+      A Little Gift, Wrapped in a Thousand Feelings ❤️
+    </h2>
+
+    <p>
+      Because some feelings are too special to be expressed in words.
+    </p>
+  </div>
 
   <button
     class="birthday-wish-button"
@@ -1929,15 +1988,21 @@ html.luvora-welcome-active #luvoraWelcome[hidden] {
       id="pandaRomanticMessage"
     >If I could gift you one thing, it would be the chance to see yourself through my eyes. ❤️</p>
 
+<!-- PLAY GAME BUTTON -->
+<button
+  type="button"
+  id="playGiftGameButton"
+  class="play-gift-game-button"
+>
+  🎮 Play the Game
+</button>
+
   </div>
 
 </div>
 
-    </section>
-
 <!-- =========================================================
      LUVORA — THE MYSTERY GIFT GAME
-     Replace the complete previous Mystery Gift section
 ========================================================= -->
 
 <section
@@ -1945,11 +2010,13 @@ html.luvora-welcome-active #luvoraWelcome[hidden] {
   id="luvoraGiftGame"
   aria-labelledby="luvoraGameTitle"
 >
+
   <div class="luvora-game-inner">
 
     <!-- GAME HEADING -->
 
     <header class="luvora-game-heading">
+
       <span class="luvora-game-eyebrow">
         A LITTLE EXTRA SURPRISE
       </span>
@@ -1962,10 +2029,11 @@ html.luvora-welcome-active #luvoraWelcome[hidden] {
         Three gifts. Three hidden treasures.
         Watch carefully and find the right one!
       </p>
+
     </header>
 
 
-    <!-- GAME INSTRUCTION / QUESTION -->
+    <!-- GAME STATUS -->
 
     <div
       class="luvora-game-status"
@@ -1973,6 +2041,7 @@ html.luvora-welcome-active #luvoraWelcome[hidden] {
       aria-live="polite"
       aria-atomic="true"
     >
+
       <span
         class="luvora-status-icon"
         id="luvoraStatusIcon"
@@ -1982,12 +2051,11 @@ html.luvora-welcome-active #luvoraWelcome[hidden] {
       <p id="luvoraGameInstruction">
         Take a look inside each gift before the magic begins.
       </p>
+
     </div>
 
 
-    <!-- GIFT BOX STAGE
-         Symbols remain inside their original gift elements.
-         JavaScript will move the boxes, not the symbols. -->
+    <!-- GIFT BOX STAGE -->
 
     <div
       class="luvora-gift-stage"
@@ -2003,32 +2071,27 @@ html.luvora-welcome-active #luvoraWelcome[hidden] {
         id="luvoraGiftA"
         type="button"
         data-gift-id="A"
-        aria-label="Mystery gift containing a hidden symbol"
+        aria-label="Mystery gift A"
         aria-pressed="false"
       >
-        <span class="luvora-gift-card-inner">
 
-          <!-- Gift lid -->
+        <span class="luvora-gift-card-inner">
 
           <span class="luvora-gift-lid" aria-hidden="true">
             <span class="luvora-gift-lid-ribbon"></span>
             <span class="luvora-gift-lid-bow"></span>
           </span>
 
-          <!-- Gift body -->
-
           <span class="luvora-gift-box-body" aria-hidden="true">
             <span class="luvora-gift-ribbon-vertical"></span>
             <span class="luvora-gift-ribbon-horizontal"></span>
-
             <span class="luvora-gift-symbol">❤️</span>
           </span>
-
-          <!-- Decorative base -->
 
           <span class="luvora-gift-box-base" aria-hidden="true"></span>
 
         </span>
+
       </button>
 
 
@@ -2039,9 +2102,10 @@ html.luvora-welcome-active #luvoraWelcome[hidden] {
         id="luvoraGiftB"
         type="button"
         data-gift-id="B"
-        aria-label="Mystery gift containing a hidden symbol"
+        aria-label="Mystery gift B"
         aria-pressed="false"
       >
+
         <span class="luvora-gift-card-inner">
 
           <span class="luvora-gift-lid" aria-hidden="true">
@@ -2052,13 +2116,13 @@ html.luvora-welcome-active #luvoraWelcome[hidden] {
           <span class="luvora-gift-box-body" aria-hidden="true">
             <span class="luvora-gift-ribbon-vertical"></span>
             <span class="luvora-gift-ribbon-horizontal"></span>
-
             <span class="luvora-gift-symbol">🌹</span>
           </span>
 
           <span class="luvora-gift-box-base" aria-hidden="true"></span>
 
         </span>
+
       </button>
 
 
@@ -2069,9 +2133,10 @@ html.luvora-welcome-active #luvoraWelcome[hidden] {
         id="luvoraGiftC"
         type="button"
         data-gift-id="C"
-        aria-label="Mystery gift containing a hidden symbol"
+        aria-label="Mystery gift C"
         aria-pressed="false"
       >
+
         <span class="luvora-gift-card-inner">
 
           <span class="luvora-gift-lid" aria-hidden="true">
@@ -2082,13 +2147,13 @@ html.luvora-welcome-active #luvoraWelcome[hidden] {
           <span class="luvora-gift-box-body" aria-hidden="true">
             <span class="luvora-gift-ribbon-vertical"></span>
             <span class="luvora-gift-ribbon-horizontal"></span>
-
             <span class="luvora-gift-symbol">💎</span>
           </span>
 
           <span class="luvora-gift-box-base" aria-hidden="true"></span>
 
         </span>
+
       </button>
 
     </div>
@@ -2096,18 +2161,32 @@ html.luvora-welcome-active #luvoraWelcome[hidden] {
 
     <!-- MIX / START ACTION -->
 
-    <div class="luvora-game-actions" id="luvoraGameActions">
+    <div
+      class="luvora-game-actions"
+      id="luvoraGameActions"
+    >
 
       <button
         class="luvora-game-start"
         id="luvoraGameStart"
         type="button"
       >
-        <span class="luvora-game-start-label">MIX THE GIFTS</span>
-        <span class="luvora-game-start-icon" aria-hidden="true">✦</span>
+
+        <span class="luvora-game-start-label">
+          MIX THE GIFTS
+        </span>
+
+        <span
+          class="luvora-game-start-icon"
+          aria-hidden="true"
+        >✦</span>
+
       </button>
 
-      <p class="luvora-game-hint" id="luvoraGameHint">
+      <p
+        class="luvora-game-hint"
+        id="luvoraGameHint"
+      >
         Remember the symbols. Then follow the gifts!
       </p>
 
@@ -2123,11 +2202,13 @@ html.luvora-welcome-active #luvoraWelcome[hidden] {
       aria-live="polite"
       hidden
     >
+
       <span aria-hidden="true">💫</span>
 
       <p id="luvoraGameRetryText">
         Try Again!
       </p>
+
     </div>
 
 
@@ -2139,6 +2220,7 @@ html.luvora-welcome-active #luvoraWelcome[hidden] {
       hidden
       aria-live="polite"
     >
+
       <span
         class="luvora-success-icon"
         aria-hidden="true"
@@ -2155,27 +2237,34 @@ html.luvora-welcome-active #luvoraWelcome[hidden] {
         id="luvoraRewardUnlock"
         type="button"
       >
+
         <span>Reveal Your Reward</span>
         <span aria-hidden="true">♡</span>
+
       </button>
+
     </div>
 
 
-    <!-- SCRATCH CARD REWARD
-         JavaScript can place this inside the same gift stage. -->
+    <!-- SCRATCH CARD REWARD -->
 
     <div
       class="luvora-scratch-area"
       id="luvoraScratchArea"
       hidden
     >
-      <span class="luvora-scratch-eyebrow">
-        A LITTLE GIFT FROM YOUR SPECIAL SOMEONE
-      </span>
+
+  <span class="luvora-scratch-eyebrow">
+  A LITTLE GIFT FROM
+  <span id="luvoraScratchSenderName">Someone Special</span>
+</span>
 
       <h3>Your Birthday Reward 💝</h3>
 
-      <p>Scratch away to reveal your surprise!</p>
+      <p>
+        Scratch away to reveal your surprise!
+      </p>
+
 
       <div
         class="luvora-scratch-card"
@@ -2183,53 +2272,83 @@ html.luvora-welcome-active #luvoraWelcome[hidden] {
         role="group"
         aria-label="Birthday scratch card"
       >
+
         <div
           class="luvora-scratch-cover"
           id="luvoraScratchCover"
         >
+
           <span aria-hidden="true">🎁</span>
 
           <strong>SCRATCH TO REVEAL</strong>
+
         </div>
 
-      
-<div
-  class="luvora-scratch-result"
-  id="luvoraScratchResult"
-  aria-live="polite"
-  hidden
->
-  <span aria-hidden="true">💖</span>
 
-  <p id="luvoraScratchRewardText"></p>
+        <!-- SCRATCH RESULT -->
 
-  <button
-    type="button"
-    id="luvoraCopyReward"
-    class="luvora-copy-reward"
-    hidden
-  >
-    Copy Reward
-  </button>
+        <div
+          class="luvora-scratch-result"
+          id="luvoraScratchResult"
+          aria-live="polite"
+          hidden
+        >
 
-  <p
-    id="luvoraCopyRewardStatus"
-    aria-live="polite"
-    hidden
-  ></p>
-</div>
+          <span aria-hidden="true">💖</span>
+
+          <p id="luvoraScratchRewardText"></p>
+
+          <button
+            type="button"
+            id="luvoraCopyReward"
+            class="luvora-copy-reward"
+            hidden
+          >
+            Copy Reward
+          </button>
+
+          <p
+            id="luvoraCopyRewardStatus"
+            aria-live="polite"
+            hidden
+          ></p>
+
+        </div>
 
       </div>
+
+
+      <!-- CONTINUE BUTTON -->
+
+      <div
+        id="luvoraFinalContinueWrap"
+        class="luvora-final-continue-wrap"
+        hidden
+      >
+
+        <button
+          type="button"
+          class="birthday-flow-continue-button"
+          id="luvoraFinalContinueButton"
+        >
+
+          <span>Continue to Final Surprise</span>
+
+          <span aria-hidden="true">♡</span>
+
+        </button>
+
+      </div>
+
     </div>
 
   </div>
+
 </section>
 
 <!-- =========================================================
      END — LUVORA MYSTERY GIFT GAME
 ========================================================= -->
-
-
     <!-- =======================================================
          07 — FINAL SURPRISE
     ======================================================== -->
@@ -2290,272 +2409,6 @@ html.luvora-welcome-active #luvoraWelcome[hidden] {
           Never forget that.
         </p>
 
-      </div>
-
-    </section>
-
-<section
-  class="customization-panel"
-  id="customizationPanel"
->
-
- <div class="customization-inner">
-
-  <span class="section-eyebrow">
-    YOUR STORY, YOUR WAY
-  </span>
-
-  <h2>
-    Create Something Meaningful ✨
-  </h2>
-
-  <p>
-    Personalize every detail with your favourite memories,
-    special moments, and heartfelt words.
-  </p>
-
-  <div class="privacy-note">
-    <span class="privacy-icon">🔒</span>
-    <p>
-      <strong>Your Memories, Our Care.</strong>
-      Your personal data are handled with care and respect.
-    </p>
-  </div>
-
-  <div class="customization-form">
-
-    <div class="form-group full-width">
-      <label for="customerPhone">Your Mobile Number</label>
-  <input
-    type="tel"
-    id="customerPhone"
-    placeholder="Enter your mobile number"
-    inputmode="numeric"
-    maxlength="10"
-    pattern="[6-9][0-9]{9}"
-    required
-  >
-
-  <small style="color: #d00000; font-size: 12px;">
-    ⚠️ Enter your own number.
-  </small>
-</div>
-
-      <div class="form-group">
-        <label for="customerName">
-          Name
-        </label>
-
-        <input
-          type="text"
-          id="customerName"
-          placeholder="Enter Their Name"
-        >
-       <small style="color: red; font-weight: 600;">❤️ Enter the name of your loved                       one.</small>
-      </div>
-
-
-      <div class="form-group">
-        <label for="customerDate">
-          Special Date
-        </label>
-
-      <input type="date" id="customerDate" required>
-      </div>
-
-
-      <div class="form-group full-width">
-
-        <label for="customerPhotos">
-          Your Photos
-        </label>
-
-        <input
-          type="file"
-          id="customerPhotos"
-          accept="image/*"
-          multiple
-        >
-
-        <small>
-          Select six beautiful photos from your gallery.
-        </small>
-
-        <div
-          class="custom-photo-preview"
-          id="customPhotoPreview"
-        ></div>
-
-      </div>
-
-
-      <div class="form-group full-width">
-
-        <label for="customerVideo">
-          Your Video
-        </label>
-
-        <input
-          type="file"
-          id="customerVideo"
-          accept="video/*"
-        >
-
-        <small>
-          Select one birthday video.
-        </small>
-
-        <div
-          class="custom-video-name"
-          id="customVideoName"
-        ></div>
-
-      </div>
-
-    </div>
-
-<!-- LUVORA — CHOOSE YOUR BIRTHDAY REWARD -->
-
-<div class="luvora-reward-customizer">
-
-  <label class="luvora-reward-heading">
-    Choose Your Reward 💝
-  </label>
-
-  <!-- COMPACT REWARD DROPDOWN -->
-
-  <div class="luvora-reward-dropdown" id="customerRewardDropdown">
-
-    <button
-      type="button"
-      class="luvora-reward-dropdown-toggle"
-      id="customerRewardToggle"
-      aria-expanded="false"
-      aria-controls="customerRewardOptions"
-    >
-      <span id="customerRewardPlaceholder">
-        Select a special reward
-      </span>
-      <span aria-hidden="true">⌄</span>
-    </button>
-
-    <div
-      class="luvora-reward-options"
-      id="customerRewardOptions"
-      role="listbox"
-      aria-label="Choose one birthday reward"
-      hidden
-    >
-
-      <button type="button" class="luvora-reward-option"
-        data-reward="Romantic Dinner Date" aria-pressed="false">
-        <span class="luvora-reward-icon">🕯️</span>
-        <span class="luvora-reward-name">Romantic Dinner Date</span>
-      </button>
-
-      <button type="button" class="luvora-reward-option"
-        data-reward="Lunch Date" aria-pressed="false">
-        <span class="luvora-reward-icon">🍽️</span>
-        <span class="luvora-reward-name">Lunch Date</span>
-      </button>
-
-      <button type="button" class="luvora-reward-option"
-        data-reward="Coffee Date" aria-pressed="false">
-        <span class="luvora-reward-icon">☕</span>
-        <span class="luvora-reward-name">Coffee Date</span>
-      </button>
-
-      <button type="button" class="luvora-reward-option"
-        data-reward="Cake & Dessert Treat" aria-pressed="false">
-        <span class="luvora-reward-icon">🍰</span>
-        <span class="luvora-reward-name">Cake & Dessert Treat</span>
-      </button>
-
-      <button type="button" class="luvora-reward-option"
-        data-reward="Movie Date" aria-pressed="false">
-        <span class="luvora-reward-icon">🎬</span>
-        <span class="luvora-reward-name">Movie Date</span>
-      </button>
-
-      <button type="button" class="luvora-reward-option"
-        data-reward="Surprise Gift" aria-pressed="false">
-        <span class="luvora-reward-icon">🎁</span>
-        <span class="luvora-reward-name">Surprise Gift</span>
-      </button>
-
-    </div>
-
-  </div>
-
-  <!-- ALTERNATIVE REWARD -->
-
-  <div class="luvora-reward-divider">
-    <span></span>
-    <span>OR</span>
-    <span></span>
-  </div>
-
-<!-- CUSTOM REWARD OR GIFT CARD -->
-
-<div class="luvora-reward-input-group">
-
-  <label for="customerCustomReward">
-    Create Your Own Special Gift 🎀
-  </label>
-
-  <textarea
-    id="customerCustomReward"
-    maxlength="300"
-    rows="2"
-    placeholder="Example: A heartfelt message written just for you, a promise to always stand by you, or a little surprise made with love..."
-  ></textarea>
-
-</div>
-
-<!-- GIFT CARD INSTRUCTIONS -->
-
-<div class="luvora-reward-note">
-  <p>
-    Write your own special reward above, or paste a gift card or coupon code there.
-    For a gift card, purchase one from Amazon, Flipkart, Myntra, or boAt and enter
-    its code in the same box.
-  </p>
-</div>
-
-
-  <p
-    class="luvora-reward-selection-status"
-    id="customerRewardStatus"
-    aria-live="polite"
-  >
-    Choose one reward option or create your own gift.
-  </p>
-
-</div>
-
-<!-- END — LUVORA REWARD SELECTOR -->
-
-
-    <div class="customization-actions">
-
-      <button
-        type="button"
-        id="previewSurpriseButton"
-      >
-        Preview Complete Surprise
-      </button>
-<p
-  class="preview-status"
-  id="previewStatus"
-></p>
-      
-    </div>
-
-  </div>
-
-</section>
-
-
 <div
   class="preview-actions"
   id="previewActions"
@@ -2576,7 +2429,378 @@ html.luvora-welcome-active #luvoraWelcome[hidden] {
   </button>
 
 </div>
+      </div>
 
+    </section>
+
+<!-- =====================================================
+     LUVORA — PREMIUM CUSTOMIZATION PANEL
+===================================================== -->
+
+<section
+  class="customization-panel"
+  id="customizationPanel"
+>
+
+  <div class="customization-inner">
+
+    <!-- HEADER -->
+
+    <div class="customization-header">
+
+      <span class="section-eyebrow">
+        🎀 YOUR STORY, YOUR WAY
+      </span>
+
+      <h2>
+        Create Something Meaningful
+        <span>♥</span>
+      </h2>
+
+      <p>
+        A little space to create something beautiful
+        for someone special.
+      </p>
+
+    </div>
+
+
+    <!-- =========================================
+         NAME SECTION
+    ========================================== -->
+
+    <div class="name-love-card">
+
+      <div class="name-field">
+
+        <label for="customerYourName">
+          Your Name
+        </label>
+
+        <input
+          type="text"
+          id="customerYourName"
+          placeholder="Enter your name"
+          autocomplete="name"
+        >
+
+      </div>
+
+
+      <div class="name-love-divider">
+
+        <span class="love-line"></span>
+
+        <span class="love-heart">
+          ♥
+        </span>
+
+        <span class="love-line"></span>
+
+      </div>
+
+
+      <div class="name-field">
+
+        <label for="customerName">
+          Loved One's Name
+        </label>
+
+        <input
+          type="text"
+          id="customerName"
+          placeholder="Enter their name"
+          autocomplete="off"
+        >
+
+      </div>
+
+    </div>
+
+
+    <!-- =========================================
+         SPECIAL DATE
+    ========================================== -->
+
+    <div class="customization-form">
+
+      <div class="form-group full-width">
+
+        <label for="customerDate">
+          🌷 Special Date
+        </label>
+
+        <input
+          type="date"
+          id="customerDate"
+          required
+        >
+
+      </div>
+
+
+      <!-- =====================================
+           PHOTO UPLOAD
+      ====================================== -->
+
+      <div class="form-group full-width">
+
+        <label for="customerPhotos">
+          📸 Your Beautiful Memories
+        </label>
+
+        <input
+          type="file"
+          id="customerPhotos"
+          accept="image/*"
+          multiple
+        >
+
+        <small>
+          Select six beautiful photos from your gallery.
+        </small>
+
+        <div
+          class="custom-photo-preview"
+          id="customPhotoPreview"
+        ></div>
+
+      </div>
+
+    </div>
+
+
+    <!-- =========================================
+         CHOOSE YOUR REWARD
+    ========================================== -->
+
+    <div class="luvora-reward-customizer">
+
+      <div class="reward-section-heading">
+
+        <span>🎁</span>
+
+        <div>
+          <h3>Choose Your Reward</h3>
+
+          <p>
+            Pick a special reward or create your own.
+          </p>
+        </div>
+
+      </div>
+
+
+      <!-- TWO REWARD MODES -->
+
+      <div class="reward-mode-switch">
+
+        <button
+          type="button"
+          class="reward-mode-button active"
+          id="rewardListMode"
+          data-reward-mode="list"
+          aria-pressed="true"
+        >
+          ✨ Select from List
+        </button>
+
+
+        <button
+          type="button"
+          class="reward-mode-button"
+          id="rewardCustomMode"
+          data-reward-mode="custom"
+          aria-pressed="false"
+        >
+          🎀 Create Your Own
+        </button>
+
+      </div>
+
+
+      <!-- SELECT FROM LIST -->
+
+      <div
+        class="reward-list-content"
+        id="rewardListContent"
+      >
+
+        <div
+          class="luvora-reward-dropdown"
+          id="customerRewardDropdown"
+        >
+
+          <button
+            type="button"
+            class="luvora-reward-dropdown-toggle"
+            id="customerRewardToggle"
+            aria-expanded="false"
+            aria-controls="customerRewardOptions"
+          >
+
+            <span id="customerRewardPlaceholder">
+              Select a special reward
+            </span>
+
+            <span aria-hidden="true">⌄</span>
+
+          </button>
+
+
+          <div
+            class="luvora-reward-options"
+            id="customerRewardOptions"
+            role="listbox"
+            aria-label="Choose one birthday reward"
+            hidden
+          >
+
+            <button
+              type="button"
+              class="luvora-reward-option"
+              data-reward="Romantic Dinner Date"
+              aria-pressed="false"
+            >
+              <span class="luvora-reward-icon">🕯️</span>
+              <span class="luvora-reward-name">
+                Romantic Dinner Date
+              </span>
+            </button>
+
+
+            <button
+              type="button"
+              class="luvora-reward-option"
+              data-reward="Lunch Date"
+              aria-pressed="false"
+            >
+              <span class="luvora-reward-icon">🍽️</span>
+              <span class="luvora-reward-name">
+                Lunch Date
+              </span>
+            </button>
+
+
+            <button
+              type="button"
+              class="luvora-reward-option"
+              data-reward="Coffee Date"
+              aria-pressed="false"
+            >
+              <span class="luvora-reward-icon">☕</span>
+              <span class="luvora-reward-name">
+                Coffee Date
+              </span>
+            </button>
+
+
+            <button
+              type="button"
+              class="luvora-reward-option"
+              data-reward="Cake & Dessert Treat"
+              aria-pressed="false"
+            >
+              <span class="luvora-reward-icon">🍰</span>
+              <span class="luvora-reward-name">
+                Cake & Dessert Treat
+              </span>
+            </button>
+
+
+            <button
+              type="button"
+              class="luvora-reward-option"
+              data-reward="Movie Date"
+              aria-pressed="false"
+            >
+              <span class="luvora-reward-icon">🎬</span>
+              <span class="luvora-reward-name">
+                Movie Date
+              </span>
+            </button>
+
+
+            <button
+              type="button"
+              class="luvora-reward-option"
+              data-reward="Surprise Gift"
+              aria-pressed="false"
+            >
+              <span class="luvora-reward-icon">🎁</span>
+              <span class="luvora-reward-name">
+                Surprise Gift
+              </span>
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- CREATE YOUR OWN -->
+
+      <div
+        class="reward-custom-content"
+        id="rewardCustomContent"
+        hidden
+      >
+
+        <label for="customerCustomReward">
+          🎀 Write Your Special Reward
+        </label>
+
+        <textarea
+          id="customerCustomReward"
+          maxlength="300"
+          rows="3"
+          placeholder="Write a personal gift, promise, special message or coupon code..."
+        ></textarea>
+
+      </div>
+
+
+      <!-- REWARD STATUS -->
+
+      <p
+        class="luvora-reward-selection-status"
+        id="customerRewardStatus"
+        aria-live="polite"
+      >
+        Choose a reward to make the surprise special. ❤️
+      </p>
+
+    </div>
+
+
+    <!-- =========================================
+         PREVIEW BUTTON
+    ========================================== -->
+
+    <div class="customization-actions">
+
+      <button
+        type="button"
+        id="previewSurpriseButton"
+      >
+        ✨ Preview Complete Surprise
+      </button>
+
+      <p
+        class="preview-status"
+        id="previewStatus"
+        aria-live="polite"
+      ></p>
+
+    </div>
+
+  </div>
+
+</section>
+
+ 
 
 <!-- =======================================================
      FOOTER
