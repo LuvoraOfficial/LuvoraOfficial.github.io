@@ -15876,3 +15876,18 @@ transform-origin: center center !important;
   }
 
 }
+@media (max-width: 800px) {
+
+  #balloonSection .balloon-message.mobile-final-balloon-message {
+    left: 50% !important;
+    right: auto !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    transform: translateX(-50%) translateY(10px) scale(.96) !important;
+  }
+
+  #balloonSection .balloon-message.mobile-final-balloon-message.visible {
+    transform: translateX(-50%) translateY(0) scale(1) !important;
+  }
+
+}
