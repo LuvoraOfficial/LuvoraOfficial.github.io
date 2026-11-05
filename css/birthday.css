@@ -15824,4 +15824,35 @@ transform-origin: center center !important;
   }
 }
 
+/* =========================================
+   LUVORA — MOBILE FINAL BALLOON MESSAGE
+========================================= */
 
+@media (max-width: 800px) {
+
+  #balloonSection .balloon-message.mobile-final-balloon-message {
+    width: min(340px, calc(100vw - 36px)) !important;
+    max-width: 340px !important;
+
+    height: auto !important;
+    min-height: 0 !important;
+
+    padding: 13px 16px !important;
+    margin: 12px auto 0 !important;
+
+    box-sizing: border-box !important;
+    overflow: visible !important;
+  }
+
+  #balloonSection
+  .balloon-message.mobile-final-balloon-message p {
+    height: auto !important;
+    min-height: 0 !important;
+
+    margin: 6px 0 0 !important;
+
+    line-height: 1.6 !important;
+    overflow-wrap: break-word;
+  }
+
+}
