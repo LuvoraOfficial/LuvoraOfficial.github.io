@@ -15858,26 +15858,27 @@ transform-origin: center center !important;
 }
 
 
-   /* =========================================
-   LUVORA — SHOW FULL UPLOADED PHOTOS
+/* =========================================
+   LUVORA — MOBILE PHOTO PREVIEW HEIGHT FIX
 ========================================= */
 
 @media (max-width: 700px) {
 
   #customizationPanel #customPhotoPreview > .custom-photo-item {
     height: 65px !important;
-    overflow: hidden !important;
-    background: #fff !important;
+    min-height: 65px !important;
+    overflow: visible !important;
   }
 
   #customizationPanel #customPhotoPreview > .custom-photo-item img {
+    display: block !important;
     width: 100% !important;
-    height: 100% !important;
-    object-fit: contain !important;
-    object-position: center !important;
+    height: 65px !important;
+    object-fit: cover !important;
   }
 
 }
+
 
    /* =========================================
    LUVORA — MOBILE CAMERA FULL MESSAGE
