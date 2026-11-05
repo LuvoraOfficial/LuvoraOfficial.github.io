@@ -214,7 +214,93 @@ document.addEventListener("DOMContentLoaded", () => {
   const backButton =
     document.getElementById("backButton");
 
+/* =================================
+   TERMS & REFUND POLICY
+================================= */
 
+const policyConsent =
+    document.getElementById("policyConsent");
+
+
+/* Disable payment until agreement */
+
+if (policyConsent && payNowButton) {
+
+    payNowButton.disabled = !policyConsent.checked;
+
+    policyConsent.addEventListener("change", function () {
+
+        payNowButton.disabled = !this.checked;
+
+    });
+
+}
+
+/* Open policy popup */
+
+document.querySelectorAll("[data-policy]").forEach(button => {
+
+    button.addEventListener("click", function () {
+
+        const dialog = document.getElementById(
+            this.dataset.policy
+        );
+
+        if (dialog) dialog.showModal();
+
+    });
+
+});
+
+/* Close popup */
+
+document.querySelectorAll(".dialog-close").forEach(button => {
+
+    button.addEventListener("click", function () {
+
+        this.closest("dialog").close();
+
+    });
+
+});
+
+/* =====================================
+   LUVORA — MORE / LESS CONSENT
+===================================== */
+
+const policyMoreButton =
+    document.getElementById("policyMoreButton");
+
+const policyMoreContent =
+    document.getElementById("policyMoreContent");
+
+if (policyMoreButton && policyMoreContent) {
+
+    policyMoreButton.addEventListener("click", function () {
+
+        const isOpening = policyMoreContent.hidden;
+
+        policyMoreContent.hidden = !isOpening;
+
+        policyMoreButton.textContent =
+            isOpening ? "Less −" : "More +";
+
+        if (isOpening) {
+
+            setTimeout(() => {
+
+               document.getElementById("paymentConsent").scrollIntoView({
+    behavior: "smooth",
+    block: "nearest"
+});
+
+            }, 150);
+
+        }
+
+    });
+
+}
   /* =====================================================
      LOAD CUSTOMER DATA
      ===================================================== */
@@ -581,8 +667,7 @@ console.log(
           );
 
 
-          payNowButton.disabled =
-            false;
+         payNowButton.disabled = !policyConsent?.checked;
 
        payNowButton.textContent = "Continue to Payment →";
 
@@ -618,3 +703,34 @@ console.log(
   }
 
 });
+
+/* Premium Floating Love Hearts */
+
+(function createFloatingHearts() {
+
+    const hearts = ["♥", "♡", "❤", "♥"];
+
+    function createHeart() {
+        const heart = document.createElement("span");
+
+        heart.className = "love-float";
+        heart.textContent =
+            hearts[Math.floor(Math.random() * hearts.length)];
+
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = (17 + Math.random() * 13) + "px";
+        heart.style.animationDuration = (9 + Math.random() * 5) + "s";
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 15000);
+    }
+
+    // Initial hearts
+    for (let i = 0; i < 4; i++) {
+        setTimeout(createHeart, i * 900);
+    }
+
+    setInterval(createHeart, 1300);
+
+})();
