@@ -497,10 +497,12 @@ letter:
     ? surpriseData.letter.trim().slice(0, 10000)
     : "",
 
-  customer_phone:
-    surpriseData.phone || "",
+customer_phone:
+  document.getElementById("customerPhone")?.value.trim() ||
+  surpriseData.phone ||
+  "", 
 
-  template:
+    template:
     surpriseData.template ||
     "birthday-story",
 
