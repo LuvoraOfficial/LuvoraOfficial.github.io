@@ -15902,33 +15902,37 @@ transform-origin: center center !important;
     text-align: center !important;
   }
 
-  #luvoraCameraSection #luvoraRomanticTyping {
+/* =========================================
+   LUVORA — CENTER FINAL BALLOON MESSAGE
+========================================= */
+
+@media (max-width: 800px) {
+
+  #balloonSection .balloon-message.mobile-final-balloon-message {
+    position: relative !important;
+
     display: block !important;
 
-    width: 100% !important;
-    height: auto !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
 
-    min-height: 0 !important;
-    max-height: none !important;
+    float: none !important;
 
-    overflow: visible !important;
+    width: calc(100% - 30px) !important;
+    max-width: 310px !important;
 
-    white-space: normal !important;
-    overflow-wrap: anywhere !important;
-    word-break: normal !important;
+    margin: 18px auto 0 !important;
 
-    font-size: 13px !important;
-    line-height: 1.7 !important;
+    align-self: center !important;
+    justify-self: center !important;
 
-    text-align: center !important;
+    transform: translateY(10px) scale(.96) !important;
+    box-sizing: border-box !important;
   }
 
-  #luvoraCameraSection + .birthday-flow-continue-wrap {
-    display: flex !important;
-    justify-content: center !important;
-
-    width: 100% !important;
-    margin: 18px auto 25px !important;
+  #balloonSection .balloon-message.mobile-final-balloon-message.visible {
+    transform: translateY(0) scale(1) !important;
   }
 
 }
