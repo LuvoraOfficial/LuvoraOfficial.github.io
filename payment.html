@@ -1,134 +1,337 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f8edf0">
   <title>Luvora — Complete Your Surprise</title>
-
-  <link
-    rel="stylesheet"
-    href="css/payment.css"
-  >
-
+  <link rel="stylesheet" href="css/payment.css">
 </head>
-
 <body>
-
   <main class="payment-page">
+    <section class="payment-card" aria-labelledby="paymentTitle">
+      <div class="card-orbit orbit-one"></div>
+      <div class="card-orbit orbit-two"></div>
 
-    <section class="payment-card">
-
-      <div class="payment-icon">
-        ✨
+      <div class="payment-icon" aria-hidden="true">
+        <span>♡</span>
       </div>
 
-      <p class="payment-eyebrow">
-        YOUR SURPRISE IS READY
-      </p>
-
-      <h1>
-        One little step<br>
-        before the magic begins.
-      </h1>
-
+      <p class="payment-eyebrow">A LITTLE MAGIC IS WAITING</p>
+      <h1 id="paymentTitle">One little step<br>before the magic begins.</h1>
       <p class="payment-description">
-        Your personalized birthday surprise has been
-        prepared. Complete the payment to create your
-        private shareable surprise link.
+        Your personalized birthday surprise is ready.
+        Add your mobile number to continue securely.
       </p>
-
 
       <div class="payment-summary">
-
         <div class="summary-row">
           <span>Template</span>
           <strong>Birthday Story</strong>
         </div>
-
         <div class="summary-row">
-  <span>For</span>
-  <strong id="customerNameDisplay">My Love</strong>
-</div>
-
-<div class="summary-row">
-  <span>Special Date</span>
-  <strong id="customerDateDisplay">
-    A very special day
-  </strong>
-</div>
-
+          <span>For</span>
+          <strong id="customerNameDisplay">My Love</strong>
+        </div>
+        <div class="summary-row">
+          <span>Special Date</span>
+          <strong id="customerDateDisplay">A very special day</strong>
+        </div>
         <div class="summary-row">
           <span>Personalized photos</span>
           <strong>Included</strong>
         </div>
-
         <div class="summary-row">
           <span>Private surprise link</span>
           <strong>After payment</strong>
         </div>
-
       </div>
 
+      <div class="phone-section">
+        <label class="phone-label" for="customerPhone">Your mobile number</label>
+        <div class="phone-control" id="phoneControl">
+          <span class="phone-symbol" aria-hidden="true">✆</span>
+          <select id="countryCode" name="countryCode" aria-label="Country calling code">
+            <option value="+91" data-length="10" selected>🇮🇳 +91</option>
+            <option value="+1" data-length="10">🇺🇸 +1</option>
+            <option value="+44" data-length="10">🇬🇧 +44</option>
+            <option value="+971" data-length="9">🇦🇪 +971</option>
+            <option value="+880" data-length="10">🇧🇩 +880</option>
+            <option value="+977" data-length="10">🇳🇵 +977</option>
+            <option value="+94" data-length="9">🇱🇰 +94</option>
+            <option value="+61" data-length="9">🇦🇺 +61</option>
+            <option value="+1" data-length="10">🇨🇦 +1</option>
+          </select>
+          <span class="phone-divider" aria-hidden="true"></span>
+          <input
+            id="customerPhone"
+            name="customerPhone"
+            type="tel"
+            inputmode="numeric"
+            autocomplete="tel-national"
+            placeholder="Enter mobile number"
+            maxlength="10"
+            aria-describedby="phoneHint phoneError"
+            required
+          >
+          <span class="phone-check" aria-hidden="true">✓</span>
+        </div>
+        <p class="phone-hint" id="phoneHint">We'll use this number for your secure payment.</p>
+        <p class="phone-error" id="phoneError" role="alert" aria-live="polite"></p>
+      </div>
 
       <div class="price-box">
-
-        <span class="price-label">
-          Surprise creation
-        </span>
-
-     <div class="price">
-  <span class="old-price">₹99</span>
-  <span class="current-price">₹49</span>
-</div>
+        <div>
+          <span class="price-label">Surprise creation</span>
+          <span class="price-caption">One-time payment</span>
+        </div>
+        <div class="price">
+          <span class="old-price">₹99</span>
+          <span class="current-price">₹49</span>
+        </div>
       </div>
 
+<!-- LUVORA POLICY CONSENT -->
+<div class="payment-consent" id="paymentConsent">
 
-      <button
-        type="button"
-        class="payment-button"
-        id="payNowButton"
-      >
-        Continue to Payment
-        <span>→</span>
+  <div class="consent-main">
+
+    <label class="consent-checkbox">
+      <input type="checkbox" id="policyConsent">
+
+      <span class="custom-check" aria-hidden="true"></span>
+    </label>
+
+    <div class="consent-text">
+
+      <span>
+        I agree to Luvora's
+        <button type="button" class="policy-link"
+          data-policy="termsDialog">
+          Terms & Conditions
+        </button>
+        and
+        <button type="button" class="policy-link"
+          data-policy="refundDialog">
+          Refund Policy
+        </button>.
+      </span>
+
+    </div>
+
+    <button type="button" id="policyMoreButton"
+      class="policy-more">
+      More +
+    </button>
+
+  </div>
+
+  <div class="policy-expanded" id="policyMoreContent" hidden>
+
+    <p>
+      I have read and agree to Luvora's Terms & Conditions
+      and Refund Policy.
+    </p>
+
+    <p>
+      I understand that successful delivery of a personalized
+      digital surprise page is generally non-refundable,
+      except in eligible cases involving verified technical
+      or payment-related issues.
+    </p>
+
+  </div>
+
+</div>
+      <button type="button" class="payment-button" id="payNowButton" disabled>
+        <span>Continue to Payment</span><span class="button-arrow" aria-hidden="true">→</span>
       </button>
 
-
-      <p class="secure-note">
-        🔒 Secure payment · Your surprise remains private
-      </p>
-
-
-      <button
-        type="button"
-        class="back-button"
-        id="backButton"
-      >
-        ← Back to Surprise
-      </button>
-
+      <p class="secure-note"><span aria-hidden="true">▣</span> Secure checkout powered by Cashfree</p>
+      <button type="button" class="back-button" id="backButton">← Back to Surprise</button>
+      <p class="brand-note">MADE WITH <span>♥</span> BY LUVORA</p>
     </section>
-
   </main>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    window.SUPABASE_CONFIG = {
+      url: "https://yyxcoojwjihimfhnjkhg.supabase.co",
+      publishableKey: "sb_publishable_mz1iukZ_LByi-5YK82fhKw_FxcnX1X7"
+    };
+  </script>
+  <script src="templates/payment.js"></script>
+  <script>
+    // UI validation only. payment.js must read these values before creating the order.
+    (() => {
+      const input = document.getElementById("customerPhone");
+      const country = document.getElementById("countryCode");
+      const error = document.getElementById("phoneError");
+      const control = document.getElementById("phoneControl");
+      const button = document.getElementById("payNowButton");
 
- <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+      input.addEventListener("input", () => {
+        input.value = input.value.replace(/\D/g, "").slice(0, 10);
+        error.textContent = "";
+        control.classList.remove("invalid");
+      });
 
-<script>
-window.SUPABASE_CONFIG = {
-  url: "https://yyxcoojwjihimfhnjkhg.supabase.co",
-  publishableKey: "sb_publishable_mz1iukZ_LByi-5YK82fhKw_FxcnX1X7"
-};
-</script>
+      country.addEventListener("change", () => {
+        input.maxLength = Number(country.selectedOptions[0].dataset.length || 10);
+        input.value = "";
+        error.textContent = "";
+        input.placeholder = "Enter mobile number";
+      });
 
-<script src="templates/payment.js"></script>
+      button.addEventListener("click", (event) => {
+        const digits = input.value.trim();
+        const expected = Number(country.selectedOptions[0].dataset.length || 10);
+        if (digits.length !== expected) {
+          event.stopImmediatePropagation();
+          error.textContent = `Please enter a valid ${expected}-digit mobile number.`;
+          control.classList.add("invalid");
+          input.focus();
+          return;
+        }
+        if (country.value === "+91" && !/^[6-9]\d{9}$/.test(digits)) {
+          event.stopImmediatePropagation();
+          error.textContent = "Please enter a valid Indian mobile number.";
+          control.classList.add("invalid");
+          input.focus();
+          return;
+        }
+        // Persist the entered number for the payment script.
+        const saved = sessionStorage.getItem("luvoraSurpriseData") || localStorage.getItem("luvoraSurpriseData");
+        if (saved) {
+          try {
+            const data = JSON.parse(saved);
+            data.phone = digits;
+            data.countryCode = country.value;
+            sessionStorage.setItem("luvoraSurpriseData", JSON.stringify(data));
+            localStorage.setItem("luvoraSurpriseData", JSON.stringify(data));
+          } catch (_) {}
+        }
+      }, true);
+    })();
+  </script>
+
+<!-- Terms & Conditions -->
+<dialog id="termsDialog" class="policy-dialog">
+
+    <div class="dialog-header">
+        <h2>Terms & Conditions</h2>
+        <button type="button" class="dialog-close">×</button>
+    </div>
+
+    <div class="dialog-content">
+
+        <h3>1. Our Service</h3>
+        <p>
+            Luvora provides personalized digital surprise pages
+            for birthdays, anniversaries and special occasions.
+        </p>
+
+        <h3>2. Payment</h3>
+        <p>
+            Full payment is required before processing your
+            personalized surprise order.
+        </p>
+
+        <h3>3. Customer Responsibility</h3>
+        <p>
+            Customers are responsible for providing correct names,
+            dates, photographs, videos and other submitted details.
+        </p>
+
+        <h3>4. Digital Delivery</h3>
+        <p>
+            Luvora will make reasonable efforts to create and
+            deliver the purchased surprise link.
+        </p>
+
+        <h3>5. Support</h3>
+        <p>
+            For assistance, contact:
+            luvoraofficial@outlook.com
+        </p>
+
+    </div>
+</dialog>
+
+<!-- Refund Policy -->
+<dialog id="refundDialog" class="policy-dialog">
+
+    <div class="dialog-header">
+        <h2>Refund Policy</h2>
+        <button type="button" class="dialog-close">×</button>
+    </div>
+
+    <div class="dialog-content">
+
+        <p class="refund-highlight">
+            At Luvora, our first priority is to resolve the issue
+            and successfully deliver your surprise.
+        </p>
+
+        <h3>1. Non-Refundable Orders</h3>
+        <p>
+            All purchases are generally non-refundable due to
+            the personalized digital nature of our service.
+            Change of mind or incorrect information submitted
+            by the customer is not eligible for a refund.
+        </p>
+
+        <h3>2. Technical Issues</h3>
+        <p>
+            If a technical issue prevents the creation or
+            delivery of your surprise link, our team will
+            first attempt to resolve the issue and provide
+            the purchased service.
+        </p>
+
+        <p>
+            A refund will only be considered if the technical
+            issue cannot be resolved and we are unable to
+            provide the promised service within a reasonable
+            time after review.
+        </p>
+
+        <h3>3. Link Generation Failure</h3>
+        <p>
+            Failure to generate a link immediately does not
+            automatically qualify for a refund. We will first
+            attempt to generate or recover your surprise link.
+        </p>
+
+        <h3>4. Duplicate Payment</h3>
+        <p>
+            If the same order is charged more than once,
+            the verified duplicate amount will be refunded.
+        </p>
+
+        <h3>5. Refund Requests</h3>
+        <p>
+            For payment-related or technical issues, contact:
+        </p>
+
+        <p>
+            <strong>Email:</strong>
+            luvoraofficial@outlook.com
+        </p>
+
+        <p>
+            Please provide your payment ID or order ID
+            for verification.
+        </p>
+
+        <p>
+            Approved refunds will be processed through the
+            applicable payment channel. Processing time may
+            vary depending on the payment provider or bank.
+        </p>
+
+    </div>
+</dialog>
 
 </body>
-
 </html>
