@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#100d20">
+  <title>LUVORA — A Day Made for You</title>
+  <link rel="stylesheet" href="cake.css">
+</head>
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+  <main class="cake-page">
+    <header class="intro" id="cakeIntro">
+      <span class="eyebrow">A DAY MADE FOR YOU </span>
+      <h1>TAP THE  <em>CANDLES</em></h1>
+      <p>Every little detail, made with love.</p>
+    </header>
+
+    <section class="cake-stage" aria-label="Interactive birthday cake">
+      <div class="spotlight"></div>
+      <div class="floating-star star-a">✦</div>
+      <div class="floating-star star-b">✧</div>
+      <div class="floating-star star-c">✦</div>
+
+      <div class="cake" id="cake">
+        <div class="cake-topper" aria-hidden="true">
+          <span class="topper-stem"></span>
+          <span class="topper-heart">♡</span>
+        </div>
+        <div class="cake-layer layer-bottom">
+          <div class="layer-face"></div>
+          <div class="cream-band cream-bottom"></div>
+          <div class="pearls pearls-bottom"></div>
+        </div>
+        <div class="cake-layer layer-middle">
+          <div class="layer-face"></div>
+          <div class="cream-band cream-middle"></div>
+          <div class="pearls pearls-middle"></div>
+        </div>
+        <div class="cake-layer layer-top">
+          <div class="layer-face"></div>
+<div class="cream-pouring">
+  <div class="cream-stream"></div>
+  <div class="cream-flow"></div>
+</div>
+          <div class="top-icing"></div>
+
+<div class="cream-pour">
+  <span class="pour-stream"></span>
+  <span class="pour-splash"></span>
+</div>
+
+<div class="side-overflow">
+  <i></i>
+  <i></i>
+  <i></i>
+  <i></i>
+  <i></i>
+  <i></i>
+</div>
+          <div class="drips">
+            <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+          </div>
+          <div class="top-decor">
+            <b>✿</b><b>·</b><b>✿</b>
+          </div>
+        </div>
+        <div class="candles">
+          <button class="candle candle-one" aria-label="Blow out candle one"><span class="flame"></span><span class="wick"></span></button>
+          <button class="candle candle-two" aria-label="Blow out candle two"><span class="flame"></span><span class="wick"></span></button>
+          <button class="candle candle-three" aria-label="Blow out candle three"><span class="flame"></span><span class="wick"></span></button>
+        </div>
+        <div class="cake-plate"></div>
+        <div class="plate-shadow"></div>
+      </div>
+
+      <div class="tap-hint" id="tapHint">
+        <span class="hint-sparkle">✧</span>
+        <span>TAP THE CANDLES</span>
+        <span class="hint-sparkle">✧</span>
+      </div>
+
+      <div class="reveal" id="reveal" aria-live="polite">
+        <div class="reveal-kicker">MAKE A WISH</div>
+        <div class="reveal-title">Happy Birthday</div>
+        <div class="reveal-name" id="birthdayName">Arohi</div>
+        <div class="reveal-note">May your world always sparkle with love.</div>
+      </div>
+      <div class="confetti-layer" id="confettiLayer"></div>
+    </section>
+
+    <button class="continue-button" id="continueButton" type="button">
+      <span>Continue the Surprise</span><b>→</b>
+    </button>
+    
+  </main>
+
+  <div class="next-screen" id="nextScreen" aria-hidden="true">
+    <div class="gift-card">
+      <span class="gift-icon">🎁</span>
+      <p class="eyebrow">THE NEXT LITTLE SURPRISE</p>
+      <h2>Something lovely<br><em>is waiting for you.</em></h2>
+      <p>This is where your panda gift experience will appear.</p>
+      <button id="backButton" type="button">Back to the cake</button>
+    </div>
+  </div>
+  <script src="cake.js"></script>
+</body>
+</html>
