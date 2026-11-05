@@ -6023,88 +6023,69 @@ function playLuvoraCameraClick() {
     revealTimer = null;
   }
 
- function typeLoveMessage(onComplete) {
 
+function typeLoveMessage(onComplete) {
+  // Reveal Camera Continue button when romantic typing starts.
   const cameraContinueButton = document.getElementById(
     "cameraContinueButton"
   );
 
-  const continueWrap = cameraContinueButton?.closest(
-    ".birthday-flow-continue-wrap"
+  if (cameraContinueButton) {
+    const continueWrap = cameraContinueButton.closest(
+      ".birthday-flow-continue-wrap"
+    );
+if (continueWrap) {
+  continueWrap.classList.remove(
+    "birthday-flow-continue-hidden"
   );
 
-  if (continueWrap) {
-    continueWrap.classList.remove(
-      "birthday-flow-continue-hidden"
-    );
-  }
-
+  setTimeout(() => {
+    continueWrap.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+  }, 300);
+}  
+}
   clearTimeout(typingTimer);
-
   typing.textContent = "";
-  message.style.cursor = "pointer";
-  message.title = "Tap to reveal the full message";
+
+  const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  if (reducedMotion) {
+    typing.textContent = LOVE_MESSAGE;
+    if (typeof onComplete === "function") onComplete();
+    return;
+  }
 
   let index = 0;
-  let completed = false;
-
-  function finishTyping() {
-    if (completed) return;
-
-    completed = true;
-
-    clearTimeout(typingTimer);
-    typingTimer = null;
-
-    typing.textContent = LOVE_MESSAGE;
-
-    message.style.cursor = "default";
-    message.removeAttribute("title");
-
-    if (typeof onComplete === "function") {
-      onComplete();
-    }
-  }
-
-  // Tap anywhere on the message to skip typing
-  message.onclick = () => {
-    if (!completed) {
-      finishTyping();
-    }
-  };
 
   function next() {
-    if (completed) return;
-
     if (index >= LOVE_MESSAGE.length) {
-      finishTyping();
+      typingTimer = null;
+
+      // Reveal upload only after every character is typed.
+      if (typeof onComplete === "function") {
+        onComplete();
+      }
+
       return;
     }
 
     const character = LOVE_MESSAGE[index++];
-
     typing.textContent += character;
 
     let delay = 32;
-
     if (character === ",") delay = 170;
     if (character === ".") delay = 300;
 
     typingTimer = setTimeout(next, delay);
   }
 
-  if (
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  ) {
-    finishTyping();
-    return;
-  }
-
   next();
-}  
-
-
-  function restartFlash() {
+}  function restartFlash() {
     flash.classList.remove("is-flashing");
     void flash.offsetWidth;
     flash.classList.add("is-flashing");
@@ -6850,4 +6831,3 @@ if (nextWrap && step.button !== "balloonContinueButton") {
   }
 
 })();
-
