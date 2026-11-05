@@ -15878,3 +15878,57 @@ transform-origin: center center !important;
   }
 
 }
+
+   /* =========================================
+   LUVORA — MOBILE CAMERA FULL MESSAGE
+========================================= */
+
+@media (max-width: 700px) {
+
+  #luvoraCameraSection #luvoraRomanticMessage {
+    display: block !important;
+
+    width: 100% !important;
+    height: auto !important;
+
+    min-height: 0 !important;
+    max-height: none !important;
+
+    overflow: visible !important;
+
+    box-sizing: border-box !important;
+    padding: 12px 10px !important;
+
+    text-align: center !important;
+  }
+
+  #luvoraCameraSection #luvoraRomanticTyping {
+    display: block !important;
+
+    width: 100% !important;
+    height: auto !important;
+
+    min-height: 0 !important;
+    max-height: none !important;
+
+    overflow: visible !important;
+
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+    word-break: normal !important;
+
+    font-size: 13px !important;
+    line-height: 1.7 !important;
+
+    text-align: center !important;
+  }
+
+  #luvoraCameraSection + .birthday-flow-continue-wrap {
+    display: flex !important;
+    justify-content: center !important;
+
+    width: 100% !important;
+    margin: 18px auto 25px !important;
+  }
+
+}
