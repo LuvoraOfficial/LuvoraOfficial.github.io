@@ -92,16 +92,6 @@ const BIRTHDAY_CONFIG = {
 
   date: "",
 
-  /* Balloon messages */
-
-  balloonMessages: [
-    "You make my world brighter every single day. ❤️",
-    "Your smile is still my favourite thing in the world. ✨",
-    "You deserve every beautiful thing life has to offer. 🌷",
-    "Life feels a little sweeter because you're in it. 💕",
-    "If I could give you one thing, it would be the ability to see yourself through my eyes. 💗"
-  ],
-
   /* Customer video can later be inserted here */
 
   video: ""
@@ -261,6 +251,55 @@ function deleteDraftFile(key) {
     });
 
 }
+
+/* =========================================
+   LUVORA — DRAFT REFRESH CONTROL
+========================================= */
+
+async function clearAllDraftFiles() {
+  const db = await openDraftDatabase();
+
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(
+      LUVORA_DRAFT_STORE,
+      "readwrite"
+    );
+
+    transaction.objectStore(
+      LUVORA_DRAFT_STORE
+    ).clear();
+
+    transaction.oncomplete = () => {
+      db.close();
+      resolve();
+    };
+
+    transaction.onerror = () => {
+      db.close();
+      reject(transaction.error);
+    };
+  });
+}
+
+
+/* Detect genuine return from Cake */
+
+const LUVORA_IS_CAKE_RETURN =
+  window.location.hash === "#giftExperience" &&
+  sessionStorage.getItem("luvoraCakeReturnPending") === "1";
+
+
+if (LUVORA_IS_CAKE_RETURN) {
+  sessionStorage.removeItem("luvoraCakeReturnPending");
+}
+
+
+/* Clear old files on fresh visit or refresh */
+
+const LUVORA_DRAFT_READY =
+  LUVORA_IS_CAKE_RETURN
+    ? Promise.resolve()
+    : clearAllDraftFiles();
 
 
 /* =========================================================
@@ -615,7 +654,7 @@ requestAnimationFrame(() => {
     createMiniConfetti(12);
 
 
-    /* =============================================
+     /* =============================================
        FINAL MESSAGE — AFTER ALL BALLOONS
     ============================================= */
 
@@ -623,83 +662,32 @@ requestAnimationFrame(() => {
 
       setTimeout(() => {
 
-        // DESKTOP — Separate final message
-        if (window.innerWidth > 800) {
+        // Celebration effects
+        createFloatingHearts(10);
+        createMiniConfetti(30);
 
-          const messageList =
-            getDesktopBalloonMessageList();
+        // Continue button
+        if (balloonContinueButton) {
 
-          const finalCard =
-            document.createElement("div");
-
-          finalCard.className =
-            "desktop-balloon-final-message";
-
-          finalCard.textContent =
-            "You found every little message. But this is only the beginning... 💖";
-
-          messageList.appendChild(finalCard);
+          balloonContinueButton.classList.remove(
+            "balloon-continue-hidden"
+          );
 
           requestAnimationFrame(() => {
-            finalCard.classList.add("visible");
+
+            setTimeout(() => {
+
+              balloonContinueButton.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+              });
+
+            }, 500);
+
           });
 
         }
 
-        // MOBILE — Preserve existing final message
-        else {
-
-          if (balloonMessage) {
-            balloonMessage.classList.remove("visible");
-          }
-
-          setTimeout(() => {
-
-            if (balloonMessageText) {
-              balloonMessageText.textContent =
-                "You found every little message. But this is only the beginning... 💖";
-            }
-
-            if (balloonMessage) {
-
-              balloonMessage.classList.add(
-                "mobile-final-balloon-message"
-              );
-
-              balloonMessage.style.left = "50%";
-              balloonMessage.style.top = "100%";
-
-              balloonMessage.classList.add("visible");
-
-            }
-
-          }, 200);
-
-        }
-
-        createFloatingHearts(10);
-        createMiniConfetti(30);
-
-if (balloonContinueButton) {
-
-  balloonContinueButton.classList.remove(
-    "balloon-continue-hidden"
-  );
-
-  requestAnimationFrame(() => {
-
-    setTimeout(() => {
-
-      balloonContinueButton.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-      });
-
-    }, 500);
-
-  });
-
-}
       }, 500);
 
     }
@@ -707,6 +695,8 @@ if (balloonContinueButton) {
   });
 
 });
+        createMiniConfetti(30);
+
 
 /* =========================================================
    LUVORA — ROYAL LOVE LETTER
@@ -984,60 +974,100 @@ function loadCustomerPhotosFromURL() {
 
   if (photoList.length > 0) {
 
-    BIRTHDAY_CONFIG.photos =
-      photoList.slice(0, 6);
-
-  }
+BIRTHDAY_CONFIG.photos = uploadedPhotoUrls.slice(0, 4);
+  
+}
 
 }
 
 
 /* =========================================================
-   LOAD PHOTOS INTO MEMORY BOOK
-   ========================================================= */
+   LOAD PHOTOS INTO MEMORY BOOK — MAXIMUM 4
+========================================================= */
 
 function loadMemoryGallery() {
 
-  if (!memoryGallery) {
-    return;
-  }
+  if (!memoryGallery) return;
 
-  const photoSlots =
-    memoryGallery.querySelectorAll(
-      ".memory-photo-slot img"
-    );
+  const photos = (
+    BIRTHDAY_CONFIG.photos || []
+  ).slice(0, 4);
 
-  if (!photoSlots.length) {
-    return;
-  }
+  const page1 = memoryGallery.querySelector(
+    ".memory-page-1"
+  );
 
-  const photos =
-    BIRTHDAY_CONFIG.photos || [];
+  const page2 = memoryGallery.querySelector(
+    ".memory-page-2"
+  );
 
-  /*
-    Maximum 6 photos:
+  const photoSlots = memoryGallery.querySelectorAll(
+    ".memory-photo-slot img"
+  );
 
-    Photo 1 + 2 → Page 1
-    Photo 3 + 4 → Page 2
-    Photo 5 + 6 → Page 3
-  */
-
+  // Load only uploaded photos
   photoSlots.forEach((image, index) => {
 
     if (photos[index]) {
 
-      image.src =
-        photos[index];
+      image.src = photos[index];
 
-      image.alt =
-        `Birthday memory ${index + 1}`;
+      image.alt = `Birthday memory ${index + 1}`;
+
+    } else {
+
+      image.removeAttribute("src");
+
+      image.alt = "";
 
     }
 
   });
 
+ // Show Page 2 only when exactly 4 photos exist
+if (page2) {
+  page2.style.display =
+    photos.length === 4 ? "" : "none";
 }
 
+// Always hide Page 3 and any extra pages
+memoryGallery.querySelectorAll(".memory-page").forEach(
+  (page, index) => {
+    if (index >= 2) {
+      page.style.display = "none";
+    }
+  }
+);
+
+  // Page 1 goes directly to Back Cover when only 2 photos exist
+  const page1Next = page1?.querySelector(
+    ".memory-next-button"
+  );
+
+  if (page1Next) {
+
+    page1Next.setAttribute(
+      "data-next-page",
+      photos.length === 4 ? "2" : "4"
+    );
+
+  }
+
+  // Page 2 always goes to Back Cover
+  const page2Next = page2?.querySelector(
+    ".memory-next-button"
+  );
+
+  if (page2Next) {
+
+    page2Next.setAttribute(
+      "data-next-page",
+      "4"
+    );
+
+  }
+
+}
 /* =========================================================
    MEMORY BOOK — INTERACTION ENGINE
    ========================================================= */
@@ -1102,27 +1132,53 @@ const mobileDiary = document.createElement("div");
 mobileDiary.className = "mobile-memory-diary";
 mobileDiary.setAttribute("aria-live", "polite");
 
+
 const mobilePhotos = [];
 
-pages.forEach(page => {
-  const photos = page.querySelectorAll(".memory-photo-slot img");
-  const quotes = page.querySelectorAll(".memory-quote");
+/* =========================================
+   REFRESH MOBILE PHOTOS FROM LIVE GALLERY
+========================================= */
 
-  photos.forEach((photo, index) => {
-    mobilePhotos.push({
-      src: photo.src,
-      alt: photo.alt,
-      quote: quotes[index]
-        ? quotes[index].querySelector("p")?.innerHTML || ""
-        : ""
+function refreshMobilePhotos() {
+
+  mobilePhotos.length = 0;
+
+  pages.forEach(page => {
+
+    const photos =
+      page.querySelectorAll(".memory-photo-slot img");
+
+    const quotes =
+      page.querySelectorAll(".memory-quote");
+
+    photos.forEach((photo, index) => {
+if (!photo.src || !photo.getAttribute("src")) {
+  return;
+}
+      mobilePhotos.push({
+
+        src: photo.currentSrc || photo.src,
+
+        alt: photo.alt,
+
+        quote: quotes[index]
+          ? quotes[index].querySelector("p")?.innerHTML || ""
+          : ""
+
+      });
+
     });
+
   });
-});
+
+}
 
 let mobileSlideIndex = 0;
 
 function renderMobileDiary() {
-  const item = mobilePhotos[mobileSlideIndex];
+  refreshMobilePhotos();
+
+const item = mobilePhotos[mobileSlideIndex];
 console.log("DIARY IMAGE DEBUG:", {
   src: item?.src,
   totalPhotos: mobilePhotos.length
@@ -1151,55 +1207,305 @@ console.log("MOBILE DIARY IMAGE:", {
       </div>
 
       <div class="mobile-diary-counter">
-        MEMORY ${mobileSlideIndex + 1} / 6
+        MEMORY ${mobileSlideIndex + 1} / ${mobilePhotos.length}
       </div>
 
     </article>
   `;
+  /* =========================================
+     AUTO PHOTO FRAME — PORTRAIT / SQUARE / LANDSCAPE
+  ========================================= */
 
-  bookArea.classList.add("mobile-diary-open");
-}
+  const diaryPhotoFrame =
+    mobileDiary.querySelector(".mobile-diary-photo");
 
-bookArea.appendChild(mobileDiary);
+  const diaryImage =
+    diaryPhotoFrame?.querySelector("img");
 
+  function setDiaryPhotoFrame() {
 
-  /* =======================================================
-     MOBILE DIARY SCALE
-     Keep the complete diary interaction/layout intact.
-     On mobile only, compress the visual height to create
-     a wider landscape presentation. Desktop is untouched.
-     ======================================================= */
+    if (!diaryImage || !diaryImage.naturalWidth) return;
 
-  function updateMobileMemoryBookScale() {
+    const ratio =
+      diaryImage.naturalWidth / diaryImage.naturalHeight;
 
-    if (window.innerWidth <= 800) {
+    diaryPhotoFrame.classList.remove(
+      "photo-portrait",
+      "photo-square",
+      "photo-landscape"
+    );
 
-      const availableWidth =
-        Math.max(300, window.innerWidth - 24);
+    if (ratio < 0.85) {
 
-      const scale =
-        Math.min(1, availableWidth / 920);
+      diaryPhotoFrame.classList.add("photo-portrait");
 
-      book.style.zoom = String(scale);
+    } else if (ratio <= 1.15) {
 
-      bookArea.style.minHeight =
-        `${650 * scale * 0.8 + 24}px`;
+      diaryPhotoFrame.classList.add("photo-square");
 
     } else {
 
-      book.style.zoom = "";
-      bookArea.style.minHeight = "";
+      diaryPhotoFrame.classList.add("photo-landscape");
 
     }
   }
 
-  updateMobileMemoryBookScale();
+  if (diaryImage) {
 
-  window.addEventListener(
-    "resize",
-    updateMobileMemoryBookScale,
-    { passive: true }
-  );
+    if (diaryImage.complete && diaryImage.naturalWidth > 0) {
+
+      setDiaryPhotoFrame();
+
+    } else {
+
+      diaryImage.addEventListener(
+        "load",
+        setDiaryPhotoFrame,
+        { once: true }
+      );
+
+    }
+
+  }
+
+  bookArea.classList.add("mobile-diary-open");
+
+/* Match diary page with mobile screen height */
+requestAnimationFrame(() => {
+
+console.log("COVER DIMENSIONS:", {
+  offsetWidth: cover.offsetWidth,
+  offsetHeight: cover.offsetHeight,
+  clientWidth: cover.clientWidth,
+  clientHeight: cover.clientHeight,
+  rectWidth: cover.getBoundingClientRect().width,
+  rectHeight: cover.getBoundingClientRect().height,
+  display: getComputedStyle(cover).display,
+  visibility: getComputedStyle(cover).visibility,
+  position: getComputedStyle(cover).position,
+  parentWidth: cover.parentElement?.offsetWidth,
+  parentHeight: cover.parentElement?.offsetHeight
+});  
+
+
+// Desktop design untouched
+  if (window.innerWidth > 800) return;
+
+ // Match diary dimensions with the visually scaled cover
+// Calculate the exact same scale used by the mobile book
+const memorySection =
+  document.getElementById("memoriesSection");
+
+const heading =
+  memorySection?.querySelector(".section-heading");
+
+const continueButton =
+  document.getElementById("memoryContinueButton");
+
+const viewportHeight =
+  window.visualViewport?.height || window.innerHeight;
+
+const availableWidth =
+  Math.max(280, window.innerWidth - 24);
+
+const headingHeight =
+  heading?.getBoundingClientRect().height || 80;
+
+const buttonHeight =
+  continueButton?.getBoundingClientRect().height || 48;
+
+const reservedSpace =
+  headingHeight + buttonHeight + 60;
+
+const availableBookHeight =
+  Math.max(220, viewportHeight - reservedSpace);
+
+const scale = Math.min(
+  1,
+  availableWidth / 920,
+  availableBookHeight / 650
+);
+
+// Exact scaled cover dimensions
+const coverWidth = 920 * scale;
+const coverHeight = 650 * scale; 
+
+const diarySheet =
+    mobileDiary.querySelector(".mobile-diary-sheet");
+
+  if (!diarySheet || !coverWidth || !coverHeight) {
+  return;
+}
+
+mobileDiary.style.width = `${coverWidth}px`;
+mobileDiary.style.maxWidth = "none";
+mobileDiary.style.boxSizing = "border-box";
+console.log("DIARY SCALE DEBUG:", {
+  viewportHeight,
+  headingHeight,
+  buttonHeight,
+  reservedSpace,
+  availableBookHeight,
+  availableWidth,
+
+  widthScale: availableWidth / 920,
+  heightScale: availableBookHeight / 650,
+
+  scale,
+  calculatedWidth: 920 * scale,
+  calculatedHeight: 650 * scale
+});
+
+diarySheet.style.setProperty(
+  "width",
+  `${coverWidth}px`,
+  "important"
+);
+
+diarySheet.style.setProperty(
+  "max-width",
+  "none",
+  "important"
+);
+
+diarySheet.style.boxSizing = "border-box";
+diarySheet.style.setProperty(
+  "height",
+  `${coverHeight}px`,
+  "important"
+);
+
+diarySheet.style.setProperty(
+  "min-height",
+  `${coverHeight}px`,
+  "important"
+);
+
+diarySheet.style.setProperty(
+  "max-height",
+  `${coverHeight}px`,
+  "important"
+);
+
+diarySheet.style.setProperty(
+  "aspect-ratio",
+  "auto",
+  "important"
+);console.log("DIARY SIZE CHECK:", {
+  coverOffsetWidth: cover.offsetWidth,
+  coverOffsetHeight: cover.offsetHeight,
+
+  bookOffsetWidth: book.offsetWidth,
+  bookOffsetHeight: book.offsetHeight,
+  bookRect: book.getBoundingClientRect(),
+
+  bookZoom: getComputedStyle(book).zoom,
+
+  diaryWidth: diarySheet.getBoundingClientRect().width,
+  diaryHeight: diarySheet.getBoundingClientRect().height,
+
+  mobileDiaryWidth: mobileDiary.getBoundingClientRect().width,
+  mobileDiaryHeight: mobileDiary.getBoundingClientRect().height
+});
+});}
+
+bookArea.appendChild(mobileDiary);
+
+/* =====================================================
+   MOBILE DIARY — TAP / CLICK TO NEXT PHOTO
+===================================================== */
+
+mobileDiary.addEventListener("click", function(event) {
+
+  if (!bookArea.classList.contains("mobile-diary-open")) {
+    return;
+  }
+
+  event.preventDefault();
+  event.stopPropagation();
+
+  if (!mobilePhotos.length) return;
+
+  mobileSlideIndex =
+    (mobileSlideIndex + 1) % mobilePhotos.length;
+
+  renderMobileDiary();
+
+});
+
+ /* =======================================================
+   MOBILE MEMORY BOOK — FULL SCREEN HEIGHT FIT
+======================================================= */
+
+function updateMobileMemoryBookScale() {
+
+  if (window.innerWidth <= 800) {
+
+    const memorySection =
+      document.getElementById("memoriesSection");
+
+    const heading =
+      memorySection?.querySelector(".section-heading");
+
+    const continueButton =
+      document.getElementById("memoryContinueButton");
+
+    const viewportHeight =
+      window.visualViewport?.height || window.innerHeight;
+
+    const availableWidth =
+      Math.max(280, window.innerWidth - 24);
+
+    const headingHeight =
+      heading?.getBoundingClientRect().height || 80;
+
+    const buttonHeight =
+      continueButton?.getBoundingClientRect().height || 48;
+
+    const reservedSpace =
+      headingHeight +
+      buttonHeight +
+      90;
+
+    const availableBookHeight =
+      Math.max(220, viewportHeight - reservedSpace);
+
+    const widthScale =
+      availableWidth / 920;
+
+    const heightScale =
+      availableBookHeight / 650;
+
+    const scale =
+      Math.min(1, widthScale, heightScale);
+
+    book.style.zoom = String(scale);
+
+    bookArea.style.minHeight =
+      `${650 * scale + 24}px`;
+
+  } else {
+
+    book.style.zoom = "";
+    bookArea.style.minHeight = "";
+
+  }
+
+}
+
+updateMobileMemoryBookScale();
+
+window.addEventListener(
+  "resize",
+  updateMobileMemoryBookScale,
+  { passive: true }
+);
+
+window.visualViewport?.addEventListener(
+  "resize",
+  updateMobileMemoryBookScale,
+  { passive: true }
+);
 
 
   /* =======================================================
@@ -1217,23 +1523,41 @@ bookArea.appendChild(mobileDiary);
     cover.style.display = "flex";
     cover.style.pointerEvents = "auto";
 
-    pages.forEach(page => {
+  pages.forEach(page => {
 
-      page.classList.remove("active");
+  const photos =
+    page.querySelectorAll(".memory-photo-slot img");
 
-      page.style.opacity = "0";
-      page.style.pointerEvents = "none";
+  const quotes =
+    page.querySelectorAll(".memory-quote");
+
+  photos.forEach((photo, index) => {
+
+    // Only uploaded photos are included
+    if (!photo.getAttribute("src") && !photo.currentSrc) {
+      return;
+    }
+
+    if (mobilePhotos.length >= 4) {
+      return;
+    }
+
+    mobilePhotos.push({
+
+      src: photo.currentSrc || photo.src,
+
+      alt: photo.alt,
+
+      quote: quotes[index]
+        ? quotes[index].querySelector("p")?.innerHTML || ""
+        : ""
 
     });
 
-    backCover.style.opacity = "0";
-    backCover.style.pointerEvents = "none";
+  });
 
-  }
-
-
-  setInitialState();
-
+});
+}
 
   /* =======================================================
      OPEN COVER
@@ -1257,7 +1581,7 @@ bookArea.appendChild(mobileDiary);
   opening before showing Page 1.
 */
 
-if (window.innerWidth <= 600) {
+if (window.innerWidth <= 800) {
 
   mobileSlideIndex = 0;
 
@@ -1303,15 +1627,16 @@ if (window.innerWidth <= 600) {
      ======================================================= */
 
   function showPage(pageNumber) {
+const photoCount =
+  (BIRTHDAY_CONFIG.photos || []).length;
 
-    if (
-      pageNumber < 1 ||
-      pageNumber > 3
-    ) {
-      return;
-    }
-
-
+if (
+  pageNumber < 1 ||
+  pageNumber > 2 ||
+  (pageNumber === 2 && photoCount !== 4)
+) {
+  return;
+}
     currentPage = pageNumber;
 
 
@@ -1418,20 +1743,15 @@ bookArea.classList.remove("mobile-diary-open");
           );
 
 
-        if (
-          nextPage === 2 ||
-          nextPage === 3
-        ) {
+  if (nextPage === 2) {
 
-          showPage(nextPage);
+  showPage(2);
 
-        } else if (
-          nextPage === 4
-        ) {
+} else if (nextPage === 4) {
 
-          showBackCover();
+  showBackCover();
 
-        }
+}
 
       }
     );
@@ -1442,83 +1762,55 @@ bookArea.classList.remove("mobile-diary-open");
   /* =======================================================
      KEYBOARD — RIGHT ARROW
      ======================================================= */
+document.addEventListener(
+  "keydown",
+  function(event) {
 
-  document.addEventListener(
-    "keydown",
-    function(event) {
+    if (event.key !== "ArrowRight") return;
 
-      if (
-        event.key !== "ArrowRight"
-      ) {
-        return;
-      }
+    if (currentPage === 0) {
 
+      openMemoryBook();
 
-      if (currentPage === 0) {
+    } else if (currentPage === 1) {
 
-        openMemoryBook();
-
-      } else if (
-        currentPage === 1
-      ) {
-
+      if ((BIRTHDAY_CONFIG.photos || []).length === 4) {
         showPage(2);
-
-      } else if (
-        currentPage === 2
-      ) {
-
-        showPage(3);
-
-      } else if (
-        currentPage === 3
-      ) {
-
+      } else {
         showBackCover();
-
       }
+
+    } else if (currentPage === 2) {
+
+      showBackCover();
 
     }
-  );
 
+  }
+);
 
-  /* =======================================================
-     KEYBOARD — LEFT ARROW
-     ======================================================= */
+document.addEventListener(
+  "keydown",
+  function(event) {
 
-  document.addEventListener(
-    "keydown",
-    function(event) {
+    if (event.key !== "ArrowLeft") return;
 
-      if (
-        event.key !== "ArrowLeft"
-      ) {
-        return;
-      }
+    if (currentPage === 4) {
 
-
-      if (currentPage === 4) {
-
-        showPage(3);
-
-      } else if (
-        currentPage === 3
-      ) {
-
+      if ((BIRTHDAY_CONFIG.photos || []).length === 4) {
         showPage(2);
-
-      } else if (
-        currentPage === 2
-      ) {
-
+      } else {
         showPage(1);
-
       }
 
+    } else if (currentPage === 2) {
+
+      showPage(1);
+
     }
-  );
 
-
+  }
+);
   /* =======================================================
      TOUCH / SWIPE SUPPORT
      ======================================================= */
@@ -1563,16 +1855,19 @@ bookArea.classList.remove("mobile-diary-open");
 
       const swipeDistance =
         touchEndX - touchStartX;
-
 if (window.innerWidth <= 600 && currentPage !== 0) {
 
   if (swipeDistance < -50) {
 
-    if (mobileSlideIndex < 5) {
+    if (mobileSlideIndex < mobilePhotos.length - 1) {
+
       mobileSlideIndex++;
       renderMobileDiary();
+
     } else {
+
       showBackCover();
+
     }
 
     return;
@@ -1581,20 +1876,24 @@ if (window.innerWidth <= 600 && currentPage !== 0) {
   if (swipeDistance > 50) {
 
     if (currentPage === 4) {
+
       currentPage = 1;
-      mobileSlideIndex = 5;
+      mobileSlideIndex = mobilePhotos.length - 1;
       renderMobileDiary();
+
     } else if (mobileSlideIndex > 0) {
+
       mobileSlideIndex--;
       renderMobileDiary();
+
     }
 
     return;
   }
 }
-
-
       /* Swipe left → next */
+
+            /* Swipe left → next */
 
       if (swipeDistance < -50) {
 
@@ -1602,17 +1901,19 @@ if (window.innerWidth <= 600 && currentPage !== 0) {
 
           openMemoryBook();
 
-        } else if (
-          currentPage < 3
-        ) {
+        } else if (currentPage === 1) {
 
-          showPage(
-            currentPage + 1
-          );
+          if ((BIRTHDAY_CONFIG.photos || []).length === 4) {
 
-        } else if (
-          currentPage === 3
-        ) {
+            showPage(2);
+
+          } else {
+
+            showBackCover();
+
+          }
+
+        } else if (currentPage === 2) {
 
           showBackCover();
 
@@ -1627,15 +1928,19 @@ if (window.innerWidth <= 600 && currentPage !== 0) {
 
         if (currentPage === 4) {
 
-          showPage(3);
+          if ((BIRTHDAY_CONFIG.photos || []).length === 4) {
 
-        } else if (
-          currentPage > 1
-        ) {
+            showPage(2);
 
-          showPage(
-            currentPage - 1
-          );
+          } else {
+
+            showPage(1);
+
+          }
+
+        } else if (currentPage === 2) {
+
+          showPage(1);
 
         }
 
@@ -1646,7 +1951,6 @@ if (window.innerWidth <= 600 && currentPage !== 0) {
   );
 
 }
-
 
 /* =========================================================
    START MEMORY BOOK
@@ -1829,6 +2133,21 @@ document.addEventListener("click", (event) => {
   giftExperience.classList.remove("flow-unlocked");
 
   luvoraGiftGame.classList.add("flow-unlocked");
+
+// Force the Mystery Gift section to become visible
+luvoraGiftGame.hidden = false;
+
+luvoraGiftGame.style.setProperty(
+  "display",
+  "block",
+  "important"
+);
+
+luvoraGiftGame.style.setProperty(
+  "visibility",
+  "visible",
+  "important"
+);
 
 luvoraGiftGame.scrollIntoView({
   behavior: "instant",
@@ -2112,9 +2431,6 @@ balloonMessage.style.top = "";
 
 }
 
-if (balloonMessageText) {
-balloonMessageText.textContent = "";
-}
 
 // Reset love letter
 if (loveEnvelope) {
@@ -2243,16 +2559,14 @@ const customReward = customRewardInput
 const selectedRewards = getSelectedRewards();
 
 // Save customization data before leaving
-sessionStorage.setItem(
-  "luvoraCakeReturnData",
-  JSON.stringify({
-    lovedOneName,
-    senderName,
-    date: customerDate ? customerDate.value : "",
-    selectedRewards,
-    customReward
-  })
-);
+sessionStorage.setItem("luvoraCakeReturnData", JSON.stringify({
+  lovedOneName,
+  senderName,
+  pandaMessage: customerPandaMessage ? customerPandaMessage.value : "",
+  date: customerDate ? customerDate.value : "",
+  selectedRewards,
+  customReward
+}));
 
 const cakeUrl = new URL(
   continueToCakeButton.href,
@@ -2268,9 +2582,6 @@ window.location.href = cakeUrl.toString();
 });
 }
 
-if (customerName) {
-  customerName.value = BIRTHDAY_CONFIG.name;
-}
 
 if (customerDate) {
   customerDate.value = BIRTHDAY_CONFIG.date;
@@ -2492,6 +2803,11 @@ function updateLetterSignature() {
     ? customerYourName.value.trim()
     : "";
 
+  // Save only a non-empty sender name
+  if (senderName) {
+    sessionStorage.setItem("luvoraSenderName", senderName);
+  }
+
   if (letterSignatureName) {
     letterSignatureName.textContent =
       senderName ? `${senderName} ♡` : "Your Name ♡";
@@ -2503,11 +2819,11 @@ function updateLetterSignature() {
 
   if (scratchSenderName) {
     scratchSenderName.textContent =
-      senderName || "Someone Special";
+      senderName ||
+      sessionStorage.getItem("luvoraSenderName") ||
+      "Someone Special";
   }
-}
-
-if (customerYourName) {
+}if (customerYourName) {
   customerYourName.addEventListener(
     "input",
     updateLetterSignature
@@ -2515,11 +2831,17 @@ if (customerYourName) {
 
   updateLetterSignature();
 }
+
+/* CLEAR OLD CAKE FORM DATA ON FRESH VISIT / REFRESH */
+if (!LUVORA_IS_CAKE_RETURN) {
+  sessionStorage.removeItem("luvoraCakeReturnData");
+}
+
 /* =====================================================
 RESTORE CUSTOMIZATION AFTER RETURNING FROM CAKE
 ===================================================== */
 
-if (window.location.hash === "#giftExperience") {
+if (LUVORA_IS_CAKE_RETURN) {
 try {
 const savedData = sessionStorage.getItem(
 "luvoraCakeReturnData"
@@ -2534,11 +2856,18 @@ if (savedData) {
     customerName.value = data.lovedOneName;
     BIRTHDAY_CONFIG.name = data.lovedOneName;
   }
+// Restore sender name
+if (customerYourName) {
+  customerYourName.value =
+    data.senderName ||
+    sessionStorage.getItem("luvoraSenderName") ||
+    "";
+}
 
-  // Restore sender name
-  if (customerYourName) {
-    customerYourName.value = data.senderName || "";
-  }
+ // Restore Panda message
+if (customerPandaMessage) {
+  customerPandaMessage.value = data.pandaMessage || "";
+}
 
   // Restore birthday date
   if (customerDate && data.date) {
@@ -2615,7 +2944,7 @@ if (customerPhotos) {
     function updateCustomPhotos() {
 
     BIRTHDAY_CONFIG.photos =
-      uploadedPhotoUrls.slice(0, 6);
+      uploadedPhotoUrls.slice(0, 4);
 
     loadMemoryGallery();
 console.log(
@@ -2745,8 +3074,8 @@ console.log("IMAGE STATUS:", [...document.querySelectorAll(".memory-photo-slot i
 
   function updatePhotoInputState() {
 
-    const reachedLimit =
-      uploadedPhotoFiles.length >= 6;
+  const reachedLimit =
+  uploadedPhotoFiles.length >= 4;
 
     customerPhotos.disabled =
       reachedLimit;
@@ -2755,12 +3084,12 @@ console.log("IMAGE STATUS:", [...document.querySelectorAll(".memory-photo-slot i
     if (reachedLimit) {
 
       customerPhotos.title =
-        "Maximum 6 photos allowed";
+        "Maximum 4 photos allowed";
 
     } else {
 
       customerPhotos.title =
-        `${6 - uploadedPhotoFiles.length} photo slot(s) remaining`;
+        `${4 - uploadedPhotoFiles.length} photo slot(s) remaining`;
 
     }
 
@@ -2786,10 +3115,10 @@ console.log("IMAGE STATUS:", [...document.querySelectorAll(".memory-photo-slot i
 
 
      const remainingSlots =
-  6 - uploadedPhotoFiles.length;
+  4 - uploadedPhotoFiles.length;
 
 if (remainingSlots <= 0) {
-  alert("💗 You can select a maximum of 6 photos.");
+  alert("💗 You can select a maximum of 4 photos.");
   customerPhotos.value = "";
   return;
 }
@@ -2858,7 +3187,7 @@ customerPhotos.value = "";
 
   async function restoreSavedPhotos() {
 
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 4; i++) {
 
       const file =
         await getDraftFile(
@@ -2893,7 +3222,36 @@ customerPhotos.value = "";
   }
 
 
-  restoreSavedPhotos();
+  (async () => {
+
+  try {
+
+    await LUVORA_DRAFT_READY;
+
+    if (LUVORA_IS_CAKE_RETURN) {
+
+      await restoreSavedPhotos();
+
+    } else {
+
+      uploadedPhotoFiles.length = 0;
+      uploadedPhotoUrls.length = 0;
+
+      updateCustomPhotos();
+      updatePhotoInputState();
+
+    }
+
+  } catch (error) {
+
+    console.error(
+      "LUVORA photo draft initialization failed:",
+      error
+    );
+
+  }
+
+})();
 
 }
 
@@ -2979,7 +3337,41 @@ if (customVideoName) {
       }
     );
 
+/* =========================================
+   RESTORE VIDEO AFTER RETURNING FROM CAKE
+========================================= */
+(async () => {
+  try {
+    await LUVORA_DRAFT_READY;
 
+    if (!LUVORA_IS_CAKE_RETURN) {
+      return;
+    }
+
+    const savedVideo = await getDraftFile("video");
+
+    if (!savedVideo) {
+      return;
+    }
+
+    currentVideoUrl = URL.createObjectURL(savedVideo);
+    BIRTHDAY_CONFIG.video = currentVideoUrl;
+
+    if (birthdayVideoSource) {
+      birthdayVideoSource.src = currentVideoUrl;
+      birthdayVideoSource.type = savedVideo.type || "video/mp4";
+    }
+
+    if (customVideoName) {
+      customVideoName.textContent = savedVideo.name;
+    }
+
+    loadBirthdayVideo();
+
+  } catch (error) {
+    console.error("Could not restore birthday video:", error);
+  }
+})();
     
 
   }
@@ -3024,14 +3416,14 @@ if (
 }
 
  
-   // Minimum 2 photos required
-if (photoCount < 2) {
+// LUVORA — ONLY 2 OR 4 PHOTOS ALLOWED
+if (![2, 4].includes(photoCount)) {
   errors.push(
-    `Please upload at least 2 photos. Currently uploaded: ${photoCount}.`
+    `Please upload exactly 2 or 4 photos. Currently uploaded: ${photoCount}.`
   );
-}
+} 
 
-  // Reward selection validation
+ // Reward selection validation
 const selectedRewards = getSelectedRewards();
 
 const customGift = customRewardInput
@@ -3059,6 +3451,18 @@ if (selectedRewards.length === 0 && !customGift) {
 
       document.body.classList.remove("preview-mode");
 
+// Exit Cake-return fullscreen mode
+document.documentElement.classList.remove(
+"luvora-cake-return",
+ "luvora-game-return",
+  "luvora-final-surprise-return"
+);
+document.body.classList.remove(
+"luvora-cake-return",
+  "luvora-game-return",
+  "luvora-final-surprise-return"
+);
+
       if (previewStatus) {
         previewStatus.scrollIntoView({
           behavior: "smooth",
@@ -3068,43 +3472,70 @@ if (selectedRewards.length === 0 && !customGift) {
 
       return;
     }
-
-   resetSurpriseInteractions();
-
+resetSurpriseInteractions();
 document.body.classList.add("preview-mode");
-
-
 createFloatingHearts();
 createMiniConfetti();
 
-// Show the premium birthday overlay first
-showLuvoraBirthdayOverlay();
+/* Refresh latest customization values before preview */
+updateBirthdayName();
+updateLetterSignature();
+
+showLuvoraBirthdayOverlay();  });
+
+}
+
+/* =========================================
+   LUVORA — BACK TO CUSTOMIZATION PANEL
+========================================= */
+
+if (backToEditButton && customizationPanel) {
+
+  backToEditButton.addEventListener("click", () => {
+
+    // Exit preview mode
+    document.body.classList.remove("preview-mode");
+// Clear every full-screen surprise mode
+document.documentElement.classList.remove(
+  "luvora-cake-return",
+  "luvora-game-return",
+  "luvora-final-surprise-return"
+);
+
+document.body.classList.remove(
+  "luvora-cake-return",
+  "luvora-game-return",
+  "luvora-final-surprise-return"
+);
+
+    // Hide preview buttons
+    if (previewActions) {
+      previewActions.classList.remove("show");
+    }
+
+    if (previewStatus) {
+      previewStatus.classList.remove("show");
+    }
+
+    // Show customization overlay
+    customizationPanel.classList.add("active");
+
+    customizationPanel.style.display = "flex";
+
+
+    // Reset panel scroll position
+    customizationPanel.scrollTop = 0;
+
+    // Scroll to the top of customization panel
+    requestAnimationFrame(() => {
+      customizationPanel.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    });
+
   });
-}
 
-if (backToEditButton) {
-backToEditButton.addEventListener("click", () => {
-if (previewActions) {
-previewActions.classList.remove("show");
-}
-
-document.body.classList.remove("preview-mode");
-
-if (previewStatus) {
-  previewStatus.classList.remove("show");
-}
-
-if (customizationPanel) {
-  customizationPanel.classList.add("active");
-
-  customizationPanel.scrollIntoView({
-    behavior: "smooth",
-    block: "start"
-  });
-}
-
-
-});
 }
 
 /* =========================================================
@@ -3165,8 +3596,15 @@ const surpriseData = {
 
   name: name,
 
-  date: date,
+  senderName: customerYourName
+    ? customerYourName.value.trim()
+    : "",
 
+  pandaMessage: customerPandaMessage
+    ? customerPandaMessage.value.trim()
+    : "",
+
+  date: date,
   letter: (() => {
     const message = document.getElementById("letterMessage");
     if (!message) return "";
@@ -4415,52 +4853,17 @@ openButton.blur();
 })();
 
 
-/* ===== LUVORA TEST DETAILS PERSISTENCE ===== */
+/* =========================================
+   LUVORA — DISABLE OLD TEST DATA PERSISTENCE
+   Refresh should start with a clean form.
+========================================= */
+
 (function () {
-  const fields = {
-    name: {
-      id: "customerName",
-      key: "luvora_test_name"
-    },
-    date: {
-      id: "customerDate",
-      key: "luvora_test_date"
-    },
-    };
-
-  function setupSavedDetails() {
-    Object.values(fields).forEach(function (field) {
-      const input = document.getElementById(field.id);
-      if (!input) return;
-
-      try {
-        const savedValue = localStorage.getItem(field.key);
-
-        if (savedValue !== null) {
-          input.value = savedValue;
-        }
-
-        function saveValue() {
-          localStorage.setItem(field.key, input.value);
-        }
-
-        input.addEventListener("input", saveValue);
-        input.addEventListener("change", saveValue);
-
-        const form = input.closest("form");
-        if (form) {
-          form.addEventListener("submit", saveValue, true);
-        }
-      } catch (error) {
-        console.warn("Could not save Luvora test details.", error);
-      }
-    });
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", setupSavedDetails);
-  } else {
-    setupSavedDetails();
+  try {
+    localStorage.removeItem("luvora_test_name");
+    localStorage.removeItem("luvora_test_date");
+  } catch (error) {
+    console.warn("Could not clear old test details.", error);
   }
 })();
 
@@ -6023,9 +6426,7 @@ function playLuvoraCameraClick() {
     revealTimer = null;
   }
 
-
 function typeLoveMessage(onComplete) {
-  // Reveal Camera Continue button when romantic typing starts.
   const cameraContinueButton = document.getElementById(
     "cameraContinueButton"
   );
@@ -6034,39 +6435,82 @@ function typeLoveMessage(onComplete) {
     const continueWrap = cameraContinueButton.closest(
       ".birthday-flow-continue-wrap"
     );
-if (continueWrap) {
-  continueWrap.classList.remove(
-    "birthday-flow-continue-hidden"
-  );
 
-  setTimeout(() => {
-    continueWrap.scrollIntoView({
-      behavior: "smooth",
-      block: "center"
-    });
-  }, 300);
-}  
-}
+    if (continueWrap) {
+      continueWrap.classList.remove(
+        "birthday-flow-continue-hidden"
+      );
+
+      setTimeout(() => {
+        continueWrap.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+      }, 300);
+    }
+  }
+
   clearTimeout(typingTimer);
   typing.textContent = "";
+
+  let index = 0;
+  let typingActive = true;
+
+  function finishTyping() {
+    if (!typingActive) return;
+
+    typingActive = false;
+
+    clearTimeout(typingTimer);
+    typingTimer = null;
+
+    document.removeEventListener(
+      "pointerdown",
+      handleScreenTouch,
+      true
+    );
+
+    typing.textContent = LOVE_MESSAGE;
+
+    if (typeof onComplete === "function") {
+      onComplete();
+    }
+  }
+
+  function handleScreenTouch(event) {
+  if (!typingActive) return;
+
+  finishTyping();
+}
+
+  document.addEventListener(
+    "pointerdown",
+    handleScreenTouch,
+    true
+  );
 
   const reducedMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)"
   ).matches;
 
   if (reducedMotion) {
-    typing.textContent = LOVE_MESSAGE;
-    if (typeof onComplete === "function") onComplete();
+    finishTyping();
     return;
   }
 
-  let index = 0;
-
   function next() {
+    if (!typingActive) return;
+
     if (index >= LOVE_MESSAGE.length) {
+      typingActive = false;
       typingTimer = null;
 
-      // Reveal upload only after every character is typed.
+      document.removeEventListener(
+        "pointerdown",
+        handleScreenTouch,
+        true
+      );
+
       if (typeof onComplete === "function") {
         onComplete();
       }
@@ -6078,6 +6522,7 @@ if (continueWrap) {
     typing.textContent += character;
 
     let delay = 32;
+
     if (character === ",") delay = 170;
     if (character === ".") delay = 300;
 
@@ -6085,7 +6530,9 @@ if (continueWrap) {
   }
 
   next();
-}  function restartFlash() {
+}
+
+function restartFlash() {
     flash.classList.remove("is-flashing");
     void flash.offsetWidth;
     flash.classList.add("is-flashing");
