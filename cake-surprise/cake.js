@@ -888,11 +888,13 @@ continueButton.addEventListener("click", () => {
 
   try {
 
-    const birthdayUrl = new URL(returnUrl);
+   const birthdayUrl = new URL(returnUrl);
+birthdayUrl.hash = "giftExperience";
 
-    birthdayUrl.hash = "giftExperience";
+// Confirm that this is a genuine return from Cake
+sessionStorage.setItem("luvoraCakeReturnPending", "1");
 
-    window.location.href = birthdayUrl.toString();
+window.location.href = birthdayUrl.toString();
 
   } catch (error) {
 
