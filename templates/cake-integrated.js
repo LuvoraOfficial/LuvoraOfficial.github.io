@@ -247,7 +247,7 @@ function startCakeCelebrationAudio() {
 
   if (backgroundMusic) {
     previousMusicVolume = backgroundMusic.volume;
-    backgroundMusic.volume = 0.75;
+    backgroundMusic.volume = 0.85;
   }
 
   // Start Happy Birthday melody
