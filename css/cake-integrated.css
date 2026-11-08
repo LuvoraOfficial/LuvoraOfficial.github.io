@@ -1415,3 +1415,47 @@
   }
 
 }
+
+/* =========================================
+   LUVORA — FASTER CAKE CONSTRUCTION
+   Preserve Existing Animation Effects
+========================================= */
+
+#cakePageSection .cake.build .layer-bottom {
+  animation-duration: .65s !important;
+  animation-delay: .15s !important;
+}
+
+#cakePageSection .cake.build .layer-middle {
+  animation-duration: .65s !important;
+  animation-delay: .80s !important;
+}
+
+#cakePageSection .cake.build .layer-top {
+  animation-duration: .65s !important;
+  animation-delay: 1.45s !important;
+}
+
+#cakePageSection .cake.build .cream-stream {
+  animation-duration: 1s !important;
+  animation-delay: 2.15s !important;
+}
+
+#cakePageSection .cake.build .cream-flow {
+  animation-duration: .9s !important;
+  animation-delay: 2.75s !important;
+}
+
+#cakePageSection .cake.build .drips {
+  animation-duration: .55s !important;
+  animation-delay: 3.15s !important;
+}
+
+#cakePageSection .cake.build .candle {
+  animation-duration: .55s !important;
+  animation-delay: 3.75s !important;
+}
+
+#cakePageSection .cake.build .candle-two {
+  animation-delay: 3.90s !important;
+}
