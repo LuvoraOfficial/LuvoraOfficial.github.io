@@ -1307,8 +1307,6 @@
 /* LUVORA INTEGRATION: keep the original Cake atmosphere inside its section. */
 #cakePageSection { position: relative; isolation: isolate; min-height: 100vh; min-height: 100dvh; overflow: hidden; }
 
-
-
 /* =========================================
    LUVORA — MOBILE CAKE RESPONSIVE FIX
 ========================================= */
@@ -1458,4 +1456,36 @@
 
 #cakePageSection .cake.build .candle-two {
   animation-delay: 3.90s !important;
+}
+
+/* Slightly lower the cake intro text */
+#cakePageSection .intro {
+  position: relative !important;
+  top: 10px !important;
+}
+
+/* =========================================
+   LUVORA — BIGGER & COMPACT BIRTHDAY WISH
+========================================= */
+
+#cakePageSection.luvora-single-screen #reveal .wish-small {
+  margin-bottom: 8px !important;
+}
+
+#cakePageSection.luvora-single-screen #reveal .premium-wish h2 {
+  font-size: clamp(38px, 9.5vw, 56px) !important;
+  line-height: 1 !important;
+}
+
+#cakePageSection.luvora-single-screen #reveal .wish-divider {
+  margin: 7px 0 !important;
+}
+
+#cakePageSection.luvora-single-screen #reveal .premium-partner-name {
+  font-size: clamp(44px, 11vw, 70px) !important;
+  line-height: 1 !important;
+}
+
+#cakePageSection.luvora-single-screen #reveal .wish-message {
+  margin-top: 9px !important;
 }
