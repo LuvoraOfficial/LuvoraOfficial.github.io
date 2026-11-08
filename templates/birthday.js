@@ -2535,51 +2535,69 @@ const letterSignatureName = document.getElementById("letterSignatureName");
 
   const previewCreateButton =
     document.getElementById("previewCreateButton");
-// Pass customization data to Cake Surprise page
+
+
+// =========================================
+// CAKE SURPRISE — SAME PAGE TRANSITION
+// =========================================
+
 const continueToCakeButton = document.getElementById(
-"continueToCakeButton"
+  "continueToCakeButton"
 );
 
 if (continueToCakeButton) {
-continueToCakeButton.addEventListener("click", (event) => {
-event.preventDefault();
+  continueToCakeButton.addEventListener("click", (event) => {
+    event.preventDefault();
 
-const lovedOneName = customerName
-  ? customerName.value.trim()
-  : "";
+    const lovedOneName = customerName
+      ? customerName.value.trim()
+      : "";
 
-const senderName = customerYourName
-  ? customerYourName.value.trim()
-  : "";
+    const senderName = customerYourName
+      ? customerYourName.value.trim()
+      : "";
 
-const customReward = customRewardInput
-  ? customRewardInput.value.trim()
-  : "";
+    const customReward = customRewardInput
+      ? customRewardInput.value.trim()
+      : "";
 
-const selectedRewards = getSelectedRewards();
+    const selectedRewards = getSelectedRewards();
 
-// Save customization data before leaving
-sessionStorage.setItem("luvoraCakeReturnData", JSON.stringify({
-  lovedOneName,
-  senderName,
-  pandaMessage: customerPandaMessage ? customerPandaMessage.value : "",
-  date: customerDate ? customerDate.value : "",
-  selectedRewards,
-  customReward
-}));
+    // Save customization data for the Gift Experience
+    sessionStorage.setItem(
+      "luvoraCakeReturnData",
+      JSON.stringify({
+        lovedOneName,
+        senderName,
+        pandaMessage: customerPandaMessage
+          ? customerPandaMessage.value
+          : "",
+        date: customerDate
+          ? customerDate.value
+          : "",
+        selectedRewards,
+        customReward
+      })
+    );
 
-const cakeUrl = new URL(
-  continueToCakeButton.href,
-  window.location.href
-);
+    // Hide Video Section
+    const videoSection = document.getElementById("videoSection");
 
-if (lovedOneName) {
-  cakeUrl.searchParams.set("name", lovedOneName);
-}
+    if (videoSection) {
+      videoSection.classList.add("birthday-flow-hidden");
+    }
 
-window.location.href = cakeUrl.toString();
+    // Reveal Cake Section
+    const cakeSection = document.getElementById("cakePageSection");
 
-});
+    if (cakeSection) {
+      cakeSection.classList.remove("birthday-flow-hidden");
+
+      void cakeSection.offsetWidth;
+
+      cakeSection.classList.add("birthday-flow-revealed");
+    }
+  });
 }
 
 
@@ -2766,6 +2784,13 @@ function updateBirthdayName() {
   if (birthdayName) {
     birthdayName.textContent = displayName;
   }
+// Cake Surprise — personalized birthday name
+const cakeBirthdayName =
+  document.getElementById("cakeBirthdayName");
+
+if (cakeBirthdayName) {
+  cakeBirthdayName.textContent = displayName;
+}
 
   // Love Letter recipient
   letterRecipients.forEach((recipient) => {
@@ -3472,6 +3497,67 @@ document.body.classList.remove(
 
       return;
     }
+
+// Hide customization panel when preview starts.
+if (customizationPanel) {
+  customizationPanel.classList.remove("active");
+  customizationPanel.style.display = "none";
+}
+
+// =========================================
+// LUVORA — RESET BIRTHDAY FLOW FOR NEW PREVIEW
+// =========================================
+
+const heroSection = document.getElementById("birthdayHero");
+const balloonSection = document.getElementById("balloonSection");
+
+const firstSections = [
+  heroSection,
+  balloonSection
+];
+
+firstSections.forEach(section => {
+  if (section) {
+    section.classList.remove("birthday-flow-hidden");
+  }
+});
+
+// Hide all upcoming sections
+[
+  "luvoraCameraSection",
+  "letterSection",
+  "memoriesSection",
+  "videoSection",
+  "cakePageSection",
+  "luvoraGiftGame",
+  "finalSurprise"
+].forEach(id => {
+  const section = document.getElementById(id);
+
+  if (!section) return;
+
+  section.classList.add("birthday-flow-hidden");
+
+  section.classList.remove(
+    "flow-unlocked",
+    "birthday-flow-revealed"
+  );
+});
+
+// Reset Continue buttons
+[
+  "balloonContinueButton",
+  "cameraContinueButton",
+  "letterContinueButton",
+  "memoryContinueButton"
+].forEach(id => {
+  const button = document.getElementById(id);
+
+  if (button) {
+    button.disabled = false;
+  }
+});
+
 resetSurpriseInteractions();
 document.body.classList.add("preview-mode");
 createFloatingHearts();
@@ -3495,6 +3581,7 @@ if (backToEditButton && customizationPanel) {
 
     // Exit preview mode
     document.body.classList.remove("preview-mode");
+sessionStorage.setItem("luvoraReturnedFromFinalEdit", "true");
 // Clear every full-screen surprise mode
 document.documentElement.classList.remove(
   "luvora-cake-return",
@@ -4829,6 +4916,7 @@ document.documentElement.classList.add("luvora-welcome-open");
 
 // 2. Wait for the fade-out to finish.
 window.setTimeout(function () {
+
   // Hide the Welcome screen.
   welcome.hidden = true;
 
@@ -4838,7 +4926,7 @@ window.setTimeout(function () {
     "luvora-welcome-open"
   );
 
-  // 3. Open the Birthday Overlay and Archery Game.
+  // Open the Birthday Overlay and Archery Game.
   if (typeof showLuvoraBirthdayOverlay === "function") {
     showLuvoraBirthdayOverlay();
   } else {
@@ -4847,9 +4935,7 @@ window.setTimeout(function () {
 
 }, 700);
 
-openButton.blur();
-openButton.blur();
-});
+openButton.blur();});
 })();
 
 
@@ -6854,71 +6940,6 @@ window.playLuvoraBalloonPop = function () {
   }
 };
 
-// =========================================
-// CAKE PAGE → BIRTHDAY GIFT BOX RETURN
-// =========================================
-
-window.addEventListener("load", () => {
-
-  if (window.location.hash !== "#giftExperience") return;
-
-  const giftBox = document.getElementById("giftExperience");
-
-  if (!giftBox) return;
-
-  document.documentElement.classList.add("luvora-cake-return");
-
-  giftBox.classList.add("flow-unlocked");
-
-  window.scrollTo(0, 0);
-
-});
-
-/* =========================================
-   SAVE BIRTHDAY PAGE URL BEFORE CAKE
-========================================= */
-
-const continueToCakeButton =
-  document.getElementById("continueToCakeButton");
-
-if (continueToCakeButton) {
-  continueToCakeButton.addEventListener("click", () => {
-    sessionStorage.setItem(
-      "luvoraBirthdayReturnUrl",
-      window.location.href.split("#")[0]
-    );
-  });
-}
-
-/* =========================================
-   CAKE PAGE — PASS BIRTHDAY RETURN LINK
-========================================= */
-
-window.addEventListener("DOMContentLoaded", () => {
-
-  const cakeButton = document.getElementById(
-    "continueToCakeButton"
-  );
-
-  if (!cakeButton) return;
-
-  const birthdayUrl = new URL(window.location.href);
-
-  birthdayUrl.hash = "";
-
-  const cakeUrl = new URL(
-    cakeButton.getAttribute("href"),
-    window.location.href
-  );
-
-  cakeUrl.searchParams.set(
-    "return",
-    birthdayUrl.toString()
-  );
-
-  cakeButton.href = cakeUrl.toString();
-
-});
 
 /* =========================================
    LUVORA — REWARD MODE SWITCH
@@ -7168,7 +7189,9 @@ button.addEventListener("click", () => {
   if (button.disabled) return;
 
   button.disabled = true;
+const destinationSection = nextSection;
 
+if (!destinationSection) return;
   // Hide the current section
   currentSection.classList.add(
     "birthday-flow-hidden"
@@ -7191,7 +7214,7 @@ if (step.button === "balloonContinueButton") {
   }
 
   // Prepare next section
-  nextSection.classList.remove(
+  destinationSection.classList.remove(
     "birthday-flow-hidden",
     "camera-section-hidden",
     "camera-section-visible",
@@ -7208,9 +7231,9 @@ if (step.button === "balloonContinueButton") {
   // Trigger entrance animations
   void nextSection.offsetWidth;
 
-  nextSection.classList.add(
-    "birthday-flow-revealed"
-  );
+ destinationSection.classList.add(
+  "birthday-flow-revealed"
+);
 
   // Reveal next Continue button
 // Camera button will be revealed when romantic typing starts.
