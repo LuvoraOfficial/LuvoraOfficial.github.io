@@ -4686,7 +4686,7 @@ const isHit = projection > 0 && missDistance <= hitRadius;
         birthdayMusic.pause();
         birthdayMusic.currentTime = 0;
         birthdayMusic.muted = false;
-        birthdayMusic.volume = 0.75;
+        birthdayMusic.volume = 0.35;
 
         birthdayMusic.play().catch((error) => {
           console.error(
