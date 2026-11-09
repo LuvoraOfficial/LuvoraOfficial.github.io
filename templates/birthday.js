@@ -3818,6 +3818,10 @@ if (cakeBirthdayName) {
 if (typeof updateLetterSignature === "function") {
   updateLetterSignature();
 }
+console.log(
+  "FINAL LETTER SIGNATURE:",
+  document.getElementById("letterSignatureName")?.textContent
+);
 
 // FINAL SURPRISE — VIDEO TO CAKE NAVIGATION
 if (LUVORA_IS_FINAL_SURPRISE) {
