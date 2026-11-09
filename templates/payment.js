@@ -575,20 +575,49 @@ console.log(
           /* -------------------------------------------------
              SUPABASE ERROR
           ------------------------------------------------- */
+if (error) {
 
-          if (error) {
+  let edgeErrorDetails = "";
 
-            console.error(
-              "create-payment error:",
-              error
-            );
+  try {
 
-            throw new Error(
-              error.message ||
-              "Could not start payment."
-            );
+    if (error.context instanceof Response) {
+      edgeErrorDetails =
+        await error.context.clone().text();
+    } else {
+      edgeErrorDetails =
+        JSON.stringify(error.context);
+    }
 
-          }
+  } catch (readError) {
+
+    edgeErrorDetails =
+      "Could not read Edge Function response.";
+
+  }
+
+  console.error(
+    "CREATE PAYMENT STATUS:",
+    error.context?.status
+  );
+
+  console.error(
+    "CREATE PAYMENT SERVER RESPONSE:",
+    edgeErrorDetails
+  );
+
+  console.error(
+    "CREATE PAYMENT FULL ERROR:",
+    error
+  );
+
+  throw new Error(
+    edgeErrorDetails ||
+    error.message ||
+    "Could not start payment."
+  );
+
+}
 
 
           /* -------------------------------------------------
