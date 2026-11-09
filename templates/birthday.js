@@ -282,25 +282,9 @@ async function clearAllDraftFiles() {
 }
 
 
-/* Detect genuine return from Cake */
+/* Clear temporary uploaded files on fresh page load */
 
-const LUVORA_IS_CAKE_RETURN =
-  window.location.hash === "#giftExperience" &&
-  sessionStorage.getItem("luvoraCakeReturnPending") === "1";
-
-
-if (LUVORA_IS_CAKE_RETURN) {
-  sessionStorage.removeItem("luvoraCakeReturnPending");
-}
-
-
-/* Clear old files on fresh visit or refresh */
-
-const LUVORA_DRAFT_READY =
-  LUVORA_IS_CAKE_RETURN
-    ? Promise.resolve()
-    : clearAllDraftFiles();
-
+const LUVORA_DRAFT_READY = clearAllDraftFiles();
 
 /* =========================================================
    02 — DOM ELEMENTS
@@ -386,7 +370,10 @@ function loadCustomerDataFromURL() {
 }
 
 function loadBirthdayInformation() {
-
+if (birthdayName) {
+  birthdayName.textContent =
+    BIRTHDAY_CONFIG.name || "My Love";
+}
 
   if (birthdayDate) {
     birthdayDate.textContent =
@@ -2132,6 +2119,8 @@ document.addEventListener("click", (event) => {
 
   giftExperience.classList.remove("flow-unlocked");
 
+giftExperience.style.removeProperty("display");
+
   luvoraGiftGame.classList.add("flow-unlocked");
 
 // Force the Mystery Gift section to become visible
@@ -2530,9 +2519,6 @@ const letterSignatureName = document.getElementById("letterSignatureName");
   const previewActions =
     document.getElementById("previewActions");
 
-  const backToEditButton =
-    document.getElementById("backToEditButton");
-
   const previewCreateButton =
     document.getElementById("previewCreateButton");
 
@@ -2563,22 +2549,7 @@ if (continueToCakeButton) {
 
     const selectedRewards = getSelectedRewards();
 
-    // Save customization data for the Gift Experience
-    sessionStorage.setItem(
-      "luvoraCakeReturnData",
-      JSON.stringify({
-        lovedOneName,
-        senderName,
-        pandaMessage: customerPandaMessage
-          ? customerPandaMessage.value
-          : "",
-        date: customerDate
-          ? customerDate.value
-          : "",
-        selectedRewards,
-        customReward
-      })
-    );
+    
 
     // Hide Video Section
     const videoSection = document.getElementById("videoSection");
@@ -2857,98 +2828,6 @@ function updateLetterSignature() {
   updateLetterSignature();
 }
 
-/* CLEAR OLD CAKE FORM DATA ON FRESH VISIT / REFRESH */
-if (!LUVORA_IS_CAKE_RETURN) {
-  sessionStorage.removeItem("luvoraCakeReturnData");
-}
-
-/* =====================================================
-RESTORE CUSTOMIZATION AFTER RETURNING FROM CAKE
-===================================================== */
-
-if (LUVORA_IS_CAKE_RETURN) {
-try {
-const savedData = sessionStorage.getItem(
-"luvoraCakeReturnData"
-);
-
-
-if (savedData) {
-  const data = JSON.parse(savedData);
-
-  // Restore loved one's name
-  if (customerName && data.lovedOneName) {
-    customerName.value = data.lovedOneName;
-    BIRTHDAY_CONFIG.name = data.lovedOneName;
-  }
-// Restore sender name
-if (customerYourName) {
-  customerYourName.value =
-    data.senderName ||
-    sessionStorage.getItem("luvoraSenderName") ||
-    "";
-}
-
- // Restore Panda message
-if (customerPandaMessage) {
-  customerPandaMessage.value = data.pandaMessage || "";
-}
-
-  // Restore birthday date
-  if (customerDate && data.date) {
-    customerDate.value = data.date;
-    BIRTHDAY_CONFIG.date = data.date;
-  }
-
-  // Restore reward selection
-  clearSelectedReward();
-
-  if (customRewardInput) {
-    customRewardInput.value = data.customReward || "";
-  }
-
-  if (data.customReward) {
-    // Custom reward restored
-    clearSelectedReward();
-
-  } else if (
-    Array.isArray(data.selectedRewards) &&
-    data.selectedRewards.length
-  ) {
-    const savedReward = data.selectedRewards[0];
-
-    const matchingOption = [...rewardOptions].find(
-      option => option.dataset.reward === savedReward
-    );
-
-    if (matchingOption) {
-      matchingOption.classList.add("is-selected");
-      matchingOption.setAttribute("aria-pressed", "true");
-
-      if (rewardPlaceholder) {
-        rewardPlaceholder.textContent =
-          matchingOption.querySelector(".luvora-reward-name")
-            ?.textContent.trim() || savedReward;
-      }
-    }
-  }
-
-  // Refresh displayed names
-  updateBirthdayName();
-  updateLetterSignature();
-
-  // Clear temporary saved data
-  sessionStorage.removeItem("luvoraCakeReturnData");
-}
-
-
-} catch (error) {
-console.error(
-"Could not restore Cake customization:",
-error
-);
-}
-}
 
 
 if (customerPhotos) {
@@ -3253,19 +3132,11 @@ customerPhotos.value = "";
 
     await LUVORA_DRAFT_READY;
 
-    if (LUVORA_IS_CAKE_RETURN) {
+uploadedPhotoFiles.length = 0;
+uploadedPhotoUrls.length = 0;
 
-      await restoreSavedPhotos();
-
-    } else {
-
-      uploadedPhotoFiles.length = 0;
-      uploadedPhotoUrls.length = 0;
-
-      updateCustomPhotos();
-      updatePhotoInputState();
-
-    }
+updateCustomPhotos();
+updatePhotoInputState();
 
   } catch (error) {
 
@@ -3365,38 +3236,6 @@ if (customVideoName) {
 /* =========================================
    RESTORE VIDEO AFTER RETURNING FROM CAKE
 ========================================= */
-(async () => {
-  try {
-    await LUVORA_DRAFT_READY;
-
-    if (!LUVORA_IS_CAKE_RETURN) {
-      return;
-    }
-
-    const savedVideo = await getDraftFile("video");
-
-    if (!savedVideo) {
-      return;
-    }
-
-    currentVideoUrl = URL.createObjectURL(savedVideo);
-    BIRTHDAY_CONFIG.video = currentVideoUrl;
-
-    if (birthdayVideoSource) {
-      birthdayVideoSource.src = currentVideoUrl;
-      birthdayVideoSource.type = savedVideo.type || "video/mp4";
-    }
-
-    if (customVideoName) {
-      customVideoName.textContent = savedVideo.name;
-    }
-
-    loadBirthdayVideo();
-
-  } catch (error) {
-    console.error("Could not restore birthday video:", error);
-  }
-})();
     
 
   }
@@ -3570,61 +3409,6 @@ updateLetterSignature();
 showLuvoraBirthdayOverlay();  });
 
 }
-
-/* =========================================
-   LUVORA — BACK TO CUSTOMIZATION PANEL
-========================================= */
-
-if (backToEditButton && customizationPanel) {
-
-  backToEditButton.addEventListener("click", () => {
-
-    // Exit preview mode
-    document.body.classList.remove("preview-mode");
-sessionStorage.setItem("luvoraReturnedFromFinalEdit", "true");
-// Clear every full-screen surprise mode
-document.documentElement.classList.remove(
-  "luvora-cake-return",
-  "luvora-game-return",
-  "luvora-final-surprise-return"
-);
-
-document.body.classList.remove(
-  "luvora-cake-return",
-  "luvora-game-return",
-  "luvora-final-surprise-return"
-);
-
-    // Hide preview buttons
-    if (previewActions) {
-      previewActions.classList.remove("show");
-    }
-
-    if (previewStatus) {
-      previewStatus.classList.remove("show");
-    }
-
-    // Show customization overlay
-    customizationPanel.classList.add("active");
-
-    customizationPanel.style.display = "flex";
-
-
-    // Reset panel scroll position
-    customizationPanel.scrollTop = 0;
-
-    // Scroll to the top of customization panel
-    requestAnimationFrame(() => {
-      customizationPanel.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-    });
-
-  });
-
-}
-
 /* =========================================================
    CREATE SURPRISE → SAVE DATA → PAYMENT
    ========================================================= */
@@ -3883,6 +3667,25 @@ if (LUVORA_IS_FINAL_SURPRISE) {
   if (selfieUploadSection) {
     selfieUploadSection.hidden = true;
   }
+
+// Hide video upload controls on the paid shared link.
+const birthdayVideoUpload = document.querySelector(
+  ".birthday-video-upload"
+);
+
+if (birthdayVideoUpload) {
+  birthdayVideoUpload.hidden = true;
+}
+
+
+// Hide Back to Edit button on the paid final surprise link.
+const backToEditButton = document.getElementById(
+  "backToEditButton"
+);
+
+if (backToEditButton) {
+  backToEditButton.hidden = true;
+}
 }
 
     // Customer information
@@ -5224,7 +5027,6 @@ const finalContinueButton =
 const finalSurprise =
   document.getElementById("finalSurprise");
 
-
 if (finalContinueButton && finalSurprise) {
   finalContinueButton.addEventListener("click", () => {
 
@@ -5233,25 +5035,32 @@ if (finalContinueButton && finalSurprise) {
       "luvora-cake-return"
     );
 
+    document.documentElement.classList.add(
+      "luvora-final-surprise-return"
+    );
+
     finalSurprise.classList.add("flow-unlocked");
 
-const finalActions =
-  document.getElementById("previewActions");
+    if (finalContinueWrap) {
+      finalContinueWrap.hidden = true;
+    }
 
-if (finalActions) {
-  finalActions.classList.add("show");
-}
+    const finalActions =
+      document.getElementById("previewActions");
+
+    if (finalActions) {
+      finalActions.classList.add("show");
+    }
 
     setTimeout(() => {
       finalSurprise.scrollIntoView({
         behavior: "smooth",
         block: "start"
       });
-    }, 100);
+    }, 150);
 
   });
 }
-
 
     const boxes = GAME_IDS.boxes.map(function (id) {
       return document.getElementById(id);
@@ -6135,48 +5944,6 @@ if (finalContinueWrap) {
 
         }, 360);
       }   
-// CONTINUE TO FINAL SURPRISE
-const finalContinueButton =
-  document.getElementById("luvoraFinalContinueButton");
-
-const finalSurprise =
-  document.getElementById("finalSurprise");
-
-if (finalContinueButton && finalSurprise) {
-
-  finalContinueButton.addEventListener("click", function () {
-
-    // Remove previous screen modes
-    document.documentElement.classList.remove(
-      "luvora-game-return",
-      "luvora-cake-return"
-    );
-
-    // Activate final surprise screen
-    document.documentElement.classList.add(
-      "luvora-final-surprise-return"
-    );
-
-    finalSurprise.classList.add("flow-unlocked");
-
-    // Show Generate Link and Back to Edit
-    const previewActions =
-      document.getElementById("previewActions");
-
-    if (previewActions) {
-      previewActions.classList.add("show");
-    }
-
-    setTimeout(function () {
-      finalSurprise.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
-    }, 200);
-
-  });
-
-}
       canvas.addEventListener(
         "pointerdown",
         function (event) {
@@ -6477,6 +6244,7 @@ if (uploadSection && stage) {
   let typingTimer = null;
   let flashTimer = null;
   let revealTimer = null;
+  let printAnimationActive = false;
 
 
 // LUVORA Real Camera Click Sound
@@ -6513,29 +6281,6 @@ function playLuvoraCameraClick() {
   }
 
 function typeLoveMessage(onComplete) {
-  const cameraContinueButton = document.getElementById(
-    "cameraContinueButton"
-  );
-
-  if (cameraContinueButton) {
-    const continueWrap = cameraContinueButton.closest(
-      ".birthday-flow-continue-wrap"
-    );
-
-    if (continueWrap) {
-      continueWrap.classList.remove(
-        "birthday-flow-continue-hidden"
-      );
-
-      setTimeout(() => {
-        continueWrap.scrollIntoView({
-          behavior: "smooth",
-          block: "center"
-        });
-      }, 300);
-    }
-  }
-
   clearTimeout(typingTimer);
   typing.textContent = "";
 
@@ -6618,6 +6363,68 @@ function typeLoveMessage(onComplete) {
   next();
 }
 
+function completePrintAnimation() {
+  if (!printAnimationActive) return;
+
+  printAnimationActive = false;
+
+  clearTimeout(revealTimer);
+  revealTimer = null;
+
+  print.classList.remove("is-printing");
+  print.classList.add("is-printed");
+
+  stage.classList.add("is-card-revealed");
+
+  setTimeout(function () {
+
+    if (!printed) return;
+
+    typeLoveMessage(function () {
+
+      if (!printed || !uploadSection) return;
+
+      // Show Add Your Selfie card
+      uploadSection.classList.add("is-upload-revealed");
+
+      // Show Continue button at the same time
+      const continueButton = document.getElementById(
+        "cameraContinueButton"
+      );
+
+      const continueWrap = continueButton?.closest(
+        ".birthday-flow-continue-wrap"
+      );
+
+      if (continueWrap) {
+        continueWrap.classList.remove(
+          "birthday-flow-continue-hidden"
+        );
+      }
+
+    });
+
+    printing = false;
+
+  }, 250);
+}
+
+document.addEventListener(
+  "pointerdown",
+  function (event) {
+
+    if (!printAnimationActive) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+
+    completePrintAnimation();
+
+  },
+  true
+);
+
 function restartFlash() {
     flash.classList.remove("is-flashing");
     void flash.offsetWidth;
@@ -6625,6 +6432,24 @@ function restartFlash() {
   }
 
   function resetCamera() {
+
+  printAnimationActive = false;
+
+  const cameraContinueButton = document.getElementById(
+    "cameraContinueButton"
+  );
+
+  const cameraContinueWrap = cameraContinueButton?.closest(
+    ".birthday-flow-continue-wrap"
+  );
+
+  if (cameraContinueWrap) {
+    cameraContinueWrap.classList.add(
+      "birthday-flow-continue-hidden"
+    );
+  }
+
+  // নিচে তোমার আগের resetCamera() code আগের মতোই থাকবে
     if (uploadSection) {
        uploadSection.classList.remove("is-upload-revealed");
        }
@@ -6699,51 +6524,24 @@ photo.alt =
     ? "Your uploaded couple selfie"
     : "Our beautiful memory";
 
-    // Instant flash burst, then the print starts.
-    restartFlash();
+  // Instant flash burst, then the print starts.
+restartFlash();
 
-    flashTimer = setTimeout(function () {
-      if (!printing) return;
+flashTimer = setTimeout(function () {
 
-      print.classList.remove("is-printed");
-      print.classList.add("is-printing");
+  if (!printing) return;
 
+  print.classList.remove("is-printed");
+  print.classList.add("is-printing");
 
-    }, 100);
+  printAnimationActive = true;
 
-    // CSS print animation runs for 4.2 seconds.
-    revealTimer = setTimeout(function () {
-      if (!printing) return;
+  // Automatically finish after 4.3 seconds
+  revealTimer = setTimeout(function () {
+    completePrintAnimation();
+  }, 4300);
 
-      print.classList.remove("is-printing");
-      print.classList.add("is-printed");
-
-      // The card takes over the camera's position.
-      // The camera is covered, not faded away.
-      stage.classList.add("is-card-revealed");
-
-
-      // Begin typing after the card reveal.
-      
-setTimeout(function () {
-  if (!printed) return;
-
-typeLoveMessage(function () {
-  if (!printed || !uploadSection) return;
-
-  setTimeout(function () {
-    if (!printed || !uploadSection) return;
-
-    uploadSection.classList.add("is-upload-revealed");
-  }, 1000);
-});  
-  printing = false;
-}, 250);
-
-     
-      revealTimer = null;
-
-    }, 4300);
+}, 100);
   }
 
  
@@ -7189,7 +6987,41 @@ button.addEventListener("click", () => {
   if (button.disabled) return;
 
   button.disabled = true;
-const destinationSection = nextSection;
+let destinationSection = nextSection;
+
+// FINAL SURPRISE — SKIP VIDEO IF NO VIDEO WAS UPLOADED
+if (
+  LUVORA_IS_FINAL_SURPRISE &&
+  step.button === "memoryContinueButton"
+) {
+
+ const videoSourceValue = String(
+  BIRTHDAY_CONFIG.video || ""
+).trim();
+
+const activeVideoSource = String(
+  birthdayVideo?.currentSrc || ""
+).trim();
+
+const hasUploadedVideo = Boolean(
+  videoSourceValue || activeVideoSource
+);
+
+  if (!hasUploadedVideo) {
+
+    // Hide the complete video section
+    const videoSection = document.getElementById("videoSection");
+
+    if (videoSection) {
+      videoSection.classList.add("birthday-flow-hidden");
+    }
+
+    // Direct destination: Cake
+    destinationSection = document.getElementById("cakePageSection");
+
+  }
+
+}
 
 if (!destinationSection) return;
   // Hide the current section
@@ -7229,7 +7061,7 @@ if (step.button === "balloonContinueButton") {
   }
 
   // Trigger entrance animations
-  void nextSection.offsetWidth;
+  void destinationSection.offsetWidth;
 
  destinationSection.classList.add(
   "birthday-flow-revealed"
