@@ -335,50 +335,41 @@ const birthdayVideoSource =
   document.getElementById("birthdayVideoSource");
 
 /* ==========================================
-   LUVORA — DUCK BACKGROUND MUSIC DURING VIDEO
+   LUVORA — SMART BACKGROUND MUSIC DUCKING
 ========================================== */
 
 (() => {
   const video = document.getElementById("birthdayVideo");
   const music = document.getElementById("luvoraBirthdayMusic");
 
-  if (!video || !music || video.dataset.musicDuckReady === "true") {
-    return;
-  }
+  if (!video || !music) return;
+
+  if (video.dataset.musicDuckReady === "true") return;
 
   video.dataset.musicDuckReady = "true";
 
-  let previousVolume = music.volume;
+  const NORMAL_VOLUME = 0.35;
+  const VIDEO_MODE_VOLUME = 0.03;
 
-  video.addEventListener("play", () => {
-    previousVolume = music.volume;
-    music.volume = 0.05;
-  });
-
-  function restoreMusicVolume() {
-    music.volume = previousVolume;
+  function lowerBackgroundMusic() {
+    if (!video.paused && !video.ended) {
+      music.volume = VIDEO_MODE_VOLUME;
+    }
   }
 
-  video.addEventListener("pause", restoreMusicVolume);
-  video.addEventListener("ended", restoreMusicVolume);
+  function restoreBackgroundMusic() {
+    music.volume = NORMAL_VOLUME;
+  }
+
+  video.addEventListener("play", lowerBackgroundMusic);
+  video.addEventListener("playing", lowerBackgroundMusic);
+
+  video.addEventListener("timeupdate", lowerBackgroundMusic);
+
+  video.addEventListener("pause", restoreBackgroundMusic);
+  video.addEventListener("ended", restoreBackgroundMusic);
+
 })();
-
-const videoPlaceholder =
-  document.getElementById("videoPlaceholder");
-
-
-const birthdayWishButton =
-  document.getElementById("birthdayWishButton");
-
-const wishMessage =
-  document.getElementById("wishMessage");
-
-const floatingHearts =
-  document.getElementById("floatingHearts");
-
-const confettiContainer =
-  document.getElementById("confettiContainer");
-
 /* =========================================================
    03 — INITIAL CUSTOMER DATA
    ========================================================= */
