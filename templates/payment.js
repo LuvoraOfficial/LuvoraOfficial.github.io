@@ -547,6 +547,11 @@ policies_accepted: policyConsent.checked,
       : ""
 };
 
+console.log("SENDER NAME DEBUG:", {
+  originalSenderName: surpriseData.senderName,
+  outgoingSenderName: requestData.sender_name
+});
+
 console.log(
   "Luvora payment request:",
   requestData
