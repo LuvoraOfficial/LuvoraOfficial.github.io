@@ -2860,29 +2860,6 @@ function updateLetterSignature() {
   updateLetterSignature();
 }
 
-// Apply sender name to Welcome and Reward sections
-if (LUVORA_IS_FINAL_SURPRISE) {
-  const senderName =
-    (BIRTHDAY_CONFIG.senderName || "").trim();
-
-  const welcomeSender =
-    document.getElementById("welcomeSenderName");
-
-  if (welcomeSender) {
-    welcomeSender.textContent =
-      senderName || "Someone";
-  }
-
-  const rewardSender =
-    document.getElementById("rewardSenderName");
-
-  if (rewardSender) {
-    rewardSender.textContent =
-      senderName || "YOUR SPECIAL SOMEONE";
-  }
-
-  console.log("FINAL SENDER NAME APPLIED:", senderName);
-}
 
 
 if (customerPhotos) {
@@ -3840,6 +3817,28 @@ if (cakeBirthdayName) {
 // Apply sender name to Love Letter and Scratch Card
 const finalSenderName =
   (BIRTHDAY_CONFIG.senderName || "").trim();
+
+// Apply sender name to Welcome and Reward sections
+const welcomeSender =
+  document.getElementById("welcomeSenderName");
+
+if (welcomeSender) {
+  welcomeSender.textContent =
+    finalSenderName || "Someone";
+}
+
+const rewardSender =
+  document.getElementById("rewardSenderName");
+
+if (rewardSender) {
+  rewardSender.textContent =
+    finalSenderName || "YOUR SPECIAL SOMEONE";
+}
+
+console.log(
+  "FINAL SENDER NAME APPLIED:",
+  finalSenderName
+);
 
 const finalLetterSignature =
   document.getElementById("letterSignatureName");
