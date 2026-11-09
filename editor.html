@@ -1,33 +1,1071 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Luvora — Editor</title>
-  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
-  <link rel="stylesheet" href="css/home.css">
-  <script src="assets/js/site-config.js"></script>
-  <style>
-    .editor-placeholder{min-height:70vh;display:grid;place-items:center;padding:40px;text-align:center}
-    .editor-placeholder h1{font-size:clamp(42px,6vw,72px);color:var(--primary)}
-    .editor-placeholder p{max-width:560px;margin:20px auto;color:var(--muted);font-size:14px}
-    .editor-placeholder a{display:inline-block;margin-top:10px;padding:13px 20px;border-radius:999px;background:var(--primary);color:#fff}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Luvora — Coming Soon</title>
+
+<link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/home.css">
+<script src="assets/js/site-config.js"></script>
+
+<style>
+:root {
+  --wine: #4A0E1F;
+  --deep: #270710;
+  --rose: #D689A4;
+  --light-rose: #F2C8D7;
+  --cream: #F1E8DB;
+  --muted: #9B7D85;
+  --white: #FFF9F7;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: "DM Sans", sans-serif;
+  background: var(--cream);
+  color: var(--deep);
+}
+
+/* MAIN PAGE */
+
+.coming-page {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  isolation: isolate;
+
+  background:
+    radial-gradient(ellipse at 12% 12%, rgba(214,137,164,.22), transparent 32%),
+    radial-gradient(ellipse at 88% 80%, rgba(74,14,31,.10), transparent 34%),
+    linear-gradient(145deg, #FFF9F5 0%, #F5E9E5 48%, #F1E8DB 100%);
+}
+
+/* BACK BUTTON */
+
+.minimal-nav {
+  position: absolute;
+  top: 20px;
+  left: 24px;
+  z-index: 20;
+}
+
+.minimal-nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 15px;
+
+  border: 1px solid rgba(74,14,31,.15);
+  border-radius: 50px;
+
+  background: rgba(255,255,255,.55);
+  backdrop-filter: blur(12px);
+
+  color: var(--wine);
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .2px;
+
+  transition: .3s ease;
+}
+
+.minimal-nav a:hover {
+  background: var(--wine);
+  color: white;
+  transform: translateX(-3px);
+}
+
+/* BACKGROUND DECORATION */
+
+.glow {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+  filter: blur(2px);
+}
+
+.glow-one {
+  width: 230px;
+  height: 230px;
+  top: -100px;
+  right: 8%;
+  background: rgba(214,137,164,.17);
+}
+
+.glow-two {
+  width: 190px;
+  height: 190px;
+  bottom: -90px;
+  left: 5%;
+  background: rgba(74,14,31,.09);
+}
+
+/* FLOATING PETALS */
+
+.petal {
+  position: absolute;
+  top: -30px;
+  width: 10px;
+  height: 15px;
+  border-radius: 90% 10% 90% 10%;
+  background: rgba(214,137,164,.48);
+  pointer-events: none;
+  animation: petalFall linear infinite;
+  z-index: -1;
+}
+
+@keyframes petalFall {
+  0% {
+    transform: translate3d(0,-20px,0) rotate(0deg);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: .65;
+  }
+
+  90% {
+    opacity: .5;
+  }
+
+  100% {
+    transform: translate3d(65px,110vh,0) rotate(400deg);
+    opacity: 0;
+  }
+}
+
+/* MAIN CONTENT */
+
+.main-content {
+  position: relative;
+  z-index: 2;
+
+  width: min(100%, 1120px);
+  flex: 1;
+  min-height: 0;
+
+  margin: 0 auto;
+  padding: 54px 28px 8px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+}
+
+/* TOP BADGE */
+
+.top-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 7px 15px;
+  border: 1px solid rgba(74,14,31,.13);
+  border-radius: 50px;
+
+  background: rgba(255,255,255,.45);
+  color: var(--wine);
+
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+
+  margin-bottom: 12px;
+}
+
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--rose);
+  box-shadow: 0 0 9px var(--rose);
+}
+
+/* TEMPLATE TITLE */
+
+.selection-label {
+  color: #9B6A79;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.selected-title {
+  color: var(--wine);
+  font-family: "Playfair Display", serif;
+  font-size: clamp(18px, 2vw, 25px);
+  font-weight: 500;
+  margin-bottom: 1px;
+}
+
+/* ======================================
+   COMING SOON — ANIMATION 1
+====================================== */
+
+.coming-soon {
+  font-family: "DM Sans", sans-serif !important;
+
+  font-size: clamp(40px, 8vw, 92px);
+  font-weight: 800;
+  letter-spacing: clamp(2px, 1vw, 9px);
+  line-height: 1;
+
+  color: transparent;
+
+  background: linear-gradient(
+    100deg,
+    #4A0E1F 0%,
+    #8B3654 35%,
+    #D689A4 55%,
+    #4A0E1F 100%
+  );
+
+  background-size: 220% auto;
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
+  filter: blur(5px);
+
+  animation:
+    luvoraHeadingReveal 1.15s .25s cubic-bezier(.22, 1, .36, 1) forwards,
+    luvoraGradientFlow 8s 1.4s linear infinite;
+}
+
+.coming-soon span {
+  font-family: "DM Sans", sans-serif !important;
+  font-style: normal !important;
+  font-weight: 800 !important;
+
+  color: transparent !important;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes luvoraHeadingReveal {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+    filter: blur(5px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+  }
+}
+
+@keyframes luvoraGradientFlow {
+  from {
+    background-position: 0% center;
+  }
+
+  to {
+    background-position: 220% center;
+  }
+}
+
+/* DIVIDER */
+
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 3px 0 10px;
+}
+
+.divider span {
+  width: 38px;
+  height: 1px;
+  background: rgba(74,14,31,.25);
+}
+
+.divider i {
+  color: var(--rose);
+  font-size: 13px;
+}
+
+/* DESCRIPTION */
+
+.hero-description {
+  max-width: 430px;
+  color: #876D73;
+  font-size: 12px;
+  line-height: 1.6;
+  margin-bottom: 17px;
+}
+
+/* ======================================
+   BIRTHDAY PROMO — ANIMATION 2
+   Starts at 1.25s
+====================================== */
+
+.birthday-promo {
+  position: relative;
+
+  width: min(100%, 690px);
+  padding: 17px 25px;
+
+  border-radius: 17px;
+  overflow: hidden;
+
+  background:
+    radial-gradient(circle at 95% 5%, rgba(214,137,164,.24), transparent 35%),
+    linear-gradient(115deg, #270710, #4A0E1F 65%, #641D35);
+
+  box-shadow: 0 13px 35px rgba(39,7,16,.17);
+
+  color: white;
+
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 15px;
+
+  text-align: left;
+
+  opacity: 0;
+  transform: scale(.94) translate3d(0, 9px, 0);
+  filter: blur(3px);
+  transform-origin: center;
+
+  animation: luvoraPromoReveal .85s 1.25s
+    cubic-bezier(.22, 1, .36, 1) forwards;
+}
+
+.birthday-promo::before {
+  content: "✦";
+  position: absolute;
+  right: 175px;
+  top: -35px;
+  font-size: 115px;
+  color: rgba(255,255,255,.045);
+  pointer-events: none;
+}
+
+@keyframes luvoraPromoReveal {
+  0% {
+    opacity: 0;
+    transform: scale(.94) translate3d(0, 9px, 0);
+    filter: blur(3px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) translate3d(0, 0, 0);
+    filter: blur(0);
+  }
+}
+
+/* PROMO CONTENT */
+
+.promo-content {
+  position: relative;
+  z-index: 1;
+}
+
+.promo-tag {
+  display: inline-block;
+  color: #F2C8D7;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.promo-title {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(21px, 3vw, 29px);
+  line-height: 1.15;
+  font-weight: 600;
+  color: #FFF8F5;
+  margin-bottom: 5px;
+}
+
+.promo-title em {
+  color: #E5A6BC;
+  font-weight: 500;
+}
+
+.promo-description {
+  color: rgba(255,255,255,.72);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+/* BIRTHDAY BUTTON */
+
+.birthday-button {
+  position: relative;
+  z-index: 2;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  white-space: nowrap;
+  padding: 12px 17px;
+
+  border-radius: 50px;
+  background: var(--cream);
+  color: var(--wine);
+
+  text-decoration: none;
+  font-size: 10px;
+  font-weight: 800;
+
+  transition: .3s ease;
+}
+
+.birthday-button:hover {
+  background: white;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,.15);
+}
+
+.birthday-button span {
+  font-size: 15px;
+  transition: .3s;
+}
+
+.birthday-button:hover span {
+  transform: translateX(4px);
+}
+
+/* ======================================
+   TEMPLATE STATUS SECTION
+====================================== */
+
+.templates-section {
+  width: min(100%, 760px);
+  margin-top: 18px;
+}
+
+.templates-heading {
+  font-family: "Playfair Display", serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--wine);
+  margin-bottom: 2px;
+}
+
+.templates-subtitle {
+  font-size: 9px;
+  color: #9B7D85;
+  margin-bottom: 10px;
+}
+
+.template-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 9px;
+}
+
+/* ======================================
+   CARDS — ANIMATION 3
+   Starts with promo zoom
+====================================== */
+
+.template-card {
+  min-width: 0;
+
+  padding: 10px 7px;
+
+  border: 1px solid rgba(74,14,31,.10);
+  border-radius: 12px;
+
+  background: rgba(255,255,255,.48);
+  backdrop-filter: blur(8px);
+
+  opacity: 0;
+  transform: translate3d(0, 12px, 0) scale(.98);
+  filter: blur(2px);
+
+  animation: luvoraCardReveal .68s
+    cubic-bezier(.22, 1, .36, 1) both;
+}
+
+/* First card — starts with promo */
+
+.template-card:nth-child(1) {
+  animation-delay: 1.25s;
+}
+
+/* Second card */
+
+.template-card:nth-child(2) {
+  animation-delay: 1.46s;
+}
+
+/* Third card */
+
+.template-card:nth-child(3) {
+  animation-delay: 1.67s;
+}
+
+/* Fourth card */
+
+.template-card:nth-child(4) {
+  animation-delay: 1.88s;
+}
+
+@keyframes luvoraCardReveal {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0) scale(.98);
+    filter: blur(2px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.template-card:hover {
+  border-color: rgba(74,14,31,.28);
+  background: rgba(255,255,255,.85);
+
+  transition:
+    background .35s ease,
+    border-color .35s ease,
+    transform .35s ease;
+}
+
+/* CARD CONTENT */
+
+.card-icon {
+  font-size: 19px;
+  margin-bottom: 4px;
+}
+
+.card-name {
+  color: var(--wine);
+  font-size: 10px;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.card-status {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 50px;
+
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+.status-live {
+  background: rgba(42,132,91,.12);
+  color: #287C56;
+}
+
+.status-soon {
+  background: rgba(214,137,164,.16);
+  color: #9A4968;
+}
+
+/* FOOTER */
+
+.coming-footer {
+  position: relative;
+  z-index: 2;
+
+  flex-shrink: 0;
+  width: 100%;
+
+  padding: 8px 15px 11px;
+
+  text-align: center;
+  color: #A78C91;
+
+  font-size: 9px;
+  letter-spacing: .5px;
+}
+
+.coming-footer span {
+  color: var(--wine);
+  font-weight: 800;
+}
+
+/* TABLET */
+
+@media (max-width: 700px) {
+
+  .main-content {
+    padding: 55px 18px 5px;
+  }
+
+  .coming-soon {
+    font-size: clamp(48px, 11vw, 76px);
+    letter-spacing: -2px;
+  }
+
+  .birthday-promo {
+    padding: 15px 17px;
+  }
+
+  .template-grid {
+    gap: 7px;
+  }
+
+  .template-card {
+    padding: 9px 5px;
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 480px) {
+
+  .minimal-nav {
+    top: 12px;
+    left: 13px;
+  }
+
+  .minimal-nav a {
+    padding: 8px 12px;
+    font-size: 10px;
+  }
+
+  .main-content {
+    padding: 49px 13px 3px;
+  }
+
+  .top-badge {
+    font-size: 8px;
+    padding: 6px 12px;
+    margin-bottom: 9px;
+  }
+
+  .selection-label {
+    font-size: 8px;
+  }
+
+  .selected-title {
+    font-size: 19px;
+  }
+
+  .coming-soon {
+    font-size: clamp(43px, 12vw, 59px);
+    margin: 4px 0 7px;
+    letter-spacing: -2px;
+  }
+
+  .divider {
+    margin: 2px 0 7px;
+  }
+
+  .hero-description {
+    max-width: 300px;
+    font-size: 10px;
+    line-height: 1.45;
+    margin-bottom: 12px;
+  }
+
+  .birthday-promo {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 11px;
+    padding: 14px 14px;
+    border-radius: 14px;
+  }
+
+  .promo-tag {
+    font-size: 7px;
+  }
+
+  .promo-title {
+    font-size: 23px;
+  }
+
+  .promo-description {
+    font-size: 9px;
+  }
+
+  .birthday-button {
+    justify-self: center;
+    padding: 10px 17px;
+    font-size: 9px;
+  }
+
+  .templates-section {
+    margin-top: 13px;
+  }
+
+  .templates-heading {
+    font-size: 16px;
+  }
+
+  .templates-subtitle {
+    font-size: 8px;
+    margin-bottom: 8px;
+  }
+
+  .template-grid {
+    gap: 5px;
+  }
+
+  .template-card {
+    padding: 8px 3px;
+    border-radius: 9px;
+  }
+
+  .card-icon {
+    font-size: 16px;
+  }
+
+  .card-name {
+    font-size: 8px;
+  }
+
+  .card-status {
+    font-size: 6px;
+    padding: 3px 5px;
+  }
+
+  .coming-footer {
+    font-size: 8px;
+    padding: 5px 8px 8px;
+  }
+}
+
+/* SHORT HEIGHT SCREENS */
+
+@media (max-height: 700px) {
+
+  .main-content {
+    padding-top: 43px;
+  }
+
+  .top-badge {
+    margin-bottom: 6px;
+  }
+
+  .hero-description {
+    margin-bottom: 10px;
+  }
+
+  .templates-section {
+    margin-top: 12px;
+  }
+
+  .templates-subtitle {
+    margin-bottom: 6px;
+  }
+
+  .template-card {
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
+
+  .coming-footer {
+    padding-top: 4px;
+    padding-bottom: 5px;
+  }
+}
+
+@media (max-height: 580px) {
+
+  .main-content {
+    padding-top: 38px;
+    padding-bottom: 0;
+  }
+
+  .top-badge {
+    display: none;
+  }
+
+  .hero-description {
+    display: none;
+  }
+
+  .templates-section {
+    margin-top: 8px;
+  }
+
+  .templates-subtitle {
+    display: none;
+  }
+
+  .coming-footer {
+    display: none;
+  }
+
+  .coming-soon {
+    font-size: clamp(40px, 7vw, 65px);
+  }
+
+  .birthday-promo {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
+
+@media (max-width: 380px) {
+
+  .template-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .template-card {
+    padding: 7px 4px;
+  }
+
+  .main-content {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+/* ACCESSIBILITY */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .coming-soon,
+  .birthday-promo,
+  .template-card {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}
+</style>
 </head>
+
 <body>
-  <header class="site-header">
-    <a href="index.html" class="brand" aria-label="Luvora Home">
-      <img class="brand-logo" src="assets/icons/luvora-logo.svg" alt="Luvora" data-site-brand>
+
+<div class="coming-page">
+
+  <div class="glow glow-one"></div>
+  <div class="glow glow-two"></div>
+
+  <!-- NAVIGATION -->
+
+  <div class="minimal-nav">
+    <a href="templates.html">
+      <span>←</span>
+      Back to Templates
     </a>
-    <a href="templates.html" class="back-link">← Templates</a>
-  </header>
-  <main class="editor-placeholder">
-    <div>
-      <div class="eyebrow">Editor foundation</div>
-      <h1>Your surprise<br><em>starts here.</em></h1>
-      <p>The template editor is the next development layer. This placeholder keeps the current template links valid and gives us a clean place to add personalization, media uploads, preview, authentication and payment later.</p>
-      <a href="templates.html">Back to templates</a>
+  </div>
+
+  <main class="main-content">
+
+    <div class="top-badge">
+      <span class="badge-dot"></span>
+      Something beautiful is on its way
     </div>
+
+    <div class="selection-label">
+      A little more magic for
+    </div>
+
+    <div class="selected-title" id="selectedTemplate">
+      Your Special Moments
+    </div>
+
+    <h1 class="coming-soon">
+      COMING <span>SOON.</span>
+    </h1>
+
+    <div class="divider">
+      <span></span>
+      <i>✦</i>
+      <span></span>
+    </div>
+
+    <p class="hero-description">
+      We're creating something special for your unforgettable moments.
+      A little patience, a little magic.
+    </p>
+
+    <!-- BIRTHDAY PROMOTION -->
+
+    <section class="birthday-promo">
+
+      <div class="promo-content">
+
+        <div class="promo-tag">
+          ✦ Available Now on Luvora
+        </div>
+
+        <h2 class="promo-title">
+          Make their birthday<br>
+          <em>unforgettable.</em>
+        </h2>
+
+        <p class="promo-description">
+          Create a beautiful surprise filled with memories, love and little moments.
+        </p>
+
+      </div>
+
+      <a href="birthday.html" class="birthday-button">
+        Create Birthday Surprise
+        <span>→</span>
+      </a>
+
+    </section>
+
+    <!-- TEMPLATE STATUS -->
+
+    <section class="templates-section">
+
+      <h2 class="templates-heading">
+        More moments. More magic.
+      </h2>
+
+      <p class="templates-subtitle">
+        A little preview of what's coming to Luvora.
+      </p>
+
+      <div class="template-grid">
+
+        <div class="template-card">
+          <div class="card-icon">🎂</div>
+          <div class="card-name">Birthday</div>
+          <span class="card-status status-live">Available Now</span>
+        </div>
+
+        <div class="template-card">
+          <div class="card-icon">💍</div>
+          <div class="card-name">Anniversary</div>
+          <span class="card-status status-soon">Coming Soon</span>
+        </div>
+
+        <div class="template-card">
+          <div class="card-icon">💗</div>
+          <div class="card-name">Valentine</div>
+          <span class="card-status status-soon">Coming Soon</span>
+        </div>
+
+        <div class="template-card">
+          <div class="card-icon">💌</div>
+          <div class="card-name">Just Because</div>
+          <span class="card-status status-soon">Coming Soon</span>
+        </div>
+
+      </div>
+
+    </section>
+
   </main>
+
+  <footer class="coming-footer">
+    Made with <span>♥</span> for the moments that matter.
+  </footer>
+
+</div>
+
+<script>
+/* SELECTED TEMPLATE NAME */
+
+(function () {
+
+  const params = new URLSearchParams(window.location.search);
+
+  const rawName =
+    params.get("template") ||
+    params.get("name") ||
+    params.get("title") ||
+    params.get("occasion");
+
+  const titleElement =
+    document.getElementById("selectedTemplate");
+
+  if (!titleElement || !rawName) return;
+
+  const formattedName = rawName
+    .replace(/[-_+]/g, " ")
+    .trim()
+    .replace(/\b\w/g, char => char.toUpperCase());
+
+  titleElement.textContent =
+    formattedName || "Your Special Moments";
+
+})();
+
+
+/* FLOATING ROSE PETALS */
+
+(function () {
+
+  const page = document.querySelector(".coming-page");
+
+  if (!page) return;
+
+  const petalCount =
+    window.innerWidth < 480 ? 7 : 13;
+
+  for (let i = 0; i < petalCount; i++) {
+
+    const petal = document.createElement("span");
+
+    petal.className = "petal";
+
+    petal.style.left =
+      Math.random() * 100 + "%";
+
+    petal.style.animationDuration =
+      (9 + Math.random() * 10) + "s";
+
+    petal.style.animationDelay =
+      (Math.random() * 10) + "s";
+
+    petal.style.opacity =
+      (0.2 + Math.random() * 0.4).toString();
+
+    petal.style.transform =
+      "scale(" + (0.6 + Math.random() * 0.7) + ")";
+
+    page.appendChild(petal);
+
+  }
+
+})();
+</script>
+
 </body>
 </html>
