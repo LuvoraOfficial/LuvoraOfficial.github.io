@@ -16853,3 +16853,7 @@ html.luvora-game-return body #giftExperience.gift-experience:has(.panda-visible)
   visibility: hidden !important;
   pointer-events: none !important;
 }
+/* FINAL SURPRISE — HIDE VIDEO UPLOAD CONTROLS */
+html.luvora-final-mode #videoSection .birthday-video-upload {
+  display: none !important;
+}
