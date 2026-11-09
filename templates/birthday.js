@@ -334,6 +334,35 @@ const birthdayVideo =
 const birthdayVideoSource =
   document.getElementById("birthdayVideoSource");
 
+/* ==========================================
+   LUVORA — DUCK BACKGROUND MUSIC DURING VIDEO
+========================================== */
+
+(() => {
+  const video = document.getElementById("birthdayVideo");
+  const music = document.getElementById("luvoraBirthdayMusic");
+
+  if (!video || !music || video.dataset.musicDuckReady === "true") {
+    return;
+  }
+
+  video.dataset.musicDuckReady = "true";
+
+  let previousVolume = music.volume;
+
+  video.addEventListener("play", () => {
+    previousVolume = music.volume;
+    music.volume = 0.05;
+  });
+
+  function restoreMusicVolume() {
+    music.volume = previousVolume;
+  }
+
+  video.addEventListener("pause", restoreMusicVolume);
+  video.addEventListener("ended", restoreMusicVolume);
+})();
+
 const videoPlaceholder =
   document.getElementById("videoPlaceholder");
 
@@ -7202,4 +7231,77 @@ if (nextWrap && step.button !== "balloonContinueButton") {
     setupCinema();
   }
 
+})();
+
+/* LUVORA — PAUSE BIRTHDAY VIDEO ON CONTINUE */
+
+(() => {
+  if (document.documentElement.dataset.videoContinuePauseReady === "true") {
+    return;
+  }
+
+  document.documentElement.dataset.videoContinuePauseReady = "true";
+
+  document.addEventListener("click", event => {
+    const button = event.target.closest("#continueToCakeButton");
+    if (!button) return;
+
+    const video = document.getElementById("birthdayVideo");
+
+    if (video && !video.paused) {
+      video.pause();
+    }
+  });
+})();
+
+/* LUVORA — PAUSE MEDIA IN BACKGROUND & RESUME ON RETURN */
+
+(() => {
+  if (document.documentElement.dataset.mediaVisibilityReady === "true") {
+    return;
+  }
+
+  document.documentElement.dataset.mediaVisibilityReady = "true";
+
+  let previouslyPlaying = [];
+
+  function stopAllMedia() {
+    previouslyPlaying = [];
+
+    document.querySelectorAll("audio, video").forEach(media => {
+      if (!media.paused && !media.ended) {
+        previouslyPlaying.push(media);
+        media.pause();
+      }
+    });
+  }
+
+  async function resumeMedia() {
+    const mediaToResume = [...previouslyPlaying];
+    previouslyPlaying = [];
+
+    for (const media of mediaToResume) {
+      if (!media.isConnected) continue;
+
+      try {
+        await media.play();
+      } catch (error) {
+        console.warn("Luvora media auto-resume was blocked:", error);
+      }
+    }
+  }
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      stopAllMedia();
+    } else {
+      resumeMedia();
+    }
+  });
+
+  window.addEventListener("pagehide", () => {
+  document.querySelectorAll("audio, video").forEach(media => {
+    media.pause();
+  });
+});
 })();
