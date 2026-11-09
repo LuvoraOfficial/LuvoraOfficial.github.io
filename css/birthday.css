@@ -9988,55 +9988,90 @@ html body #giftExperience + section {
     clip-path 0.9s ease !important;
 }
 
-/* Closed envelope */
+/* =========================================
+   LUVORA — SMOOTH LETTER OPENING
+   GPU FRIENDLY ANIMATION
+========================================= */
 
+/* Closed envelope */
 #letterSection .love-envelope:not(.open) .letter-paper {
   opacity: 0 !important;
   visibility: hidden !important;
   pointer-events: none !important;
-  clip-path: inset(100% 0 0 0) !important;
+
+  transform: translate3d(0, 25px, 0) scale(0.97) !important;
+
+  clip-path: none !important;
+  animation: none !important;
 }
 
 /* Open envelope */
-
 #letterSection .love-envelope.open .letter-paper {
   opacity: 1 !important;
   visibility: visible !important;
   pointer-events: auto !important;
 
-  clip-path: inset(0 0 0 0) !important;
+  transform: translate3d(0, -55px, 0) scale(1) !important;
 
-  transform: translateY(-55px) scale(1) !important;
+  clip-path: none !important;
 
   box-shadow:
     0 22px 42px rgba(47, 30, 13, 0.30),
     inset 0 0 24px rgba(120, 76, 29, 0.12) !important;
 
   z-index: 8 !important;
+
+  animation: luvoraSmoothLetterOpen 0.85s
+    cubic-bezier(0.22, 1, 0.36, 1) both !important;
+
+  will-change: transform, opacity;
 }
 
-/* Scroll unrolling reveal */
+/* Smooth letter reveal */
+@keyframes luvoraSmoothLetterOpen {
 
-#letterSection .love-envelope.open .letter-paper {
-  animation: luvoraParchmentUnroll 1.15s
-    cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-@keyframes luvoraParchmentUnroll {
   0% {
-    clip-path: inset(48% 0 48% 0);
-    filter: brightness(0.78);
-  }
-
-  45% {
-    clip-path: inset(20% 0 20% 0);
-    filter: brightness(0.94);
+    opacity: 0;
+    transform: translate3d(0, 25px, 0) scale(0.97);
   }
 
   100% {
-    clip-path: inset(0 0 0 0);
-    filter: brightness(1);
+    opacity: 1;
+    transform: translate3d(0, -55px, 0) scale(1);
   }
+
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+
+  #letterSection .love-envelope.open .letter-paper {
+    transform: translate3d(0, -42px, 0) scale(1) !important;
+  }
+
+  @keyframes luvoraSmoothLetterOpen {
+
+    0% {
+      opacity: 0;
+      transform: translate3d(0, 25px, 0) scale(0.97);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translate3d(0, -42px, 0) scale(1);
+    }
+
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+
+  #letterSection .love-envelope.open .letter-paper {
+    animation: none !important;
+    transition: none !important;
+  }
+
 }
 
 /* ---------- 4. LETTER CONTENT ---------- */
@@ -16810,3 +16845,11 @@ html:not(.luvora-cake-return) body #giftExperience.flow-unlocked {
   }
 }
 
+/* LUVORA — HIDE PANDA GIFT WHILE GAME IS ACTIVE */
+
+html.luvora-game-return body #giftExperience.gift-experience,
+html.luvora-game-return body #giftExperience.gift-experience:has(.panda-visible) {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
