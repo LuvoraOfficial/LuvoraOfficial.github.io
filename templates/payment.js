@@ -443,6 +443,15 @@ if (policyMoreButton && policyMoreContent) {
 
         }
 
+// Require Terms & Refund Policy consent
+if (!policyConsent || !policyConsent.checked) {
+  alert("Please accept the Terms & Conditions and Refund Policy.");
+  payNowButton.disabled = false;
+  payNowButton.innerHTML =
+    `Continue to Payment <span>→</span>`;
+  return;
+}
+
 
         /* -------------------------------------------------
            LOCK BUTTON
@@ -501,7 +510,7 @@ customer_phone:
   document.getElementById("customerPhone")?.value.trim() ||
   surpriseData.phone ||
   "", 
-
+policies_accepted: policyConsent.checked,
     template:
     surpriseData.template ||
     "birthday-story",
