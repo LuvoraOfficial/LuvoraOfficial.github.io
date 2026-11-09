@@ -2794,10 +2794,13 @@ if (customerName) {
   updateBirthdayName();
 }
 // Update Love Letter signature and Scratch Card sender name
+
 function updateLetterSignature() {
-  const senderName = customerYourName
-    ? customerYourName.value.trim()
-    : "";
+  const senderName = LUVORA_IS_FINAL_SURPRISE
+    ? (BIRTHDAY_CONFIG.senderName || "").trim()
+    : (customerYourName
+        ? customerYourName.value.trim()
+        : "");
 
   // Save only a non-empty sender name
   if (senderName) {
@@ -3688,12 +3691,17 @@ if (backToEditButton) {
 }
 }
 
-    // Customer information
-    BIRTHDAY_CONFIG.name =
-      surprise.name || "My Love";
+   // Customer information
+BIRTHDAY_CONFIG.name =
+  surprise.name || "someone special";
 
-    BIRTHDAY_CONFIG.date =
-      surprise.birthday_date || "";
+BIRTHDAY_CONFIG.senderName =
+  typeof surprise.sender_name === "string"
+    ? surprise.sender_name.trim()
+    : "";
+
+BIRTHDAY_CONFIG.date =
+  surprise.birthday_date || "";
 
 // Load the personalized Love Letter for the paid share link.
 if (
@@ -3766,6 +3774,68 @@ async function initializeBirthdayExperience() {
   }
 
  await loadSharedSurprise();
+
+// Apply recipient name to the Cake section
+const cakeBirthdayName = document.getElementById(
+  "cakeBirthdayName"
+);
+
+if (cakeBirthdayName) {
+  cakeBirthdayName.textContent =
+    BIRTHDAY_CONFIG.name || "My Love";
+}
+
+// Apply sender name to Love Letter and Scratch Card
+if (typeof updateLetterSignature === "function") {
+  updateLetterSignature();
+}
+
+// FINAL SURPRISE — VIDEO TO CAKE NAVIGATION
+if (LUVORA_IS_FINAL_SURPRISE) {
+
+  const continueToCakeButton =
+    document.getElementById("continueToCakeButton");
+
+  if (
+    continueToCakeButton &&
+    !continueToCakeButton.dataset.finalCakeHandler
+  ) {
+
+    continueToCakeButton.dataset.finalCakeHandler = "true";
+
+    continueToCakeButton.addEventListener("click", (event) => {
+
+      event.preventDefault();
+
+      const videoSection =
+        document.getElementById("videoSection");
+
+      const cakePageSection =
+        document.getElementById("cakePageSection");
+
+      if (videoSection) {
+        videoSection.classList.add("birthday-flow-hidden");
+      }
+
+      if (cakePageSection) {
+
+        cakePageSection.classList.remove(
+          "birthday-flow-hidden"
+        );
+
+        void cakePageSection.offsetWidth;
+
+        cakePageSection.classList.add(
+          "birthday-flow-revealed"
+        );
+
+      }
+
+    });
+
+  }
+
+}
 
 loadCustomerDataFromURL();
 loadCustomerPhotosFromURL();
