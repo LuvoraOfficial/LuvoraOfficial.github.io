@@ -80,6 +80,14 @@
 
     const track = mobile.querySelector(".mb-track");
     const pagination = mobile.querySelector(".mb-pagination");
+     // Isolate premium card swipes from the legacy flipbook.
+["touchstart", "touchend"].forEach(type => {
+  track.addEventListener(
+    type,
+    event => event.stopPropagation(),
+    { passive: true }
+  );
+});
     let lastSignature = "";
 
     function render() {
