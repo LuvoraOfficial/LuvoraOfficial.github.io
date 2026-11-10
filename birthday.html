@@ -21,6 +21,7 @@
   <!-- Birthday page stylesheet -->
   <link rel="stylesheet" href="css/birthday.css">
   <link rel="stylesheet" href="css/cake-integrated.css">
+  <link rel="stylesheet" href="css/memory-book-premium.css">
 
 <script>
 (function () {
@@ -1392,353 +1393,94 @@ html.luvora-welcome-active #luvoraWelcome[hidden] {
 </div>
 
 
-
-    <!-- =======================================================
-         04 — PHOTO MEMORIES
-    ======================================================== -->
-
-   <section
+<!-- =======================================================
+     04 — PHOTO MEMORIES | REPLACE THE EXISTING SECTION ONLY
+======================================================== -->
+<section
   class="birthday-section memories-section birthday-flow-hidden"
   id="memoriesSection"
 >
-
   <div class="section-heading">
-
-    <span class="section-eyebrow">
-      A WORLD OF YOU
-    </span>
-
-    <h2>
-      Our little memories
-                      </h2>
-
-   
+    <span class="section-eyebrow">A WORLD OF YOU</span>
+    <h2>Our little memories</h2>
+    <p>A few moments, kept close forever. ♡</p>
   </div>
-
-
-  <!-- =====================================================
-       INTERACTIVE MEMORY BOOK
-       ===================================================== -->
 
   <div class="memory-book-area" id="memoryBookArea">
-
     <div class="memory-book" id="memoryBook">
 
-
-      <!-- =================================================
-           FRONT COVER
-           ================================================= -->
-
-      <div class="memory-cover" id="memoryCover">
-
-        <div class="cover-decoration cover-decoration-top">
-          ✦
-        </div>
-
+      <!-- DESKTOP / TABLET FRONT COVER -->
+      <div class="memory-cover" id="memoryCover" role="button" tabindex="0" aria-label="Open our memory book">
+        <span class="cover-decoration cover-decoration-top">✦</span>
         <div class="cover-inner">
-
-          <span class="cover-eyebrow">
-            OUR STORY
-          </span>
-
-          <h3>
-            Our Little<br>
-            Memories
-          </h3>
-
+          <span class="cover-eyebrow">A LITTLE BOOK OF US</span>
+          <h3>Our Little<br>Memories</h3>
           <div class="cover-line"></div>
-
-          <p>
-            A collection of moments<br>
-            I never want to forget.
-          </p>
-
-          <div class="cover-flower">
-            ✿
-          </div>
-
+          <p>Every photograph holds<br>a feeling worth keeping.</p>
+          <div class="cover-flower">✿</div>
         </div>
-
-        <div class="cover-decoration cover-decoration-bottom">
-          ✧
-        </div>
-
-        <!-- Page-turn hint -->
+        <span class="cover-decoration cover-decoration-bottom">✧</span>
         <div class="memory-book-hint">
-
-          <span class="hint-arrow">
-            →
-          </span>
-
-          <span>
-            Turn the pages...
-          </span>
-
-          <small>
-            A few beautiful memories are waiting for you.
-          </small>
-
+          <span class="hint-arrow">→</span>
+          <span>Open our memories</span>
+          <small>Turn each page slowly ♡</small>
         </div>
-
       </div>
 
-
-      <!-- =================================================
-           MEMORY PAGE 1
-           ================================================= -->
-
-      <div
-        class="memory-page memory-page-1"
-        data-page="1"
-      >
-
+      <!-- PAGE 1: PHOTOS 1 & 2 -->
+      <div class="memory-page memory-page-1" data-page="1">
         <div class="memory-page-content">
-
-          <div class="memory-photo-slot photo-slot-top">
-
-            <img
-              alt="Our memory"
-            >
-
-          </div>
-
-
+          <div class="memory-photo-slot photo-slot-top"><img alt="Our memory 1"></div>
           <div class="memory-quote quote-top">
-
             <span class="quote-decoration">🌹</span>
-
-            <p>
-              “Some moments become
-              memories we keep forever.”
-            </p>
-
+            <p>“Some moments become memories we keep forever.”</p>
           </div>
-
-
-          <div class="memory-photo-slot photo-slot-bottom">
-
-            <img
-              alt="Our memory"
-            >
-
-          </div>
-
-
+          <div class="memory-photo-slot photo-slot-bottom"><img alt="Our memory 2"></div>
           <div class="memory-quote quote-bottom">
-
             <span class="quote-decoration">🦋</span>
-
-            <p>
-              “Happiness is hidden
-              in little moments like these.”
-            </p>
-
+            <p>“Happiness is hidden in little moments like these.”</p>
           </div>
-
         </div>
-
-        <div class="memory-page-number">
-          1 / 3
-        </div>
-
-        <button
-          type="button"
-          class="memory-next-button"
-          data-next-page="2"
-        >
-          Turn the page →
-        </button>
-
+        <div class="memory-page-number">01</div>
+        <button type="button" class="memory-next-button" data-next-page="4">Turn the page →</button>
       </div>
 
-
-      <!-- =================================================
-           MEMORY PAGE 2
-           ================================================= -->
-
-      <div
-        class="memory-page memory-page-2"
-        data-page="2"
-      >
-
+      <!-- PAGE 2: PHOTOS 3 & 4; birthday.js hides this page for 2 photos -->
+      <div class="memory-page memory-page-2" data-page="2">
         <div class="memory-page-content">
-
-          <div class="memory-photo-slot photo-slot-top">
-
-            <img
-              alt="Our memory"
-            >
-
-          </div>
-
-
+          <div class="memory-photo-slot photo-slot-top"><img alt="Our memory 3"></div>
           <div class="memory-quote quote-top">
-
             <span class="quote-decoration">🌸</span>
-
-            <p>
-              “The sweetest memories
-              are the ones made together.”
-            </p>
-
+            <p>“The sweetest memories are the ones made together.”</p>
           </div>
-
-
-          <div class="memory-photo-slot photo-slot-bottom">
-
-            <img
-              alt="Our memory"
-            >
-
-          </div>
-
-
+          <div class="memory-photo-slot photo-slot-bottom"><img alt="Our memory 4"></div>
           <div class="memory-quote quote-bottom">
-
             <span class="quote-decoration">✦</span>
-
-            <p>
-              “Every picture holds
-              a little piece of our story.”
-            </p>
-
+            <p>“Every picture holds a little piece of our story.”</p>
           </div>
-
         </div>
-
-        <div class="memory-page-number">
-          2 / 3
-        </div>
-
-        <button
-          type="button"
-          class="memory-next-button"
-          data-next-page="3"
-        >
-          Turn the page →
-        </button>
-
+        <div class="memory-page-number">02</div>
+        <button type="button" class="memory-next-button" data-next-page="4">Finish memories ♡</button>
       </div>
 
-
-      <!-- =================================================
-           MEMORY PAGE 3
-           ================================================= -->
-
-      <div
-        class="memory-page memory-page-3"
-        data-page="3"
-      >
-
-        <div class="memory-page-content">
-
-          <div class="memory-photo-slot photo-slot-top">
-
-            <img
-              alt="Our memory"
-            >
-
-          </div>
-
-
-          <div class="memory-quote quote-top">
-
-            <span class="quote-decoration">🌹</span>
-
-            <p>
-              “And somehow,
-              every memory feels better
-              with you in it.”
-            </p>
-
-          </div>
-
-
-          <div class="memory-photo-slot photo-slot-bottom">
-
-            <img
-              alt="Our memory"
-            >
-
-          </div>
-
-
-          <div class="memory-quote quote-bottom">
-
-            <span class="quote-decoration">🦋</span>
-
-            <p>
-              “Here’s to all the memories
-              still waiting to be made.”
-            </p>
-
-          </div>
-
-        </div>
-
-        <div class="memory-page-number">
-          3 / 3
-        </div>
-
-        <button
-          type="button"
-          class="memory-next-button memory-final-button"
-          data-next-page="4"
-        >
-          One more page... ❤️
-        </button>
-
-      </div>
-
-
-      <!-- =================================================
-           BACK COVER
-           ================================================= -->
-
-      <div
-        class="memory-back-cover"
-        id="memoryBackCover"
-      >
-
+      <!-- BACK COVER -->
+      <div class="memory-back-cover" id="memoryBackCover">
         <div class="back-cover-inner">
-
-          <div class="back-cover-flower">
-            ✿
-          </div>
-
-          <p>
-            And this is only<br>
-            the beginning...
-          </p>
-
-          <span>
-            ❤️
-          </span>
-
+          <div class="back-cover-flower">✿</div>
+          <p>More beautiful moments<br>are waiting for us...</p>
+          <span>♡</span>
         </div>
-
       </div>
-
-
     </div>
-
   </div>
-
 </section>
 
-<!-- MEMORY BOOK CONTINUE BUTTON -->
-
+<!-- KEEP THIS CONTINUE BUTTON IN THE NORMAL BIRTHDAY FLOW -->
 <div class="birthday-flow-continue-wrap">
-  <button
-    type="button"
-    class="birthday-flow-continue-button"
-    id="memoryContinueButton"
-  >
+  <button type="button" class="birthday-flow-continue-button" id="memoryContinueButton">
     Continue <span>✦</span>
   </button>
 </div>
-
-
 
     <!-- =======================================================
          05 — PERSONAL VIDEO
@@ -2916,6 +2658,7 @@ html.luvora-welcome-active #luvoraWelcome[hidden] {
 <script src="assets/js/site-config.js"></script>
 <script src="templates/birthday.js"></script>
 <script src="templates/cake-integrated.js"></script>
+<script src="templates/memory-book-premium.js" defer></script>
 
 
 <script>
