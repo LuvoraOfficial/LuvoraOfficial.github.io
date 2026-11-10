@@ -1827,31 +1827,31 @@ document.addEventListener(
 
   }
 );
-  /* =======================================================
-     TOUCH / SWIPE SUPPORT
-     ======================================================= */
+ /* =======================================================
+   TOUCH / SWIPE SUPPORT
+   ======================================================= */
 
-  let touchStartX = 0;
-  let touchEndX = 0;
+let touchStartX = 0;
+let touchEndX = 0;
+let touchStartedOnPremiumMemory = false;
 
+bookArea.addEventListener(
+  "touchstart",
+  function(event) {
 
-  bookArea.addEventListener(
-    "touchstart",
-    function(event) {
+    if (!event.touches || !event.touches.length) {
+      return;
+    }
 
-      if (
-        !event.touches ||
-        !event.touches.length
-      ) {
-        return;
-      }
+    touchStartedOnPremiumMemory =
+      event.target instanceof Element &&
+      !!event.target.closest(".luvora-mobile-memory");
 
-      touchStartX =
-        event.touches[0].clientX;
+    touchStartX = event.touches[0].clientX;
 
-    },
-    { passive: true }
-  );
+  },
+  { passive: true }
+);
 
 
   bookArea.addEventListener(
@@ -1864,7 +1864,10 @@ document.addEventListener(
       ) {
         return;
       }
-
+if (touchStartedOnPremiumMemory) {
+  touchStartedOnPremiumMemory = false;
+  return;
+}
       touchEndX =
         event.changedTouches[0].clientX;
 
