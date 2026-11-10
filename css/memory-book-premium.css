@@ -1,0 +1,2113 @@
+/* =========================================================
+   LUVORA — PREMIUM ROMANTIC MEMORY BOOK
+   COMPLETE CSS REPLACEMENT
+   Existing birthday page background preserved.
+   ========================================================= */
+
+#memoriesSection {
+  --mb-wine: #581b35;
+  --mb-wine-deep: #32101f;
+  --mb-rose: #b85f7e;
+  --mb-rose-light: #e9a9bc;
+  --mb-blush: #f7e5e8;
+  --mb-cream: #fffaf5;
+  --mb-ink: #49303b;
+
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+  background: transparent !important;
+  color: var(--mb-cream);
+  padding: clamp(18px, 3vh, 34px) 16px clamp(16px, 2.5vh, 28px);
+  border-radius: 0;
+}
+
+/* ================= SECTION HEADING ================= */
+
+#memoriesSection .section-heading {
+  position: relative;
+  z-index: 3;
+  margin: 0 auto 12px;
+}
+
+#memoriesSection .section-eyebrow {
+  color: var(--mb-rose-light);
+  letter-spacing: .22em;
+}
+
+#memoriesSection .section-heading h2 {
+  color: #fff7f5;
+  text-shadow: 0 3px 18px rgba(48, 12, 28, .28);
+}
+
+#memoriesSection .section-heading p {
+  color: rgba(255, 244, 241, .82);
+}
+
+/* ================= BOOK AREA ================= */
+
+#memoryBookArea {
+  position: relative;
+  width: min(100%, 1040px);
+  height: clamp(390px, 64vh, 550px);
+  min-height: 0;
+  margin: 12px auto 0;
+  display: grid;
+  place-items: center;
+  perspective: 1800px;
+  isolation: isolate;
+}
+
+#memoryBookArea::before,
+#memoryBookArea::after {
+  content: none !important;
+}
+
+#memoryBook {
+  position: relative;
+  width: min(920px, 94vw);
+  height: 100%;
+  max-height: 550px;
+  transform-style: preserve-3d;
+  zoom: 1 !important;
+}
+
+/* ================= BOOK STRUCTURE ================= */
+
+#memoryBook .memory-cover,
+#memoryBook .memory-page,
+#memoryBook .memory-back-cover {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  border-radius: 17px;
+  overflow: hidden;
+
+  box-shadow:
+    0 24px 58px rgba(30, 8, 17, .28),
+    0 0 0 1px rgba(255, 231, 226, .58);
+}
+
+/* ================= FRONT COVER ================= */
+
+#memoryBook .memory-cover {
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  color: #fff8f5;
+  text-align: center;
+
+  background:
+    radial-gradient(
+      circle at 18% 18%,
+      rgba(255, 226, 222, .13) 0 1px,
+      transparent 2px
+    ),
+    radial-gradient(
+      circle at 82% 76%,
+      rgba(255, 226, 222, .10) 0 1px,
+      transparent 2px
+    ),
+    linear-gradient(
+      138deg,
+      #792d4a 0%,
+      #571b35 48%,
+      #32101f 100%
+    );
+
+  border: 1px solid rgba(255, 224, 219, .72);
+
+  transition:
+    transform .95s cubic-bezier(.2, .72, .18, 1),
+    opacity .75s ease;
+
+  transform-origin: left center;
+  backface-visibility: hidden;
+}
+
+#memoryBook .memory-cover::before {
+  content: "";
+  position: absolute;
+  inset: 15px;
+
+  border: 1px solid rgba(245, 207, 199, .48);
+  border-radius: 11px;
+
+  box-shadow:
+    inset 0 0 34px rgba(255, 225, 219, .055),
+    0 0 0 4px rgba(255, 255, 255, .018);
+
+  pointer-events: none;
+}
+
+#memoryBook .memory-cover::after {
+  content: "✦  ·  ✧  ·  ✦";
+
+  position: absolute;
+  top: 29px;
+  left: 0;
+  right: 0;
+
+  color: #f4c9c6;
+  letter-spacing: .48em;
+  font-size: 14px;
+
+  pointer-events: none;
+}
+
+#memoryBook .cover-inner {
+  position: relative;
+  z-index: 2;
+  padding: 24px 30px 58px;
+}
+
+#memoryBook .cover-eyebrow {
+  color: #f4c7c9;
+  letter-spacing: .32em;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+#memoryBook .cover-inner h3 {
+  margin: 18px 0 12px;
+
+  color: #fff8f5;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(38px, 5vw, 62px);
+  line-height: 1.04;
+  font-weight: 500;
+
+  text-shadow: 0 5px 22px rgba(25, 5, 13, .28);
+}
+
+#memoryBook .cover-line {
+  width: 82px;
+  height: 1px;
+  margin: 17px auto;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #f3c2bd,
+    transparent
+  );
+}
+
+#memoryBook .cover-inner p {
+  color: #f1dadd;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+#memoryBook .cover-flower {
+  margin-top: 17px;
+  color: #f0b8c2;
+  font-size: 27px;
+
+  text-shadow: 0 0 16px rgba(242, 174, 190, .22);
+}
+
+#memoryBook .cover-decoration {
+  position: absolute;
+  color: #f4c7c9;
+  opacity: .82;
+  font-size: 20px;
+}
+
+#memoryBook .cover-decoration-top {
+  top: 43px;
+  left: 44px;
+}
+
+#memoryBook .cover-decoration-bottom {
+  bottom: 42px;
+  right: 46px;
+}
+
+#memoryBook .memory-book-hint {
+  position: absolute;
+  bottom: 22px;
+  left: 12px;
+  right: 12px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+
+  color: #f3d2d3;
+  font-size: 11px;
+}
+
+#memoryBook .memory-book-hint small {
+  color: #dfbfc5;
+  font-size: 10px;
+}
+
+#memoryBook .hint-arrow {
+  font-size: 20px;
+  animation: mb-nudge 1.8s ease-in-out infinite;
+}
+
+#memoryBook .memory-cover.memory-cover-open {
+  transform: rotateY(-178deg);
+  pointer-events: none;
+}
+
+/* ================= INNER PAGES ================= */
+
+#memoryBook .memory-page {
+  display: block;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 5;
+
+  padding: 30px 36px 56px;
+
+  background:
+    radial-gradient(
+      circle at 12% 10%,
+      rgba(218, 151, 166, .12),
+      transparent 27%
+    ),
+    linear-gradient(
+      135deg,
+      #fffaf5 0%,
+      #f8edf0 54%,
+      #f2e3e8 100%
+    );
+
+  color: var(--mb-ink);
+
+  transition:
+    opacity .45s ease,
+    transform .65s ease;
+
+  transform: rotateY(-3deg) scale(.985);
+}
+
+#memoryBook .memory-page.active {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  transform: rotateY(0) scale(1);
+  z-index: 10;
+}
+
+#memoryBook .memory-page::before {
+  content: "";
+  position: absolute;
+  inset: 13px;
+
+  border: 1px solid rgba(145, 77, 99, .19);
+  border-radius: 9px;
+
+  pointer-events: none;
+}
+
+/* PHOTO + QUOTE GRID */
+
+#memoryBook .memory-page-content {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+  height: 100%;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 1fr);
+
+  grid-template-rows:
+    minmax(0, 1fr)
+    minmax(0, 1fr);
+
+  gap:
+    clamp(12px, 2.2vh, 22px)
+    clamp(18px, 3vw, 30px);
+
+  align-items: center;
+  justify-items: center;
+}
+
+/* POLAROID PHOTO FRAMES */
+
+#memoryBook .memory-photo-slot {
+  position: relative;
+
+  width: min(100%, 275px);
+  height: clamp(125px, 27vh, 190px);
+
+  margin: auto;
+  padding: 9px 9px 24px;
+
+  box-sizing: border-box;
+
+  background: #fff;
+  border: 1px solid rgba(105, 62, 73, .12);
+  border-radius: 3px;
+
+  box-shadow: 0 10px 24px rgba(72, 31, 45, .15);
+
+  transform: rotate(-1.8deg);
+}
+
+#memoryBook .photo-slot-bottom {
+  transform: rotate(1.8deg);
+}
+
+#memoryBook .memory-photo-slot img {
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+/* QUOTES */
+
+#memoryBook .memory-quote {
+  align-self: center;
+
+  width: min(100%, 260px);
+  margin: auto;
+  padding: 12px 14px;
+
+  color: #684052;
+
+  font-family: Georgia, "Times New Roman", serif;
+  text-align: center;
+
+  font-size: clamp(14px, 1.45vw, 18px);
+  line-height: 1.5;
+}
+
+#memoryBook .quote-decoration {
+  display: block;
+  color: #b66a83;
+
+  margin-bottom: 6px;
+  font-size: 18px;
+}
+
+#memoryBook .memory-quote p {
+  margin: 0;
+}
+
+/* PAGE NUMBER */
+
+#memoryBook .memory-page-number {
+  position: absolute;
+  bottom: 17px;
+  left: 0;
+  right: 0;
+
+  text-align: center;
+  color: #a77b8b;
+
+  font: 10px/1.2 Georgia, "Times New Roman", serif;
+  letter-spacing: .2em;
+}
+
+/* PAGE BUTTON */
+
+#memoryBook .memory-next-button {
+  position: absolute;
+  bottom: 12px;
+  right: 22px;
+  z-index: 8;
+
+  border: 1px solid rgba(122, 58, 80, .24);
+  border-radius: 999px;
+
+  background: linear-gradient(
+    135deg,
+    #78304d,
+    #4b1a31
+  );
+
+  color: #fff5f2;
+
+  padding: 8px 16px;
+  font-size: 11px;
+
+  cursor: pointer;
+
+  box-shadow: 0 5px 14px rgba(76, 28, 45, .16);
+
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease;
+}
+
+#memoryBook .memory-next-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(76, 28, 45, .22);
+}
+
+/* ================= BACK COVER ================= */
+
+#memoryBook .memory-back-cover {
+  z-index: 2;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  opacity: 0;
+  pointer-events: none;
+
+  text-align: center;
+  color: #fff5f2;
+
+  background: linear-gradient(
+    140deg,
+    #79304d,
+    #4e192f 68%,
+    #32101f
+  );
+}
+
+#memoryBook .back-cover-inner {
+  position: relative;
+  z-index: 2;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(24px, 3vw, 30px);
+  line-height: 1.4;
+}
+
+#memoryBook .back-cover-flower {
+  color: #f0bac3;
+  font-size: 34px;
+}
+
+#memoryBook .back-cover-inner span {
+  color: #f1a8bb;
+}
+
+/* No extra floating particles or background effects */
+
+#memoryBookArea .mb-particle {
+  display: none !important;
+}
+
+/* ================= ANIMATIONS ================= */
+
+@keyframes mb-nudge {
+  0%, 100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(6px);
+  }
+}
+
+@keyframes mb-lights-blink {
+  0%, 100% {
+    opacity: .58;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ================= MOBILE DEFAULTS ================= */
+
+#memoryBookArea .mobile-memory-diary {
+  display: none;
+}
+
+#memoryBookArea .luvora-mobile-memory {
+  display: none;
+}
+
+#memoryContinueButton {
+  position: relative;
+  z-index: 4;
+}
+
+/* =========================================================
+   MOBILE — POLAROID MEMORY DIARY
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  #memoriesSection {
+    padding: 22px 0 24px;
+    border-radius: 0;
+    overflow: visible;
+  }
+
+  /* Hide desktop heading on phone */
+
+  #memoriesSection > .section-heading {
+    display: none !important;
+  }
+
+  #memoryBookArea {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    min-height: 0 !important;
+
+    margin: 0 auto;
+    padding: 0 0 8px;
+
+    perspective: none;
+  }
+
+  #memoryBookArea::before,
+  #memoryBookArea::after {
+    display: none !important;
+  }
+
+  #memoryBook {
+    display: none !important;
+  }
+
+  #memoryBookArea .luvora-mobile-memory {
+    display: block;
+
+    position: relative;
+
+    width: 100%;
+    overflow: visible;
+
+    padding: 0 0 8px;
+
+    box-sizing: border-box;
+    z-index: 2;
+  }
+
+  /* TOP STRAIGHT FAIRY LIGHT WIRE */
+
+  #memoryBookArea .luvora-mobile-memory::before {
+    content: "";
+
+    position: absolute;
+
+    top: 5px;
+    left: 8%;
+    right: 8%;
+
+    height: 1px;
+
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 222, 180, .62) 10%,
+      rgba(255, 222, 180, .8) 50%,
+      rgba(255, 222, 180, .62) 90%,
+      transparent
+    );
+
+    box-shadow: 0 0 5px rgba(255, 218, 170, .24);
+
+    pointer-events: none;
+  }
+
+  /* BLINKING TINY BULBS */
+
+  #memoryBookArea .luvora-mobile-memory::after {
+    content: "";
+
+    position: absolute;
+
+    top: 2px;
+    left: 16%;
+
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background: #ffe6a9;
+
+    box-shadow:
+      22vw 0 0 #ffe6a9,
+      44vw 0 0 #ffe6a9,
+      66vw 0 0 #ffe6a9;
+
+    filter: drop-shadow(
+      0 0 4px rgba(255, 220, 151, .9)
+    );
+
+    animation: mb-lights-blink 2.2s ease-in-out infinite alternate;
+
+    pointer-events: none;
+  }
+
+  /* MOBILE TITLE */
+
+  .luvora-mobile-memory .mb-mobile-kicker {
+    text-align: center;
+
+    color: #f0c5d0;
+
+    font: 9px/1.3 Arial, sans-serif;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+
+    margin: 16px 0 6px;
+  }
+
+  .luvora-mobile-memory .mb-mobile-title {
+    text-align: center;
+
+    color: #fff8f5;
+
+    font: 500 clamp(24px, 7vw, 32px)/1.15 Georgia, "Times New Roman", serif;
+
+    margin: 0 14px 5px;
+
+    text-shadow: 0 2px 14px rgba(35, 9, 19, .24);
+  }
+
+  .luvora-mobile-memory .mb-mobile-subtitle {
+    text-align: center;
+
+    color: rgba(255, 239, 238, .82);
+
+    font: 11px/1.45 Arial, sans-serif;
+
+    margin: 0 16px 10px;
+  }
+
+  /* HORIZONTAL POLAROID CAROUSEL */
+
+  .luvora-mobile-memory .mb-track {
+    display: flex;
+    align-items: stretch;
+
+    gap: 13px;
+
+    overflow-x: auto;
+
+    padding: 19px max(24px, calc((100vw - 310px)/2)) 16px;
+
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .luvora-mobile-memory .mb-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* POLAROID CARD */
+
+  .luvora-mobile-memory .mb-card {
+    position: relative;
+
+    flex: 0 0 min(78vw, 318px);
+
+    scroll-snap-align: center;
+
+    padding: 11px 11px 15px;
+
+    border-radius: 4px;
+
+    background: #fffdfb;
+
+    box-shadow:
+      0 16px 34px rgba(24, 8, 15, .28),
+      0 0 0 1px rgba(255, 255, 255, .72);
+
+    transform: rotate(-1.2deg);
+
+    box-sizing: border-box;
+
+    transition:
+      transform .35s ease,
+      box-shadow .35s ease;
+  }
+
+  /* YELLOW PHOTO CLIP */
+
+  .luvora-mobile-memory .mb-card::before {
+    content: "";
+
+    position: absolute;
+    z-index: 5;
+
+    top: -8px;
+    left: 50%;
+
+    width: 39px;
+    height: 17px;
+
+    transform: translateX(-50%) rotate(-2deg);
+
+    border: 1px solid rgba(157, 112, 34, .42);
+    border-radius: 3px 3px 6px 6px;
+
+    background: linear-gradient(
+      180deg,
+      #ffe99a 0%,
+      #f4cc59 58%,
+      #e9b943 100%
+    );
+
+    box-shadow: 0 2px 5px rgba(65, 43, 10, .18);
+  }
+
+  .luvora-mobile-memory .mb-card::after {
+    content: "";
+
+    position: absolute;
+    z-index: 6;
+
+    top: -5px;
+    left: 50%;
+
+    width: 19px;
+    height: 5px;
+
+    transform: translateX(-50%) rotate(-2deg);
+
+    border-top: 1px solid rgba(255, 255, 255, .72);
+    border-radius: 50%;
+
+    pointer-events: none;
+  }
+
+  .luvora-mobile-memory .mb-card:nth-child(even) {
+    transform: rotate(1.2deg);
+  }
+
+  .luvora-mobile-memory .mb-card.is-active {
+    transform: rotate(0) translateY(-2px);
+
+    box-shadow:
+      0 20px 38px rgba(24, 8, 15, .32),
+      0 0 0 1px rgba(255, 255, 255, .78);
+  }
+
+  /* PHOTO */
+
+  .luvora-mobile-memory .mb-card-photo {
+    width: 100%;
+
+    aspect-ratio: 4 / 4.55;
+
+    background: #eee4e6;
+
+    overflow: hidden;
+  }
+
+  .luvora-mobile-memory .mb-card-photo img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+  }
+
+  /* PHOTO QUOTE */
+
+  .luvora-mobile-memory .mb-card-quote {
+    min-height: 66px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px 8px 0;
+
+    color: #624052;
+
+    text-align: center;
+
+    font: 14px/1.4 Georgia, "Times New Roman", serif;
+  }
+
+  .luvora-mobile-memory .mb-card-quote .mb-emoji {
+    color: #b66a83;
+
+    font-size: 16px;
+
+    margin-bottom: 4px;
+  }
+
+  .luvora-mobile-memory .mb-card-quote p {
+    margin: 0;
+  }
+
+  /* PAGINATION DOTS */
+
+  .luvora-mobile-memory .mb-pagination {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 1px 0 0;
+  }
+
+  .luvora-mobile-memory .mb-dot {
+    width: 6px;
+    height: 6px;
+
+    border: 0;
+    padding: 0;
+
+    border-radius: 50%;
+
+    background: #d8a6b5;
+
+    opacity: .55;
+  }
+
+  .luvora-mobile-memory .mb-dot[aria-current="true"] {
+    width: 19px;
+
+    border-radius: 99px;
+
+    opacity: 1;
+
+    background: #f0c0cc;
+
+    box-shadow: 0 0 9px rgba(240, 192, 204, .42);
+  }
+
+  /* SWIPE NOTE */
+
+  .luvora-mobile-memory .mb-swipe-note {
+    text-align: center;
+
+    color: rgba(255, 235, 235, .72);
+
+    font: 9px/1.4 Arial, sans-serif;
+
+    letter-spacing: .08em;
+
+    margin: 8px 0 0;
+  }
+
+  #memoryContinueButton {
+    margin-top: 8px;
+  }
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (min-width: 601px) and (max-width: 900px) {
+
+  #memoriesSection {
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+
+  #memoryBookArea {
+    height: clamp(400px, 61vh, 500px);
+  }
+
+  #memoryBook {
+    width: min(920px, 96vw);
+  }
+
+  #memoryBook .memory-page {
+    padding: 26px 28px 52px;
+  }
+
+  #memoryBook .memory-photo-slot {
+    height: clamp(125px, 23vh, 165px);
+  }
+
+  #memoryBook .memory-page-content {
+    gap: 12px 18px;
+  }
+}
+
+/* =========================================================
+   SHORT LAPTOP VIEWPORTS
+   ========================================================= */
+
+@media (min-width: 601px) and (max-height: 760px) {
+
+  #memoriesSection {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  #memoriesSection .section-heading {
+    margin-bottom: 6px;
+  }
+
+  #memoriesSection .section-heading h2 {
+    font-size: clamp(25px, 3vw, 34px);
+  }
+
+  #memoryBookArea {
+    height: clamp(350px, 59vh, 445px);
+    margin-top: 8px;
+  }
+
+  #memoryBook .memory-page {
+    padding: 22px 28px 48px;
+  }
+
+  #memoryBook .memory-photo-slot {
+    height: clamp(112px, 21vh, 150px);
+
+    padding: 7px 7px 20px;
+  }
+
+  #memoryBook .memory-quote {
+    font-size: clamp(13px, 1.2vw, 16px);
+
+    padding: 8px 10px;
+  }
+
+  #memoryBook .cover-inner h3 {
+    font-size: clamp(34px, 4vw, 48px);
+  }
+
+  #memoryBook .cover-inner {
+    padding-bottom: 48px;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION ACCESSIBILITY
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  #memoryBook .hint-arrow,
+  #memoryBookArea .luvora-mobile-memory::after {
+    animation: none !important;
+  }
+
+  #memoryBook .memory-cover,
+  #memoryBook .memory-page,
+  .luvora-mobile-memory .mb-card {
+    transition-duration: .01ms !important;
+  }
+}
+/* =====================================================
+   LUVORA — PREMIUM MOBILE MEMORY VISUAL
+   Reference-inspired Polaroid Carousel
+   Mobile only | Existing background preserved
+===================================================== */
+
+@media (max-width: 600px) {
+
+  /* SECTION */
+
+  #memoriesSection {
+    background: transparent !important;
+    padding: 22px 0 24px !important;
+    overflow: visible !important;
+  }
+
+  /* MOBILE HEADING */
+
+  .luvora-mobile-memory .mb-mobile-kicker {
+    display: none !important;
+  }
+
+  .luvora-mobile-memory .mb-mobile-title {
+    font-family: Arial, sans-serif !important;
+    font-size: clamp(25px, 7.5vw, 36px) !important;
+    font-weight: 700 !important;
+    line-height: 1.12 !important;
+    letter-spacing: -.8px !important;
+    color: #fff8f0 !important;
+
+    margin: 25px 12px 8px !important;
+
+    text-shadow:
+      0 2px 12px rgba(0,0,0,.18) !important;
+  }
+
+  .luvora-mobile-memory .mb-mobile-subtitle {
+    font-family: Arial, sans-serif !important;
+    font-size: clamp(15px, 4vw, 19px) !important;
+    font-weight: 400 !important;
+    color: #f4e5dc !important;
+
+    margin: 0 12px 75px !important;
+  }
+
+  /* FAIRY LIGHT LINE */
+
+  #memoryBookArea .luvora-mobile-memory::before {
+    top: 5px !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 2px !important;
+
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,222,180,.65),
+      rgba(255,235,195,.95),
+      rgba(255,222,180,.65),
+      transparent
+    ) !important;
+
+    box-shadow:
+      0 0 8px rgba(255,218,160,.45) !important;
+  }
+
+  /* GLOWING BULBS */
+
+  #memoryBookArea .luvora-mobile-memory::after {
+    top: -5px !important;
+    left: 13% !important;
+
+    width: 12px !important;
+    height: 12px !important;
+
+    background: #ffe8ad !important;
+
+    border-radius: 50% !important;
+
+    box-shadow:
+      17vw 0 9px 2px rgba(255,226,160,.85),
+      34vw 0 9px 2px rgba(255,226,160,.75),
+      51vw 0 9px 2px rgba(255,226,160,.85),
+      68vw 0 9px 2px rgba(255,226,160,.75) !important;
+
+    filter: drop-shadow(
+      0 0 8px rgba(255,220,150,.95)
+    ) !important;
+  }
+
+  /* CAROUSEL TRACK */
+
+  .luvora-mobile-memory .mb-track {
+    gap: 18px !important;
+
+    padding:
+      20px
+      max(20px, calc((100vw - min(72vw, 380px)) / 2))
+      22px !important;
+
+    align-items: center !important;
+
+    scroll-snap-type: x mandatory !important;
+    scroll-behavior: smooth !important;
+  }
+
+  /* MAIN POLAROID CARD */
+
+  .luvora-mobile-memory .mb-card {
+    position: relative !important;
+
+    flex: 0 0 min(72vw, 380px) !important;
+
+    padding: 12px 12px 58px !important;
+
+    background: #fffdf4 !important;
+
+    border: 1px solid rgba(255,255,255,.9) !important;
+
+    border-radius: 15px !important;
+
+    box-shadow:
+      0 18px 42px rgba(0,0,0,.28),
+      0 3px 9px rgba(0,0,0,.12) !important;
+
+    transform: rotate(-1.2deg) !important;
+
+    transition:
+      transform .4s ease,
+      box-shadow .4s ease !important;
+
+    scroll-snap-align: center !important;
+  }
+
+  .luvora-mobile-memory .mb-card:nth-child(even) {
+    transform: rotate(1.2deg) !important;
+  }
+
+  .luvora-mobile-memory .mb-card.is-active {
+    transform: rotate(0deg) translateY(-3px) !important;
+
+    box-shadow:
+      0 22px 48px rgba(0,0,0,.32),
+      0 0 0 1px rgba(255,255,255,.65) !important;
+  }
+
+  /* GOLDEN PHOTO CLIP */
+
+  .luvora-mobile-memory .mb-card::before {
+    top: -12px !important;
+
+    width: 25px !important;
+    height: 48px !important;
+
+    border-radius: 9px !important;
+
+    background: linear-gradient(
+      90deg,
+      #dfb95e,
+      #ffe8a2 45%,
+      #d8ae50
+    ) !important;
+
+    border: 1px solid rgba(155,116,40,.4) !important;
+
+    box-shadow:
+      0 4px 9px rgba(0,0,0,.2) !important;
+
+    transform: translateX(-50%) rotate(3deg) !important;
+  }
+
+  .luvora-mobile-memory .mb-card::after {
+    display: none !important;
+  }
+
+  /* PHOTO FRAME */
+
+  .luvora-mobile-memory .mb-card-photo {
+    width: 100% !important;
+
+    aspect-ratio: 4 / 4.8 !important;
+
+    background: #f1e8df !important;
+
+    overflow: hidden !important;
+
+    border-radius: 5px !important;
+  }
+
+  .luvora-mobile-memory .mb-card-photo img {
+    width: 100% !important;
+    height: 100% !important;
+
+    object-fit: cover !important;
+
+    border-radius: 5px !important;
+  }
+
+  /* GOLDEN HEART */
+
+  .luvora-mobile-memory .mb-card-quote {
+    position: absolute !important;
+
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 10px !important;
+
+    min-height: 38px !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    color: #efbd4e !important;
+  }
+
+  .luvora-mobile-memory .mb-card-quote .mb-emoji {
+    font-size: 0 !important;
+    margin: 0 !important;
+    color: #efbd4e !important;
+  }
+
+  .luvora-mobile-memory .mb-card-quote .mb-emoji::after {
+    content: "♥";
+
+    display: block;
+
+    font-family: Arial, sans-serif;
+    font-size: 32px;
+    line-height: 1;
+
+    color: #efbd4e;
+
+    text-shadow:
+      0 2px 5px rgba(220,160,50,.2);
+  }
+
+  .luvora-mobile-memory .mb-card-quote p {
+    display: none !important;
+  }
+
+  /* BOTTOM PAGINATION */
+
+  .luvora-mobile-memory .mb-pagination {
+    gap: 10px !important;
+
+    padding: 5px 0 0 !important;
+  }
+
+  .luvora-mobile-memory .mb-dot {
+    width: 9px !important;
+    height: 9px !important;
+
+    background: rgba(255,255,255,.65) !important;
+
+    opacity: .55 !important;
+
+    transition: all .3s ease !important;
+  }
+
+  .luvora-mobile-memory .mb-dot[aria-current="true"] {
+    width: 25px !important;
+    height: 11px !important;
+
+    background: #efb84c !important;
+
+    opacity: 1 !important;
+
+    box-shadow:
+      0 0 12px rgba(255,194,80,.5) !important;
+  }
+
+  /* SWIPE TEXT */
+
+  .luvora-mobile-memory .mb-swipe-note {
+    margin-top: 12px !important;
+
+    font-size: 10px !important;
+
+    letter-spacing: .12em !important;
+
+    color: rgba(255,240,230,.75) !important;
+  }
+
+  #memoryContinueButton {
+    margin-top: 12px !important;
+  }
+}
+
+/* SMALL PHONES */
+
+@media (max-width: 360px) {
+
+  .luvora-mobile-memory .mb-card {
+    flex-basis: 76vw !important;
+    padding: 9px 9px 53px !important;
+  }
+
+  .luvora-mobile-memory .mb-mobile-title {
+    font-size: 25px !important;
+  }
+
+}
+
+/* LARGE PHONES */
+
+@media (min-width: 430px) and (max-width: 600px) {
+
+  .luvora-mobile-memory .mb-card {
+    flex-basis: 70vw !important;
+  }
+
+}
+
+/* =====================================================
+   LUVORA — MOBILE MEMORY VISUAL CORRECTION
+   ===================================================== */
+
+@media (max-width: 600px) {
+
+  /* HEADING SPACING */
+
+  .luvora-mobile-memory .mb-mobile-title {
+    margin-top: 25px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .luvora-mobile-memory .mb-mobile-subtitle {
+    margin-bottom: 48px !important;
+  }
+
+  /* GOLDEN DECORATIVE LINE */
+
+  #memoryBookArea .luvora-mobile-memory::before {
+    top: 218px !important;
+
+    left: 0 !important;
+    right: 0 !important;
+
+    height: 2px !important;
+
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,220,170,.7) 10%,
+      #f8dfaa 50%,
+      rgba(255,220,170,.7) 90%,
+      transparent
+    ) !important;
+
+    box-shadow:
+      0 0 5px rgba(255,220,170,.35) !important;
+  }
+
+  /* SHARP FAIRY LIGHT BULBS */
+
+  #memoryBookArea .luvora-mobile-memory::after {
+    top: 213px !important;
+
+    left: 13% !important;
+
+    width: 11px !important;
+    height: 11px !important;
+
+    background: #ffe6a6 !important;
+
+    border-radius: 50% !important;
+
+    box-shadow:
+      17vw 0 0 #ffe6a6,
+      34vw 0 0 #ffe6a6,
+      51vw 0 0 #ffe6a6,
+      68vw 0 0 #ffe6a6 !important;
+
+    filter: none !important;
+
+    animation: mb-lights-blink 2.2s ease-in-out infinite alternate;
+  }
+
+  /* CARD SPACING */
+
+  .luvora-mobile-memory .mb-track {
+    padding-top: 25px !important;
+  }
+
+  /* POLAROID BOTTOM SPACE */
+
+  .luvora-mobile-memory .mb-card {
+    padding: 11px 11px 17px !important;
+  }
+
+  /* ORIGINAL QUOTE BELOW IMAGE */
+
+  .luvora-mobile-memory .mb-card-quote {
+    position: relative !important;
+
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+
+    width: 100% !important;
+
+    min-height: 78px !important;
+
+    padding: 12px 8px 2px !important;
+
+    margin: 0 !important;
+
+    display: flex !important;
+
+    flex-direction: column !important;
+
+    justify-content: center !important;
+    align-items: center !important;
+
+    text-align: center !important;
+
+    color: #684052 !important;
+
+    font-family: Georgia, "Times New Roman", serif !important;
+
+    font-size: clamp(13px, 3.7vw, 16px) !important;
+
+    line-height: 1.45 !important;
+  }
+
+  /* RESTORE ORIGINAL QUOTE TEXT */
+
+  .luvora-mobile-memory .mb-card-quote .mb-emoji {
+    font-size: 16px !important;
+
+    margin-bottom: 5px !important;
+
+    color: #b66a83 !important;
+  }
+
+  .luvora-mobile-memory .mb-card-quote .mb-emoji::after {
+    content: none !important;
+  }
+
+  .luvora-mobile-memory .mb-card-quote p {
+    display: block !important;
+
+    margin: 0 !important;
+
+    max-width: 100% !important;
+  }
+
+  /* REMOVE ARTIFICIAL HEART */
+
+  .luvora-mobile-memory .mb-card-quote .mb-emoji {
+    text-shadow: none !important;
+  }
+
+}
+
+/* SMALL MOBILE */
+
+@media (max-width: 360px) {
+
+  .luvora-mobile-memory .mb-card-quote {
+    font-size: 13px !important;
+    min-height: 72px !important;
+  }
+
+}
+
+
+/* =========================================================
+   LUVORA — FINAL POLAROID VISUAL
+   Straight Cards + Hanging Clips + Aligned Fairy Wire
+   MOBILE ONLY
+========================================================= */
+
+@media (max-width: 600px) {
+
+  /* RESET OLD DECORATIVE POSITIONING */
+
+  #memoryBookArea .luvora-mobile-memory::before,
+  #memoryBookArea .luvora-mobile-memory::after {
+    content: none !important;
+    display: none !important;
+  }
+
+  /* HEADING */
+
+  .luvora-mobile-memory .mb-mobile-title {
+    margin: 24px 12px 8px !important;
+  }
+
+  .luvora-mobile-memory .mb-mobile-subtitle {
+    margin: 0 12px !important;
+  }
+
+  /* CAROUSEL */
+
+  .luvora-mobile-memory .mb-track {
+    position: relative !important;
+
+    display: flex !important;
+    align-items: stretch !important;
+
+    gap: 15px !important;
+
+    /* Wire and clips share this coordinate system */
+    padding: 53px max(20px, calc((100vw - 59.4vw) / 2)) 20px !important;
+
+    overflow-x: auto !important;
+
+    scroll-snap-type: x mandatory !important;
+    scroll-behavior: smooth !important;
+
+    scrollbar-width: none !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .luvora-mobile-memory .mb-track::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  /* GOLDEN WIRE */
+
+  .luvora-mobile-memory .mb-track::before {
+    content: "" !important;
+
+    position: absolute !important;
+
+    top: 41px !important;
+    left: 0 !important;
+    right: 0 !important;
+
+    height: 2px !important;
+
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,224,175,.75) 8%,
+      #ffe6ad 50%,
+      rgba(255,224,175,.75) 92%,
+      transparent
+    ) !important;
+
+    box-shadow:
+      0 0 5px rgba(255,220,160,.3) !important;
+
+    z-index: 1 !important;
+
+    pointer-events: none !important;
+  }
+
+  /* SHARP BLINKING BULBS */
+
+  .luvora-mobile-memory .mb-track::after {
+    content: "" !important;
+
+    position: absolute !important;
+
+    top: 36px !important;
+    left: 13% !important;
+
+    width: 11px !important;
+    height: 11px !important;
+
+    border-radius: 50% !important;
+
+    background: #ffe7aa !important;
+
+    box-shadow:
+      18vw 0 0 #ffe7aa,
+      36vw 0 0 #ffe7aa,
+      54vw 0 0 #ffe7aa,
+      72vw 0 0 #ffe7aa !important;
+
+    filter: none !important;
+
+    animation: mb-lights-blink 2.5s ease-in-out infinite alternate !important;
+
+    z-index: 3 !important;
+
+    pointer-events: none !important;
+  }
+
+  /* POLAROID CARD — 10% SMALLER */
+
+  .luvora-mobile-memory .mb-card {
+    position: relative !important;
+
+    flex: 0 0 clamp(190px, 59.4vw, 270px) !important;
+
+    box-sizing: border-box !important;
+
+    padding: 10px 10px 15px !important;
+
+    background: #fffdf5 !important;
+
+    border-radius: 13px !important;
+
+    transform: none !important;
+
+    box-shadow:
+      0 15px 34px rgba(0,0,0,.27),
+      0 0 0 1px rgba(255,255,255,.75) !important;
+
+    scroll-snap-align: center !important;
+
+    z-index: 2 !important;
+
+    transition:
+      box-shadow .3s ease !important;
+  }
+
+  .luvora-mobile-memory .mb-card:nth-child(even),
+  .luvora-mobile-memory .mb-card.is-active {
+    transform: none !important;
+  }
+
+  .luvora-mobile-memory .mb-card.is-active {
+    box-shadow:
+      0 19px 38px rgba(0,0,0,.3),
+      0 0 0 1px rgba(255,255,255,.8) !important;
+  }
+
+  /* CLIP — HANGING FROM WIRE */
+
+  .luvora-mobile-memory .mb-card::before {
+    content: "" !important;
+
+    position: absolute !important;
+
+    top: -35px !important;
+
+    left: 50% !important;
+
+    width: 25px !important;
+    height: 48px !important;
+
+    transform: translateX(-50%) rotate(0deg) !important;
+
+    border: 1px solid rgba(157,112,34,.4) !important;
+
+    border-radius: 9px !important;
+
+    background: linear-gradient(
+      90deg,
+      #dfb95e,
+      #ffe8a2 45%,
+      #d8ae50
+    ) !important;
+
+    box-shadow:
+      0 3px 7px rgba(0,0,0,.2) !important;
+
+    z-index: 5 !important;
+
+    pointer-events: none !important;
+  }
+
+  .luvora-mobile-memory .mb-card::after {
+    display: none !important;
+  }
+
+  /* PHOTO */
+
+  .luvora-mobile-memory .mb-card-photo {
+    width: 100% !important;
+
+    aspect-ratio: 4 / 4.65 !important;
+
+    overflow: hidden !important;
+
+    border-radius: 5px !important;
+  }
+
+  .luvora-mobile-memory .mb-card-photo img {
+    display: block !important;
+
+    width: 100% !important;
+    height: 100% !important;
+
+    object-fit: cover !important;
+  }
+
+  /* ORIGINAL QUOTE */
+
+  .luvora-mobile-memory .mb-card-quote {
+    position: relative !important;
+
+    width: 100% !important;
+
+    min-height: 76px !important;
+
+    padding: 12px 7px 3px !important;
+
+    display: flex !important;
+
+    flex-direction: column !important;
+
+    justify-content: center !important;
+    align-items: center !important;
+
+    text-align: center !important;
+
+    font-family: Georgia, serif !important;
+
+    font-size: clamp(12px, 3.5vw, 15px) !important;
+
+    line-height: 1.45 !important;
+
+    color: #684052 !important;
+  }
+
+  .luvora-mobile-memory .mb-card-quote .mb-emoji {
+    font-size: 16px !important;
+    margin-bottom: 5px !important;
+  }
+
+  .luvora-mobile-memory .mb-card-quote .mb-emoji::after {
+    content: none !important;
+  }
+
+  .luvora-mobile-memory .mb-card-quote p {
+    display: block !important;
+    margin: 0 !important;
+  }
+
+  /* PAGINATION */
+
+  .luvora-mobile-memory .mb-pagination {
+    gap: 9px !important;
+    padding-top: 5px !important;
+  }
+}
+
+/* SMALL PHONES */
+
+@media (max-width: 360px) {
+
+  .luvora-mobile-memory .mb-card {
+    flex-basis: 59.4vw !important;
+  }
+}
+
+/* LARGE PHONES */
+
+@media (min-width: 430px) and (max-width: 600px) {
+
+  .luvora-mobile-memory .mb-card {
+    flex-basis: 57.6vw !important;
+  }
+}
+
+/* =====================================================
+   LUVORA — STABLE FAIRY WIRE & FLOATING POLAROIDS
+   MOBILE ONLY
+===================================================== */
+
+@media (max-width: 600px) {
+
+  /* =================================
+     1. STABLE WIRE
+     Background stays fixed while
+     carousel content moves.
+  ================================= */
+
+  .luvora-mobile-memory .mb-track {
+
+    background-image:
+
+      /* Golden horizontal wire */
+      linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,222,175,.75) 10%,
+        #ffe7b0 50%,
+        rgba(255,222,175,.75) 90%,
+        transparent
+      ),
+
+      /* Sharp fairy bulbs */
+      radial-gradient(
+        circle,
+        #ffe9b5 0 5px,
+        rgba(255,224,165,.2) 6px,
+        transparent 9px
+      ),
+      radial-gradient(
+        circle,
+        #ffe9b5 0 5px,
+        rgba(255,224,165,.2) 6px,
+        transparent 9px
+      ),
+      radial-gradient(
+        circle,
+        #ffe9b5 0 5px,
+        rgba(255,224,165,.2) 6px,
+        transparent 9px
+      ),
+      radial-gradient(
+        circle,
+        #ffe9b5 0 5px,
+        rgba(255,224,165,.2) 6px,
+        transparent 9px
+      ),
+      radial-gradient(
+        circle,
+        #ffe9b5 0 5px,
+        rgba(255,224,165,.2) 6px,
+        transparent 9px
+      ) !important;
+
+    background-repeat: no-repeat !important;
+
+    background-size:
+      100% 2px,
+      18px 18px,
+      18px 18px,
+      18px 18px,
+      18px 18px,
+      18px 18px !important;
+
+    background-position:
+      center 41px,
+      13% 33px,
+      31% 33px,
+      50% 33px,
+      69% 33px,
+      87% 33px !important;
+  }
+
+
+  /* Remove moving wire pseudo elements */
+
+  .luvora-mobile-memory .mb-track::before,
+  .luvora-mobile-memory .mb-track::after {
+
+    content: none !important;
+    display: none !important;
+  }
+
+
+  /* =================================
+     2. CARD SIZE — 10% SMALLER
+  ================================= */
+
+  .luvora-mobile-memory .mb-card {
+
+    flex: 0 0 clamp(175px, 53.5vw, 243px) !important;
+
+    padding: 9px 9px 14px !important;
+
+    transform:
+      rotate(-1.1deg)
+      translateY(2px) !important;
+
+    transition:
+      transform .45s ease,
+      box-shadow .45s ease !important;
+  }
+
+
+  /* Different floating positions */
+
+  .luvora-mobile-memory .mb-card:nth-child(2n) {
+
+    transform:
+      rotate(1.3deg)
+      translateY(-3px) !important;
+  }
+
+  .luvora-mobile-memory .mb-card:nth-child(3n) {
+
+    transform:
+      rotate(-.7deg)
+      translateY(4px) !important;
+  }
+
+
+  /* Active card */
+
+  .luvora-mobile-memory .mb-card.is-active {
+
+    transform:
+      rotate(0deg)
+      translateY(-4px) !important;
+
+    box-shadow:
+      0 22px 42px rgba(0,0,0,.32),
+      0 0 0 1px rgba(255,255,255,.8) !important;
+  }
+
+
+  /* =================================
+     3. CLIP — 10% SMALLER
+  ================================= */
+
+  .luvora-mobile-memory .mb-card::before {
+
+    width: 22.5px !important;
+    height: 43px !important;
+
+    top: -33px !important;
+
+    left: 50% !important;
+
+    transform:
+      translateX(-50%)
+      rotate(2deg) !important;
+
+    border-radius: 8px !important;
+
+    background: linear-gradient(
+      90deg,
+      #dfb95e,
+      #ffe8a2 45%,
+      #d8ae50
+    ) !important;
+
+    box-shadow:
+      0 3px 6px rgba(0,0,0,.18) !important;
+
+    z-index: 5 !important;
+  }
+
+
+  /* =================================
+     4. PHOTO FRAME
+  ================================= */
+
+  .luvora-mobile-memory .mb-card-photo {
+
+    aspect-ratio: 4 / 4.65 !important;
+
+    border-radius: 5px !important;
+
+    overflow: hidden !important;
+  }
+
+
+  /* =================================
+     5. FLOATING DEPTH
+  ================================= */
+
+  .luvora-mobile-memory .mb-track {
+
+    gap: 16px !important;
+
+    padding-top: 53px !important;
+
+    scroll-snap-type: x mandatory !important;
+
+    scroll-behavior: smooth !important;
+  }
+
+
+  /* =================================
+     6. QUOTE
+  ================================= */
+
+  .luvora-mobile-memory .mb-card-quote {
+
+    min-height: 76px !important;
+
+    padding: 11px 7px 2px !important;
+  }
+
+}
+
+
+/* SMALL PHONES */
+
+@media (max-width: 360px) {
+
+  .luvora-mobile-memory .mb-card {
+
+    flex-basis: 53.5vw !important;
+  }
+
+}
+
+
+/* LARGE PHONES */
+
+@media (min-width: 430px) and (max-width: 600px) {
+
+  .luvora-mobile-memory .mb-card {
+
+    flex-basis: 51.8vw !important;
+  }
+
+}
+/* =========================================
+   LUVORA — FINAL PREMIUM MESSAGE CARD
+   Mobile only
+========================================= */
+
+@media (max-width: 600px) {
+
+  .luvora-mobile-memory .mb-card-message {
+    background: #fffaf4;
+    overflow: visible;
+  }
+
+  .luvora-mobile-memory .mb-card-message .mb-message-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .luvora-mobile-memory .mb-message-main {
+    width: 100%;
+    aspect-ratio: 4 / 4.55;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 13px;
+    padding: 18px 12px;
+
+    text-align: center;
+
+    background:
+      radial-gradient(
+        circle at 50% 0%,
+        rgba(255, 255, 255, .9),
+        transparent 65%
+      ),
+      linear-gradient(
+        145deg,
+        #fff9ef,
+        #f8e9e8 55%,
+        #f2e5dc
+      );
+
+    border: 1px solid rgba(190, 148, 111, .28);
+    box-shadow: inset 0 0 22px rgba(255, 255, 255, .48);
+  }
+
+  .luvora-mobile-memory .mb-message-line {
+    display: block;
+
+    color: #70465a;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(18px, 5.1vw, 23px);
+    font-weight: 600;
+    line-height: 1.3;
+
+    letter-spacing: -.035em;
+  }
+
+  .luvora-mobile-memory .mb-message-line:last-child {
+    color: #a66e72;
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  .luvora-mobile-memory .mb-message-footer {
+    min-height: 66px;
+
+    display: grid;
+    place-items: center;
+  }
+
+  .luvora-mobile-memory .mb-message-footer span {
+    display: block;
+
+    width: 42px;
+    height: 1px;
+
+    background: linear-gradient(
+      90deg,
+      transparent,
+      #c59b76,
+      transparent
+    );
+
+    position: relative;
+  }
+
+  .luvora-mobile-memory .mb-message-footer span::after {
+    content: "✦";
+
+    position: absolute;
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    padding: 0 7px;
+
+    color: #bb8e79;
+    background: #fffaf4;
+
+    font-size: 11px;
+  }
+}
