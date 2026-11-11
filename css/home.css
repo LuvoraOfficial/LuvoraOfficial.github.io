@@ -4097,5 +4097,230 @@ transition: none;
   opacity: 0 !important;
   animation: none !important;
 }
+/* =====================================
+   LUVORA — MY SURPRISE LINKS
+===================================== */
 
+.recovery-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .3s ease, visibility .3s ease;
+}
+
+.recovery-modal.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.recovery-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(25, 5, 12, .76);
+  backdrop-filter: blur(7px);
+}
+
+.recovery-dialog {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 540px;
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: 48px 42px 36px;
+  background: #F8F1EA;
+  border: 1px solid rgba(212, 175, 124, .55);
+  border-radius: 5px;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, .3);
+  transform: translateY(18px);
+  transition: transform .3s ease;
+}
+
+.recovery-modal.is-open .recovery-dialog {
+  transform: translateY(0);
+}
+
+.recovery-close {
+  position: absolute;
+  top: 15px;
+  right: 18px;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(74, 14, 31, .18);
+  border-radius: 50%;
+  background: transparent;
+  color: #4A0E1F;
+  font-size: 25px;
+  line-height: 1;
+  cursor: pointer;
+  transition: .2s ease;
+}
+
+.recovery-close:hover {
+  background: #4A0E1F;
+  color: #fff;
+}
+
+.recovery-eyebrow {
+  margin-bottom: 16px;
+  color: #A77B56;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.recovery-dialog h2 {
+  margin: 0;
+  color: #4A0E1F;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(30px, 5vw, 42px);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.recovery-dialog h2 em {
+  color: #B77A89;
+  font-weight: 400;
+}
+
+.recovery-description {
+  margin: 15px 0 25px;
+  color: #79656B;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+#recoveryStatus {
+  margin: 15px 0;
+  color: #79656B;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.recovery-card {
+  margin: 12px 0;
+  padding: 19px;
+  background: #FFFDFC;
+  border: 1px solid rgba(74, 14, 31, .12);
+  border-radius: 4px;
+}
+
+.recovery-card h3 {
+  margin: 0 0 7px;
+  color: #4A0E1F;
+  font-family: "Playfair Display", serif;
+  font-size: 19px;
+  font-weight: 500;
+}
+
+.recovery-card p {
+  margin: 4px 0;
+  color: #79656B;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.recovery-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.recovery-actions button,
+.recovery-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 35px;
+  padding: 8px 14px;
+  border: 1px solid #4A0E1F;
+  border-radius: 2px;
+  background: #4A0E1F;
+  color: #fff;
+  font-family: inherit;
+  font-size: 11px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: .2s ease;
+}
+
+.recovery-actions button:hover,
+.recovery-actions a:hover {
+  background: #270710;
+  border-color: #270710;
+}
+
+.recovery-actions .recovery-secondary {
+  background: transparent;
+  color: #4A0E1F;
+}
+
+.recovery-actions .recovery-secondary:hover {
+  background: #F1E5E0;
+}
+
+.recovery-help {
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(74, 14, 31, .14);
+}
+
+.recovery-help span {
+  color: #4A0E1F;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.recovery-help p {
+  margin: 7px 0 0;
+  color: #79656B;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.recovery-help a {
+  color: #9B5369;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  .recovery-modal {
+    padding: 12px;
+  }
+
+  .recovery-dialog {
+    max-height: 90vh;
+    padding: 42px 23px 26px;
+  }
+
+  .recovery-dialog h2 {
+    font-size: 32px;
+  }
+
+  .recovery-card {
+    padding: 15px;
+  }
+
+  .recovery-actions {
+    gap: 7px;
+  }
+
+  .recovery-actions button,
+  .recovery-actions a {
+    flex: 1;
+    padding: 9px 10px;
+  }
+}
 
