@@ -624,30 +624,70 @@ console.log(
           }
 
 
-          /* -------------------------------------------------
-             SAVE PAYMENT INFORMATION
-          ------------------------------------------------- */
+/* -------------------------------------------------
+   SAVE PAYMENT & RECOVERY INFORMATION
+------------------------------------------------- */
 
-          sessionStorage.setItem(
-            "luvoraPaymentData",
-            JSON.stringify({
+// Save payment information permanently
+const paymentInfo = {
+  surprise_id: data.surprise_id,
+  link_id: data.link_id,
+  order_id: data.order_id,
+  amount: data.amount,
+  created_at: new Date().toISOString()
+};
 
-              surprise_id:
-                data.surprise_id,
-
-              link_id:
-                data.link_id,
-
-              order_id:
-                data.order_id,
-
-              amount:
-                data.amount
-
-            })
-          );
+localStorage.setItem(
+  "luvoraPaymentData",
+  JSON.stringify(paymentInfo)
+);
 
 
+// Save recovery token
+if (data.customer_token) {
+
+  const recoveryKey = "luvoraRecoveryTokens";
+
+  let savedTokens = [];
+
+  try {
+    savedTokens = JSON.parse(
+      localStorage.getItem(recoveryKey) || "[]"
+    );
+
+    if (!Array.isArray(savedTokens)) {
+      savedTokens = [];
+    }
+
+  } catch {
+    savedTokens = [];
+  }
+
+  // Avoid duplicate token entries
+  savedTokens = savedTokens.filter(
+    item => item.token !== data.customer_token
+  );
+
+  savedTokens.push({
+    token: data.customer_token,
+    created_at: new Date().toISOString()
+  });
+
+  // Keep the latest 100 records
+  savedTokens = savedTokens.slice(-100);
+
+  localStorage.setItem(
+    recoveryKey,
+    JSON.stringify(savedTokens)
+  );
+
+} else {
+
+  console.error(
+    "Recovery token was not returned by create-payment."
+  );
+
+}
           console.log(
             "Cashfree payment session created:",
             data.order_id
