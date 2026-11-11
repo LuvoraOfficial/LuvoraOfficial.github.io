@@ -30,12 +30,13 @@
     >
   </a>
 
-  <nav class="nav" id="mainNav" aria-label="Main navigation">
+ <nav class="nav" id="mainNav" aria-label="Main navigation">
     <a href="#occasions">Occasions</a>
     <a href="#templates">Templates</a>
     <a href="#pricing">Pricing</a>
+    <a href="#" id="openRecoveryNav">My Surprise Links</a>
     <a href="#help">Help</a>
-  </nav>
+</nav>
 
   <a href="templates.html" class="header-btn">
     Create a Surprise <span>♡</span>
@@ -70,7 +71,9 @@
 
         <div class="hero-actions">
           <a href="templates.html" class="primary-btn">Create Your Surprise <span>→</span></a>
-          <a href="#how-it-works" class="text-btn">Discover the Magic <span>↗</span></a>
+          <button type="button" class="text-btn" id="openRecoveryBtn">
+    Find My Links <span>↗</span>
+</button>
         </div>
       </div>
 
@@ -458,7 +461,47 @@
         </div>
       </div>
     </section>
+<!-- MY SURPRISE LINKS MODAL -->
+<div class="recovery-modal" id="recoveryModal" aria-hidden="true">
 
+  <div class="recovery-backdrop" data-recovery-close></div>
+
+  <section class="recovery-dialog"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="recoveryTitle">
+
+    <button type="button"
+      class="recovery-close"
+      id="closeRecoveryBtn"
+      aria-label="Close">×</button>
+
+    <div class="recovery-eyebrow">YOUR LUVORA MEMORIES</div>
+
+    <h2 id="recoveryTitle">
+      Your surprises,<br>
+      <em>all in one place.</em>
+    </h2>
+
+    <p class="recovery-description">
+      Find the surprise links you created on this browser.
+    </p>
+
+    <div id="recoveryStatus" aria-live="polite"></div>
+
+    <div id="recoveryList"></div>
+
+    <div class="recovery-help">
+      <span>Changed your browser or device?</span>
+      <p>
+        Contact
+        <a href="mailto:luvoraofficial@outlook.com">Luvora Support</a>
+        with your payment transaction ID or payment screenshot.
+      </p>
+    </div>
+
+  </section>
+</div>
 
   </main>
 
