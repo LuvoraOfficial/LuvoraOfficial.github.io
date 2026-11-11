@@ -699,10 +699,10 @@ if (data.customer_token) {
              SANDBOX MODE
           ------------------------------------------------- */
 
-          const cashfree =
-            Cashfree({
-              mode: "sandbox"
-            });
+         const cashfree =
+  Cashfree({
+    mode: "production"
+  });
 
 
           /* -------------------------------------------------
